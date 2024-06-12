@@ -1,9 +1,9 @@
 # 📝 Segundo Parcial de PPS, 2024
 
 ## 👥 Integrantes del grupo Brigada Binaria
-- Gil Miguel Ángel
-- Dongo Huaman Juan Pablo
-- Fernández Santiago
+- **Alfa**: Gil Miguel Ángel
+- **Beta**: Dongo Huaman Juan Pablo
+- **Gamma**: Fernández Santiago
 
 ## 🛠️ Responsabilidades de cada Integrante (08/06)
 
