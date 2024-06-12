@@ -51,7 +51,7 @@ Decidimos quedarnos con la segunda opción como Ícono, la del Alfa. Y con su re
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/5ef7ce6d-66e8-4af0-8e28-c9120263ca56" width="500"/>
 
 - **Splash**
-<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/52125464-9e4d-427c-8ea3-dd8996081aee" width="500"/>
+<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/0a871275-b76b-42a8-9cfd-3a3a81689fb0" width="500"/>
 
 ## 🗂️ Tareas a futuro
 - Altas D y E (Pendiente de organización)
