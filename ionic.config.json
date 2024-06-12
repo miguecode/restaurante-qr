@@ -1,7 +1,0 @@
-{
-  "name": "sp-pps",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "angular-standalone"
-}
