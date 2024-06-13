@@ -12,6 +12,7 @@
 - Creación del diseño del Ícono y del Splash
 - Alta A (Dueño/Supervisor)
 - Código QR E (De Ingreso al Local)
+- Rama: 'miguel'
 #### 📅 Fecha de Inicio: 10/06
 #### ⏳ Fecha de Finalización: Pendiente
 
@@ -19,13 +20,15 @@
 - Creación del diseño del Ícono y del Splash
 - Alta B (Empleados)
 - Código QR F (De la Mesa)
+- Rama: 'juanpablo'
 #### 📅 Fecha de Inicio: 08/06
-#### ✅ Fecha de Finalización: 10/06 ✔
+#### ✅ Fecha de Finalización: 10/06
 
 ### 🌟 Fernández Santiago (Gamma)
 - Creación del diseño del Ícono y del Splash
 - Alta C (Clientes)
 - Código QR G (De la Propina)
+- Rama: 'santiago'
 #### 📅 Fecha de Inicio: 10/06
 #### ⏳ Fecha de Finalización: Pendiente
 
