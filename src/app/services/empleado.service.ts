@@ -29,7 +29,7 @@ export class EmpleadoService {
   private async insertarFoto(empleado: Empleado) {
     const nombreArchivo = empleado.id.toString();
 
-    await this.cloudStorageService.subirArchivoBase64(
+    await this.cloudStorageService.subirArchivoUri(
       this.carpeta,
       nombreArchivo,
       empleado.file
@@ -54,20 +54,20 @@ export class EmpleadoService {
       await this.registrar(empleado);
       await this.cerrarSesion();
 
-      // !OJO! el file que se le asigna a la entidad debe ser [base64]
-      const fotoUrl = await this.insertarFoto(empleado);
-      if (fotoUrl === undefined) {
-        flag = true;
-        throw new Error('Hubo un problema al recuperar la URL de la foto');
-      }
-      empleado.foto = fotoUrl;
-
       const id = await this.traerProximoId();
       if (id === undefined) {
         flag = true;
         throw new Error('El ID fue null');
       }
       empleado.id = id;
+
+      // !OJO! el file que se le asigna a la entidad debe ser [Uri]
+      const fotoUrl = await this.insertarFoto(empleado);
+      if (fotoUrl === undefined) {
+        flag = true;
+        throw new Error('Hubo un problema al recuperar la URL de la foto');
+      }
+      empleado.foto = fotoUrl;
 
       await this.insertarDoc(empleado);
 

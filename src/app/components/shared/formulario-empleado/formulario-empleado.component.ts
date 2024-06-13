@@ -10,16 +10,18 @@ import { Empleado } from 'src/app/classes/empleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
-import Swal from 'sweetalert2';
+import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-formulario-empleado',
   templateUrl: './formulario-empleado.component.html',
   styleUrls: ['./formulario-empleado.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [FormsModule, ReactiveFormsModule, QrScannerComponent, JsonPipe],
 })
 export class FormularioEmpleadoComponent implements OnInit {
+  dataTemporalLuegoBorrar: any;
   formRegistrar!: FormGroup;
 
   get nombre() {
@@ -93,28 +95,30 @@ export class FormularioEmpleadoComponent implements OnInit {
         promptLabelHeader: 'Foto de Empleado',
         promptLabelPhoto: 'Buscar foto local',
         promptLabelPicture: 'Tomar foto',
-        quality: 90,
+        quality: 75, // No subir demasiado este valor, relentiza el celular, almenos el mio.
         allowEditing: false,
-        resultType: CameraResultType.Base64,
+        resultType: CameraResultType.Uri, // Usar Uri, es lo optimo, para luego hacer fetch al Uri y transformarlo a blob
       });
-      if (image.base64String === undefined) {
+      if (image.webPath === undefined) {
         throw new Error('No se pudo recuperar la imagen de Camera.getPhoto()');
       }
 
       const swalertResult = await Swalert.modalCargarFoto();
       if (swalertResult.isConfirmed) {
-        this.foto.setValue(image.base64String);
+        this.foto.setValue(image.webPath);
       }
     } catch (e: any) {
       console.log(e.message);
-    } finally {
-      console.log(this.foto.value);
     }
+  }
+  public recibirDataDniCuilQR($event: string) {
+    this.nombre.setValue($event);
   }
   public async registrar() {
     try {
       const empleado = await this.empleadoService.alta(this.getEmpleado());
       console.log(empleado);
+
       await Swalert.toastSuccess('Registrado exitosamente');
     } catch (e: any) {
       console.log(e.message);

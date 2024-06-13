@@ -22,14 +22,26 @@
       <!-- #region DNI -->
       <div class="form-group dni">
         <label>D.N.I.</label>
-        <input class="form-control" type="text" formControlName="dni" />
+        <div class="input-group">
+          <app-qr-scanner
+            [nombreBtn]="'QR'"
+            (handlerData)="recibirDataDniCuilQR($event)"
+          ></app-qr-scanner>
+          <input class="form-control" type="text" formControlName="dni" />
+        </div>
       </div>
       <!-- #endregion DNI -->
 
       <!-- #region CUIL -->
       <div class="form-group cuil">
         <label>CUIL</label>
-        <input class="form-control" type="text" formControlName="cuil" />
+        <div class="input-group">
+          <app-qr-scanner
+            [nombreBtn]="'QR'"
+            (handlerData)="recibirDataDniCuilQR($event)"
+          ></app-qr-scanner>
+          <input class="form-control" type="text" formControlName="cuil" />
+        </div>
       </div>
       <!-- #endregion CUIL -->
     </div>
@@ -39,11 +51,10 @@
       <div class="form-group foto">
         <label>Foto</label>
         <div class="input-group">
-          <button class="btn btn-primary" (click)="tomarFoto()">Tomar</button>
+          <button class="btn btn-primary" (click)="tomarFoto()">Camara</button>
           <input
             class="form-control"
             type="text"
-            placeholder="Falta instalar @capacitor/camera"
             readonly
             formControlName="foto"
           />
@@ -89,5 +100,6 @@
     </button>
     --></div>
   </form>
+  {{ dataTemporalLuegoBorrar | json }}
   <!-- #endregion Formulario -->
 </div>

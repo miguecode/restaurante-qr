@@ -21,11 +21,9 @@ label {
 
 .nombre,
 .apellido,
-.edad,
 .dni,
 .cuil,
 .foto,
-.tipo-empleado,
 .correo,
 .clave,
 .botones-registro {
@@ -34,19 +32,12 @@ label {
 
 .nombre,
 .apellido,
+.dni,
 .cuil,
 .foto,
-.tipo-empleado,
 .correo,
 .clave {
   width: 100%;
-}
-
-.edad input {
-  width: 55px;
-}
-.dni input {
-  width: 115px;
 }
 
 .boton-registro,
