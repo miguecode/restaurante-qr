@@ -8,8 +8,8 @@ export class Empleado extends Usuario {
     this.cuil = 0;
   }
 
-  setCuil(dni: number) {
-    this.dni = dni;
+  setCuil(cuil: number) {
+    this.cuil = cuil;
   }
 
   static toDoc(empleado: Empleado) {
