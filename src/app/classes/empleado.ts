@@ -5,6 +5,7 @@ export class Empleado extends Usuario {
 
   constructor() {
     super();
+    this.rol = 'empleado';
     this.cuil = 0;
   }
 

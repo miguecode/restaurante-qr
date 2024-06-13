@@ -6,6 +6,8 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { Empleado } from 'src/app/classes/empleado';
+import { EmpleadoService } from 'src/app/services/empleado.service';
 
 @Component({
   selector: 'app-formulario-empleado',
@@ -32,9 +34,6 @@ export class FormularioEmpleadoComponent implements OnInit {
   get foto() {
     return this.formRegistrar.get('foto') as FormControl;
   }
-  get rol() {
-    return this.formRegistrar.get('rol') as FormControl;
-  }
   get correo() {
     return this.formRegistrar.get('correo') as FormControl;
   }
@@ -42,7 +41,7 @@ export class FormularioEmpleadoComponent implements OnInit {
     return this.formRegistrar.get('clave') as FormControl;
   }
 
-  constructor() {
+  constructor(private empleadoService: EmpleadoService) {
     this.crearFormGroup();
   }
 
@@ -57,13 +56,17 @@ export class FormularioEmpleadoComponent implements OnInit {
     this.dni.setValue(0);
     this.cuil.setValue(0);
     this.foto.setValue(undefined);
-    this.rol.setValue('');
     this.correo.setValue('');
     this.clave.setValue('');
   }
 
-  registrar() {
-    alert('accion registrar');
+  async registrar() {
+    try {
+      const empleado = await this.empleadoService.alta(this.getEmpleado());
+      console.log(empleado);
+    } catch (e: any) {
+      console.log(e.message);
+    }
   }
 
   private crearFormGroup() {
@@ -81,7 +84,6 @@ export class FormularioEmpleadoComponent implements OnInit {
         Validators.max(99999999999),
       ]),
       foto: new FormControl(undefined, [Validators.required]),
-      rol: new FormControl('', [Validators.required]),
       correo: new FormControl('', [Validators.required, Validators.email]),
       clave: new FormControl('', [
         Validators.required,
@@ -89,5 +91,17 @@ export class FormularioEmpleadoComponent implements OnInit {
         Validators.max(30),
       ]),
     });
+  }
+
+  private getEmpleado() {
+    let empleado = new Empleado();
+    empleado.setNombre(this.nombre.value);
+    empleado.setApellido(this.apellido.value);
+    empleado.setDni(this.dni.value);
+    empleado.setCuil(this.cuil.value);
+    empleado.setFile(this.foto.value);
+    empleado.setCorreo(this.correo.value);
+    empleado.setClave(this.clave.value);
+    return empleado;
   }
 }
