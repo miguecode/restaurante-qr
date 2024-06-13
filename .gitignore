@@ -73,6 +73,3 @@ Thumbs.db
 .firebase
 *-debug.log
 .runtimeconfig.json
-
-# Entorno
-/src/environments

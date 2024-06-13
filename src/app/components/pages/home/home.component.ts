@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import {
   IonHeader,
   IonToolbar,
@@ -12,6 +13,7 @@ import {
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
+    FormsModule,
     IonContent,
     IonTitle,
     IonToolbar,
@@ -23,7 +25,11 @@ import {
   ],
 })
 export class HomeComponent implements OnInit {
+  mensaje = '';
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mensaje = 'ngOnInit() saluda';
+  }
 }
