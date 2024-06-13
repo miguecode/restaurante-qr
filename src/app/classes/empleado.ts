@@ -1,9 +1,17 @@
 import { Usuario } from './padres/usuario';
 
 export class Empleado extends Usuario {
+  public cuil: number;
+
   constructor() {
     super();
+    this.cuil = 0;
   }
+
+  setCuil(dni: number) {
+    this.dni = dni;
+  }
+
   static toDoc(empleado: Empleado) {
     return {
       id: empleado.id.toString(),
