@@ -1,19 +1,46 @@
-import { Usuario } from '../classes/padres/usuario';
+import { Usuario } from './padres/usuario';
 
 export class Supervisor extends Usuario {
-  cuil: string;
-  perfil: string;
-
-  constructor(
-    nombre: string,
-    apellido: string,
-    dni: string,
-    foto: string,
-    cuil: string,
-    perfil: string
-  ) {
-    super(nombre, apellido, dni, foto);
-    this.cuil = cuil;
-    this.perfil = perfil;
+  constructor() {
+    super();
+  }
+  static toDoc(supervisor: Supervisor) {
+    return {
+      id: supervisor.id.toString(),
+      nombre: supervisor.nombre,
+      apellido: supervisor.apellido,
+      dni: supervisor.dni.toString(),
+      cuil: supervisor.cuil.toString(),
+      foto: supervisor.foto,
+      rol: supervisor.rol,
+      correoVerificado: supervisor.correoVerificado.toString(),
+      correo: supervisor.correo,
+    };
+  }
+  static parseDoc(doc: any) {
+    let supervisor = new Supervisor();
+    supervisor.id = Number(doc.id);
+    supervisor.nombre = doc.nombre;
+    supervisor.apellido = doc.apellido;
+    supervisor.dni = Number(doc.dni);
+    supervisor.cuil = Number(doc.cuil);
+    supervisor.foto = doc.foto;
+    supervisor.rol = doc.rol;
+    supervisor.correoVerificado = JSON.parse(doc.correoVerificado);
+    supervisor.correo = doc.correo;
+    return supervisor;
+  }
+  static parseDocArray(doc: any) {
+    let supervisor = new Supervisor();
+    supervisor.id = Number(doc['id']);
+    supervisor.nombre = doc['nombre'];
+    supervisor.apellido = doc['apellido'];
+    supervisor.dni = Number(doc['dni']);
+    supervisor.cuil = Number(doc['cuil']);
+    supervisor.foto = doc['foto'];
+    supervisor.rol = doc['rol'];
+    supervisor.correoVerificado = JSON.parse(doc['correoVerificado']);
+    supervisor.correo = doc['correo'];
+    return supervisor;
   }
 }
