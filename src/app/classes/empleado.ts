@@ -21,7 +21,6 @@ export class Empleado extends Usuario {
       cuil: empleado.cuil.toString(),
       foto: empleado.foto,
       rol: empleado.rol,
-      correoVerificado: empleado.correoVerificado.toString(),
       correo: empleado.correo,
     };
   }
@@ -34,7 +33,6 @@ export class Empleado extends Usuario {
     empleado.cuil = Number(doc.cuil);
     empleado.foto = doc.foto;
     empleado.rol = doc.rol;
-    empleado.correoVerificado = JSON.parse(doc.correoVerificado);
     empleado.correo = doc.correo;
     return empleado;
   }
@@ -47,7 +45,6 @@ export class Empleado extends Usuario {
     empleado.cuil = Number(doc['cuil']);
     empleado.foto = doc['foto'];
     empleado.rol = doc['rol'];
-    empleado.correoVerificado = JSON.parse(doc['correoVerificado']);
     empleado.correo = doc['correo'];
     return empleado;
   }
