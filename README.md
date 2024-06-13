@@ -22,7 +22,7 @@
 - Código QR F (De la Mesa)
 - Rama: 'juanpablo'
 #### 📅 Fecha de Inicio: 08/06
-#### ✅ Fecha de Finalización: 10/06
+#### ⏳ Fecha de Finalización: Pendiente
 
 ### 🌟 Fernández Santiago (Gamma)
 - Creación del diseño del Ícono y del Splash
@@ -55,6 +55,9 @@ Decidimos quedarnos con la segunda opción como Ícono, la del Alfa. Y con su re
 
 - **Splash**
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/0a871275-b76b-42a8-9cfd-3a3a81689fb0" width="250"/>
+
+## 📊 Informe (13/06)
+Ya completamos la inicialización del proyecto, y se pretende realizar el formulario de ingreso.
 
 ## 🗂️ Tareas a futuro
 - Altas D y E (Pendiente de organización)
