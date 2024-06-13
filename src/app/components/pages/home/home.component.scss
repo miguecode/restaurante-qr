@@ -25,3 +25,15 @@
 #container a {
   text-decoration: none;
 }
+
+.container-router {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+ion-button {
+  height: 50px;
+  width: 90%;
+  margin: 20px;
+}

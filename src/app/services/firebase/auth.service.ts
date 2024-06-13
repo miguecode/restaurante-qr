@@ -11,7 +11,7 @@ import {
   providedIn: 'root',
 })
 export class AuthService {
-  private credenciales: any = undefined;
+  private credenciales: any = null;
 
   constructor(private auth: Auth) {
     onAuthStateChanged(this.auth, (userCred) => {
@@ -31,31 +31,33 @@ export class AuthService {
 
   public getCorreo() {
     return new Promise<string | undefined>((ok) => {
-      if (this.credenciales) {
+      if (this.credenciales !== null) {
         ok(this.credenciales.email);
-      } else {
-        setTimeout(() => {
-          if (!this.credenciales) {
-            ok(undefined);
-          }
-          ok(this.credenciales.email);
-        }, 500);
       }
+
+      setTimeout(() => {
+        if (this.credenciales === null) {
+          ok(undefined);
+        }
+
+        ok(this.credenciales.email);
+      }, 500);
     });
   }
 
   public getVerificoCorreo() {
     return new Promise<boolean | undefined>((ok) => {
-      if (this.credenciales) {
+      if (this.credenciales !== null) {
         ok(this.credenciales.emailVerified);
-      } else {
-        setTimeout(() => {
-          if (!this.credenciales) {
-            ok(undefined);
-          }
-          ok(this.credenciales.emailVerified);
-        }, 500);
       }
+
+      setTimeout(() => {
+        if (this.credenciales === null) {
+          ok(undefined);
+        }
+
+        ok(this.credenciales.emailVerified);
+      }, 500);
     });
   }
 

@@ -55,15 +55,18 @@ export class FirestoreService {
     const listaResponse = this.traerTodos(col);
     if (isObservable(listaResponse)) {
       const lista: any = await firstValueFrom(listaResponse);
+
       if (lista && lista.length > 0) {
         lista.sort(
           (a: any, b: any) => b[nombreAtributoId] - a[nombreAtributoId]
         );
+
         return Number(lista[0][nombreAtributoId]) + 1;
-      } else {
-        return 1;
       }
+
+      return 1;
     }
-    return null;
+
+    return undefined;
   }
 }

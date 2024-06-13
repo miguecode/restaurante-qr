@@ -1,11 +1,18 @@
 import { Usuario } from './padres/usuario';
 
 export class Empleado extends Usuario {
-  cuil: string;
+  public cuil: number;
 
   constructor() {
     super();
+    this.rol = 'empleado';
+    this.cuil = 0;
   }
+
+  setCuil(cuil: number) {
+    this.cuil = cuil;
+  }
+
   static toDoc(empleado: Empleado) {
     return {
       id: empleado.id.toString(),
@@ -15,7 +22,6 @@ export class Empleado extends Usuario {
       cuil: empleado.cuil.toString(),
       foto: empleado.foto,
       rol: empleado.rol,
-      correoVerificado: empleado.correoVerificado.toString(),
       correo: empleado.correo,
     };
   }
@@ -28,7 +34,6 @@ export class Empleado extends Usuario {
     empleado.cuil = Number(doc.cuil);
     empleado.foto = doc.foto;
     empleado.rol = doc.rol;
-    empleado.correoVerificado = JSON.parse(doc.correoVerificado);
     empleado.correo = doc.correo;
     return empleado;
   }
@@ -41,7 +46,6 @@ export class Empleado extends Usuario {
     empleado.cuil = Number(doc['cuil']);
     empleado.foto = doc['foto'];
     empleado.rol = doc['rol'];
-    empleado.correoVerificado = JSON.parse(doc['correoVerificado']);
     empleado.correo = doc['correo'];
     return empleado;
   }

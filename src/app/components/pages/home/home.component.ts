@@ -1,9 +1,13 @@
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
   IonTitle,
   IonContent,
+  IonButton,
+  IonLabel,
 } from '@ionic/angular/standalone';
 
 @Component({
@@ -12,6 +16,10 @@ import {
   styleUrls: ['./home.component.scss'],
   standalone: true,
   imports: [
+    RouterLink,
+    IonLabel,
+    IonButton,
+    FormsModule,
     IonContent,
     IonTitle,
     IonToolbar,
@@ -23,7 +31,11 @@ import {
   ],
 })
 export class HomeComponent implements OnInit {
+  mensaje = '';
+
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.mensaje = 'ngOnInit() saluda';
+  }
 }
