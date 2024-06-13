@@ -38,13 +38,16 @@
       <!-- #region Foto -->
       <div class="form-group foto">
         <label>Foto</label>
-        <input
-          class="form-control"
-          type="text"
-          placeholder="Falta instalar @capacitor/camera"
-          readonly
-          formControlName="foto"
-        />
+        <div class="input-group">
+          <button class="btn btn-primary" (click)="tomarFoto()">Tomar</button>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Falta instalar @capacitor/camera"
+            readonly
+            formControlName="foto"
+          />
+        </div>
       </div>
       <!-- #endregion Foto -->
     </div>

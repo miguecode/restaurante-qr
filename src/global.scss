@@ -34,4 +34,79 @@
 
 /* @import "@ionic/angular/css/palettes/dark.always.css"; */
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
-@import '@ionic/angular/css/palettes/dark.system.css';
+@import "@ionic/angular/css/palettes/dark.system.css";
+
+$color-title-toast-cargar-foto: green;
+$marginRight-botonConfirm-toast-cargar-foto: 5px;
+.toast-cargar-foto-title {
+  color: $color-title-toast-cargar-foto;
+}
+.toast-cargar-foto-confirm-button {
+  margin-right: $marginRight-botonConfirm-toast-cargar-foto;
+}
+// #region Estilos para intentar replicar ion-buttons. Solo modificar las variables $var
+
+/* Estilos comunes entre los BOTONES */
+// boton -> aplica tanto al botonConfirm como botonCancel
+$backgroundColor-boton-toast-cargar-foto: green;
+$border-boton-toast-cargar-foto: none;
+$borderRadius-boton-toast-cargar-foto: 25px;
+$color-boton-toast-cargar-foto: lightgreen;
+$fontSize-boton-toast-cargar-foto: 20px;
+$heigh-boton-toast-cargar-foto: 50px;
+$width-boton-toast-cargar-foto: 120px;
+$boxShadow-boton-toast-cargar-foto: 0 3px 3px rgba(0, 0, 0, 0.2);
+
+.toast-cargar-foto-confirm-button,
+.toast-cargar-foto-cancel-button {
+  position: relative; /* Permite posicionar el círculo grisáceo dentro del botón */
+  overflow: hidden; /* Oculta cualquier contenido adicional que sobresalga del botón */
+  user-select: none; /* Evita la selección de texto dentro del botón */
+  background-color: $backgroundColor-boton-toast-cargar-foto;
+  border: $border-boton-toast-cargar-foto;
+  border-radius: $borderRadius-boton-toast-cargar-foto;
+  color: $color-boton-toast-cargar-foto;
+  font-size: $fontSize-boton-toast-cargar-foto;
+  height: $heigh-boton-toast-cargar-foto;
+  width: $width-boton-toast-cargar-foto;
+  box-shadow: $boxShadow-boton-toast-cargar-foto;
+}
+
+/* Estilos para el CIRCULO GRISACEO que aparece al presionar el botón. Solo modificar las variables $var */
+$backgroundColor-circuloGrisaceo-boton-toast-cargar-foto: rgba(
+  141,
+  141,
+  141,
+  0.4
+);
+$height-circuloGrisaceo-boton-toast-cargar-foto: 350px;
+$width-circuloGrisaceo-boton-toast-cargar-foto: 350px;
+$borderRadius-circuloGrisaceo-boton-toast-cargar-foto: 50%;
+.toast-cargar-foto-confirm-button::after,
+.toast-cargar-foto-cancel-button::after {
+  content: ""; /* Necesario para que el círculo sea visible */
+  z-index: 0; /* Asegura que esté detrás del contenido del botón */
+  position: absolute; /* Se posiciona absolutamente dentro del botón */
+  top: 50%; /* Se centra verticalmente */
+  left: 50%; /* Se centra horizontalmente */
+  background-color: $backgroundColor-circuloGrisaceo-boton-toast-cargar-foto;
+  height: $height-circuloGrisaceo-boton-toast-cargar-foto;
+  width: $width-circuloGrisaceo-boton-toast-cargar-foto;
+  border-radius: $borderRadius-circuloGrisaceo-boton-toast-cargar-foto;
+  transform: translate(-50%, -50%) scale(0); /* Lo hace invisible inicialmente */
+  transition: transform 3s, opacity 3s; /* Transición suave de la transformación y opacidad */
+  pointer-events: none; /* Evita que el círculo afecte a los eventos del ratón */
+}
+/* Estilos para el BOTON cuando está activo(presionado). En lo posible no modicarlo. */
+.toast-cargar-foto-confirm-button:active,
+.toast-cargar-foto-cancel-button:active {
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.3); /* Agrega una sombra al botón cuando está activo */
+}
+/* Estilos para el CIRCULO GRISACEO cuando se presiona el botón. En lo posible no modicarlo. */
+.toast-cargar-foto-confirm-button:active::after,
+.toast-cargar-foto-cancel-button:active::after {
+  transform: translate(-50%, -50%) scale(8); /* Escala el círculo a un tamaño 8 veces mayor */
+  opacity: 0; /* Hace que el círculo desaparezca gradualmente */
+}
+
+// #endregion Estilos para intentar replicar ion-buttons. Solo modificar las variables $var

@@ -8,6 +8,9 @@ import {
 } from '@angular/forms';
 import { Empleado } from 'src/app/classes/empleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { Swalert } from 'src/app/classes/utils/swalert.class';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-formulario-empleado',
@@ -45,30 +48,6 @@ export class FormularioEmpleadoComponent implements OnInit {
     this.crearFormGroup();
   }
 
-  ngOnInit() {
-    console.log(''); // Solo para que tire error
-  }
-
-  limpiar() {
-    this.formRegistrar.reset();
-    this.nombre.setValue('');
-    this.apellido.setValue('');
-    this.dni.setValue(0);
-    this.cuil.setValue(0);
-    this.foto.setValue(undefined);
-    this.correo.setValue('');
-    this.clave.setValue('');
-  }
-
-  async registrar() {
-    try {
-      const empleado = await this.empleadoService.alta(this.getEmpleado());
-      console.log(empleado);
-    } catch (e: any) {
-      console.log(e.message);
-    }
-  }
-
   private crearFormGroup() {
     this.formRegistrar = new FormGroup({
       nombre: new FormControl('', [Validators.required]),
@@ -92,7 +71,6 @@ export class FormularioEmpleadoComponent implements OnInit {
       ]),
     });
   }
-
   private getEmpleado() {
     let empleado = new Empleado();
     empleado.setNombre(this.nombre.value);
@@ -103,5 +81,53 @@ export class FormularioEmpleadoComponent implements OnInit {
     empleado.setCorreo(this.correo.value);
     empleado.setClave(this.clave.value);
     return empleado;
+  }
+
+  public ngOnInit() {
+    console.log(''); // Solo para que tire error
+  }
+
+  public async tomarFoto() {
+    try {
+      const image = await Camera.getPhoto({
+        promptLabelHeader: 'Foto de Empleado',
+        promptLabelPhoto: 'Buscar foto local',
+        promptLabelPicture: 'Tomar foto',
+        quality: 90,
+        allowEditing: false,
+        resultType: CameraResultType.Base64,
+      });
+      if (image.base64String === undefined) {
+        throw new Error('No se pudo recuperar la imagen de Camera.getPhoto()');
+      }
+
+      const swalertResult = await Swalert.modalCargarFoto();
+      if (swalertResult.isConfirmed) {
+        this.foto.setValue(image.base64String);
+      }
+    } catch (e: any) {
+      console.log(e.message);
+    } finally {
+      console.log(this.foto.value);
+    }
+  }
+  public async registrar() {
+    try {
+      const empleado = await this.empleadoService.alta(this.getEmpleado());
+      console.log(empleado);
+      await Swalert.toastSuccess('Registrado exitosamente');
+    } catch (e: any) {
+      console.log(e.message);
+    }
+  }
+  public limpiar() {
+    this.formRegistrar.reset();
+    this.nombre.setValue('');
+    this.apellido.setValue('');
+    this.dni.setValue(0);
+    this.cuil.setValue(0);
+    this.foto.setValue(undefined);
+    this.correo.setValue('');
+    this.clave.setValue('');
   }
 }

@@ -66,6 +66,7 @@ export class FirestoreService {
 
       return 1;
     }
+
     return undefined;
   }
 }

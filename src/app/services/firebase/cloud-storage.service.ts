@@ -26,6 +26,10 @@ export class CloudStorageService {
 
     return blob;
   }
+  private traerTodas(carpeta: string) {
+    const imagesRef = ref(this.storage, carpeta);
+    return listAll(imagesRef);
+  }
   private static obtenerNombreSinExtension(nombreArchivo: string): string {
     const lastIndex = nombreArchivo.lastIndexOf('.');
 
@@ -45,12 +49,6 @@ export class CloudStorageService {
     const blob = CloudStorageService.convertirBase64ABlob(archivoBase64);
     return uploadBytes(storageRef, blob);
   }
-
-  public traerTodas(carpeta: string) {
-    const imagesRef = ref(this.storage, carpeta);
-    return listAll(imagesRef);
-  }
-
   public async traerUrlPorNombre(nombre: string, carpeta: string) {
     const carpetaStorage = await this.traerTodas(carpeta);
 
