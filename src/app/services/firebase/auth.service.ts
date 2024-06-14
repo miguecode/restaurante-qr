@@ -30,33 +30,33 @@ export class AuthService {
   }
 
   public getCorreo() {
-    return new Promise<string | undefined>((ok) => {
+    return new Promise<string | undefined>((resolver) => {
       if (this.credenciales !== null) {
-        ok(this.credenciales.email);
+        resolver(this.credenciales.email);
       }
 
       setTimeout(() => {
         if (this.credenciales === null) {
-          ok(undefined);
+          resolver(undefined);
         }
 
-        ok(this.credenciales.email);
+        resolver(this.credenciales.email);
       }, 500);
     });
   }
 
   public getVerificoCorreo() {
-    return new Promise<boolean | undefined>((ok) => {
+    return new Promise<boolean | undefined>((resolver) => {
       if (this.credenciales !== null) {
-        ok(this.credenciales.emailVerified);
+        resolver(this.credenciales.emailVerified);
       }
 
       setTimeout(() => {
         if (this.credenciales === null) {
-          ok(undefined);
+          resolver(undefined);
         }
 
-        ok(this.credenciales.emailVerified);
+        resolver(this.credenciales.emailVerified);
       }, 500);
     });
   }

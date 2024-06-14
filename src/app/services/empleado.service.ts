@@ -20,10 +20,10 @@ export class EmpleadoService {
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }
-  private registrar(empleado: Empleado) {
+  private registrarAuth(empleado: Empleado) {
     return this.authService.registrar(empleado.correo, empleado.clave);
   }
-  private cerrarSesion() {
+  private cerrarSesionAuth() {
     return this.authService.cerrarSesion();
   }
   private async setId(empleado: Empleado) {
@@ -57,20 +57,15 @@ export class EmpleadoService {
   }
 
   public async alta(empleado: Empleado) {
-    let flag: boolean = false;
-
     try {
-      await this.registrar(empleado);
-      await this.cerrarSesion();
+      await this.registrarAuth(empleado);
+      await this.cerrarSesionAuth();
       await this.setId(empleado);
       await this.insertarFoto(empleado); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
       await this.insertarDoc(empleado);
       return empleado; // Esta linea se puede borrar, solo la use para debugear
     } catch (e: any) {
-      if (!flag) {
-        throw new Error(e.message);
-      }
-
+      await this.cerrarSesionAuth();
       throw new Error(e.message);
     }
   }

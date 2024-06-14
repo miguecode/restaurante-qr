@@ -77,7 +77,7 @@ export class Swalert {
       background: '#00DC00', // Verde
       didOpen: (t) => {
         t.addEventListener('click', () => {
-          Swal.close(); // Cierra el toast se hace clic dentro del toast
+          Swal.close(); // Cierra el toast si se hace clic dentro del toast
         });
       },
     });
@@ -97,7 +97,7 @@ export class Swalert {
       background: '#E40000', // Rojo
       didOpen: (t) => {
         t.addEventListener('click', () => {
-          Swal.close(); // Cierra el toast se hace clic dentro del toast
+          Swal.close(); // Cierra el toast si se hace clic dentro del toast
         });
       },
     });
@@ -113,7 +113,7 @@ export class Swalert {
    * @confirmButtonText Texto del boton confirmar (izquierdo)
    * @cancelButtonText Texto del boton cancelar (derecho)
    * @showConfirmButton Mostrar/Ocultar boton confirmar (izquierdo)
-   * @showCancelButton Mostrar/Ocultar boton confirmar (izquierdo)
+   * @showCancelButton Mostrar/Ocultar boton cancelar (derecho)
    * @showLoaderOnConfirm Muestra spinner en el boton Confirmar al pulsarlo.
    * @allowOutsideClick Evita cerrar el modal cuando se clickea por fuera del modal.
    * @background Color de fondo de la VENTANA del modal.
