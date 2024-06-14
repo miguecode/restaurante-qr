@@ -12,6 +12,6 @@ import { IonContent } from '@ionic/angular/standalone';
 })
 export class AltaEmpleadoComponent implements OnInit {
   ngOnInit() {
-    console.log(''); // Solo para que tire error
+    console.log('');
   }
 }

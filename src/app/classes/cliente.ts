@@ -1,8 +1,11 @@
 import { Usuario } from './padres/usuario';
 
 export class Empleado extends Usuario {
+  correoVerificado: boolean;
+
   constructor() {
     super();
+    this.correoVerificado = false;
   }
   static toDoc(empleado: Empleado) {
     return {

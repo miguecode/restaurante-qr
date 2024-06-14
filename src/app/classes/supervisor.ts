@@ -1,9 +1,20 @@
 import { Usuario } from './padres/usuario';
 
 export class Supervisor extends Usuario {
+  public cuil: number;
+  correoVerificado: boolean;
+
   constructor() {
     super();
+    this.rol = 'supervisor';
+    this.cuil = 0;
+    this.correoVerificado = false;
   }
+
+  setCuil(cuil: number) {
+    this.cuil = cuil;
+  }
+
   static toDoc(supervisor: Supervisor) {
     return {
       id: supervisor.id.toString(),

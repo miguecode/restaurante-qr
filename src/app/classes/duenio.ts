@@ -1,9 +1,20 @@
 import { Usuario } from './padres/usuario';
 
 export class Duenio extends Usuario {
+  public cuil: number;
+  correoVerificado: boolean;
+
   constructor() {
     super();
+    this.rol = 'duenio';
+    this.cuil = 0;
+    this.correoVerificado = false;
   }
+
+  setCuil(cuil: number) {
+    this.cuil = cuil;
+  }
+
   static toDoc(duenio: Duenio) {
     return {
       id: duenio.id.toString(),

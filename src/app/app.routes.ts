@@ -7,6 +7,20 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'splash',
+    loadComponent: () =>
+      import('./components/pages/splash/splash.component').then(
+        (m) => m.SplashComponent
+      ),
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./components/pages/login/login.component').then(
+        (m) => m.LoginComponent
+      ),
+  },
+  {
     path: 'home',
     loadComponent: () =>
       import('./components/pages/home/home.component').then(

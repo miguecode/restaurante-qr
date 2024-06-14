@@ -36,6 +36,6 @@ export class HomeComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {
-    this.mensaje = 'ngOnInit() saluda';
+    console.log('home');
   }
 }

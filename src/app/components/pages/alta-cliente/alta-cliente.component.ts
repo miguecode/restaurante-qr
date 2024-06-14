@@ -9,5 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AltaClienteComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('');
+  }
 }
