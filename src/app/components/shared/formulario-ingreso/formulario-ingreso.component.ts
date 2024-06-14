@@ -2,20 +2,25 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/firebase/auth.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import Swal from 'sweetalert2';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
+import { NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-formulario-ingreso',
   templateUrl: './formulario-ingreso.component.html',
   styleUrls: ['./formulario-ingreso.component.scss'],
   standalone: true,
-  imports: [IonContent],
+  imports: [IonContent, NgClass, ReactiveFormsModule],
 })
 export class FormularioIngresoComponent implements OnInit {
   loginForm: FormGroup;
   mensaje: string =
-    'Bienvenido, para iniciar sesión tenés que ingresar tus datos correctamente';
+    'Bienvenido, para iniciar sesión tenés que ingresar tus datos correctamente.';
 
   constructor(
     private fb: FormBuilder,
@@ -36,56 +41,40 @@ export class FormularioIngresoComponent implements OnInit {
     const { correoActual, claveActual } = this.loginForm.value;
 
     if (this.loginForm.invalid) {
-      this.mensaje = 'Tenés que completar todos los campos correctamente';
-      this.mostrarError(this.mensaje);
+      this.mensaje = 'Tenés que completar todos los campos correctamente.';
       return;
     }
 
     try {
       await this.authService.iniciarSesion(correoActual, claveActual);
       console.log('Inicio de sesión exitoso');
-      this.router.navigate(['/inicio']);
-      this.mostrarExito('Inicio de sesión exitoso');
+      this.router.navigate(['/home']);
     } catch (error) {
       console.log('Error durante el inicio de sesión:', error);
-      this.mensaje = 'No existe un usuario con ese correo y esa contraseña';
-      this.mostrarError(this.mensaje);
+      this.mensaje = 'No existe un usuario con ese correo y esa contraseña.';
     }
-  }
-
-  mostrarExito(mensaje: string) {
-    Swal.fire({
-      icon: 'success',
-      title: 'Éxito',
-      text: mensaje,
-      timer: 3500,
-    });
-  }
-
-  mostrarError(mensaje: string) {
-    Swal.fire({
-      icon: 'error',
-      title: 'Error',
-      text: mensaje,
-      timer: 3500,
-    });
   }
 
   autocompletar(usuario: string) {
     if (usuario === '1') {
       this.loginForm.patchValue({
-        correoActual: 'admin@admin.com',
+        correoActual: 'junmigue7@gmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '2') {
       this.loginForm.patchValue({
-        correoActual: 'invitado@invitado.com',
-        claveActual: '222222',
+        correoActual: 'probando@gmail.com',
+        claveActual: '111111',
+      });
+    } else if (usuario === '3') {
+      this.loginForm.patchValue({
+        correoActual: 'juanp@gmail.com',
+        claveActual: '111111',
       });
     } else {
       this.loginForm.patchValue({
-        correoActual: 'usuario@usuario.com',
-        claveActual: '333333',
+        correoActual: 'sofig@gmail.com',
+        claveActual: '111111',
       });
     }
   }

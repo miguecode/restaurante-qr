@@ -1,83 +1,159 @@
 import { Injectable } from '@angular/core';
-import { FirestoreService } from './firebase/firestore.service';
-import { Usuario } from '../classes/padres/usuario';
+import { Empleado } from '../classes/empleado';
+import { Supervisor } from '../classes/supervisor';
+import { Duenio } from '../classes/duenio';
+import { Cliente } from '../classes/cliente';
+import { DuenioService } from './duenio.service';
+import { SupervisorService } from './supervisor.service';
 import { AuthService } from './firebase/auth.service';
-import { CloudStorageService } from './firebase/cloud-storage.service';
+import { EmpleadoService } from './empleado.service';
+import { ClienteService } from './cliente.service';
+import { Usuario } from '../classes/padres/usuario';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UsuarioService {
-  private carpeta = 'usuarios';
-  private col = 'usuarios';
+  public static ACCESOS_RAPIDOS: Usuario[] = [
+    { correo: 'jp@jp.com', clave: '123abc' } as Usuario,
+    { correo: 'mg@mg.com', clave: '123abc' } as Usuario,
+    { correo: 'st@st.com', clave: '123abc' } as Usuario,
+  ];
+  private duenios: Duenio[] = [];
+  private supervisores: Supervisor[] = [];
+  private empleados: Empleado[] = [];
+  private clientes: Cliente[] = [];
 
   constructor(
     private authService: AuthService,
-    private firestoreService: FirestoreService,
-    private cloudStorageService: CloudStorageService
-  ) {}
+    private duenioService: DuenioService,
+    private supervisorService: SupervisorService,
+    private empleadoService: EmpleadoService,
+    private clienteService: ClienteService
+  ) {
+    /* Todavia no tiene su parseDoc()
+    this.duenioService.traerTodosObservable().subscribe((listaDocs) => {
+      if (listaDocs) {
+        this.duenios = listaDocs.map((a) => Duenio.parseDoc(a));
+      }
+    });
+    */
 
-  private traerProximoId() {
-    return this.firestoreService.traerProximoId(this.col, 'id');
+    /* Todavia no tiene su parseDoc()
+    this.supervisorService.traerTodosObservable().subscribe((listaDocs) => {
+      if (listaDocs) {
+        this.supervisores = listaDocs.map((e) => Supervisor.parseDoc(e));
+      }
+    });
+    */
+
+    this.empleadoService.traerTodosObservable().subscribe((listaDocs) => {
+      if (listaDocs) {
+        this.empleados = listaDocs.map((e) => Empleado.parseDoc(e));
+      }
+    });
+
+    /* Todavia no tiene su parseDoc()
+    this.clienteService.traerTodosObservable().subscribe((listaDocs) => {
+      if (listaDocs) {
+        this.clientes = listaDocs.map((p) => Cliente.parseDoc(p));
+      }
+    });
+    */
   }
-  private registrar(usuario: Usuario) {
-    return this.authService.registrar(usuario.correo, usuario.clave);
+
+  private async iniciarSesionAuth(usuario: Usuario) {
+    try {
+      await this.authService.iniciarSesion(usuario.correo, usuario.clave);
+    } catch (e) {
+      throw new Error('No existe el usuario');
+    }
   }
-  private cerrarSesion() {
+  private async cerrarSesionAuth() {
     return this.authService.cerrarSesion();
   }
-  private async insertarFoto(usuario: Usuario) {
-    const nombreArchivo = usuario.id.toString();
+  public async getCorreoAuth() {
+    const correo = await this.authService.getCorreo();
+    if (correo === undefined) {
+      throw new Error('El usuario no se logeo o hay lentitud de conexion');
+    }
 
-    await this.cloudStorageService.subirArchivoBase64(
-      this.carpeta,
-      nombreArchivo,
-      usuario.file
-    );
-
-    const fotoUrl = await this.cloudStorageService.traerUrlPorNombre(
-      nombreArchivo,
-      this.carpeta
-    );
-
-    return fotoUrl;
+    return correo;
   }
-  /*private insertarDoc(usuario: Usuario) {
-    const doc = Usuario.toDoc(usuario);
-    return this.firestoreService.insertarConId(doc.id, doc, this.col);
+  public async getVerificoCorreoAuth() {
+    const verificoCorreo = await this.authService.getVerificoCorreo();
+    if (verificoCorreo === undefined) {
+      throw new Error('El usuario no se logeo o hay lentitud de conexion');
+    }
+
+    return verificoCorreo;
+  }
+  private async getUsuarioBd() {
+    const correo = await this.getCorreoAuth();
+    let usuario: (Duenio | Supervisor | Empleado | Cliente) | undefined =
+      undefined;
+
+    for (let item of [
+      ...this.duenios,
+      ...this.supervisores,
+      ...this.empleados,
+      ...this.clientes,
+    ]) {
+      if (item.correo === correo) {
+        usuario = item;
+        break;
+      }
+    }
+
+    if (usuario === undefined) {
+      throw new Error(
+        'El usuario no existe en la base de datos o hay lentitud en la conexion'
+      );
+    }
+
+    return usuario;
+  }
+  public async getRol() {
+    const usuario = await this.getUsuarioBd();
+    if (usuario === undefined) {
+      throw new Error(
+        'El usuario no existe en la bd o hay lentitud de conexion'
+      );
+    }
+
+    return usuario.rol;
   }
 
-  public async alta(usuario: Usuario) {
-    let flag: boolean = false;
-
+  public async cerrarSesion() {
+    return this.cerrarSesionAuth();
+  }
+  public async iniciarSesion(usuario: Usuario) {
     try {
-      await this.registrar(usuario);
-      await this.cerrarSesion();
+      /*
+      console.log([
+        ...this.administradores,
+        ...this.especialistas,
+        ...this.pacientes,
+      ]);
+      */
+      await this.iniciarSesionAuth(usuario);
 
-      // !OJO! el file que se le asigna a la entidad debe ser [base64]
-      const fotoUrl = await this.insertarFoto(usuario);
-      if (fotoUrl === undefined) {
-        flag = true;
-        throw new Error('Hubo un problema al recuperar la URL de la foto');
+      /* Aca se valida si verifico su correo, lo dejo comentado porque al hacer el Alta todavia no envia el correo de verficacion
+      const verificoCorreoAuth = await this.getVerificoCorreoAuth();
+      if (verificoCorreoAuth === false) {
+        throw new Error('Todavia no verificaste tu correo');
       }
-      usuario.foto = fotoUrl;
+      */
 
-      const id = await this.traerProximoId();
-      if (id === undefined) {
-        flag = true;
-        throw new Error('El ID fue null');
+      /* Aca se valida si fue habilitado o no por la entidad superior (jefe), todavia no me fije bien en el pdf como es eso, pero lo dejo comentado.
+      const usuarioBd = await this.getUsuarioBd();
+      if (usuarioBd instanceof Empleado && usuarioBd.habilitado === false) {
+        throw new Error('Tu cuenta se encuentra deshabilitada');
       }
-      usuario.id = id;
-
-      await this.insertarDoc(usuario);
-
-      return usuario; // Esta linea se puede borrar, solo la use para debugear
+      */
     } catch (e: any) {
-      if (!flag) {
-        throw new Error(e.message);
-      }
-
+      await this.cerrarSesionAuth();
       throw new Error(e.message);
     }
-  }*/
+  }
 }

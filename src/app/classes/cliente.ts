@@ -1,46 +1,46 @@
 import { Usuario } from './padres/usuario';
 
-export class Empleado extends Usuario {
+export class Cliente extends Usuario {
   correoVerificado: boolean;
 
   constructor() {
     super();
     this.correoVerificado = false;
   }
-  static toDoc(empleado: Empleado) {
+  static toDoc(cliente: Cliente) {
     return {
-      id: empleado.id.toString(),
-      nombre: empleado.nombre,
-      apellido: empleado.apellido,
-      dni: empleado.dni.toString(),
-      foto: empleado.foto,
-      rol: empleado.rol,
-      correoVerificado: empleado.correoVerificado.toString(),
-      correo: empleado.correo,
+      id: cliente.id.toString(),
+      nombre: cliente.nombre,
+      apellido: cliente.apellido,
+      dni: cliente.dni.toString(),
+      foto: cliente.foto,
+      rol: cliente.rol,
+      correoVerificado: cliente.correoVerificado.toString(),
+      correo: cliente.correo,
     };
   }
   static parseDoc(doc: any) {
-    let empleado = new Empleado();
-    empleado.id = Number(doc.id);
-    empleado.nombre = doc.nombre;
-    empleado.apellido = doc.apellido;
-    empleado.dni = Number(doc.dni);
-    empleado.foto = doc.foto;
-    empleado.rol = doc.rol;
-    empleado.correoVerificado = JSON.parse(doc.correoVerificado);
-    empleado.correo = doc.correo;
-    return empleado;
+    let cliente = new Cliente();
+    cliente.id = Number(doc.id);
+    cliente.nombre = doc.nombre;
+    cliente.apellido = doc.apellido;
+    cliente.dni = Number(doc.dni);
+    cliente.foto = doc.foto;
+    cliente.rol = doc.rol;
+    cliente.correoVerificado = JSON.parse(doc.correoVerificado);
+    cliente.correo = doc.correo;
+    return cliente;
   }
   static parseDocArray(doc: any) {
-    let empleado = new Empleado();
-    empleado.id = Number(doc['id']);
-    empleado.nombre = doc['nombre'];
-    empleado.apellido = doc['apellido'];
-    empleado.dni = Number(doc['dni']);
-    empleado.foto = doc['foto'];
-    empleado.rol = doc['rol'];
-    empleado.correoVerificado = JSON.parse(doc['correoVerificado']);
-    empleado.correo = doc['correo'];
-    return empleado;
+    let cliente = new Cliente();
+    cliente.id = Number(doc['id']);
+    cliente.nombre = doc['nombre'];
+    cliente.apellido = doc['apellido'];
+    cliente.dni = Number(doc['dni']);
+    cliente.foto = doc['foto'];
+    cliente.rol = doc['rol'];
+    cliente.correoVerificado = JSON.parse(doc['correoVerificado']);
+    cliente.correo = doc['correo'];
+    return cliente;
   }
 }

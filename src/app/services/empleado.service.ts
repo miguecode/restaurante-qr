@@ -3,6 +3,7 @@ import { FirestoreService } from './firebase/firestore.service';
 import { Empleado } from '../classes/empleado';
 import { AuthService } from './firebase/auth.service';
 import { CloudStorageService } from './firebase/cloud-storage.service';
+import { firstValueFrom, isObservable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,16 +21,27 @@ export class EmpleadoService {
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }
-  private registrar(empleado: Empleado) {
-    return this.authService.registrar(empleado.correo, empleado.clave);
+  private async registrarAuth(empleado: Empleado) {
+    try {
+      await this.authService.registrar(empleado.correo, empleado.clave);
+    } catch (e) {
+      throw new Error('Ya existe un usuario con ese correo');
+    }
   }
-  private cerrarSesion() {
+  private cerrarSesionAuth() {
     return this.authService.cerrarSesion();
+  }
+  private async setId(empleado: Empleado) {
+    const id = await this.traerProximoId();
+    if (id === undefined) {
+      throw new Error('El ID fue null');
+    }
+    empleado.id = id;
   }
   private async insertarFoto(empleado: Empleado) {
     const nombreArchivo = empleado.id.toString();
 
-    await this.cloudStorageService.subirArchivoBase64(
+    await this.cloudStorageService.subirArchivoUri(
       this.carpeta,
       nombreArchivo,
       empleado.file
@@ -39,45 +51,51 @@ export class EmpleadoService {
       nombreArchivo,
       this.carpeta
     );
-
-    return fotoUrl;
+    if (fotoUrl === undefined) {
+      throw new Error('Hubo un problema al recuperar la URL de la foto');
+    }
+    empleado.foto = fotoUrl;
   }
-  private insertarDoc(empleado: Empleado) {
+  private async insertarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
     return this.firestoreService.insertarConId(doc.id, doc, this.col);
   }
 
   public async alta(empleado: Empleado) {
-    let flag: boolean = false;
-
     try {
-      await this.registrar(empleado);
-      await this.cerrarSesion();
-
-      // !OJO! el file que se le asigna a la entidad debe ser [base64]
-      const fotoUrl = await this.insertarFoto(empleado);
-      if (fotoUrl === undefined) {
-        flag = true;
-        throw new Error('Hubo un problema al recuperar la URL de la foto');
-      }
-      empleado.foto = fotoUrl;
-
-      const id = await this.traerProximoId();
-      if (id === undefined) {
-        flag = true;
-        throw new Error('El ID fue null');
-      }
-      empleado.id = id;
-
+      await this.registrarAuth(empleado);
+      await this.cerrarSesionAuth();
+      await this.setId(empleado);
+      await this.insertarFoto(empleado); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
       await this.insertarDoc(empleado);
-
       return empleado; // Esta linea se puede borrar, solo la use para debugear
     } catch (e: any) {
-      if (!flag) {
-        throw new Error(e.message);
-      }
-
+      await this.cerrarSesionAuth();
       throw new Error(e.message);
     }
+  }
+
+  public traerTodosObservable() {
+    return this.firestoreService.traerTodos(this.col);
+  }
+  public async traerTodosPromise() {
+    const empleadosObservable = this.traerTodosObservable();
+    if (isObservable(empleadosObservable)) {
+      return firstValueFrom(empleadosObservable);
+    }
+
+    return undefined;
+  }
+  public traerPorIdObservable(empleado: Empleado) {
+    const doc = Empleado.toDoc(empleado);
+    return this.firestoreService.traerPorId(doc.id, this.col);
+  }
+  public async traerPorIdPromise(empleado: Empleado) {
+    const empleadoObservable = this.traerPorIdObservable(empleado);
+    if (isObservable(empleadoObservable)) {
+      return firstValueFrom(empleadoObservable);
+    }
+
+    return undefined;
   }
 }

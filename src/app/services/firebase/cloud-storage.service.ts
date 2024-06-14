@@ -26,6 +26,11 @@ export class CloudStorageService {
 
     return blob;
   }
+  private static async convertirUriABlob(archivoUri: any) {
+    const response = await fetch(archivoUri);
+    const blob = await response.blob();
+    return blob;
+  }
   private traerTodas(carpeta: string) {
     const imagesRef = ref(this.storage, carpeta);
     return listAll(imagesRef);
@@ -40,13 +45,13 @@ export class CloudStorageService {
     return nombreArchivo;
   }
 
-  public subirArchivoBase64(
+  public async subirArchivoUri(
     carpeta: string,
     nombreArchivo: string,
-    archivoBase64: any
+    archivoUri: any
   ) {
-    const storageRef = ref(this.storage, `${carpeta}/${nombreArchivo}.jpg`);
-    const blob = CloudStorageService.convertirBase64ABlob(archivoBase64);
+    const storageRef = ref(this.storage, `${carpeta}/${nombreArchivo}`);
+    const blob = await CloudStorageService.convertirUriABlob(archivoUri);
     return uploadBytes(storageRef, blob);
   }
   public async traerUrlPorNombre(nombre: string, carpeta: string) {
