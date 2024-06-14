@@ -14,7 +14,7 @@
 - Código QR E (De Ingreso al Local)
 - Rama: 'miguel'
 #### 📅 Fecha de Inicio: 10/06
-#### ✔️ Fecha de Finalización: 14/06 (Parcial)
+#### ⌛ Fecha de Finalización: Pendiente
 
 ### 🌟 Dongo Huaman Juan Pablo (Beta)
 - Creación del diseño del Ícono y del Splash
@@ -22,7 +22,7 @@
 - Código QR F (De la Mesa)
 - Rama: 'juanpablo'
 #### 📅 Fecha de Inicio: 08/06
-#### ✔️ Fecha de Finalización: 13/06 
+#### ⌛ Fecha de Finalización: 13/06 (Parcialmente)
 
 ### 🌟 Fernández Santiago (Gamma)
 - Creación del diseño del Ícono y del Splash
@@ -30,7 +30,7 @@
 - Código QR G (De la Propina)
 - Rama: 'santiago'
 #### 📅 Fecha de Inicio: 10/06
-#### ✔️ Fecha de Finalización: 14/06 (Parcial) 
+#### ⌛ Fecha de Finalización: Pendiente
 
 --- ---
 
@@ -60,13 +60,15 @@ Decidimos quedarnos con la segunda opción como Ícono, la del Alfa. Y con su re
 Ya completamos la inicialización del proyecto, y se pretende realizar el formulario de ingreso.
 
 ## 📊 Informe (14/06)
+- ✔️ Inicialización del proyecto
+- ✔️ Estructura de clases e inyección de servicios
 - ✔️ Ícono de la App aplicado
-- ✔️ Splash estático y dinámico funcionando 
+- ✔️ Splash estático y dinámico aplicados
 - ✔️ Formulario de ingreso con accesos rápidos funcionando 
 - ⌛ Home preliminar y Alta B (Empleados) preliminar 
 
 ## 🗂️ Tareas pendientes a futuro 
-- Alfa: Alta A (Dueño/Supervisor), Código QR E (De Ingreso al Local)
-- Beta: Alta B (Empleados), Código QR F (De la Mesa)
-- Gamma: Alta C (Clientes), Código QR G (De la Propina)
+- Gil Miguel Ángel (Alfa): Alta A (Dueño/Supervisor), Código QR E (De Ingreso al Local)
+- Juan Pablo Dongo Huaman (Beta): Alta B (Empleados), Código QR F (De la Mesa)
+- Santiago Fernández (Gamma): Alta C (Clientes), Código QR G (De la Propina)
 - Altas D y E (Pendiente de organización)
