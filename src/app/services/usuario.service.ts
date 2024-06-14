@@ -101,6 +101,7 @@ export class UsuarioService {
     ]) {
       if (item.correo === correo) {
         usuario = item;
+        break;
       }
     }
 
@@ -116,7 +117,7 @@ export class UsuarioService {
     const usuario = await this.getUsuarioBd();
     if (usuario === undefined) {
       throw new Error(
-        'El usuario no existe en la bd o hay lentitud de conexion'
+        'El usuario no existe en la base de datos o hay lentitud de conexion'
       );
     }
 
