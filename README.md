@@ -60,10 +60,10 @@ Decidimos quedarnos con la segunda opción como Ícono, la del Alfa. Y con su re
 Ya completamos la inicialización del proyecto, y se pretende realizar el formulario de ingreso.
 
 ## 📊 Informe (14/06)
-✔️ Ícono de la App aplicado 
-✔️ Splash estático y dinámico funcionando 
-✔️ Formulario de ingreso con accesos rápidos funcionando 
-⌛  Home preliminar y Alta B (Empleados) preliminar 
+- ✔️ Ícono de la App aplicado
+- ✔️ Splash estático y dinámico funcionando 
+- ✔️ Formulario de ingreso con accesos rápidos funcionando 
+- ⌛ Home preliminar y Alta B (Empleados) preliminar 
 
 ## 🗂️ Tareas pendientes a futuro 
 - Alfa: Alta A (Dueño/Supervisor), Código QR E (De Ingreso al Local)
