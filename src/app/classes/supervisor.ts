@@ -1,2 +1,3 @@
-export class Supervisor {
-}
+import { Usuario } from './padres/usuario';
+
+export class Supervisor extends Usuario {}

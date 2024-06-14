@@ -20,7 +20,7 @@ export class QrScannerComponent implements OnInit {
   constructor() {}
 
   // Es necesario instalar GoogleBarcodeScannerModule al momento de crear el componente
-  async ngOnInit() {
+  public async ngOnInit() {
     await this.instalarGoogleBarcodeScannerModule();
   }
 

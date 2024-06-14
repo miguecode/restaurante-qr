@@ -1,2 +1,3 @@
-export class Duenio {
-}
+import { Usuario } from './padres/usuario';
+
+export class Duenio extends Usuario {}

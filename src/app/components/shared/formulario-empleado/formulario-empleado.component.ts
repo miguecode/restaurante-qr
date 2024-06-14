@@ -86,7 +86,7 @@ export class FormularioEmpleadoComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.log(''); // Solo para que tire error
+    console.log('');
   }
 
   public async tomarFoto() {

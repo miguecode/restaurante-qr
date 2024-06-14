@@ -9,5 +9,7 @@ import { Component, OnInit } from '@angular/core';
 export class AltaDuenioComponent implements OnInit {
   constructor() {}
 
-  ngOnInit() {}
+  public ngOnInit() {
+    console.log('');
+  }
 }

@@ -11,7 +11,7 @@ import { IonContent } from '@ionic/angular/standalone';
   imports: [IonContent, RouterLink, FormularioEmpleadoComponent],
 })
 export class AltaEmpleadoComponent implements OnInit {
-  ngOnInit() {
-    console.log(''); // Solo para que tire error
+  public ngOnInit() {
+    console.log('');
   }
 }

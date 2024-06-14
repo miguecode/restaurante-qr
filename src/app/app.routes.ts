@@ -7,10 +7,10 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'home',
+    path: 'iniciar-sesion',
     loadComponent: () =>
-      import('./components/pages/home/home.component').then(
-        (m) => m.HomeComponent
+      import('./components/pages/iniciar-sesion/iniciar-sesion.component').then(
+        (m) => m.IniciarSesionComponent
       ),
   },
   {
@@ -39,6 +39,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/pages/alta-cliente/alta-cliente.component').then(
         (m) => m.AltaClienteComponent
+      ),
+  },
+  {
+    path: 'home',
+    loadComponent: () =>
+      import('./components/pages/home/home.component').then(
+        (m) => m.HomeComponent
       ),
   },
   {

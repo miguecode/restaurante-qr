@@ -3,6 +3,7 @@ import { FirestoreService } from './firebase/firestore.service';
 import { Empleado } from '../classes/empleado';
 import { AuthService } from './firebase/auth.service';
 import { CloudStorageService } from './firebase/cloud-storage.service';
+import { firstValueFrom, isObservable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -20,8 +21,12 @@ export class EmpleadoService {
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }
-  private registrarAuth(empleado: Empleado) {
-    return this.authService.registrar(empleado.correo, empleado.clave);
+  private async registrarAuth(empleado: Empleado) {
+    try {
+      await this.authService.registrar(empleado.correo, empleado.clave);
+    } catch (e) {
+      throw new Error('Ya existe un usuario con ese correo');
+    }
   }
   private cerrarSesionAuth() {
     return this.authService.cerrarSesion();
@@ -68,5 +73,29 @@ export class EmpleadoService {
       await this.cerrarSesionAuth();
       throw new Error(e.message);
     }
+  }
+
+  public traerTodosObservable() {
+    return this.firestoreService.traerTodos(this.col);
+  }
+  public async traerTodosPromise() {
+    const empleadosObservable = this.traerTodosObservable();
+    if (isObservable(empleadosObservable)) {
+      return firstValueFrom(empleadosObservable);
+    }
+
+    return undefined;
+  }
+  public traerPorIdObservable(empleado: Empleado) {
+    const doc = Empleado.toDoc(empleado);
+    return this.firestoreService.traerPorId(doc.id, this.col);
+  }
+  public async traerPorIdPromise(empleado: Empleado) {
+    const empleadoObservable = this.traerPorIdObservable(empleado);
+    if (isObservable(empleadoObservable)) {
+      return firstValueFrom(empleadoObservable);
+    }
+
+    return undefined;
   }
 }

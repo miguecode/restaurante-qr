@@ -1,2 +1,42 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+:root {
+  /*
+    En labo por ejemplo uso [--t1-color1] t:'Tema' color:'Color del tema'
+  */
+
+  /*
+    No nombrar de esta manera las paletas, es bastante desprolijo. Es solo lo que hice en una de las apps del primer parcial
+  */
+  // Color A #004dfc
+  --ion-color-mycolor: #004dfc;
+  --ion-color-mycolor-rgb: 0, 77, 252;
+  --ion-color-mycolor-contrast: #ffffff;
+  --ion-color-mycolor-contrast-rgb: 255, 255, 255;
+  --ion-color-mycolor-shade: #0044de;
+  --ion-color-mycolor-tint: #1a5ffc;
+
+  // Color Primario #004DFC
+  --ion-color-paletprimaria: #0046e9;
+  --ion-color-paletprimaria-rgb: 0, 70, 233;
+  --ion-color-paletprimaria-contrast: #ffffff;
+  --ion-color-paletprimaria-contrast-rgb: 255, 255, 255;
+  --ion-color-paletprimaria-shade: #003ecd;
+  --ion-color-paletprimaria-tint: #1a59eb;
+
+  // Color Secundario #4479f3
+  --ion-color-paletsecundaria: #7799e9;
+  --ion-color-paletsecundaria-rgb: 119, 153, 233;
+  --ion-color-paletsecundaria-contrast: #000000;
+  --ion-color-paletsecundaria-contrast-rgb: 0, 0, 0;
+  --ion-color-paletsecundaria-shade: #6987cd;
+  --ion-color-paletsecundaria-tint: #85a3eb;
+
+  // Color Terciario #ffa73c
+  --ion-color-paletterciaria: #4c7df0;
+  --ion-color-paletterciaria-rgb: 76, 125, 240;
+  --ion-color-paletterciaria-contrast: #000000;
+  --ion-color-paletterciaria-contrast-rgb: 0, 0, 0;
+  --ion-color-paletterciaria-shade: #436ed3;
+  --ion-color-paletterciaria-tint: #5e8af2;
+}
