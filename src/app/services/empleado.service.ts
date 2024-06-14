@@ -26,6 +26,13 @@ export class EmpleadoService {
   private cerrarSesion() {
     return this.authService.cerrarSesion();
   }
+  private async setId(empleado: Empleado) {
+    const id = await this.traerProximoId();
+    if (id === undefined) {
+      throw new Error('El ID fue null');
+    }
+    empleado.id = id;
+  }
   private async insertarFoto(empleado: Empleado) {
     const nombreArchivo = empleado.id.toString();
 
@@ -39,10 +46,12 @@ export class EmpleadoService {
       nombreArchivo,
       this.carpeta
     );
-
-    return fotoUrl;
+    if (fotoUrl === undefined) {
+      throw new Error('Hubo un problema al recuperar la URL de la foto');
+    }
+    empleado.foto = fotoUrl;
   }
-  private insertarDoc(empleado: Empleado) {
+  private async insertarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
     return this.firestoreService.insertarConId(doc.id, doc, this.col);
   }
@@ -53,24 +62,9 @@ export class EmpleadoService {
     try {
       await this.registrar(empleado);
       await this.cerrarSesion();
-
-      const id = await this.traerProximoId();
-      if (id === undefined) {
-        flag = true;
-        throw new Error('El ID fue null');
-      }
-      empleado.id = id;
-
-      // !OJO! el file que se le asigna a la entidad debe ser [Uri]
-      const fotoUrl = await this.insertarFoto(empleado);
-      if (fotoUrl === undefined) {
-        flag = true;
-        throw new Error('Hubo un problema al recuperar la URL de la foto');
-      }
-      empleado.foto = fotoUrl;
-
+      await this.setId(empleado);
+      await this.insertarFoto(empleado); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
       await this.insertarDoc(empleado);
-
       return empleado; // Esta linea se puede borrar, solo la use para debugear
     } catch (e: any) {
       if (!flag) {
