@@ -50,11 +50,7 @@ Cada integrante creó su propio diseño de Ícono y de Splash. Los 3 nos pusimos
 ## ✔️​ Elección
 Decidimos quedarnos con la segunda opción como Ícono, la del Alfa. Y con su respectivo Splash:
 
-- **Ícono**
-<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/5ef7ce6d-66e8-4af0-8e28-c9120263ca56" width="250"/>
-
-- **Splash**
-<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/0a871275-b76b-42a8-9cfd-3a3a81689fb0" width="250"/>
+<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/5d69d3ce-7aa0-4a07-9ae0-2464711a5394" width="500"/>
 
 ## 📊 Informe (13/06)
 Ya completamos la inicialización del proyecto, y se pretende realizar el formulario de ingreso.
@@ -68,7 +64,16 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - ⌛ Home preliminar y Alta B (Empleados) preliminar 
 
 ## 🗂️ Tareas pendientes a futuro 
-- Gil Miguel Ángel (Alfa): Alta A (Dueño/Supervisor), Código QR E (De Ingreso al Local)
-- Juan Pablo Dongo Huaman (Beta): Alta B (Empleados), Código QR F (De la Mesa)
-- Santiago Fernández (Gamma): Alta C (Clientes), Código QR G (De la Propina)
+### 🌟 Gil Miguel Ángel (Alfa)
+- Alta A (Dueño/Supervisor)
+- Código QR E (De Ingreso al Local)
+
+### 🌟 Juan Pablo Dongo Huaman (Beta)
+- Alta B (Empleados)
+- Código QR F (De la Mesa)
+
+### 🌟 Santiago Fernández (Gamma)
+- Alta C (Clientes)
+- Código QR G (De la Propina)
+
 - Altas D y E (Pendiente de organización)
