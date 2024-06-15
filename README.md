@@ -77,3 +77,13 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - Código QR G (De la Propina)
 
 - Altas D y E (Pendiente de organización)
+
+--- ---
+
+## 🎨 Actualización del Ícono y el Splash (Post Primer Corrección, 15/06)
+- Miguel Ángel Gil (Alfa) se encargó de mejorar el diseño del Ícono y del Splash de la aplicación, a pedido del profesor Nicolas Ferrero.
+
+<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/7409df46-b343-49f8-a584-44c7186bd4ad" width="500"/>
+
+
+
