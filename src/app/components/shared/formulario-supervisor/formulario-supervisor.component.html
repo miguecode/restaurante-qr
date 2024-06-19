@@ -1,3 +1,93 @@
-<p>
-  formulario-supervisor works!
-</p>
+<div class="formulario-container">
+  <h1 class="titulo">Registro de empleado</h1>
+  <!-- #region Formulario -->
+  <form [formGroup]="formRegistrar">
+    <div class="area-a">
+      <!-- #region Nombre -->
+      <div class="form-group nombre">
+        <label>Nombre</label>
+        <input class="form-control" type="text" formControlName="nombre" />
+      </div>
+      <!-- #endregion Nombre -->
+
+      <!-- #region Apellido -->
+      <div class="form-group apellido">
+        <label>Apellido</label>
+        <input class="form-control" type="text" formControlName="apellido" />
+      </div>
+      <!-- #endregion Apellido -->
+    </div>
+
+    <div class="area-b">
+      <!-- #region DNI -->
+      <div class="form-group dni">
+        <label>D.N.I.</label>
+        <input class="form-control" type="text" formControlName="dni" />
+      </div>
+      <!-- #endregion DNI -->
+
+      <!-- #region CUIL -->
+      <div class="form-group cuil">
+        <label>CUIL</label>
+        <input class="form-control" type="text" formControlName="cuil" />
+      </div>
+      <!-- #endregion CUIL -->
+    </div>
+
+    <div class="area-c">
+      <!-- #region Foto -->
+      <div class="form-group foto">
+        <label>Foto</label>
+        <div class="input-group">
+          <button class="btn btn-primary" (click)="tomarFoto()">Tomar</button>
+          <input
+            class="form-control"
+            type="text"
+            placeholder="Falta instalar @capacitor/camera"
+            readonly
+            formControlName="foto"
+          />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+    </div>
+
+    <!-- #region Correo -->
+    <div class="form-group correo">
+      <label>Correo</label>
+      <input
+        class="form-control"
+        type="text"
+        placeholder="ejemplo@entidad.com"
+        formControlName="correo"
+      />
+    </div>
+    <!-- #endregion Correo -->
+
+    <!-- #region Clave -->
+    <div class="form-group clave">
+      <label>Clave</label>
+      <input
+        class="form-control"
+        type="password"
+        placeholder="******"
+        formControlName="clave"
+      />
+    </div>
+    <!-- #endregion Clave -->
+
+    <div class="botones-registro">
+      <!-- #region Boton Registro-->
+      <button class="btn btn-primary boton-registro" (click)="registrar()">
+        Registrar
+      </button>
+      <!-- #endregion Boton Registro-->
+
+      <!--
+    <button class="btn btn-primary boton-limpiar" (click)="limpiar()">
+      Limpiar
+    </button>
+    --></div>
+  </form>
+  <!-- #endregion Formulario -->
+</div>

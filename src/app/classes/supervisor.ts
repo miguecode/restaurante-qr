@@ -2,13 +2,11 @@ import { Usuario } from './padres/usuario';
 
 export class Supervisor extends Usuario {
   public cuil: number;
-  correoVerificado: boolean;
 
   constructor() {
     super();
     this.rol = 'supervisor';
     this.cuil = 0;
-    this.correoVerificado = false;
   }
 
   setCuil(cuil: number) {
@@ -24,7 +22,6 @@ export class Supervisor extends Usuario {
       cuil: supervisor.cuil.toString(),
       foto: supervisor.foto,
       rol: supervisor.rol,
-      correoVerificado: supervisor.correoVerificado.toString(),
       correo: supervisor.correo,
     };
   }
@@ -37,7 +34,6 @@ export class Supervisor extends Usuario {
     supervisor.cuil = Number(doc.cuil);
     supervisor.foto = doc.foto;
     supervisor.rol = doc.rol;
-    supervisor.correoVerificado = JSON.parse(doc.correoVerificado);
     supervisor.correo = doc.correo;
     return supervisor;
   }
@@ -50,7 +46,6 @@ export class Supervisor extends Usuario {
     supervisor.cuil = Number(doc['cuil']);
     supervisor.foto = doc['foto'];
     supervisor.rol = doc['rol'];
-    supervisor.correoVerificado = JSON.parse(doc['correoVerificado']);
     supervisor.correo = doc['correo'];
     return supervisor;
   }

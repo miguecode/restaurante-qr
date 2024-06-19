@@ -1,0 +1,63 @@
+.formulario-container {
+  border: 2px solid white;
+  border-radius: 15px;
+  padding: 5px;
+}
+
+input {
+  width: 100%;
+}
+label {
+  color: orange;
+  font-size: 18px;
+}
+
+.area-a,
+.area-b,
+.area-c {
+  display: flex;
+  flex-direction: row;
+}
+
+.nombre,
+.apellido,
+.edad,
+.dni,
+.cuil,
+.foto,
+.tipo-empleado,
+.correo,
+.clave,
+.botones-registro {
+  padding: 8px;
+}
+
+.nombre,
+.apellido,
+.cuil,
+.foto,
+.tipo-empleado,
+.correo,
+.clave {
+  width: 100%;
+}
+
+.edad input {
+  width: 55px;
+}
+.dni input {
+  width: 115px;
+}
+
+.boton-registro,
+.boton-limpiar {
+  height: 55px;
+}
+
+.boton-registro {
+  //width: 205px; // usar solo si esta habilitado boton-limpiar
+  width: 100%;
+}
+.boton-limpiar {
+  width: 80px;
+}
