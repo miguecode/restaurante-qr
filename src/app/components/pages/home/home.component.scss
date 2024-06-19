@@ -1,39 +1,43 @@
-#container {
-  text-align: center;
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-
-  color: #8c8c8c;
-
+* {
   margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Baloo 2", sans-serif;
 }
 
-#container a {
-  text-decoration: none;
+ion-content {
+  --background: #860106;
+  display: flex;
+  justify-content: center;
+}
+
+ion-title {
+  background: #1e1e1e;
+  font-size: 45px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
 }
 
 .container-router {
   display: flex;
   justify-content: center;
-  align-items: center;
   flex-direction: column;
+  gap: 3px;
+  align-items: stretch;
+  height: 98%;
+  margin-top: 5px;
 }
 ion-button {
-  height: 50px;
-  width: 90%;
-  margin: 20px;
+  --background: #1e1e1e;
+  flex-basis: calc(60% - 1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 4%;
+  font-size: 40px;
+  text-align: center;
+  color: #860106;
 }

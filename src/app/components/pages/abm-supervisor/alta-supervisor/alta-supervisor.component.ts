@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
-import { FormularioSupervisorComponent } from '../../shared/formulario-supervisor/formulario-supervisor.component';
+import { FormularioSupervisorComponent } from '../../../shared/formulario-supervisor/formulario-supervisor.component';
 
 @Component({
   selector: 'app-alta-supervisor',
