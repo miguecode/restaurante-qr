@@ -101,9 +101,10 @@ export class FormularioDuenioComponent implements OnInit {
         throw new Error('No se pudo recuperar la imagen de Camera.getPhoto()');
       }
 
+      const mimeType = image.format === 'jpeg' ? 'image/jpeg' : 'image/png';
       const swalertResult = await Swalert.modalCargarFoto();
       if (swalertResult.isConfirmed) {
-        this.foto.setValue(image.base64String);
+        this.foto.setValue({ base64String: image.base64String, mimeType });
       }
     } catch (e: any) {
       console.log(e.message);
@@ -113,9 +114,12 @@ export class FormularioDuenioComponent implements OnInit {
   }
   public async registrar() {
     try {
-      const duenio = await this.duenioService.alta(this.getDuenio());
-      console.log(duenio);
+      const empleado = this.getDuenio();
+      empleado.file = this.foto.value; // Pasa todo el objeto foto
+      await this.duenioService.alta(empleado);
+      console.log(empleado);
       await Swalert.toastSuccess('Registrado exitosamente');
+      this.limpiar();
     } catch (e: any) {
       console.log(e.message);
     }

@@ -13,7 +13,14 @@ import {
 export class CloudStorageService {
   constructor(private storage: Storage) {}
 
-  private static convertirBase64ABlob(archivoBase64: any) {
+  private static convertirBase64ABlob(archivoBase64: any, mimeType: string) {
+    // Valido y limpio la cadena base64
+    if (!CloudStorageService.validarBase64(archivoBase64)) {
+      throw new Error('La cadena base64 no es válida');
+    }
+
+    archivoBase64 = CloudStorageService.limpiarBase64(archivoBase64);
+
     const byteCharacters = atob(archivoBase64);
     const byteNumbers = new Array(byteCharacters.length);
 
@@ -22,15 +29,32 @@ export class CloudStorageService {
     }
 
     const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: 'image/jpeg' });
+    const blob = new Blob([byteArray], { type: mimeType });
 
     return blob;
   }
-  private static async convertirUriABlob(archivoUri: any) {
+  private static limpiarBase64(cadena: string): string {
+    // Elimino cualquier carácter no válido
+    cadena = cadena.replace(/[^A-Za-z0-9+/=]/g, '');
+
+    while (cadena.length % 4 !== 0) {
+      cadena += '=';
+    }
+
+    return cadena;
+  }
+  private static validarBase64(cadena: string): boolean {
+    const base64Regex =
+      /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
+    return base64Regex.test(cadena);
+  }
+
+  // Ya no la usamos
+  /*private static async convertirUriABlob(archivoUri: any, mimeType: string) {
     const response = await fetch(archivoUri);
     const blob = await response.blob();
-    return blob;
-  }
+    return new Blob([blob], { type: mimeType });
+  }*/
   private traerTodas(carpeta: string) {
     const imagesRef = ref(this.storage, carpeta);
     return listAll(imagesRef);
@@ -48,12 +72,16 @@ export class CloudStorageService {
   public async subirArchivoUri(
     carpeta: string,
     nombreArchivo: string,
-    archivoUri: any
+    archivo: { base64String: string; mimeType: string }
   ) {
     const storageRef = ref(this.storage, `${carpeta}/${nombreArchivo}`);
-    const blob = await CloudStorageService.convertirUriABlob(archivoUri);
+    const blob = CloudStorageService.convertirBase64ABlob(
+      archivo.base64String,
+      archivo.mimeType
+    );
     return uploadBytes(storageRef, blob);
   }
+
   public async traerUrlPorNombre(nombre: string, carpeta: string) {
     const carpetaStorage = await this.traerTodas(carpeta);
 
