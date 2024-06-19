@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {
   Auth,
   createUserWithEmailAndPassword,
+  deleteUser,
   onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
@@ -63,5 +64,9 @@ export class AuthService {
 
   public cerrarSesion() {
     return signOut(this.auth);
+  }
+
+  public async eliminar() {
+    return deleteUser(this.credenciales);
   }
 }

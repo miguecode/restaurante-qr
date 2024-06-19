@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Storage,
+  deleteObject,
   getDownloadURL,
   listAll,
   ref,
@@ -27,15 +28,15 @@ export class CloudStorageService {
     return blob;
   }
   private static async convertirUriABlob(archivoUri: any) {
-    const response = await fetch(archivoUri);
-    const blob = await response.blob();
+    const imagen = await fetch(archivoUri);
+    const blob = await imagen.blob();
     return blob;
   }
-  private traerTodas(carpeta: string) {
-    const imagesRef = ref(this.storage, carpeta);
-    return listAll(imagesRef);
+  private traerCarpeta(carpeta: string) {
+    const storageRef = ref(this.storage, carpeta);
+    return listAll(storageRef);
   }
-  private static obtenerNombreSinExtension(nombreArchivo: string): string {
+  private static getNombreSinExtension(nombreArchivo: string): string {
     const lastIndex = nombreArchivo.lastIndexOf('.');
 
     if (lastIndex !== -1) {
@@ -54,11 +55,11 @@ export class CloudStorageService {
     const blob = await CloudStorageService.convertirUriABlob(archivoUri);
     return uploadBytes(storageRef, blob);
   }
-  public async traerUrlPorNombre(nombre: string, carpeta: string) {
-    const carpetaStorage = await this.traerTodas(carpeta);
+  public async traerUrlPorNombre(carpeta: string, nombre: string) {
+    const carpetaStorage = await this.traerCarpeta(carpeta);
 
     for (let item of carpetaStorage.items) {
-      const nombreArchivo = CloudStorageService.obtenerNombreSinExtension(
+      const nombreArchivo = CloudStorageService.getNombreSinExtension(
         item.name
       );
       if (nombreArchivo === nombre) {
@@ -67,5 +68,9 @@ export class CloudStorageService {
     }
 
     return undefined;
+  }
+  public async borrarArchivo(carpeta: string, nombreArchivo: string) {
+    const storageRef = ref(this.storage, `${carpeta}/${nombreArchivo}`);
+    return deleteObject(storageRef);
   }
 }
