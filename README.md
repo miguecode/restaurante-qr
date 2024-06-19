@@ -14,7 +14,7 @@
 - Código QR E (De Ingreso al Local)
 - Rama: 'miguel'
 #### 📅 Fecha de Inicio: 10/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 19/06 (Parcialmente)
 
 ### 🌟 Dongo Huaman Juan Pablo (Beta)
 - Creación del diseño del Ícono y del Splash
@@ -85,5 +85,6 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/7409df46-b343-49f8-a584-44c7186bd4ad" width="500"/>
 
-
-
+## 📊 Informe (19/06)
+- ✔️ Corrección relacionada al diseño del Home
+- ✔️ Estructura de archivos y rutas para los ABM
