@@ -99,8 +99,8 @@ export class FormularioEmpleadoComponent implements OnInit {
   }
 
   public ngOnInit() {
-    this.crearFormGroup();
     this.tiposEmpleados = Empleado.TIPOS;
+    this.crearFormGroup();
   }
 
   public async tomarFoto() {

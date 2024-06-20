@@ -3,6 +3,7 @@ import { Usuario } from './padres/usuario';
 export class Empleado extends Usuario {
   public cuil: number;
   public tipo: string;
+
   public static TIPOS = [
     'cocinero',
     'bartender',

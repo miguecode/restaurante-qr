@@ -1,0 +1,88 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header">
+      <ion-title *ngIf="!esAlta && !esModificar && !esBaja">
+        ABM mesas
+      </ion-title>
+      <ion-title *ngIf="esAlta">Alta mesa</ion-title>
+      <ion-title *ngIf="esModificar">Modificar mesa</ion-title>
+      <ion-title *ngIf="esBaja">Baja mesa</ion-title>
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
+          Alta
+        </button>
+      </div>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div *ngIf="!esAlta && !esModificar && !esBaja">
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of lista">
+          <div class="card">
+            <label style="text-align: center">{{ item.id }}</label>
+            <label>CantCli: {{ item.cantidadClientes }}</label>
+            <label>CantMax: {{ item.cantidadMaxima }}</label>
+            <label>Tipo: {{ item.tipo }}</label>
+            <img [src]="item.foto" />
+            <button
+              class="btn btn-secondary boton-modificar"
+              (click)="mesaSeleccionada = item; esModificar = true"
+            >
+              Modificar
+            </button>
+            <button
+              class="btn btn-secondary boton-baja"
+              (click)="mesaSeleccionada = item; esBaja = true"
+            >
+              Baja
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+
+    <div *ngIf="esAlta">
+      <!-- #region Formulario Modo Alta -->
+      <app-formulario-mesa
+        [modoAlta]="true"
+        (handlerTerminado)="esAlta = false"
+      ></app-formulario-mesa>
+      <!-- #endregion Formulario Modo Alta -->
+    </div>
+
+    <div *ngIf="esModificar && mesaSeleccionada !== undefined">
+      <!-- #region Formulario Modo Modificar -->
+      <app-formulario-mesa
+        [modoModificar]="true"
+        [mesa]="mesaSeleccionada"
+        (handlerTerminado)="mesaSeleccionada = undefined; esModificar = false"
+      ></app-formulario-mesa>
+      <!-- #endregion Formulario Modo Modificar -->
+    </div>
+
+    <div *ngIf="esBaja && mesaSeleccionada !== undefined">
+      <!-- #region Formulario Modo Baja -->
+      <app-formulario-mesa
+        [modoBaja]="true"
+        [mesa]="mesaSeleccionada"
+        (handlerTerminado)="mesaSeleccionada = undefined; esBaja = false"
+      ></app-formulario-mesa>
+      <!-- #endregion Formulario Modo Baja -->
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer [translucent]="true">
+  <ion-toolbar
+    ><div class="footer">
+      <button class="btn btn-primary" routerLink="/home">Home</button>
+    </div></ion-toolbar
+  >
+</ion-footer>

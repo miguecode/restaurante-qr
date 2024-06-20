@@ -36,6 +36,7 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 })
 export class ListadoEmpleadoComponent implements OnInit {
   lista: any[] = [];
+
   constructor(private empleadoService: EmpleadoService) {}
 
   ngOnInit() {
