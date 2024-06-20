@@ -23,6 +23,7 @@ export class EmpleadoService {
     this.traerTodosObservable().subscribe((l) => {
       this.empleados = l;
       this.flagObservable = true;
+      console.log(this.empleados);
     });
   }
 

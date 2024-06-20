@@ -1,8 +1,8 @@
 <div class="formulario-container">
-  <h1 class="titulo">Registro de empleado</h1>
+  <label class="titulo">Registro de empleado</label>
   <!-- #region Formulario -->
   <form [formGroup]="formRegistrar">
-    <div class="area-a">
+    <div class="area">
       <!-- #region Nombre -->
       <div class="form-group nombre">
         <label>Nombre</label>
@@ -18,50 +18,58 @@
       <!-- #endregion Apellido -->
     </div>
 
-    <div class="area-b">
-      <!-- #region DNI -->
-      <div class="form-group dni">
-        <label>D.N.I.</label>
-        <div class="input-group">
-          <app-qr-scanner
-            [nombreBtn]="'QR'"
-            (handlerData)="recibirDataDniCuilQR($event)"
-          ></app-qr-scanner>
-          <input class="form-control" type="text" formControlName="dni" />
-        </div>
+    <!-- #region DNI -->
+    <div class="form-group dni">
+      <label>D.N.I.</label>
+      <div class="input-group">
+        <app-qr-scanner
+          [nombreBtn]="'QR'"
+          (handlerData)="recibirDataDniCuilQR($event)"
+        ></app-qr-scanner>
+        <input class="form-control" type="text" formControlName="dni" />
       </div>
-      <!-- #endregion DNI -->
-
-      <!-- #region CUIL -->
-      <div class="form-group cuil">
-        <label>CUIL</label>
-        <div class="input-group">
-          <app-qr-scanner
-            [nombreBtn]="'QR'"
-            (handlerData)="recibirDataDniCuilQR($event)"
-          ></app-qr-scanner>
-          <input class="form-control" type="text" formControlName="cuil" />
-        </div>
-      </div>
-      <!-- #endregion CUIL -->
     </div>
+    <!-- #endregion DNI -->
 
-    <div class="area-c">
-      <!-- #region Foto -->
-      <div class="form-group foto">
-        <label>Foto</label>
-        <div class="input-group">
-          <button class="btn btn-primary" (click)="tomarFoto()">Camara</button>
-          <input
-            class="form-control"
-            type="text"
-            readonly
-            formControlName="foto"
-          />
-        </div>
+    <!-- #region CUIL -->
+    <div class="form-group cuil">
+      <label>CUIL</label>
+      <div class="input-group">
+        <app-qr-scanner
+          [nombreBtn]="'QR'"
+          (handlerData)="recibirDataDniCuilQR($event)"
+        ></app-qr-scanner>
+        <input class="form-control" type="text" formControlName="cuil" />
       </div>
-      <!-- #endregion Foto -->
     </div>
+    <!-- #endregion CUIL -->
+
+    <!-- #region Foto -->
+    <div class="form-group foto">
+      <label>Foto</label>
+      <div class="input-group">
+        <button class="btn btn-primary" (click)="tomarFoto()">Camara</button>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          formControlName="foto"
+        />
+      </div>
+    </div>
+    <!-- #endregion Foto -->
+
+    <!-- #region Tipo -->
+    <div class="form-group tipo">
+      <label>Tipo de empleado</label>
+      <select class="form-control" formControlName="tipo">
+        <option value="">Seleccionar</option>
+        <option *ngFor="let item of tiposEmpleados" [value]="item">
+          {{ item | capitalize }}
+        </option>
+      </select>
+    </div>
+    <!-- #endregion Tipo -->
 
     <!-- #region Correo -->
     <div class="form-group correo">
@@ -90,16 +98,24 @@
     <div class="botones-registro">
       <!-- #region Boton Registro-->
       <button class="btn btn-primary boton-registro" (click)="registrar()">
-        Registrar
+        <div *ngIf="procesando">
+          <div class="loader-container">
+            <span class="loader"></span>
+          </div>
+        </div>
+
+        <div *ngIf="!procesando">Registrar</div>
       </button>
       <!-- #endregion Boton Registro-->
 
+      <!-- #region Boton Limpiar -->
       <!--
-    <button class="btn btn-primary boton-limpiar" (click)="limpiar()">
-      Limpiar
-    </button>
-    --></div>
+      <button class="btn btn-primary boton-limpiar" (click)="limpiar()">
+        Limpiar
+      </button>
+      -->
+      <!-- #endregion Boton Limpiar -->
+    </div>
   </form>
-  {{ dataTemporalLuegoBorrar | json }}
   <!-- #endregion Formulario -->
 </div>

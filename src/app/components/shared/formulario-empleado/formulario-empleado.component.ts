@@ -11,18 +11,28 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
-import { JsonPipe } from '@angular/common';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-formulario-empleado',
   templateUrl: './formulario-empleado.component.html',
   styleUrls: ['./formulario-empleado.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, QrScannerComponent, JsonPipe],
+  imports: [
+    FormsModule,
+    ReactiveFormsModule,
+    QrScannerComponent,
+    JsonPipe,
+    CapitalizePipe,
+    NgFor,
+    NgIf,
+  ],
 })
 export class FormularioEmpleadoComponent implements OnInit {
-  dataTemporalLuegoBorrar: any;
   formRegistrar!: FormGroup;
+  tiposEmpleados: string[] = [];
+  procesando: boolean = false;
 
   get nombre() {
     return this.formRegistrar.get('nombre') as FormControl;
@@ -39,6 +49,9 @@ export class FormularioEmpleadoComponent implements OnInit {
   get foto() {
     return this.formRegistrar.get('foto') as FormControl;
   }
+  get tipo() {
+    return this.formRegistrar.get('tipo') as FormControl;
+  }
   get correo() {
     return this.formRegistrar.get('correo') as FormControl;
   }
@@ -46,9 +59,7 @@ export class FormularioEmpleadoComponent implements OnInit {
     return this.formRegistrar.get('clave') as FormControl;
   }
 
-  constructor(private empleadoService: EmpleadoService) {
-    this.crearFormGroup();
-  }
+  constructor(private empleadoService: EmpleadoService) {}
 
   private crearFormGroup() {
     this.formRegistrar = new FormGroup({
@@ -65,6 +76,7 @@ export class FormularioEmpleadoComponent implements OnInit {
         Validators.max(99999999999),
       ]),
       foto: new FormControl(undefined, [Validators.required]),
+      tipo: new FormControl('', [Validators.required]),
       correo: new FormControl('', [Validators.required, Validators.email]),
       clave: new FormControl('', [
         Validators.required,
@@ -80,13 +92,15 @@ export class FormularioEmpleadoComponent implements OnInit {
     empleado.setDni(this.dni.value);
     empleado.setCuil(this.cuil.value);
     empleado.setFile(this.foto.value);
+    empleado.setTipo(this.tipo.value);
     empleado.setCorreo(this.correo.value);
     empleado.setClave(this.clave.value);
     return empleado;
   }
 
   public ngOnInit() {
-    console.log('');
+    this.crearFormGroup();
+    this.tiposEmpleados = Empleado.TIPOS;
   }
 
   public async tomarFoto() {
@@ -114,14 +128,19 @@ export class FormularioEmpleadoComponent implements OnInit {
   public recibirDataDniCuilQR($event: string) {
     this.nombre.setValue($event);
   }
+
   public async registrar() {
     try {
+      this.procesando = true;
+
       const empleado = await this.empleadoService.alta(this.getEmpleado());
       console.log(empleado);
 
-      await Swalert.toastSuccess('Registrado exitosamente');
+      await Swalert.toastSuccess('Alta realizada exitosamente');
     } catch (e: any) {
       console.log(e.message);
+    } finally {
+      this.procesando = false;
     }
   }
   public limpiar() {
@@ -131,6 +150,7 @@ export class FormularioEmpleadoComponent implements OnInit {
     this.dni.setValue(0);
     this.cuil.setValue(0);
     this.foto.setValue(undefined);
+    this.tipo.setValue('');
     this.correo.setValue('');
     this.clave.setValue('');
   }
