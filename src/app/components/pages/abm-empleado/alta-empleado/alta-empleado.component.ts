@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormularioEmpleadoComponent } from '../../shared/formulario-empleado/formulario-empleado.component';
+import { FormularioEmpleadoComponent } from '../../../shared/formulario-empleado/formulario-empleado.component';
 import { RouterLink } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 

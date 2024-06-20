@@ -2,13 +2,11 @@ import { Usuario } from './padres/usuario';
 
 export class Duenio extends Usuario {
   public cuil: number;
-  correoVerificado: boolean;
 
   constructor() {
     super();
     this.rol = 'duenio';
     this.cuil = 0;
-    this.correoVerificado = false;
   }
 
   setCuil(cuil: number) {
@@ -24,7 +22,6 @@ export class Duenio extends Usuario {
       cuil: duenio.cuil.toString(),
       foto: duenio.foto,
       rol: duenio.rol,
-      correoVerificado: duenio.correoVerificado.toString(),
       correo: duenio.correo,
     };
   }
@@ -37,7 +34,6 @@ export class Duenio extends Usuario {
     duenio.cuil = Number(doc.cuil);
     duenio.foto = doc.foto;
     duenio.rol = doc.rol;
-    duenio.correoVerificado = JSON.parse(doc.correoVerificado);
     duenio.correo = doc.correo;
     return duenio;
   }
@@ -50,7 +46,6 @@ export class Duenio extends Usuario {
     duenio.cuil = Number(doc['cuil']);
     duenio.foto = doc['foto'];
     duenio.rol = doc['rol'];
-    duenio.correoVerificado = JSON.parse(doc['correoVerificado']);
     duenio.correo = doc['correo'];
     return duenio;
   }

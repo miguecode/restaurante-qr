@@ -101,9 +101,10 @@ export class FormularioEmpleadoComponent implements OnInit {
         throw new Error('No se pudo recuperar la imagen de Camera.getPhoto()');
       }
 
+      const mimeType = image.format === 'jpeg' ? 'image/jpeg' : 'image/png';
       const swalertResult = await Swalert.modalCargarFoto();
       if (swalertResult.isConfirmed) {
-        this.foto.setValue(image.base64String);
+        this.foto.setValue({ base64String: image.base64String, mimeType });
       }
     } catch (e: any) {
       console.log(e.message);
@@ -111,15 +112,20 @@ export class FormularioEmpleadoComponent implements OnInit {
       console.log(this.foto.value);
     }
   }
+
   public async registrar() {
     try {
-      const empleado = await this.empleadoService.alta(this.getEmpleado());
+      const empleado = this.getEmpleado();
+      empleado.file = this.foto.value; // Pasa todo el objeto foto
+      await this.empleadoService.alta(empleado);
       console.log(empleado);
       await Swalert.toastSuccess('Registrado exitosamente');
+      this.limpiar();
     } catch (e: any) {
       console.log(e.message);
     }
   }
+
   public limpiar() {
     this.formRegistrar.reset();
     this.nombre.setValue('');
