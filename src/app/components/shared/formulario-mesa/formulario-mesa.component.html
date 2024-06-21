@@ -117,7 +117,7 @@
         <label>Foto</label>
         <div style="text-align: center">
           <img
-            *ngIf="fotoBlob !== undefined || foto !== undefined"
+            *ngIf="fotoBlob !== undefined || mesa.foto !== undefined"
             [src]="fotoBlob === undefined ? mesa.foto : fotoBlob"
           />
         </div>
