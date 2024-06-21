@@ -5,6 +5,8 @@
 - Dongo Huaman Juan Pablo
 - Fernández Santiago
 
+🔗 Link al Trello del proyecto: 
+
 ## 🛠️ Responsabilidades de cada Integrante (08/06)
 
 ### 🌟 Gil Miguel Ángel (Alfa)
@@ -14,7 +16,7 @@
 - Código QR E (De Ingreso al Local)
 - Rama: 'miguel'
 #### 📅 Fecha de Inicio: 10/06
-#### ⌛ Fecha de Finalización: 19/06 (Parcialmente)
+#### ⌛ Fecha de Finalización: 19/06
 
 ### 🌟 Dongo Huaman Juan Pablo (Beta)
 - Creación del diseño del Ícono y del Splash
@@ -22,7 +24,7 @@
 - Código QR F (De la Mesa)
 - Rama: 'juanpablo'
 #### 📅 Fecha de Inicio: 08/06
-#### ⌛ Fecha de Finalización: 13/06 (Parcialmente)
+#### ⌛ Fecha de Finalización: 13/06
 
 ### 🌟 Fernández Santiago (Gamma)
 - Creación del diseño del Ícono y del Splash
@@ -30,7 +32,7 @@
 - Código QR G (De la Propina)
 - Rama: 'santiago'
 #### 📅 Fecha de Inicio: 10/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 20/06
 
 --- ---
 
@@ -88,3 +90,7 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 ## 📊 Informe (19/06)
 - ✔️ Corrección relacionada al diseño del Home
 - ✔️ Estructura de archivos y rutas para los ABM
+
+## 📊 Informe (20/06)
+- ✔️ Todas las altas funcionales
+- ✔️ Listado de usuarios preliminar
