@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import {
   Storage,
+  deleteObject,
   getDownloadURL,
   listAll,
   ref,
@@ -13,14 +14,7 @@ import {
 export class CloudStorageService {
   constructor(private storage: Storage) {}
 
-  private static convertirBase64ABlob(archivoBase64: any, mimeType: string) {
-    // Valido y limpio la cadena base64
-    if (!CloudStorageService.validarBase64(archivoBase64)) {
-      throw new Error('La cadena base64 no es válida');
-    }
-
-    archivoBase64 = CloudStorageService.limpiarBase64(archivoBase64);
-
+  private static convertirBase64ABlob(archivoBase64: any) {
     const byteCharacters = atob(archivoBase64);
     const byteNumbers = new Array(byteCharacters.length);
 
@@ -29,37 +23,20 @@ export class CloudStorageService {
     }
 
     const byteArray = new Uint8Array(byteNumbers);
-    const blob = new Blob([byteArray], { type: mimeType });
+    const blob = new Blob([byteArray], { type: 'image/jpeg' });
 
     return blob;
   }
-  private static limpiarBase64(cadena: string): string {
-    // Elimino cualquier carácter no válido
-    cadena = cadena.replace(/[^A-Za-z0-9+/=]/g, '');
-
-    while (cadena.length % 4 !== 0) {
-      cadena += '=';
-    }
-
-    return cadena;
+  private static async convertirUriABlob(archivoUri: any) {
+    const imagen = await fetch(archivoUri);
+    const blob = await imagen.blob();
+    return blob;
   }
-  private static validarBase64(cadena: string): boolean {
-    const base64Regex =
-      /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
-    return base64Regex.test(cadena);
+  private traerCarpeta(carpeta: string) {
+    const storageRef = ref(this.storage, carpeta);
+    return listAll(storageRef);
   }
-
-  // Ya no la usamos
-  /*private static async convertirUriABlob(archivoUri: any, mimeType: string) {
-    const response = await fetch(archivoUri);
-    const blob = await response.blob();
-    return new Blob([blob], { type: mimeType });
-  }*/
-  private traerTodas(carpeta: string) {
-    const imagesRef = ref(this.storage, carpeta);
-    return listAll(imagesRef);
-  }
-  private static obtenerNombreSinExtension(nombreArchivo: string): string {
+  private static getNombreSinExtension(nombreArchivo: string): string {
     const lastIndex = nombreArchivo.lastIndexOf('.');
 
     if (lastIndex !== -1) {
@@ -72,21 +49,17 @@ export class CloudStorageService {
   public async subirArchivoUri(
     carpeta: string,
     nombreArchivo: string,
-    archivo: { base64String: string; mimeType: string }
+    archivoUri: any
   ) {
     const storageRef = ref(this.storage, `${carpeta}/${nombreArchivo}`);
-    const blob = CloudStorageService.convertirBase64ABlob(
-      archivo.base64String,
-      archivo.mimeType
-    );
+    const blob = await CloudStorageService.convertirUriABlob(archivoUri);
     return uploadBytes(storageRef, blob);
   }
-
-  public async traerUrlPorNombre(nombre: string, carpeta: string) {
-    const carpetaStorage = await this.traerTodas(carpeta);
+  public async traerUrlPorNombre(carpeta: string, nombre: string) {
+    const carpetaStorage = await this.traerCarpeta(carpeta);
 
     for (let item of carpetaStorage.items) {
-      const nombreArchivo = CloudStorageService.obtenerNombreSinExtension(
+      const nombreArchivo = CloudStorageService.getNombreSinExtension(
         item.name
       );
       if (nombreArchivo === nombre) {
@@ -95,5 +68,9 @@ export class CloudStorageService {
     }
 
     return undefined;
+  }
+  public async borrarArchivo(carpeta: string, nombreArchivo: string) {
+    const storageRef = ref(this.storage, `${carpeta}/${nombreArchivo}`);
+    return deleteObject(storageRef);
   }
 }

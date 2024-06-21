@@ -58,7 +58,7 @@ export class SupervisorService {
   }
   private async insertarDoc(supervisor: Supervisor) {
     const doc = Supervisor.toDoc(supervisor);
-    return this.firestoreService.insertarConId(doc.id, doc, this.col);
+    return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
 
   public async alta(supervisor: Supervisor) {

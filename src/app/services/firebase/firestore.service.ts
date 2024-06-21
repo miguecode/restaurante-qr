@@ -23,29 +23,29 @@ export class FirestoreService {
     return collectionData(colRef);
   }
 
-  public traerPorId(docId: string, col: string) {
+  public traerPorId(col: string, docId: string) {
     const colRef = collection(this.firestore, col);
     const docRef = doc(colRef, docId);
     return docData(docRef);
   }
 
-  public insertar(docData: any, col: string) {
+  public insertar(col: string, docData: any) {
     const colRef = collection(this.firestore, col);
     return addDoc(colRef, docData);
   }
 
-  public insertarConId(docId: string, docData: any, col: string) {
+  public insertarConId(col: string, docId: string, docData: any) {
     const docuRef = doc(this.firestore, col + `/${docId}`);
     return setDoc(docuRef, docData);
   }
 
-  public modificar(docId: string, docData: any, col: string) {
+  public modificar(col: string, docId: string, docData: any) {
     const colRef = collection(this.firestore, col);
     const docRef = doc(colRef, docId);
     return updateDoc(docRef, docData);
   }
 
-  public eliminar(docId: string, col: string) {
+  public eliminar(col: string, docId: string) {
     const colRef = collection(this.firestore, col);
     const docRef = doc(colRef, docId);
     return deleteDoc(docRef);

@@ -58,7 +58,7 @@ export class DuenioService {
   }
   private async insertarDoc(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);
-    return this.firestoreService.insertarConId(doc.id, doc, this.col);
+    return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
 
   public async alta(duenio: Duenio) {

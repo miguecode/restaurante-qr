@@ -58,7 +58,7 @@ export class EmpleadoService {
   }
   private async insertarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
-    return this.firestoreService.insertarConId(doc.id, doc, this.col);
+    return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
 
   public async alta(empleado: Empleado) {

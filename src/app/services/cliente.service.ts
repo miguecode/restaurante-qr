@@ -6,10 +6,9 @@ import { Cliente } from '../classes/cliente';
 import { firstValueFrom, isObservable } from 'rxjs';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class ClienteService {
-
   private col = 'duenios';
   private carpeta = 'duenios';
 
@@ -22,7 +21,7 @@ export class ClienteService {
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }
-  
+
   private async registrarAuth(cliente: Cliente) {
     try {
       await this.authService.registrar(cliente.correo, cliente.clave);
@@ -64,7 +63,7 @@ export class ClienteService {
 
   private async insertarDoc(cliente: Cliente) {
     const doc = Cliente.toDoc(cliente);
-    return this.firestoreService.insertarConId(doc.id, doc, this.col);
+    return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
 
   public async alta(cliente: Cliente) {
