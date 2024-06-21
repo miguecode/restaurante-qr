@@ -1,0 +1,251 @@
+<div class="card formulario-container">
+  <div *ngIf="modoAlta === true">
+    <!-- #region Formulario Alta -->
+    <form [formGroup]="formAlta">
+      <!-- #region Cantidad Maxima de Clientes -->
+      <div class="form-group control-cantidad-maxima">
+        <label>Cantidad maxima de comensales</label>
+        <input
+          class="form-control"
+          type="number"
+          formControlName="cantidadMaxima"
+        />
+      </div>
+      <!-- #endregion Cantidad Maxima de Clientes -->
+
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo de mesa</label>
+        <select class="form-control" formControlName="tipo">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let item of tiposMesas" [value]="item">
+            {{ item | capitalize }}
+          </option>
+        </select>
+      </div>
+      <!-- #endregion Tipo -->
+
+      <!-- #region Cambiar foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img *ngIf="fotoBlob !== undefined" [src]="fotoBlob" />
+        </div>
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="tomarFoto()"
+        >
+          {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
+        </button>
+      </div>
+      <!-- #endregion Cambiar Foto -->
+
+      <!-- #region Boton Alta -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Alta -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Alta -->
+  </div>
+
+  <div *ngIf="modoModificar === true && mesa !== undefined">
+    <!-- #region Formulario Modificar -->
+    <form [formGroup]="formModificar">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de mesa</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <!-- #region Cantidad Maxima de Clientes -->
+      <div class="form-group control-cantidad-maxima">
+        <label>Cantidad maxima de comensales</label>
+        <input
+          class="form-control"
+          type="number"
+          formControlName="cantidadMaxima"
+        />
+      </div>
+      <!-- #endregion Cantidad Maxima de Clientes -->
+
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo de mesa</label>
+        <select class="form-control" formControlName="tipo">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let item of tiposMesas" [value]="item">
+            {{ item | capitalize }}
+          </option>
+        </select>
+      </div>
+      <!-- #endregion Tipo -->
+
+      <!-- #region Cambiar foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img
+            *ngIf="fotoBlob !== undefined || mesa.foto !== undefined"
+            [src]="fotoBlob === undefined ? mesa.foto : fotoBlob"
+          />
+        </div>
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="tomarFoto()"
+        >
+          {{
+            fotoBlob === undefined && mesa.foto === undefined
+              ? "Tomar foto"
+              : "Cambiar foto"
+          }}
+        </button>
+      </div>
+      <!-- #endregion Cambiar Foto -->
+
+      <!-- #region Boton Modificar -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Modificar -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Modificar -->
+  </div>
+
+  <div *ngIf="modoBaja === true && mesa !== undefined">
+    <!-- #region Formulario Baja -->
+    <form [formGroup]="formBaja">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de mesa</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <!-- #region Cantidad Maxima de Clientes -->
+      <div class="form-group control-cantidad-maxima">
+        <label>Cantidad maxima de comensales</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="cantidadMaxima"
+        />
+      </div>
+      <!-- #endregion Cantidad Maxima de Clientes -->
+
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo de mesa</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          formControlName="tipo"
+        />
+      </div>
+      <!-- #endregion Tipo -->
+
+      <!-- #region foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img [src]="mesa.foto" />
+        </div>
+      </div>
+      <!-- #endregion foto -->
+
+      <!-- #region Boton Baja -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Baja -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Baja -->
+  </div>
+</div>

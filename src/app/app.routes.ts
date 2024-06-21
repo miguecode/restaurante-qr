@@ -56,6 +56,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'abm-mesa',
+    loadComponent: () =>
+      import('./components/pages/abm-mesa/abm-mesa.component').then(
+        (m) => m.AbmMesaComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
