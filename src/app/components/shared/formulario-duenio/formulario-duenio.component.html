@@ -12,8 +12,7 @@
             formControlName="nombre"
             placeholder="Nombre"
           />
-          @if (formRegistrar.get('nombre'); as aux) { @if (aux.invalid &&
-          (aux.dirty)) {
+          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
           <div class="alert alert-danger" role="alert">Nombre no válido</div>
           } }
         </div>
@@ -28,8 +27,7 @@
             formControlName="apellido"
             placeholder="Apellido"
           />
-          @if(formRegistrar.get('apellido'); as aux) { @if(aux.invalid &&
-          (aux.dirty)) {
+          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
           <div class="alert hide alert-danger" role="alert">
             Apellido no válido
           </div>
@@ -48,8 +46,7 @@
             formControlName="dni"
             placeholder="D.N.I"
           />
-          @if (formRegistrar.get('dni'); as aux) { @if (aux.invalid &&
-          aux.dirty) {
+          @if (dni) { @if (dni.invalid && dni.dirty) {
           <div class="alert hide alert-danger" role="alert">
             D.N.I no válido
           </div>
@@ -66,8 +63,7 @@
             formControlName="cuil"
             placeholder="CUIL"
           />
-          @if (formRegistrar.get('cuil'); as aux) { @if (aux.invalid &&
-          (aux.dirty)) {
+          @if (cuil) { @if (cuil.invalid && (cuil.dirty)) {
           <div class="alert hide alert-danger" role="alert">CUIL no válido</div>
           }}
         </div>
@@ -100,8 +96,7 @@
           formControlName="correo"
           placeholder="Correo"
         />
-        @if (formRegistrar.get('correo'); as aux) { @if (aux.invalid &&
-        (aux.dirty)) {
+        @if (correo) { @if (correo.invalid && (correo.dirty)) {
         <div class="alert hide alert-danger" role="alert">Correo no válido</div>
         } }
       </div>
