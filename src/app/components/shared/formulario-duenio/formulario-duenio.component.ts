@@ -145,12 +145,14 @@ export class FormularioDuenioComponent implements OnInit {
 
       if (error && error.code === 'auth/email-already-in-use') {
         console.log('Error al registrar usuario:', error);
+        this.mensaje = 'Ese correo ya está registrado';
       } else {
         this.mensaje = 'Error al registrar usuario';
       }
     }
   }
   public limpiar() {
+    this.mensaje = '';
     this.formRegistrar.reset();
     this.nombre.setValue('');
     this.apellido.setValue('');

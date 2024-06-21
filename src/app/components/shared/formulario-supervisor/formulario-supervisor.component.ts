@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Supervisor } from 'src/app/classes/supervisor';
@@ -11,16 +14,18 @@ import { SupervisorService } from 'src/app/services/supervisor.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import Swal from 'sweetalert2';
+import { IonButton, IonIcon, IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-formulario-supervisor',
   templateUrl: './formulario-supervisor.component.html',
   styleUrls: ['./formulario-supervisor.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule],
+  imports: [IonContent, IonIcon, IonButton, FormsModule, ReactiveFormsModule],
 })
 export class FormularioSupervisorComponent implements OnInit {
   formRegistrar!: FormGroup;
+  mensaje: string = 'Recordá completar todos los campos correctamente.';
 
   get nombre() {
     return this.formRegistrar.get('nombre') as FormControl;
@@ -50,24 +55,39 @@ export class FormularioSupervisorComponent implements OnInit {
 
   private crearFormGroup() {
     this.formRegistrar = new FormGroup({
-      nombre: new FormControl('', [Validators.required]),
-      apellido: new FormControl('', [Validators.required]),
-      dni: new FormControl(0, [
+      nombre: new FormControl(null, [
         Validators.required,
-        Validators.min(10000000),
-        Validators.max(99999999),
+        Validators.minLength(2),
+        Validators.maxLength(20),
+        this.validarPalabra(),
       ]),
-      cuil: new FormControl(0, [
+      apellido: new FormControl(null, [
         Validators.required,
-        Validators.min(10000000000),
-        Validators.max(99999999999),
+        Validators.minLength(2),
+        Validators.maxLength(20),
+        this.validarPalabra(),
+      ]),
+      dni: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^\d+$/),
+        Validators.minLength(7),
+        Validators.maxLength(9),
+      ]),
+      cuil: new FormControl(null, [
+        Validators.required,
+        Validators.pattern(/^\d+$/),
+        Validators.minLength(10),
+        Validators.maxLength(12),
       ]),
       foto: new FormControl(undefined, [Validators.required]),
-      correo: new FormControl('', [Validators.required, Validators.email]),
-      clave: new FormControl('', [
+      correo: new FormControl(null, [
         Validators.required,
-        Validators.min(6),
-        Validators.max(30),
+        Validators.email,
+        Validators.required,
+      ]),
+      clave: new FormControl(null, [
+        Validators.required,
+        Validators.minLength(6),
       ]),
     });
   }
@@ -84,13 +104,13 @@ export class FormularioSupervisorComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.log(''); // Solo para que tire error
+    console.log('');
   }
 
   public async tomarFoto() {
     try {
       const image = await Camera.getPhoto({
-        promptLabelHeader: 'Foto de Supervisor',
+        promptLabelHeader: 'Foto de Dueño',
         promptLabelPhoto: 'Buscar foto local',
         promptLabelPicture: 'Tomar foto',
         quality: 90,
@@ -114,17 +134,25 @@ export class FormularioSupervisorComponent implements OnInit {
   }
   public async registrar() {
     try {
-      const empleado = this.getSupervisor();
-      empleado.file = this.foto.value; // Pasa todo el objeto foto
-      await this.supervisorService.alta(empleado);
-      console.log(empleado);
+      const supervisor = this.getSupervisor();
+      supervisor.file = this.foto.value; // Pasa todo el objeto foto
+      await this.supervisorService.alta(supervisor);
+      console.log(supervisor);
       await Swalert.toastSuccess('Registrado exitosamente');
       this.limpiar();
-    } catch (e: any) {
-      console.log(e.message);
+    } catch (error: any) {
+      console.error('Error al registrar:', error);
+
+      if (error && error.code === 'auth/email-already-in-use') {
+        console.log('Error al registrar usuario:', error);
+        this.mensaje = 'Ese correo ya está registrado';
+      } else {
+        this.mensaje = 'Error al registrar usuario';
+      }
     }
   }
   public limpiar() {
+    this.mensaje = '';
     this.formRegistrar.reset();
     this.nombre.setValue('');
     this.apellido.setValue('');
@@ -133,5 +161,15 @@ export class FormularioSupervisorComponent implements OnInit {
     this.foto.setValue(undefined);
     this.correo.setValue('');
     this.clave.setValue('');
+  }
+
+  private validarPalabra(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid =
+        /^[a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+)*$/.test(
+          control.value
+        );
+      return valid ? null : { invalidName: true };
+    };
   }
 }
