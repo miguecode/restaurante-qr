@@ -118,7 +118,7 @@
         <div style="text-align: center">
           <img
             *ngIf="fotoBlob !== undefined || foto !== undefined"
-            [src]="fotoBlob === undefined ? foto : fotoBlob"
+            [src]="fotoBlob === undefined ? mesa.foto : fotoBlob"
           />
         </div>
         <button
