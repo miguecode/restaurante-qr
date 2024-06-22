@@ -26,9 +26,11 @@
         <div *ngFor="let item of lista">
           <div class="card">
             <label style="text-align: center">{{ item.id }}</label>
-            <!-- <label>CantCli: {{ item.cantidadClientes }}</label> -->
-            <!-- <label>CantMax: {{ item.cantidadMaxima }}</label> -->
-            <!-- <label>Tipo: {{ item.tipo }}</label> -->
+            <label>Nombre: {{ item.nombre }}</label>
+            <label>Apellido: {{ item.apellido }}</label>
+            <label>DNI: {{ item.dni }}</label>
+            <label>Cuil: {{ item.cuil }}</label>
+            <label>Correo: {{ item.correo }}</label>
             <img [src]="item.foto" />
             <button
               class="btn btn-secondary boton-modificar"

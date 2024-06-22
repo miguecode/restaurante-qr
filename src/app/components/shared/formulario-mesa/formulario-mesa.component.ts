@@ -96,6 +96,8 @@ export class FormularioMesaComponent implements OnInit {
         this.tipo.setValue(this.mesa.tipo);
       }
     } else if (this.modoModificar) {
+      console.log(this.mesa);
+
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
         cantidadMaxima: new FormControl(0, [
@@ -130,6 +132,7 @@ export class FormularioMesaComponent implements OnInit {
     Swalert.toastSuccess('Alta realizada exitosamente');
   }
   private async modificar() {
+    console.log('...');
     const mesa = await this.mesaService.modificar(this.getMesa());
     console.log(mesa);
     Swalert.toastSuccess('Modificacion realizada exitosamente');

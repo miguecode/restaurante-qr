@@ -47,14 +47,14 @@ export class FormularioDuenioComponent implements OnInit {
   get id() {
     if (this.modoModificar) {
       return this.formModificar.get('id') as FormControl;
-    } else return this.formBaja.get('id') as FormControl;
+    }
+    return this.formBaja.get('id') as FormControl;
   }
-
   get nombre() {
     if (this.modoAlta) {
       return this.formAlta.get('nombre') as FormControl;
     } else if (this.modoModificar) {
-      return this.formAlta.get('nombre') as FormControl;
+      return this.formModificar.get('nombre') as FormControl;
     } else {
       return this.formBaja.get('nombre') as FormControl;
     }
@@ -63,7 +63,7 @@ export class FormularioDuenioComponent implements OnInit {
     if (this.modoAlta) {
       return this.formAlta.get('apellido') as FormControl;
     } else if (this.modoModificar) {
-      return this.formAlta.get('apellido') as FormControl;
+      return this.formModificar.get('apellido') as FormControl;
     } else {
       return this.formBaja.get('apellido') as FormControl;
     }
@@ -72,7 +72,7 @@ export class FormularioDuenioComponent implements OnInit {
     if (this.modoAlta) {
       return this.formAlta.get('dni') as FormControl;
     } else if (this.modoModificar) {
-      return this.formAlta.get('dni') as FormControl;
+      return this.formModificar.get('dni') as FormControl;
     } else {
       return this.formBaja.get('dni') as FormControl;
     }
@@ -81,7 +81,7 @@ export class FormularioDuenioComponent implements OnInit {
     if (this.modoAlta) {
       return this.formAlta.get('cuil') as FormControl;
     } else if (this.modoModificar) {
-      return this.formAlta.get('cuil') as FormControl;
+      return this.formModificar.get('cuil') as FormControl;
     } else {
       return this.formBaja.get('cuil') as FormControl;
     }
@@ -90,9 +90,18 @@ export class FormularioDuenioComponent implements OnInit {
     if (this.modoAlta) {
       return this.formAlta.get('correo') as FormControl;
     } else if (this.modoModificar) {
-      return this.formAlta.get('correo') as FormControl;
+      return this.formModificar.get('correo') as FormControl;
     } else {
       return this.formBaja.get('correo') as FormControl;
+    }
+  }
+  get clave() {
+    if (this.modoAlta) {
+      return this.formAlta.get('clave') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('clave') as FormControl;
+    } else {
+      return this.formBaja.get('clave') as FormControl;
     }
   }
   get foto() {
@@ -188,24 +197,32 @@ export class FormularioDuenioComponent implements OnInit {
         this.correo.setValue(this.duenio.correo);
       }
     } else if (this.modoModificar) {
+      console.log(this.duenio);
+
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
-        cantidadMaxima: new FormControl(0, [
+        nombre: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
         ]),
-        tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
+        apellido: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
       });
 
       if (this.duenio !== undefined) {
         this.id.setValue(this.duenio.id);
         this.nombre.setValue(this.duenio.nombre);
         this.apellido.setValue(this.duenio.apellido);
-        this.dni.setValue(this.duenio.dni);
-        this.cuil.setValue(this.duenio.cuil);
-        this.correo.setValue(this.duenio.correo);
+        // this.dni.setValue(this.duenio.dni);
+        // this.cuil.setValue(this.duenio.cuil);
+        // this.correo.setValue(this.duenio.correo);
+        // this.foto.setValue(this.duenio.foto);
       }
     }
   }
@@ -228,6 +245,7 @@ export class FormularioDuenioComponent implements OnInit {
     Swalert.toastSuccess('Alta realizada exitosamente');
   }
   private async modificar() {
+    console.log('...');
     const duenio = await this.duenioService.modificar(this.getDuenio());
     console.log(duenio);
     Swalert.toastSuccess('Modificación realizada exitosamente');
@@ -276,6 +294,7 @@ export class FormularioDuenioComponent implements OnInit {
       if (this.modoAlta) {
         await this.alta();
       } else if (this.modoModificar) {
+        console.log('Estoy aca');
         await this.modificar();
       } else if (this.modoBaja) {
         await this.baja();
