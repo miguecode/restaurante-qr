@@ -195,6 +195,9 @@ export class FormularioEmpleadoComponent implements OnInit {
   }
   private getEmpleado() {
     let empleado = new Empleado();
+    if ((this.modoModificar || this.modoBaja) && this.empleado !== undefined) {
+      empleado = this.empleado;
+    }
     if (this.modoModificar || this.modoBaja) {
       empleado.setId(this.id.value);
     }

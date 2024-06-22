@@ -133,6 +133,9 @@ export class FormularioMesaComponent implements OnInit {
   }
   private getMesa() {
     let mesa = new Mesa();
+    if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
+      mesa = this.mesa;
+    }
     if (this.modoModificar || this.modoBaja) {
       mesa.setId(this.id.value);
     }
