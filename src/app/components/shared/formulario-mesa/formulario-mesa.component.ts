@@ -40,6 +40,12 @@ export class FormularioMesaComponent implements OnInit {
     }
     return this.formBaja.get('id') as FormControl;
   }
+  get cantidadClientes() {
+    if (this.modoModificar) {
+      return this.formModificar.get('cantidadClientes') as FormControl;
+    }
+    return this.formBaja.get('cantidadClientes') as FormControl;
+  }
   get cantidadMaxima() {
     if (this.modoAlta) {
       return this.formAlta.get('cantidadMaxima') as FormControl;
@@ -78,13 +84,18 @@ export class FormularioMesaComponent implements OnInit {
         tipo: new FormControl('', [Validators.required]),
         foto: new FormControl(undefined, [Validators.required]),
       });
-    } else if (this.modoBaja) {
-      this.formBaja = new FormGroup({
+    } else if (this.modoModificar) {
+      this.formModificar = new FormGroup({
         id: new FormControl(0, []),
+        cantidadClientes: new FormControl(0, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(8),
+        ]),
         cantidadMaxima: new FormControl(0, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.min(1),
+          Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
         foto: new FormControl(undefined, [Validators.required]),
@@ -92,12 +103,18 @@ export class FormularioMesaComponent implements OnInit {
 
       if (this.mesa !== undefined) {
         this.id.setValue(this.mesa.id);
+        this.cantidadClientes.setValue(this.mesa.cantidadClientes);
         this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
         this.tipo.setValue(this.mesa.tipo);
       }
-    } else if (this.modoModificar) {
-      this.formModificar = new FormGroup({
+    } else if (this.modoBaja) {
+      this.formBaja = new FormGroup({
         id: new FormControl(0, []),
+        cantidadClientes: new FormControl(0, [
+          Validators.required,
+          Validators.min(1),
+          Validators.max(8),
+        ]),
         cantidadMaxima: new FormControl(0, [
           Validators.required,
           Validators.min(10000000),
@@ -116,12 +133,21 @@ export class FormularioMesaComponent implements OnInit {
   }
   private getMesa() {
     let mesa = new Mesa();
+    if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
+      mesa = this.mesa;
+    }
     if (this.modoModificar || this.modoBaja) {
       mesa.setId(this.id.value);
+    }
+    if (this.modoModificar) {
+      mesa.setCantidadClientes(this.cantidadClientes.value);
     }
     mesa.setCantidadMaxima(this.cantidadMaxima.value);
     mesa.setTipo(this.tipo.value);
     mesa.setFile(this.foto.value);
+    if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
+      mesa.setUrlFoto(this.mesa.foto);
+    }
     return mesa;
   }
   private async alta() {

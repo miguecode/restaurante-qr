@@ -1,3 +1,5 @@
+import { url } from 'inspector';
+
 export class Mesa {
   public id: number;
   public cantidadClientes: number;
@@ -51,6 +53,9 @@ export class Mesa {
   public setId(id: number) {
     this.id = id;
   }
+  public setCantidadClientes(cantidadCLientes: number) {
+    this.cantidadClientes = cantidadCLientes;
+  }
   public setCantidadMaxima(cantidadMaxima: number) {
     this.cantidadMaxima = cantidadMaxima;
   }
@@ -59,5 +64,8 @@ export class Mesa {
   }
   public setFile(file: any) {
     this.file = file;
+  }
+  public setUrlFoto(urlFoto: string) {
+    this.foto = urlFoto;
   }
 }

@@ -43,9 +43,9 @@ export const routes: Routes = [
   },
   {
     path: 'abm-empleado',
-    loadChildren: () =>
-      import('./components/pages/abm-empleado/abm-empleado.routes').then(
-        (m) => m.routes
+    loadComponent: () =>
+      import('./components/pages/abm-empleado/abm-empleado.component').then(
+        (m) => m.AbmEmpleadoComponent
       ),
   },
   {
