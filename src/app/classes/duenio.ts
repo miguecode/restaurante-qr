@@ -9,6 +9,9 @@ export class Duenio extends Usuario {
     this.cuil = 0;
   }
 
+  setId(id: number) {
+    this.id = id;
+  }
   setCuil(cuil: number) {
     this.cuil = cuil;
   }
