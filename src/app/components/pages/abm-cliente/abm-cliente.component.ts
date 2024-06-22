@@ -5,10 +5,10 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './abm-cliente.component.html',
   styleUrls: ['./abm-cliente.component.scss'],
 })
-export class AbmClienteComponent  implements OnInit {
+export class AbmClienteComponent implements OnInit {
+  constructor() {}
 
-  constructor() { }
-
-  ngOnInit() {}
-
+  ngOnInit() {
+    console.log('');
+  }
 }
