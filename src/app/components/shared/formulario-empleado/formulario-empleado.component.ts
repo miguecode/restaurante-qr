@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
@@ -13,6 +13,7 @@ import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
+import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-formulario-empleado',
@@ -20,6 +21,7 @@ import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
   styleUrls: ['./formulario-empleado.component.scss'],
   standalone: true,
   imports: [
+    IonContent,
     FormsModule,
     ReactiveFormsModule,
     QrScannerComponent,
@@ -30,72 +32,198 @@ import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
   ],
 })
 export class FormularioEmpleadoComponent implements OnInit {
-  formRegistrar!: FormGroup;
+  @Input() modoAlta: boolean = false;
+  @Input() modoBaja: boolean = false;
+  @Input() modoModificar: boolean = false;
+  @Input() empleado: Empleado | undefined = undefined;
+  @Output() handlerTerminado: EventEmitter<void> = new EventEmitter<void>();
+
+  formAlta!: FormGroup;
+  formModificar!: FormGroup;
+  formBaja!: FormGroup;
   tiposEmpleados: string[] = [];
   procesando: boolean = false;
 
+  fotoBlob: any = undefined;
+
+  get id() {
+    if (this.modoModificar) {
+      return this.formModificar.get('id') as FormControl;
+    }
+    return this.formBaja.get('id') as FormControl;
+  }
   get nombre() {
-    return this.formRegistrar.get('nombre') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('nombre') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('nombre') as FormControl;
+    }
+    return this.formBaja.get('nombre') as FormControl;
   }
   get apellido() {
-    return this.formRegistrar.get('apellido') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('apellido') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('apellido') as FormControl;
+    }
+    return this.formBaja.get('apellido') as FormControl;
   }
   get dni() {
-    return this.formRegistrar.get('dni') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('dni') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('dni') as FormControl;
+    }
+    return this.formBaja.get('dni') as FormControl;
   }
   get cuil() {
-    return this.formRegistrar.get('cuil') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('cuil') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('cuil') as FormControl;
+    }
+    return this.formBaja.get('cuil') as FormControl;
   }
   get foto() {
-    return this.formRegistrar.get('foto') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('foto') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('foto') as FormControl;
+    }
+    return this.formBaja.get('foto') as FormControl;
   }
   get tipo() {
-    return this.formRegistrar.get('tipo') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('tipo') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('tipo') as FormControl;
+    }
+    return this.formBaja.get('tipo') as FormControl;
   }
   get correo() {
-    return this.formRegistrar.get('correo') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('correo') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('correo') as FormControl;
+    }
+    return this.formBaja.get('correo') as FormControl;
   }
   get clave() {
-    return this.formRegistrar.get('clave') as FormControl;
+    if (this.modoAlta) {
+      return this.formAlta.get('clave') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('clave') as FormControl;
+    }
+    return this.formBaja.get('clave') as FormControl;
   }
 
   constructor(private empleadoService: EmpleadoService) {}
 
   private crearFormGroup() {
-    this.formRegistrar = new FormGroup({
-      nombre: new FormControl('', [Validators.required]),
-      apellido: new FormControl('', [Validators.required]),
-      dni: new FormControl(0, [
-        Validators.required,
-        Validators.min(10000000),
-        Validators.max(99999999),
-      ]),
-      cuil: new FormControl(0, [
-        Validators.required,
-        Validators.min(10000000000),
-        Validators.max(99999999999),
-      ]),
-      foto: new FormControl(undefined, [Validators.required]),
-      tipo: new FormControl('', [Validators.required]),
-      correo: new FormControl('', [Validators.required, Validators.email]),
-      clave: new FormControl('', [
-        Validators.required,
-        Validators.min(6),
-        Validators.max(30),
-      ]),
-    });
+    if (this.modoAlta) {
+      this.formAlta = new FormGroup({
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        dni: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000),
+          Validators.max(99999999),
+        ]),
+        cuil: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000000),
+          Validators.max(99999999999),
+        ]),
+        foto: new FormControl(undefined, [Validators.required]),
+        tipo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.email]),
+        clave: new FormControl('', [
+          Validators.required,
+          Validators.min(6),
+          Validators.max(30),
+        ]),
+      });
+    } else if (this.modoModificar) {
+      this.formModificar = new FormGroup({
+        id: new FormControl(0, []),
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        dni: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000),
+          Validators.max(99999999),
+        ]),
+        cuil: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000000),
+          Validators.max(99999999999),
+        ]),
+        foto: new FormControl(undefined, [Validators.required]),
+        tipo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.email]),
+      });
+    } else if (this.modoBaja) {
+      this.formBaja = new FormGroup({
+        id: new FormControl(0, []),
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        dni: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000),
+          Validators.max(99999999),
+        ]),
+        cuil: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000000),
+          Validators.max(99999999999),
+        ]),
+        foto: new FormControl(undefined, [Validators.required]),
+        tipo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.email]),
+      });
+    }
+
+    if (this.empleado !== undefined) {
+      this.id.setValue(this.empleado.id);
+      this.nombre.setValue(this.empleado.nombre);
+      this.apellido.setValue(this.empleado.apellido);
+      this.dni.setValue(this.empleado.dni);
+      this.cuil.setValue(this.empleado.cuil);
+      this.tipo.setValue(this.empleado.tipo);
+      this.correo.setValue(this.empleado.correo);
+    }
   }
   private getEmpleado() {
     let empleado = new Empleado();
+    if (this.modoModificar || this.modoBaja) {
+      empleado.setId(this.id.value);
+    }
     empleado.setNombre(this.nombre.value);
     empleado.setApellido(this.apellido.value);
     empleado.setDni(this.dni.value);
     empleado.setCuil(this.cuil.value);
     empleado.setFile(this.foto.value);
+    if ((this.modoModificar || this.modoBaja) && this.empleado !== undefined) {
+      empleado.setUrlFoto(this.empleado.foto);
+    }
     empleado.setTipo(this.tipo.value);
     empleado.setCorreo(this.correo.value);
-    empleado.setClave(this.clave.value);
+    if (this.modoAlta) {
+      empleado.setClave(this.clave.value);
+    }
     return empleado;
+  }
+  private async alta() {
+    await this.empleadoService.alta(this.getEmpleado());
+    await Swalert.toastSuccess('Alta realizada exitosamente');
+  }
+  private async baja() {
+    await this.empleadoService.bajaLogica(this.getEmpleado());
+    await Swalert.toastSuccess('Baja realizada exitosamente');
+  }
+  private async modificar() {
+    await this.empleadoService.modificar(this.getEmpleado());
+    await Swalert.toastSuccess('Modificacion realizada exitosamente');
   }
 
   public ngOnInit() {
@@ -119,6 +247,9 @@ export class FormularioEmpleadoComponent implements OnInit {
 
       const swalertResult = await Swalert.modalCargarFoto();
       if (swalertResult.isConfirmed) {
+        const source = await fetch(image.webPath);
+        const blob = await source.blob();
+        this.fotoBlob = URL.createObjectURL(blob);
         this.foto.setValue(image.webPath);
       }
     } catch (e: any) {
@@ -129,27 +260,37 @@ export class FormularioEmpleadoComponent implements OnInit {
     this.nombre.setValue($event);
   }
 
-  public async registrar() {
+  public async accion() {
     try {
       this.procesando = true;
 
-      const empleado = await this.empleadoService.alta(this.getEmpleado());
-      console.log(empleado);
+      if (this.modoAlta) {
+        await this.alta();
+      } else if (this.modoModificar) {
+        await this.modificar();
+      } else if (this.modoBaja) {
+        await this.baja();
+      }
 
-      await Swalert.toastSuccess('Alta realizada exitosamente');
+      setTimeout(() => {
+        this.handlerTerminado.emit();
+      }, 1500);
     } catch (e: any) {
       console.log(e.message);
+      await Swalert.toastError(e.message);
     } finally {
       this.procesando = false;
     }
   }
+
   public limpiar() {
-    this.formRegistrar.reset();
+    this.formAlta.reset();
     this.nombre.setValue('');
     this.apellido.setValue('');
     this.dni.setValue(0);
     this.cuil.setValue(0);
     this.foto.setValue(undefined);
+    this.fotoBlob = undefined;
     this.tipo.setValue('');
     this.correo.setValue('');
     this.clave.setValue('');

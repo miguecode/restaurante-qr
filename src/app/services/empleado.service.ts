@@ -79,19 +79,25 @@ export class EmpleadoService {
     }
     empleado.foto = fotoUrl;
   }
+  private async modificarFoto(empleado: Empleado) {
+    if (empleado.file !== undefined && empleado.file !== null) {
+      await this.insertarFoto(empleado);
+    }
+  }
   private async eliminarFoto(empleado: Empleado) {
     const nombreArchivo = empleado.id.toString();
     await this.cloudStorageService.borrarArchivo(this.carpeta, nombreArchivo);
   }
   private async insertarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
+    console.log(doc);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
-  public async modificarDoc(empleado: Empleado) {
+  private async modificarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }
-  public async eliminarDoc(empleado: Empleado) {
+  private async eliminarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
     await this.firestoreService.eliminar(this.col, doc.id);
   }
@@ -122,9 +128,18 @@ export class EmpleadoService {
       throw new Error(e.message);
     }
   }
+  public async bajaLogica(empleado: Empleado) {
+    try {
+      empleado.habilitado = false;
+      await this.modificarDoc(empleado);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
+  }
   public async modificar(empleado: Empleado) {
     try {
-      await this.insertarFoto(empleado);
+      await this.modificarFoto(empleado);
       await this.modificarDoc(empleado);
     } catch (e: any) {
       await this.cerrarSesionAuth();

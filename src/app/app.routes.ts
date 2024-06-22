@@ -14,31 +14,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'abm-duenio',
-    loadChildren: () =>
-      import('./components/pages/abm-duenio/abm-duenio.routes').then(
-        (m) => m.routes
-      ),
-  },
-  {
-    path: 'abm-supervisor',
-    loadChildren: () =>
-      import('./components/pages/abm-supervisor/abm-supervisor.routes').then(
-        (m) => m.routes
-      ),
-  },
-  {
     path: 'abm-empleado',
-    loadChildren: () =>
-      import('./components/pages/abm-empleado/abm-empleado.routes').then(
-        (m) => m.routes
-      ),
-  },
-  {
-    path: 'abm-cliente',
-    loadChildren: () =>
-      import('./components/pages/abm-cliente/abm-cliente.routes').then(
-        (m) => m.routes
+    loadComponent: () =>
+      import('./components/pages/abm-empleado/abm-empleado.component').then(
+        (m) => m.AbmEmpleadoComponent
       ),
   },
   {

@@ -25,21 +25,17 @@
       </div>
       <!-- #endregion Tipo -->
 
-      <!-- #region Cambiar foto -->
+      <!-- #region Foto -->
       <div class="form-group control-foto">
         <label>Foto</label>
-        <div style="text-align: center">
-          <img *ngIf="fotoBlob !== undefined" [src]="fotoBlob" />
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
+          </button>
+          <img [src]="fotoBlob" />
         </div>
-        <button
-          class="btn btn-primary"
-          [disabled]="procesando"
-          (click)="tomarFoto()"
-        >
-          {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
-        </button>
       </div>
-      <!-- #endregion Cambiar Foto -->
+      <!-- #endregion Foto -->
 
       <!-- #region Boton Alta -->
       <div class="form-group control-accion">
@@ -91,6 +87,18 @@
 
       <!-- #region Cantidad Maxima de Clientes -->
       <div class="form-group control-cantidad-maxima">
+        <label>Cantidad de comensales</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="cantidadClientes"
+        />
+      </div>
+      <!-- #endregion Cantidad Maxima de Clientes -->
+
+      <!-- #region Cantidad Maxima de Clientes -->
+      <div class="form-group control-cantidad-maxima">
         <label>Cantidad maxima de comensales</label>
         <input
           class="form-control"
@@ -112,28 +120,21 @@
       </div>
       <!-- #endregion Tipo -->
 
-      <!-- #region Cambiar foto -->
+      <!-- #region Foto -->
       <div class="form-group control-foto">
         <label>Foto</label>
-        <div style="text-align: center">
-          <img
-            *ngIf="fotoBlob !== undefined || mesa.foto !== undefined"
-            [src]="fotoBlob === undefined ? mesa.foto : fotoBlob"
-          />
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{
+              fotoBlob === undefined && mesa.foto === undefined
+                ? "Tomar foto"
+                : "Cambiar foto"
+            }}
+          </button>
+          <img [src]="fotoBlob === undefined ? mesa.foto : fotoBlob" />
         </div>
-        <button
-          class="btn btn-primary"
-          [disabled]="procesando"
-          (click)="tomarFoto()"
-        >
-          {{
-            fotoBlob === undefined && mesa.foto === undefined
-              ? "Tomar foto"
-              : "Cambiar foto"
-          }}
-        </button>
       </div>
-      <!-- #endregion Cambiar Foto -->
+      <!-- #endregion Foto -->
 
       <!-- #region Boton Modificar -->
       <div class="form-group control-accion">
@@ -183,6 +184,18 @@
       </div>
       <!-- #endregion Id -->
 
+      <!-- #region Cantidad de Clientes -->
+      <div class="form-group control-cantidad-clientes">
+        <label>Cantidad de comensales</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="cantidadClientes"
+        />
+      </div>
+      <!-- #endregion Cantidad Clientes -->
+
       <!-- #region Cantidad Maxima de Clientes -->
       <div class="form-group control-cantidad-maxima">
         <label>Cantidad maxima de comensales</label>
@@ -207,14 +220,14 @@
       </div>
       <!-- #endregion Tipo -->
 
-      <!-- #region foto -->
+      <!-- #region Foto -->
       <div class="form-group control-foto">
         <label>Foto</label>
         <div style="text-align: center">
-          <img [src]="mesa.foto" />
+          <img class="img-baja" [src]="mesa.foto" />
         </div>
       </div>
-      <!-- #endregion foto -->
+      <!-- #endregion Foto -->
 
       <!-- #region Boton Baja -->
       <div class="form-group control-accion">

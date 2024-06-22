@@ -63,23 +63,8 @@ export class MesaService {
     mesa.foto = fotoUrl;
   }
   private async modificarFoto(mesa: Mesa) {
-    const nombreArchivo = mesa.id.toString();
-
-    if (mesa.file !== undefined) {
-      await this.cloudStorageService.subirArchivoUri(
-        this.carpeta,
-        nombreArchivo,
-        mesa.file
-      );
-
-      const fotoUrl = await this.cloudStorageService.traerUrlPorNombre(
-        this.carpeta,
-        nombreArchivo
-      );
-      if (fotoUrl === undefined) {
-        throw new Error('Hubo un problema al recuperar la URL de la foto');
-      }
-      mesa.foto = fotoUrl;
+    if (mesa.file !== undefined && mesa.file !== null) {
+      await this.insertarFoto(mesa);
     }
   }
   private async eliminarFoto(mesa: Mesa) {
@@ -90,11 +75,11 @@ export class MesaService {
     const doc = Mesa.toDoc(mesa);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
-  public async modificarDoc(mesa: Mesa) {
+  private async modificarDoc(mesa: Mesa) {
     const doc = Mesa.toDoc(mesa);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }
-  public async eliminarDoc(mesa: Mesa) {
+  private async eliminarDoc(mesa: Mesa) {
     const doc = Mesa.toDoc(mesa);
     await this.firestoreService.eliminar(this.col, doc.id);
   }

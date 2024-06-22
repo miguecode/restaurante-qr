@@ -2,12 +2,14 @@
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
-      <ion-title *ngIf="!esAlta && !esModificar && !esBaja">
-        ABM mesas
-      </ion-title>
-      <ion-title *ngIf="esAlta">Alta mesa</ion-title>
-      <ion-title *ngIf="esModificar">Modificar mesa</ion-title>
-      <ion-title *ngIf="esBaja">Baja mesa</ion-title>
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <ion-title> ABM empleados </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta empleado</ion-title>
+      <ion-title *ngIf="esModificar">Modificar empleado</ion-title>
+      <ion-title *ngIf="esBaja">Baja empleado</ion-title>
+
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
           Alta
@@ -26,19 +28,24 @@
         <div *ngFor="let item of lista">
           <div class="card">
             <label style="text-align: center">{{ item.id }}</label>
-            <label>CANT-CLI: {{ item.cantidadClientes }}</label>
-            <label>CANT-MAX: {{ item.cantidadMaxima }}</label>
-            <label>TIPO: {{ item.tipo }}</label>
+            <label>NOMBRE:{{ item.nombre }}</label>
+            <label>APELLIDO:{{ item.apellido }}</label>
+            <label>DNI:{{ item.dni }}</label>
+            <label>CUIL:{{ item.cuil }}</label>
             <img [src]="item.foto" />
+            <label>TIPO:{{ item.tipo }}</label>
+            <label>ROL:{{ item.rol }}</label>
+            <label>HABILITADO:{{ item.habilitado }}</label>
+            <label>CORREO:{{ item.correo }}</label>
             <button
               class="btn btn-secondary boton-modificar"
-              (click)="mesaSeleccionada = item; esModificar = true"
+              (click)="empleadoSeleccionado = item; esModificar = true"
             >
               Modificar
             </button>
             <button
               class="btn btn-secondary boton-baja"
-              (click)="mesaSeleccionada = item; esBaja = true"
+              (click)="empleadoSeleccionado = item; esBaja = true"
             >
               Baja
             </button>
@@ -50,30 +57,32 @@
 
     <div *ngIf="esAlta">
       <!-- #region Formulario Modo Alta -->
-      <app-formulario-mesa
+      <app-formulario-empleado
         [modoAlta]="true"
         (handlerTerminado)="esAlta = false"
-      ></app-formulario-mesa>
+      ></app-formulario-empleado>
       <!-- #endregion Formulario Modo Alta -->
     </div>
 
-    <div *ngIf="esModificar && mesaSeleccionada !== undefined">
+    <div *ngIf="esModificar && empleadoSeleccionado !== undefined">
       <!-- #region Formulario Modo Modificar -->
-      <app-formulario-mesa
+      <app-formulario-empleado
         [modoModificar]="true"
-        [mesa]="mesaSeleccionada"
-        (handlerTerminado)="mesaSeleccionada = undefined; esModificar = false"
-      ></app-formulario-mesa>
+        [empleado]="empleadoSeleccionado"
+        (handlerTerminado)="
+          empleadoSeleccionado = undefined; esModificar = false
+        "
+      ></app-formulario-empleado>
       <!-- #endregion Formulario Modo Modificar -->
     </div>
 
-    <div *ngIf="esBaja && mesaSeleccionada !== undefined">
+    <div *ngIf="esBaja && empleadoSeleccionado !== undefined">
       <!-- #region Formulario Modo Baja -->
-      <app-formulario-mesa
+      <app-formulario-empleado
         [modoBaja]="true"
-        [mesa]="mesaSeleccionada"
-        (handlerTerminado)="mesaSeleccionada = undefined; esBaja = false"
-      ></app-formulario-mesa>
+        [empleado]="empleadoSeleccionado"
+        (handlerTerminado)="empleadoSeleccionado = undefined; esBaja = false"
+      ></app-formulario-empleado>
       <!-- #endregion Formulario Modo Baja -->
     </div>
   </div>

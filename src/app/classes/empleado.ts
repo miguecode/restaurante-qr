@@ -24,6 +24,9 @@ export class Empleado extends Usuario {
     this.tipo = '';
   }
 
+  setId(id: number) {
+    this.id = id;
+  }
   setCuil(cuil: number) {
     this.cuil = cuil;
   }
@@ -41,6 +44,7 @@ export class Empleado extends Usuario {
       foto: empleado.foto,
       tipo: empleado.tipo,
       rol: empleado.rol,
+      habilitado: empleado.habilitado,
       correo: empleado.correo,
     };
   }
@@ -54,6 +58,7 @@ export class Empleado extends Usuario {
     empleado.foto = doc.foto;
     empleado.tipo = doc.tipo;
     empleado.rol = doc.rol;
+    empleado.habilitado = JSON.parse(doc.habilitado);
     empleado.correo = doc.correo;
     return empleado;
   }
@@ -67,8 +72,8 @@ export class Empleado extends Usuario {
     empleado.foto = doc['foto'];
     empleado.tipo = doc['tipo'];
     empleado.rol = doc['rol'];
+    empleado.habilitado = doc['habilitado'];
     empleado.correo = doc['correo'];
-
     return empleado;
   }
 }
