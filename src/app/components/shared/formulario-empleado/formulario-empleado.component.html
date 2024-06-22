@@ -1,92 +1,392 @@
 <div class="formulario-container">
-  <h1 class="titulo">Registro de empleado</h1>
-  <!-- #region Formulario -->
-  <form [formGroup]="formRegistrar">
-    <div class="area-a">
-      <!-- #region Nombre -->
-      <div class="form-group nombre">
-        <label>Nombre</label>
-        <input class="form-control" type="text" formControlName="nombre" />
-      </div>
-      <!-- #endregion Nombre -->
+  <div *ngIf="modoAlta === true">
+    <!-- #region Formulario Alta -->
+    <form [formGroup]="formAlta">
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
 
-      <!-- #region Apellido -->
-      <div class="form-group apellido">
-        <label>Apellido</label>
-        <input class="form-control" type="text" formControlName="apellido" />
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
       </div>
-      <!-- #endregion Apellido -->
-    </div>
 
-    <div class="area-b">
-      <!-- #region DNI -->
-      <div class="form-group dni">
-        <label>D.N.I.</label>
-        <input class="form-control" type="text" formControlName="dni" />
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="dni" />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="cuil" />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
       </div>
-      <!-- #endregion DNI -->
 
-      <!-- #region CUIL -->
-      <div class="form-group cuil">
-        <label>CUIL</label>
-        <input class="form-control" type="text" formControlName="cuil" />
-      </div>
-      <!-- #endregion CUIL -->
-    </div>
-
-    <div class="area-c">
       <!-- #region Foto -->
-      <div class="form-group foto">
+      <div class="form-group control-foto">
         <label>Foto</label>
-        <div class="input-group">
-          <button class="btn btn-primary" (click)="tomarFoto()">Tomar</button>
-          <input
-            class="form-control"
-            type="text"
-            readonly
-            formControlName="foto"
-          />
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
+          </button>
+          <img [src]="fotoBlob" />
         </div>
       </div>
       <!-- #endregion Foto -->
-    </div>
 
-    <!-- #region Correo -->
-    <div class="form-group correo">
-      <label>Correo</label>
-      <input
-        class="form-control"
-        type="text"
-        placeholder="ejemplo@entidad.com"
-        formControlName="correo"
-      />
-    </div>
-    <!-- #endregion Correo -->
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo de empleado</label>
+        <select class="form-control" formControlName="tipo">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let item of tiposEmpleados" [value]="item">
+            {{ item | capitalize }}
+          </option>
+        </select>
+      </div>
+      <!-- #endregion Tipo -->
 
-    <!-- #region Clave -->
-    <div class="form-group clave">
-      <label>Clave</label>
-      <input
-        class="form-control"
-        type="password"
-        placeholder="******"
-        formControlName="clave"
-      />
-    </div>
-    <!-- #endregion Clave -->
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+      </div>
+      <!-- #endregion Correo -->
 
-    <div class="botones-registro">
-      <!-- #region Boton Registro-->
-      <button class="btn btn-primary boton-registro" (click)="registrar()">
-        Registrar
-      </button>
-      <!-- #endregion Boton Registro-->
+      <!-- #region Clave -->
+      <div class="form-group control-clave">
+        <label>Clave</label>
+        <input
+          class="form-control"
+          type="password"
+          placeholder="******"
+          formControlName="clave"
+        />
+      </div>
+      <!-- #endregion Clave -->
 
-      <!--
-    <button class="btn btn-primary boton-limpiar" (click)="limpiar()">
-      Limpiar
-    </button>
-    --></div>
-  </form>
-  <!-- #endregion Formulario -->
+      <!-- #region Boton Alta -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Alta -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Alta -->
+  </div>
+
+  <div *ngIf="modoModificar === true && empleado !== undefined">
+    <!-- #region Formulario Modificar -->
+    <form [formGroup]="formModificar">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de empleado</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
+      </div>
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="cuil"
+            />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{
+              fotoBlob === undefined && empleado.foto === undefined
+                ? "Tomar foto"
+                : "Cambiar foto"
+            }}
+          </button>
+          <img [src]="fotoBlob === undefined ? empleado.foto : fotoBlob" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo de empleado</label>
+        <select class="form-control" formControlName="tipo">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let item of tiposEmpleados" [value]="item">
+            {{ item | capitalize }}
+          </option>
+        </select>
+      </div>
+      <!-- #endregion Tipo -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Boton Modificar -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Modificar -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Modificar -->
+  </div>
+
+  <div *ngIf="modoBaja === true && empleado !== undefined">
+    <!-- #region Formulario Baja -->
+    <form [formGroup]="formBaja">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de empleado</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
+      </div>
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="cuil"
+            />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img class="img-baja" [src]="empleado.foto" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo de empleado</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          formControlName="tipo"
+        />
+      </div>
+      <!-- #endregion Tipo -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Boton Baja -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Baja -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Baja -->
+  </div>
 </div>

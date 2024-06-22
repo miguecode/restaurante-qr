@@ -1,63 +1,107 @@
 .formulario-container {
-  border: 2px solid white;
-  border-radius: 15px;
-  padding: 5px;
+  background-color: lightgrey;
+  border-radius: 5px;
+  padding: 7px;
 }
 
 input {
   width: 100%;
 }
 label {
-  color: orange;
+  color: black;
   font-size: 18px;
 }
+img {
+  height: 70px;
+  width: 70px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 2px solid lightsalmon;
+}
 
-.area-a,
-.area-b,
-.area-c {
+.img-baja {
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.area {
   display: flex;
   flex-direction: row;
 }
 
-.nombre,
-.apellido,
-.edad,
-.dni,
-.cuil,
-.foto,
-.tipo-empleado,
-.correo,
-.clave,
-.botones-registro {
-  padding: 8px;
-}
-
-.nombre,
-.apellido,
-.cuil,
-.foto,
-.tipo-empleado,
-.correo,
-.clave {
+// #region Controles
+.control-id,
+.control-nombre,
+.control-apellido,
+.control-dni,
+.control-cuil,
+.control-foto,
+.control-tipo,
+.control-correo,
+.control-clave,
+.control-accion,
+.control-cancelar {
+  padding: 5px;
   width: 100%;
 }
 
-.edad input {
-  width: 55px;
-}
-.dni input {
-  width: 115px;
-}
-
-.boton-registro,
-.boton-limpiar {
-  height: 55px;
+.control-foto {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
 
-.boton-registro {
-  //width: 205px; // usar solo si esta habilitado boton-limpiar
+.control-foto button {
+  border: 0px solid black;
+  color: white;
+  height: 70px;
+  width: 299px;
+  margin-right: 1px;
+}
+
+.control-accion button,
+.control-cancelar button {
+  border: 0px solid black;
+  color: white;
+  height: 40px;
   width: 100%;
 }
-.boton-limpiar {
-  width: 80px;
+
+.control-foto button {
+  background-color: orange;
 }
+
+.control-accion button {
+  background-color: green;
+}
+
+.control-cancelar button {
+  background-color: red;
+}
+// #endregion Controles
+
+// #region Spinner
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  width: 25px;
+  height: 25px;
+  border: 5px solid #fff;
+  border-bottom-color: grey;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+// #endregion Spinner

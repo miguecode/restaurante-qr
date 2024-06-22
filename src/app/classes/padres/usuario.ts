@@ -6,6 +6,7 @@ export class Usuario {
   public foto: string;
   public file: any; // Seguramente este file sea un blob, luego en el servicio cloud-storage de alguna manera lo parsea a formato imagen
   public rol: string;
+  public habilitado: boolean;
   public correo: string;
   public clave: string;
 
@@ -17,6 +18,7 @@ export class Usuario {
     this.dni = 0;
     this.foto = '';
     this.file = undefined;
+    this.habilitado = false;
     this.correo = '';
     this.clave = '';
   }
@@ -29,6 +31,9 @@ export class Usuario {
   }
   setDni(dni: number) {
     this.dni = dni;
+  }
+  setUrlFoto(urlFoto: string) {
+    this.foto = urlFoto;
   }
   setFile(file: any) {
     this.file = file;

@@ -5,7 +5,7 @@
 - Dongo Huaman Juan Pablo
 - Fernández Santiago
 
-🔗 Link al Trello del proyecto: 
+🔗 Link al Trello del proyecto: https://trello.com/b/K1IVsIYR/prueba-sp-pps
 
 ## 🛠️ Responsabilidades de cada Integrante (08/06)
 
@@ -13,7 +13,6 @@
 - Creación del proyecto base
 - Creación del diseño del Ícono y del Splash
 - Alta A (Dueño/Supervisor)
-- Código QR E (De Ingreso al Local)
 - Rama: 'miguel'
 #### 📅 Fecha de Inicio: 10/06
 #### ⌛ Fecha de Finalización: 19/06
@@ -21,7 +20,6 @@
 ### 🌟 Dongo Huaman Juan Pablo (Beta)
 - Creación del diseño del Ícono y del Splash
 - Alta B (Empleados)
-- Código QR F (De la Mesa)
 - Rama: 'juanpablo'
 #### 📅 Fecha de Inicio: 08/06
 #### ⌛ Fecha de Finalización: 13/06
@@ -29,7 +27,6 @@
 ### 🌟 Fernández Santiago (Gamma)
 - Creación del diseño del Ícono y del Splash
 - Alta C (Clientes)
-- Código QR G (De la Propina)
 - Rama: 'santiago'
 #### 📅 Fecha de Inicio: 10/06
 #### ⌛ Fecha de Finalización: 20/06
@@ -92,5 +89,34 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - ✔️ Estructura de archivos y rutas para los ABM
 
 ## 📊 Informe (20/06)
-- ✔️ Todas las altas funcionales
+- ✔️ Todas las altas funcionales (excepto Producto)
 - ✔️ Listado de usuarios preliminar
+- ✔️ Corrección en los tamaños de los elementos para pantallas más pequeñas
+
+
+-- --
+
+
+## 🛠️ Actualización de responsabilidades e informe (21/06)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Correcciones de la entrega anterior y estructura del proyecto
+- ✔️ Alta A (Dueño y Supervisor)
+- ✔️ ABM para Dueños y Supervisores
+- Alta E (Producto)
+- ABM para Producto
+#### 📅 Fecha de Inicio: 19/06
+#### ⌛ Fecha de Finalización: Pendiente
+
+### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Alta B (Empleado)  
+- ✔️ Alta D (Mesa) 
+- ✔️ ABM Empleado
+- ✔️ ABM Mesa
+#### 📅 Fecha de Inicio: 16/06
+#### ⌛ Fecha de Finalización: 21/06
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Alta C (Cliente)
+- ABM Cliente
+#### 📅 Fecha de Inicio: 21/06
+#### ⌛ Fecha de Finalización: Pendiente

@@ -1,7 +1,7 @@
 import { NgFor, NgIf } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -22,7 +22,6 @@ import { MesaService } from 'src/app/services/mesa.service';
   standalone: true,
   imports: [
     IonFooter,
-    RouterLink,
     IonLabel,
     IonButton,
     FormsModule,
@@ -34,9 +33,10 @@ import { MesaService } from 'src/app/services/mesa.service';
     IonToolbar,
     IonTitle,
     IonContent,
-    FormularioMesaComponent,
+    RouterLink,
     NgFor,
     NgIf,
+    FormularioMesaComponent,
   ],
 })
 export class AbmMesaComponent implements OnInit {
@@ -46,7 +46,7 @@ export class AbmMesaComponent implements OnInit {
   esBaja: boolean = false;
   esModificar: boolean = false;
 
-  constructor(private mesaService: MesaService, private router: Router) {}
+  constructor(private mesaService: MesaService) {}
 
   ngOnInit() {
     this.mesaService.traerTodosObservable().subscribe((l) => {
