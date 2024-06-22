@@ -1,6 +1,7 @@
 .formulario-container {
   background-color: lightgrey;
-  padding: 5px;
+  border-radius: 5px;
+  padding: 7px;
 }
 
 input {
@@ -11,12 +12,16 @@ label {
   font-size: 18px;
 }
 img {
-  margin-top: 10px;
-  margin-bottom: 10px;
-  height: 150px;
-  width: 150px;
+  height: 70px;
+  width: 70px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 2px solid lightsalmon;
+}
+
+.img-baja {
   border-radius: 50%;
-  border: 2px solid white;
+  border: 2px solid black;
 }
 
 .area {
@@ -26,12 +31,17 @@ img {
 
 // #region Controles
 .control-id,
-.control-tipo,
-.control-cantidad-maxima,
+.control-nombre,
+.control-apellido,
+.control-dni,
+.control-cuil,
 .control-foto,
+.control-tipo,
+.control-correo,
+.control-clave,
 .control-accion,
 .control-cancelar {
-  padding: 10px;
+  padding: 5px;
   width: 100%;
 }
 
@@ -41,7 +51,14 @@ img {
   text-align: left;
 }
 
-.control-foto button,
+.control-foto button {
+  border: 0px solid black;
+  color: white;
+  height: 70px;
+  width: 299px;
+  margin-right: 1px;
+}
+
 .control-accion button,
 .control-cancelar button {
   border: 0px solid black;

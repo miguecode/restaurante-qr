@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { FirestoreService } from './firebase/firestore.service';
-import { CloudStorageService } from './firebase/cloud-storage.service';
 import { Duenio } from '../classes/duenio';
-import { map } from 'rxjs';
+import { AuthService } from './firebase/auth.service';
+import { CloudStorageService } from './firebase/cloud-storage.service';
+import { firstValueFrom, isObservable, map } from 'rxjs';
+import { sendEmailVerification } from '@firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -14,6 +16,7 @@ export class DuenioService {
   private flagObservable: boolean = false;
 
   constructor(
+    private authService: AuthService,
     private firestoreService: FirestoreService,
     private cloudStorageService: CloudStorageService
   ) {
@@ -36,6 +39,20 @@ export class DuenioService {
   }
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
+  }
+  private async registrarAuth(duenio: Duenio) {
+    try {
+      const userCred = await this.authService.registrar(
+        duenio.correo,
+        duenio.clave
+      );
+      //await sendEmailVerification(userCred.user);
+    } catch (e) {
+      throw new Error('Ya existe un usuario con ese correo');
+    }
+  }
+  private cerrarSesionAuth() {
+    return this.authService.cerrarSesion();
   }
   private async setId(duenio: Duenio) {
     const id = await this.traerProximoId();
@@ -63,23 +80,8 @@ export class DuenioService {
     duenio.foto = fotoUrl;
   }
   private async modificarFoto(duenio: Duenio) {
-    const nombreArchivo = duenio.id.toString();
-
-    if (duenio.file !== undefined) {
-      await this.cloudStorageService.subirArchivoUri(
-        this.carpeta,
-        nombreArchivo,
-        duenio.file
-      );
-
-      const fotoUrl = await this.cloudStorageService.traerUrlPorNombre(
-        this.carpeta,
-        nombreArchivo
-      );
-      if (fotoUrl === undefined) {
-        throw new Error('Hubo un problema al recuperar la URL de la foto');
-      }
-      duenio.foto = fotoUrl;
+    if (duenio.file !== undefined && duenio.file !== null) {
+      await this.insertarFoto(duenio);
     }
   }
   private async eliminarFoto(duenio: Duenio) {
@@ -88,36 +90,67 @@ export class DuenioService {
   }
   private async insertarDoc(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);
+    console.log(doc);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
-  public async modificarDoc(duenio: Duenio) {
+  private async modificarDoc(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }
-  public async eliminarDoc(duenio: Duenio) {
+  private async eliminarDoc(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);
     await this.firestoreService.eliminar(this.col, doc.id);
   }
+  private eliminarAuth() {
+    return this.authService.eliminar();
+  }
 
   public async alta(duenio: Duenio) {
-    await this.setId(duenio);
-    await this.insertarFoto(duenio); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
-    await this.insertarDoc(duenio);
-    return duenio; // Esta linea se puede borrar, solo la use para debugear
+    try {
+      await this.registrarAuth(duenio);
+      await this.cerrarSesionAuth();
+      await this.setId(duenio);
+      await this.insertarFoto(duenio); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
+      await this.insertarDoc(duenio);
+      return duenio; // Esta linea se puede borrar, solo la use para debugear
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
   }
   public async baja(duenio: Duenio) {
-    await this.eliminarFoto(duenio);
-    await this.eliminarDoc(duenio);
+    try {
+      await this.eliminarAuth();
+      await this.eliminarFoto(duenio);
+      await this.eliminarDoc(duenio);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
+  }
+  public async bajaLogica(duenio: Duenio) {
+    try {
+      duenio.habilitado = false;
+      await this.modificarDoc(duenio);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
   }
   public async modificar(duenio: Duenio) {
-    await this.modificarFoto(duenio);
-    await this.modificarDoc(duenio);
+    try {
+      await this.modificarFoto(duenio);
+      await this.modificarDoc(duenio);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
   }
 
   public traerTodosObservable() {
     return this.firestoreService
       .traerTodos(this.col)
-      .pipe(map((listaDocs) => listaDocs.map((m) => Duenio.parseDoc(m))));
+      .pipe(map((listaDocs) => listaDocs.map((e) => Duenio.parseDoc(e))));
   }
   public traerPorIdObservable(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);

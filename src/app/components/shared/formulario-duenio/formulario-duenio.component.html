@@ -1,64 +1,86 @@
-<div class="card formulario-container">
+<div class="formulario-container">
   <div *ngIf="modoAlta === true">
     <!-- #region Formulario Alta -->
     <form [formGroup]="formAlta">
-      <!-- #region Nombre -->
-      <div class="form-group control-nombre">
-        <label>Nombre</label>
-        <input class="form-control" type="text" formControlName="nombre" />
-      </div>
-      <!-- #endregion Nombre -->
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
 
-      <!-- #region Apellido -->
-      <div class="form-group control-apellido">
-        <label>Apellido</label>
-        <input class="form-control" type="text" formControlName="apellido" />
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
       </div>
-      <!-- #endregion Apellido -->
 
-      <!-- #region DNI -->
-      <div class="form-group control-dni">
-        <label>D.N.I</label>
-        <input class="form-control" type="number" formControlName="dni" />
-      </div>
-      <!-- #endregion DNI -->
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="dni" />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
 
-      <!-- #region CUIL -->
-      <div class="form-group control-cuil">
-        <label>CUIL</label>
-        <input class="form-control" type="number" formControlName="cuil" />
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="cuil" />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
       </div>
-      <!-- #endregion CUIL -->
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
+          </button>
+          <img [src]="fotoBlob" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
 
       <!-- #region Correo -->
       <div class="form-group control-correo">
         <label>Correo</label>
-        <input class="form-control" type="email" formControlName="correo" />
+        <input
+          class="form-control"
+          type="text"
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
       </div>
       <!-- #endregion Correo -->
 
       <!-- #region Clave -->
       <div class="form-group control-clave">
         <label>Clave</label>
-        <input class="form-control" type="password" formControlName="clave" />
+        <input
+          class="form-control"
+          type="password"
+          placeholder="******"
+          formControlName="clave"
+        />
       </div>
       <!-- #endregion Clave -->
-
-      <!-- #region Cambiar foto -->
-      <div class="form-group control-foto">
-        <label>Foto</label>
-        <div style="text-align: center">
-          <img *ngIf="fotoBlob !== undefined" [src]="fotoBlob" />
-        </div>
-        <button
-          class="btn btn-primary"
-          [disabled]="procesando"
-          (click)="tomarFoto()"
-        >
-          {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
-        </button>
-      </div>
-      <!-- #endregion Cambiar Foto -->
 
       <!-- #region Boton Alta -->
       <div class="form-group control-accion">
@@ -108,41 +130,80 @@
       </div>
       <!-- #endregion Id -->
 
-      <div class="form-group control-nombre">
-        <label>Nombre</label>
-        <input class="form-control" type="text" formControlName="nombre" />
-      </div>
-      <!-- #endregion Nombre -->
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
 
-      <!-- #region Apellido -->
-      <div class="form-group control-apellido">
-        <label>Apellido</label>
-        <input class="form-control" type="text" formControlName="apellido" />
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
       </div>
-      <!-- #endregion Apellido -->
 
-      <!-- #region Cambiar foto -->
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="cuil"
+            />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
+      </div>
+
+      <!-- #region Foto -->
       <div class="form-group control-foto">
         <label>Foto</label>
-        <div style="text-align: center">
-          <img
-            *ngIf="fotoBlob !== undefined || duenio.foto !== undefined"
-            [src]="fotoBlob === undefined ? duenio.foto : fotoBlob"
-          />
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{
+              fotoBlob === undefined && duenio.foto === undefined
+                ? "Tomar foto"
+                : "Cambiar foto"
+            }}
+          </button>
+          <img [src]="fotoBlob === undefined ? duenio.foto : fotoBlob" />
         </div>
-        <button
-          class="btn btn-primary"
-          [disabled]="procesando"
-          (click)="tomarFoto()"
-        >
-          {{
-            fotoBlob === undefined && duenio.foto === undefined
-              ? "Tomar foto"
-              : "Cambiar foto"
-          }}
-        </button>
       </div>
-      <!-- #endregion Cambiar Foto -->
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+      </div>
+      <!-- #endregion Correo -->
 
       <!-- #region Boton Modificar -->
       <div class="form-group control-accion">
@@ -182,7 +243,7 @@
     <form [formGroup]="formBaja">
       <!-- #region Id -->
       <div class="form-group control-id">
-        <label>ID</label>
+        <label>Numero de duenio</label>
         <input
           class="form-control"
           type="number"
@@ -192,74 +253,73 @@
       </div>
       <!-- #endregion Id -->
 
-      <!-- #region Nombre -->
-      <div class="form-group control-nombre">
-        <label>Nombre</label>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="nombre"
-          readonly
-        />
-      </div>
-      <!-- #endregion Nombre -->
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
 
-      <!-- #region Apellido -->
-      <div class="form-group control-apellido">
-        <label>Apellido</label>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="apellido"
-          readonly
-        />
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
       </div>
-      <!-- #endregion Apellido -->
 
-      <!-- #region DNI -->
-      <div class="form-group control-dni">
-        <label>D.N.I</label>
-        <input
-          class="form-control"
-          type="number"
-          formControlName="dni"
-          readonly
-        />
-      </div>
-      <!-- #endregion DNI -->
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
 
-      <!-- #region CUIL -->
-      <div class="form-group control-cuil">
-        <label>CUIL</label>
-        <input
-          class="form-control"
-          type="number"
-          formControlName="cuil"
-          readonly
-        />
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="cuil"
+            />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
       </div>
-      <!-- #endregion CUIL -->
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img class="img-baja" [src]="duenio.foto" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
 
       <!-- #region Correo -->
       <div class="form-group control-correo">
         <label>Correo</label>
         <input
           class="form-control"
-          type="email"
-          formControlName="correo"
+          type="text"
           readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
         />
       </div>
       <!-- #endregion Correo -->
-
-      <!-- #region foto -->
-      <div class="form-group control-foto">
-        <label>Foto</label>
-        <div style="text-align: center">
-          <img [src]="duenio.foto" />
-        </div>
-      </div>
-      <!-- #endregion foto -->
 
       <!-- #region Boton Baja -->
       <div class="form-group control-accion">

@@ -25,6 +25,7 @@ export class Duenio extends Usuario {
       cuil: duenio.cuil.toString(),
       foto: duenio.foto,
       rol: duenio.rol,
+      habilitado: duenio.habilitado,
       correo: duenio.correo,
     };
   }
@@ -37,6 +38,7 @@ export class Duenio extends Usuario {
     duenio.cuil = Number(doc.cuil);
     duenio.foto = doc.foto;
     duenio.rol = doc.rol;
+    duenio.habilitado = JSON.parse(doc.habilitado);
     duenio.correo = doc.correo;
     return duenio;
   }
@@ -49,6 +51,7 @@ export class Duenio extends Usuario {
     duenio.cuil = Number(doc['cuil']);
     duenio.foto = doc['foto'];
     duenio.rol = doc['rol'];
+    duenio.habilitado = doc['habilitado'];
     duenio.correo = doc['correo'];
     return duenio;
   }

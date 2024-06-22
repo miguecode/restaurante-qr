@@ -49,10 +49,10 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'abm-mesa',
+    path: 'abm-empleado',
     loadComponent: () =>
-      import('./components/pages/abm-mesa/abm-mesa.component').then(
-        (m) => m.AbmMesaComponent
+      import('./components/pages/abm-empleado/abm-empleado.component').then(
+        (m) => m.AbmEmpleadoComponent
       ),
   },
   {

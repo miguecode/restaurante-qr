@@ -1,21 +1,19 @@
-import { NgFor, NgIf } from '@angular/common';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
-  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
-import { Camera, CameraResultType } from '@capacitor/camera';
 import { Duenio } from 'src/app/classes/duenio';
-import { Swalert } from 'src/app/classes/utils/swalert.class';
-import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { DuenioService } from 'src/app/services/duenio.service';
-import { IonButton } from '@ionic/angular/standalone';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { Swalert } from 'src/app/classes/utils/swalert.class';
+import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
+import { JsonPipe, NgFor, NgIf } from '@angular/common';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
+import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-formulario-duenio',
@@ -23,12 +21,14 @@ import { IonButton } from '@ionic/angular/standalone';
   styleUrls: ['./formulario-duenio.component.scss'],
   standalone: true,
   imports: [
-    IonButton,
+    IonContent,
     FormsModule,
     ReactiveFormsModule,
-    NgIf,
-    NgFor,
+    QrScannerComponent,
+    JsonPipe,
     CapitalizePipe,
+    NgFor,
+    NgIf,
   ],
 })
 export class FormularioDuenioComponent implements OnInit {
@@ -41,8 +41,10 @@ export class FormularioDuenioComponent implements OnInit {
   formAlta!: FormGroup;
   formModificar!: FormGroup;
   formBaja!: FormGroup;
+  tiposDuenios: string[] = [];
   procesando: boolean = false;
-  fotoBlob: any;
+
+  fotoBlob: any = undefined;
 
   get id() {
     if (this.modoModificar) {
@@ -55,54 +57,32 @@ export class FormularioDuenioComponent implements OnInit {
       return this.formAlta.get('nombre') as FormControl;
     } else if (this.modoModificar) {
       return this.formModificar.get('nombre') as FormControl;
-    } else {
-      return this.formBaja.get('nombre') as FormControl;
     }
+    return this.formBaja.get('nombre') as FormControl;
   }
   get apellido() {
     if (this.modoAlta) {
       return this.formAlta.get('apellido') as FormControl;
     } else if (this.modoModificar) {
       return this.formModificar.get('apellido') as FormControl;
-    } else {
-      return this.formBaja.get('apellido') as FormControl;
     }
+    return this.formBaja.get('apellido') as FormControl;
   }
   get dni() {
     if (this.modoAlta) {
       return this.formAlta.get('dni') as FormControl;
     } else if (this.modoModificar) {
       return this.formModificar.get('dni') as FormControl;
-    } else {
-      return this.formBaja.get('dni') as FormControl;
     }
+    return this.formBaja.get('dni') as FormControl;
   }
   get cuil() {
     if (this.modoAlta) {
       return this.formAlta.get('cuil') as FormControl;
     } else if (this.modoModificar) {
       return this.formModificar.get('cuil') as FormControl;
-    } else {
-      return this.formBaja.get('cuil') as FormControl;
     }
-  }
-  get correo() {
-    if (this.modoAlta) {
-      return this.formAlta.get('correo') as FormControl;
-    } else if (this.modoModificar) {
-      return this.formModificar.get('correo') as FormControl;
-    } else {
-      return this.formBaja.get('correo') as FormControl;
-    }
-  }
-  get clave() {
-    if (this.modoAlta) {
-      return this.formAlta.get('clave') as FormControl;
-    } else if (this.modoModificar) {
-      return this.formModificar.get('clave') as FormControl;
-    } else {
-      return this.formBaja.get('clave') as FormControl;
-    }
+    return this.formBaja.get('cuil') as FormControl;
   }
   get foto() {
     if (this.modoAlta) {
@@ -112,122 +92,103 @@ export class FormularioDuenioComponent implements OnInit {
     }
     return this.formBaja.get('foto') as FormControl;
   }
+  get correo() {
+    if (this.modoAlta) {
+      return this.formAlta.get('correo') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('correo') as FormControl;
+    }
+    return this.formBaja.get('correo') as FormControl;
+  }
+  get clave() {
+    if (this.modoAlta) {
+      return this.formAlta.get('clave') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('clave') as FormControl;
+    }
+    return this.formBaja.get('clave') as FormControl;
+  }
 
   constructor(private duenioService: DuenioService) {}
 
   private crearFormGroup() {
     if (this.modoAlta) {
       this.formAlta = new FormGroup({
-        nombre: new FormControl(null, [
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        dni: new FormControl(0, [
           Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
+          Validators.min(10000000),
+          Validators.max(99999999),
         ]),
-        apellido: new FormControl(null, [
+        cuil: new FormControl(0, [
           Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
-        ]),
-        dni: new FormControl(null, [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(7),
-          Validators.maxLength(9),
-        ]),
-        cuil: new FormControl(null, [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(10),
-          Validators.maxLength(12),
+          Validators.min(10000000000),
+          Validators.max(99999999999),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        correo: new FormControl(null, [
+        tipo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.email]),
+        clave: new FormControl('', [
           Validators.required,
-          Validators.email,
-          Validators.required,
+          Validators.min(6),
+          Validators.max(30),
         ]),
-        clave: new FormControl(null, [
+      });
+    } else if (this.modoModificar) {
+      this.formModificar = new FormGroup({
+        id: new FormControl(0, []),
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        dni: new FormControl(0, [
           Validators.required,
-          Validators.minLength(6),
+          Validators.min(10000000),
+          Validators.max(99999999),
         ]),
+        cuil: new FormControl(0, [
+          Validators.required,
+          Validators.min(10000000000),
+          Validators.max(99999999999),
+        ]),
+        foto: new FormControl(undefined, [Validators.required]),
+        tipo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.email]),
       });
     } else if (this.modoBaja) {
       this.formBaja = new FormGroup({
         id: new FormControl(0, []),
-        nombre: new FormControl(null, [
+        nombre: new FormControl('', [Validators.required]),
+        apellido: new FormControl('', [Validators.required]),
+        dni: new FormControl(0, [
           Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
+          Validators.min(10000000),
+          Validators.max(99999999),
         ]),
-        apellido: new FormControl(null, [
+        cuil: new FormControl(0, [
           Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
-        ]),
-        dni: new FormControl(null, [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(7),
-          Validators.maxLength(9),
-        ]),
-        cuil: new FormControl(null, [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(10),
-          Validators.maxLength(12),
+          Validators.min(10000000000),
+          Validators.max(99999999999),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        correo: new FormControl(null, [
-          Validators.required,
-          Validators.email,
-          Validators.required,
-        ]),
+        tipo: new FormControl('', [Validators.required]),
+        correo: new FormControl('', [Validators.required, Validators.email]),
       });
+    }
 
-      if (this.duenio !== undefined) {
-        this.id.setValue(this.duenio.id);
-        this.nombre.setValue(this.duenio.nombre);
-        this.apellido.setValue(this.duenio.apellido);
-        this.dni.setValue(this.duenio.dni);
-        this.cuil.setValue(this.duenio.cuil);
-        this.correo.setValue(this.duenio.correo);
-      }
-    } else if (this.modoModificar) {
-      console.log(this.duenio);
-
-      this.formModificar = new FormGroup({
-        id: new FormControl(0, []),
-        nombre: new FormControl(null, [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
-        ]),
-        apellido: new FormControl(null, [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
-        ]),
-      });
-
-      if (this.duenio !== undefined) {
-        this.id.setValue(this.duenio.id);
-        this.nombre.setValue(this.duenio.nombre);
-        this.apellido.setValue(this.duenio.apellido);
-        // this.dni.setValue(this.duenio.dni);
-        // this.cuil.setValue(this.duenio.cuil);
-        // this.correo.setValue(this.duenio.correo);
-        // this.foto.setValue(this.duenio.foto);
-      }
+    if (this.duenio !== undefined) {
+      this.id.setValue(this.duenio.id);
+      this.nombre.setValue(this.duenio.nombre);
+      this.apellido.setValue(this.duenio.apellido);
+      this.dni.setValue(this.duenio.dni);
+      this.cuil.setValue(this.duenio.cuil);
+      this.correo.setValue(this.duenio.correo);
     }
   }
   private getDuenio() {
     let duenio = new Duenio();
+    if ((this.modoModificar || this.modoBaja) && this.duenio !== undefined) {
+      duenio = this.duenio;
+    }
     if (this.modoModificar || this.modoBaja) {
       duenio.setId(this.id.value);
     }
@@ -235,25 +196,27 @@ export class FormularioDuenioComponent implements OnInit {
     duenio.setApellido(this.apellido.value);
     duenio.setDni(this.dni.value);
     duenio.setCuil(this.cuil.value);
-    duenio.setCorreo(this.correo.value);
     duenio.setFile(this.foto.value);
+    if ((this.modoModificar || this.modoBaja) && this.duenio !== undefined) {
+      duenio.setUrlFoto(this.duenio.foto);
+    }
+    duenio.setCorreo(this.correo.value);
+    if (this.modoAlta) {
+      duenio.setClave(this.clave.value);
+    }
     return duenio;
   }
   private async alta() {
-    const duenio = await this.duenioService.alta(this.getDuenio());
-    console.log(duenio);
-    Swalert.toastSuccess('Alta realizada exitosamente');
-  }
-  private async modificar() {
-    console.log('...');
-    const duenio = await this.duenioService.modificar(this.getDuenio());
-    console.log(duenio);
-    Swalert.toastSuccess('Modificación realizada exitosamente');
+    await this.duenioService.alta(this.getDuenio());
+    await Swalert.toastSuccess('Alta realizada exitosamente');
   }
   private async baja() {
-    const duenio = await this.duenioService.baja(this.getDuenio());
-    console.log(duenio);
-    Swalert.toastSuccess('Baja realizada exitosamente');
+    await this.duenioService.bajaLogica(this.getDuenio());
+    await Swalert.toastSuccess('Baja realizada exitosamente');
+  }
+  private async modificar() {
+    await this.duenioService.modificar(this.getDuenio());
+    await Swalert.toastSuccess('Modificacion realizada exitosamente');
   }
 
   public ngOnInit() {
@@ -283,8 +246,10 @@ export class FormularioDuenioComponent implements OnInit {
       }
     } catch (e: any) {
       console.log(e.message);
-      Swalert.toastError(e.message);
     }
+  }
+  public recibirDataDniCuilQR($event: string) {
+    this.nombre.setValue($event);
   }
 
   public async accion() {
@@ -294,14 +259,9 @@ export class FormularioDuenioComponent implements OnInit {
       if (this.modoAlta) {
         await this.alta();
       } else if (this.modoModificar) {
-        console.log('Estoy aca');
         await this.modificar();
       } else if (this.modoBaja) {
         await this.baja();
-      } else {
-        throw new Error(
-          'Es necesario especificar por Input si el formulario es para Alta o Baja o Modificación'
-        );
       }
 
       setTimeout(() => {
@@ -309,7 +269,7 @@ export class FormularioDuenioComponent implements OnInit {
       }, 1500);
     } catch (e: any) {
       console.log(e.message);
-      Swalert.toastError(e.message);
+      await Swalert.toastError(e.message);
     } finally {
       this.procesando = false;
     }
@@ -317,23 +277,13 @@ export class FormularioDuenioComponent implements OnInit {
 
   public limpiar() {
     this.formAlta.reset();
-    this.formModificar.reset();
-    this.formBaja.reset();
-    this.nombre.setValue(undefined);
-    this.apellido.setValue(undefined);
-    this.dni.setValue(undefined);
-    this.cuil.setValue(undefined);
-    this.correo.setValue(undefined);
+    this.nombre.setValue('');
+    this.apellido.setValue('');
+    this.dni.setValue(0);
+    this.cuil.setValue(0);
     this.foto.setValue(undefined);
-  }
-
-  private validarPalabra(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const valid =
-        /^[a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+)*$/.test(
-          control.value
-        );
-      return valid ? null : { invalidName: true };
-    };
+    this.fotoBlob = undefined;
+    this.correo.setValue('');
+    this.clave.setValue('');
   }
 }

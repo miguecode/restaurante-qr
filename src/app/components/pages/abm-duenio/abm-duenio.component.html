@@ -2,12 +2,14 @@
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
-      <ion-title *ngIf="!esAlta && !esModificar && !esBaja">
-        ABM Dueños
-      </ion-title>
-      <ion-title *ngIf="esAlta">Alta Dueño</ion-title>
-      <ion-title *ngIf="esModificar">Modificar Dueño</ion-title>
-      <ion-title *ngIf="esBaja">Baja Dueño</ion-title>
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <ion-title> ABM duenios </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta duenio</ion-title>
+      <ion-title *ngIf="esModificar">Modificar duenio</ion-title>
+      <ion-title *ngIf="esBaja">Baja duenio</ion-title>
+
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
           Alta
@@ -26,12 +28,14 @@
         <div *ngFor="let item of lista">
           <div class="card">
             <label style="text-align: center">{{ item.id }}</label>
-            <label>Nombre: {{ item.nombre }}</label>
-            <label>Apellido: {{ item.apellido }}</label>
-            <label>DNI: {{ item.dni }}</label>
-            <label>Cuil: {{ item.cuil }}</label>
-            <label>Correo: {{ item.correo }}</label>
+            <label>NOMBRE:{{ item.nombre }}</label>
+            <label>APELLIDO:{{ item.apellido }}</label>
+            <label>DNI:{{ item.dni }}</label>
+            <label>CUIL:{{ item.cuil }}</label>
             <img [src]="item.foto" />
+            <label>ROL:{{ item.rol }}</label>
+            <label>HABILITADO:{{ item.habilitado }}</label>
+            <label>CORREO:{{ item.correo }}</label>
             <button
               class="btn btn-secondary boton-modificar"
               (click)="duenioSeleccionado = item; esModificar = true"

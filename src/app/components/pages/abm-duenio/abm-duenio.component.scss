@@ -1,11 +1,11 @@
 .page-container {
-  padding: 15px;
+  padding: 10px;
 }
 
 // #region Header
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 }
@@ -31,24 +31,22 @@ img {
   height: 70px;
   width: 70px;
   border-radius: 50%;
-  top: 5px;
-  right: 5px;
+  top: 12px;
+  right: 12px;
   border: 2px solid black;
 }
 
 .card {
   background-color: lightgrey;
   color: black;
-  padding: 10px;
+  padding: 12px;
   margin-bottom: 15px;
-  height: 150px;
+  height: 240px;
 }
 
 .card button {
   position: absolute;
-  bottom: 5px;
   width: auto;
-  margin-bottom: 0px;
 }
 // #endregion Listado
 
@@ -62,17 +60,21 @@ img {
 
 .boton-alta {
   background-color: green;
+  position: absolute;
+  top: 10px;
+  right: 10px;
   width: 100px;
-  margin-right: 7px;
 }
 
 .boton-modificar {
   background-color: orange;
-  right: 5px;
+  right: 12px;
+  bottom: 12px;
 }
 
 .boton-baja {
   background-color: red;
-  left: 5px;
+  left: 12px;
+  bottom: 12px;
 }
 // #endregion Botones ABM
