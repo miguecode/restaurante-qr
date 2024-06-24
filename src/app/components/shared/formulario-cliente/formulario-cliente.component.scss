@@ -1,154 +1,107 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
-
-* {
-  box-sizing: border-box;
-  font-family: "Baloo 2", sans-serif;
-}
-
-.contenedor {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  justify-items: center;
-  align-content: center;
-}
-
-.wrapper {
-  width: 98%;
-  background: #1e1e1e;
-  backdrop-filter: blur(40px);
-  box-shadow: 0 0 10px rgba(0, 0, 0, .2);
-  color: #fff;
-  border-radius: 10px;
-  padding: 25px;
-
-  p {
-    text-align: center;
-  }
+.formulario-container {
+  background-color: lightgrey;
+  border-radius: 5px;
+  padding: 7px;
 }
 
 input {
   width: 100%;
 }
 label {
-  color: #b72026;
+  color: black;
   font-size: 18px;
-  font-weight: bold;
+}
+img {
+  height: 70px;
+  width: 70px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 2px solid lightsalmon;
 }
 
-.area-a,
-.area-b,
-.area-c {
+.img-baja {
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.area {
   display: flex;
   flex-direction: row;
 }
 
-.nombre,
-.apellido,
-.edad,
-.dni,
-.cuil,
-.foto,
-.tipo-empleado,
-.correo,
-.clave,
-.botones-registro {
-  padding: 8px;
-}
-
-.nombre,
-.apellido,
-.cuil,
-.foto,
-.tipo-empleado,
-.correo,
-.clave {
-  width: 100%;
-}
-
-.edad input {
-  width: 55px;
-}
-.dni input {
-  width: 115px;
-}
-
-#btn-registro {
-  color: #fff;
-  --background: #b72026;
-  height: 5vh;
-  margin-top: 10px;
-  border-radius: 10px;
-  width: 100%;
-  text-align: center;
-  font-size: 25px;
-}
-#btn-registro:hover {
-  background-color: #991b1f;
-}
-
-.boton-limpiar {
-  width: 80px;
-}
-
-#btn-QR {
-  color: #fff;
-  --background: #3c3c3c;
-  height: 5vh;
-  margin-top: 15px;
-  border-radius: 10px;
-  width: 100%;
-  text-align: center;
-  font-size: 20px;
-}
-
-#btn-foto {
-  background: #860106;
+// #region Controles
+.control-id,
+.control-nombre,
+.control-apellido,
+.control-dni,
+.control-cuil,
+.control-foto,
+.control-tipo,
+.control-correo,
+.control-clave,
+.control-accion,
+.control-cancelar {
   padding: 5px;
-  border-radius: 3px 0px 0px 3px;
-}
-
-.foto input{
-  background: transparent;
-  border-color: #9a1b1f;
-  color: #acacac;
-  
-}
-
-.wrapper .form-group {
-  height: 50px;
-  margin: 0px 0px 30px 0px;
-}
-
-.form-group input {
-  width: 100%;
-  height: 100%;
-  background: transparent;
-  border: none;
-  outline: none;
-  // border: 2px solid #4a4a4a;
-  border: 2px solid #860106;
-  border-radius: 5px;
-  font-size: 16px;
-  color: #fff;
-  padding: 20px 45px 20px 20px;
-}
-
-.form-group input::placeholder {
-  color: #acacac;
-}
-
-.mensaje {
-  font-size: 20px;
   width: 100%;
 }
 
-.alert {
-  background-color: transparent;
-  border: none;
-  margin: 0px;
-  padding: 0px;
-  color: #ba6366;
-  margin-left: 7px;
+.control-foto {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
 }
+
+.control-foto button {
+  border: 0px solid black;
+  color: white;
+  height: 70px;
+  width: 299px;
+  margin-right: 1px;
+}
+
+.control-accion button,
+.control-cancelar button {
+  border: 0px solid black;
+  color: white;
+  height: 40px;
+  width: 100%;
+}
+
+.control-foto button {
+  background-color: orange;
+}
+
+.control-accion button {
+  background-color: green;
+}
+
+.control-cancelar button {
+  background-color: red;
+}
+// #endregion Controles
+
+// #region Spinner
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  width: 25px;
+  height: 25px;
+  border: 5px solid #fff;
+  border-bottom-color: grey;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+// #endregion Spinner

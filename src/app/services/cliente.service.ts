@@ -3,20 +3,27 @@ import { AuthService } from './firebase/auth.service';
 import { FirestoreService } from './firebase/firestore.service';
 import { CloudStorageService } from './firebase/cloud-storage.service';
 import { Cliente } from '../classes/cliente';
-import { firstValueFrom, isObservable } from 'rxjs';
+import { firstValueFrom, isObservable, map } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ClienteService {
-  private col = 'duenios';
-  private carpeta = 'duenios';
+  private col = 'clientes';
+  private carpeta = 'clientes';
+  private clientes: Cliente[] = [];
+  private flagObservable: boolean = false;
 
   constructor(
     private authService: AuthService,
     private firestoreService: FirestoreService,
     private cloudStorageService: CloudStorageService
-  ) {}
+  ) {
+    this.traerTodosObservable().subscribe((l) => {
+      this.clientes = l;
+      this.flagObservable = true;
+    });
+  }
 
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
@@ -79,29 +86,74 @@ export class ClienteService {
     }
   }
 
-  public traerTodosObservable() {
-    return this.firestoreService.traerTodos(this.col);
+  private async modificarFoto(cliente: Cliente) {
+    if (cliente.file !== undefined && cliente.file !== null) {
+      await this.insertarFoto(cliente);
+    }
   }
 
-  public async traerTodosPromise() {
-    const clienteObservable = this.traerTodosObservable();
-    if (isObservable(clienteObservable)) {
-      return firstValueFrom(clienteObservable);
-    }
+  private async modificarDoc(cliente: Cliente) {
+    const doc = Cliente.toDoc(cliente);
+    await this.firestoreService.modificar(this.col, doc.id, doc);
+  }
 
-    return undefined;
+  public async modificar(cliente: Cliente) {
+    try {
+      await this.modificarFoto(cliente);
+      await this.modificarDoc(cliente);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
+  }
+
+  private async eliminarFoto(cliente: Cliente) {
+    const nombreArchivo = cliente.id.toString();
+    await this.cloudStorageService.borrarArchivo(this.carpeta, nombreArchivo);
+  }
+
+  private async eliminarDoc(cliente: Cliente) {
+    const doc = Cliente.toDoc(cliente);
+    await this.firestoreService.eliminar(this.col, doc.id);
+  }
+
+  private eliminarAuth() {
+    return this.authService.eliminar();
+  }
+
+  public async baja(cliente: Cliente) {
+    try {
+      await this.eliminarAuth();
+      await this.eliminarFoto(cliente);
+      await this.eliminarDoc(cliente);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
+  }
+
+  public async bajaLogica(cliente: Cliente) {
+    try {
+      cliente.habilitado = false;
+      await this.modificarDoc(cliente);
+    } catch (e: any) {
+      await this.cerrarSesionAuth();
+      throw new Error(e.message);
+    }
+  }
+
+  public traerTodosObservable() {
+    return this.firestoreService
+      .traerTodos(this.col)
+      .pipe(map((listaDocs) => listaDocs.map((e) => Cliente.parseDoc(e))));
   }
 
   public traerPorIdObservable(cliente: Cliente) {
     const doc = Cliente.toDoc(cliente);
-    return this.firestoreService.traerPorId(doc.id, this.col);
+    return this.firestoreService
+      .traerPorId(doc.id, this.col)
+      .pipe(map((doc) => Cliente.parseDoc(doc)));
   }
-  public async traerPorIdPromise(cliente: Cliente) {
-    const clienteObservable = this.traerPorIdObservable(cliente);
-    if (isObservable(clienteObservable)) {
-      return firstValueFrom(clienteObservable);
-    }
 
-    return undefined;
-  }
+
 }

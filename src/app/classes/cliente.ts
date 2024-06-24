@@ -7,6 +7,11 @@ export class Cliente extends Usuario {
     super();
     this.correoVerificado = false;
   }
+
+  setId(id: number) {
+    this.id = id;
+  }
+
   static toDoc(cliente: Cliente) {
     return {
       id: cliente.id.toString(),
@@ -15,7 +20,7 @@ export class Cliente extends Usuario {
       dni: cliente.dni.toString(),
       foto: cliente.foto,
       rol: cliente.rol,
-      correoVerificado: cliente.correoVerificado.toString(),
+      habilitado: cliente.habilitado,
       correo: cliente.correo,
     };
   }
@@ -27,7 +32,8 @@ export class Cliente extends Usuario {
     cliente.dni = Number(doc.dni);
     cliente.foto = doc.foto;
     cliente.rol = doc.rol;
-    cliente.correoVerificado = JSON.parse(doc.correoVerificado);
+    cliente.habilitado = JSON.parse(doc.habilitado);
+    cliente.correo = doc.correo;
     cliente.correo = doc.correo;
     return cliente;
   }
@@ -39,7 +45,7 @@ export class Cliente extends Usuario {
     cliente.dni = Number(doc['dni']);
     cliente.foto = doc['foto'];
     cliente.rol = doc['rol'];
-    cliente.correoVerificado = JSON.parse(doc['correoVerificado']);
+    cliente.habilitado = doc['habilitado'];
     cliente.correo = doc['correo'];
     return cliente;
   }

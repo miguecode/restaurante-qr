@@ -50,9 +50,9 @@ export const routes: Routes = [
   },
   {
     path: 'abm-cliente',
-    loadChildren: () =>
-      import('./components/pages/abm-cliente/abm-cliente.routes').then(
-        (m) => m.routes
+    loadComponent: () =>
+      import('./components/pages/abm-clientes/abm-clientes.component').then(
+        (m) => m.AbmClientesComponent
       ),
   },
   {
