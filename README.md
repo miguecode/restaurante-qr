@@ -117,6 +117,6 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 ### 🌟 Santiago Fernández (Gamma)
 - ✔️ Alta C (Cliente)
-- ABM Cliente
+- ✔️ ABM Cliente
 #### 📅 Fecha de Inicio: 21/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 24/06
