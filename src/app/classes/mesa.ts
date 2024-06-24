@@ -7,6 +7,7 @@ export class Mesa {
   public tipo: string;
   public foto: string;
   public file: any;
+  public qr: string;
 
   public static TIPOS = ['vip', 'discapacitados', 'estandar'];
   public static M_VIP: string = Mesa.TIPOS[0];
@@ -20,6 +21,7 @@ export class Mesa {
     this.tipo = '';
     this.foto = '';
     this.file = undefined;
+    this.qr = '';
   }
 
   public static toDoc(mesa: Mesa) {
@@ -29,6 +31,7 @@ export class Mesa {
       cantidadMaxima: mesa.cantidadMaxima.toString(),
       tipo: mesa.tipo,
       foto: mesa.foto,
+      qr: mesa.qr,
     };
   }
   public static parseDoc(doc: any) {
@@ -38,6 +41,7 @@ export class Mesa {
     mesa.cantidadMaxima = Number(doc.cantidadMaxima);
     mesa.tipo = doc.tipo;
     mesa.foto = doc.foto;
+    mesa.qr = doc.qr;
     return mesa;
   }
   public static parseDocArray(doc: any) {
@@ -47,6 +51,7 @@ export class Mesa {
     mesa.cantidadMaxima = Number(doc['cantidadMaxima']);
     mesa.tipo = doc['tipo'];
     mesa.foto = doc['foto'];
+    mesa.qr = doc['qr'];
     return mesa;
   }
 

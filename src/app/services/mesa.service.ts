@@ -3,6 +3,7 @@ import { FirestoreService } from './firebase/firestore.service';
 import { CloudStorageService } from './firebase/cloud-storage.service';
 import { Mesa } from '../classes/mesa';
 import { map } from 'rxjs';
+import { ApiService } from './api/api.service';
 
 @Injectable({
   providedIn: 'root',
@@ -15,7 +16,8 @@ export class MesaService {
 
   constructor(
     private firestoreService: FirestoreService,
-    private cloudStorageService: CloudStorageService
+    private cloudStorageService: CloudStorageService,
+    private apiService: ApiService
   ) {
     this.traerTodosObservable().subscribe((l) => {
       this.mesas = l;
@@ -71,6 +73,29 @@ export class MesaService {
     const nombreArchivo = mesa.id.toString();
     await this.cloudStorageService.borrarArchivo(this.carpeta, nombreArchivo);
   }
+  private async insertarQr(mesa: Mesa) {
+    const nombreArchivo = mesa.id.toString() + '-' + 'qr';
+    const qrApi = await this.apiService.generarQrMesa(mesa);
+
+    await this.cloudStorageService.subirArchivoBase64(
+      this.carpeta,
+      nombreArchivo,
+      qrApi.base64
+    );
+
+    const qrUrl = await this.cloudStorageService.traerUrlPorNombre(
+      this.carpeta,
+      nombreArchivo
+    );
+    if (qrUrl === undefined) {
+      throw new Error('Hubo un problema al recuperar la URL del QR');
+    }
+    mesa.qr = qrUrl;
+  }
+  private async eliminarQr(mesa: Mesa) {
+    const nombreArchivo = mesa.id.toString() + '-' + 'qr';
+    await this.cloudStorageService.borrarArchivo(this.carpeta, nombreArchivo);
+  }
   private async insertarDoc(mesa: Mesa) {
     const doc = Mesa.toDoc(mesa);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
@@ -87,11 +112,13 @@ export class MesaService {
   public async alta(mesa: Mesa) {
     await this.setId(mesa);
     await this.insertarFoto(mesa); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
+    await this.insertarQr(mesa);
     await this.insertarDoc(mesa);
     return mesa; // Esta linea se puede borrar, solo la use para debugear
   }
   public async baja(mesa: Mesa) {
     await this.eliminarFoto(mesa);
+    await this.eliminarQr(mesa);
     await this.eliminarDoc(mesa);
   }
   public async modificar(mesa: Mesa) {

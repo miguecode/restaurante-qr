@@ -29,7 +29,8 @@
             <label>CANT-CLI: {{ item.cantidadClientes }}</label>
             <label>CANT-MAX: {{ item.cantidadMaxima }}</label>
             <label>TIPO: {{ item.tipo }}</label>
-            <img [src]="item.foto" />
+            <img class="img-qr" [src]="item.qr" />
+            <img class="img-foto" [src]="item.foto" />
             <button
               class="btn btn-secondary boton-modificar"
               (click)="mesaSeleccionada = item; esModificar = true"
