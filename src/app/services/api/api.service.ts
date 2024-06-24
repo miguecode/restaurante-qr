@@ -1,0 +1,27 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { Mesa } from 'src/app/classes/mesa';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class ApiService {
+  constructor() {}
+
+  public async generarQrMesa(mesa: Mesa) {
+    return new Promise<any>((resolver) => {
+      const URL_ENDPOINT = `https://quickchart.io/qr?format=base64&margin=1&text=${mesa.id}`;
+      let xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = () => {
+        if (xhttp.readyState === 4 && xhttp.status === 200) {
+          resolver({
+            png: `data:image/png;base64,${xhttp.responseText}`,
+            base64: xhttp.responseText,
+          });
+        }
+      };
+      xhttp.open('GET', URL_ENDPOINT, true);
+      xhttp.send();
+    });
+  }
+}

@@ -26,7 +26,7 @@
 // #endregion Footer
 
 // #region Listado
-img {
+.img-foto {
   position: absolute;
   height: 70px;
   width: 70px;
@@ -35,13 +35,22 @@ img {
   right: 12px;
   border: 2px solid black;
 }
+.img-qr {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  //border-radius: 50%;
+  bottom: 12px;
+  right: 40%;
+  border: 2px solid black;
+}
 
 .card {
   background-color: lightgrey;
   color: black;
   padding: 12px;
   margin-bottom: 15px;
-  height: 150px;
+  height: 180px;
 }
 
 .card button {
