@@ -9,6 +9,9 @@ export class Supervisor extends Usuario {
     this.cuil = 0;
   }
 
+  setId(id: number) {
+    this.id = id;
+  }
   setCuil(cuil: number) {
     this.cuil = cuil;
   }
@@ -22,6 +25,7 @@ export class Supervisor extends Usuario {
       cuil: supervisor.cuil.toString(),
       foto: supervisor.foto,
       rol: supervisor.rol,
+      habilitado: supervisor.habilitado,
       correo: supervisor.correo,
     };
   }
@@ -34,6 +38,7 @@ export class Supervisor extends Usuario {
     supervisor.cuil = Number(doc.cuil);
     supervisor.foto = doc.foto;
     supervisor.rol = doc.rol;
+    supervisor.habilitado = JSON.parse(doc.habilitado);
     supervisor.correo = doc.correo;
     return supervisor;
   }
@@ -46,6 +51,7 @@ export class Supervisor extends Usuario {
     supervisor.cuil = Number(doc['cuil']);
     supervisor.foto = doc['foto'];
     supervisor.rol = doc['rol'];
+    supervisor.habilitado = doc['habilitado'];
     supervisor.correo = doc['correo'];
     return supervisor;
   }

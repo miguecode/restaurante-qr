@@ -1,0 +1,94 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header">
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <ion-title> ABM duenios </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta duenio</ion-title>
+      <ion-title *ngIf="esModificar">Modificar duenio</ion-title>
+      <ion-title *ngIf="esBaja">Baja duenio</ion-title>
+
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
+          Alta
+        </button>
+      </div>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div *ngIf="!esAlta && !esModificar && !esBaja">
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of lista">
+          <div class="card">
+            <label style="text-align: center">{{ item.id }}</label>
+            <label>NOMBRE:{{ item.nombre }}</label>
+            <label>APELLIDO:{{ item.apellido }}</label>
+            <label>DNI:{{ item.dni }}</label>
+            <label>CUIL:{{ item.cuil }}</label>
+            <img [src]="item.foto" />
+            <label>ROL:{{ item.rol }}</label>
+            <label>HABILITADO:{{ item.habilitado }}</label>
+            <label>CORREO:{{ item.correo }}</label>
+            <button
+              class="btn btn-secondary boton-modificar"
+              (click)="duenioSeleccionado = item; esModificar = true"
+            >
+              Modificar
+            </button>
+            <button
+              class="btn btn-secondary boton-baja"
+              (click)="duenioSeleccionado = item; esBaja = true"
+            >
+              Baja
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+
+    <div *ngIf="esAlta">
+      <!-- #region Formulario Modo Alta -->
+      <app-formulario-duenio
+        [modoAlta]="true"
+        (handlerTerminado)="esAlta = false"
+      ></app-formulario-duenio>
+      <!-- #endregion Formulario Modo Alta -->
+    </div>
+
+    <div *ngIf="esModificar && duenioSeleccionado !== undefined">
+      <!-- #region Formulario Modo Modificar -->
+      <app-formulario-duenio
+        [modoModificar]="true"
+        [duenio]="duenioSeleccionado"
+        (handlerTerminado)="duenioSeleccionado = undefined; esModificar = false"
+      ></app-formulario-duenio>
+      <!-- #endregion Formulario Modo Modificar -->
+    </div>
+
+    <div *ngIf="esBaja && duenioSeleccionado !== undefined">
+      <!-- #region Formulario Modo Baja -->
+      <app-formulario-duenio
+        [modoBaja]="true"
+        [duenio]="duenioSeleccionado"
+        (handlerTerminado)="duenioSeleccionado = undefined; esBaja = false"
+      ></app-formulario-duenio>
+      <!-- #endregion Formulario Modo Baja -->
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer [translucent]="true">
+  <ion-toolbar>
+    <div class="footer">
+      <button class="btn btn-primary" routerLink="/home">Home</button>
+    </div>
+  </ion-toolbar>
+</ion-footer>

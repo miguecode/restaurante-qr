@@ -29,16 +29,23 @@ export const routes: Routes = [
   },
   {
     path: 'abm-duenio',
-    loadChildren: () =>
-      import('./components/pages/abm-duenio/abm-duenio.routes').then(
-        (m) => m.routes
+    loadComponent: () =>
+      import('./components/pages/abm-duenio/abm-duenio.component').then(
+        (m) => m.AbmDuenioComponent
+      ),
+  },
+  {
+    path: 'abm-cliente',
+    loadComponent: () =>
+      import('./components/pages/abm-cliente/abm-cliente.component').then(
+        (m) => m.AbmClienteComponent
       ),
   },
   {
     path: 'abm-supervisor',
-    loadChildren: () =>
-      import('./components/pages/abm-supervisor/abm-supervisor.routes').then(
-        (m) => m.routes
+    loadComponent: () =>
+      import('./components/pages/abm-supervisor/abm-supervisor.component').then(
+        (m) => m.AbmSupervisorComponent
       ),
   },
   {
@@ -50,9 +57,9 @@ export const routes: Routes = [
   },
   {
     path: 'abm-cliente',
-    loadChildren: () =>
-      import('./components/pages/abm-cliente/abm-cliente.routes').then(
-        (m) => m.routes
+    loadComponent: () =>
+      import('./components/pages/abm-cliente/abm-cliente.component').then(
+        (m) => m.AbmClienteComponent
       ),
   },
   {
