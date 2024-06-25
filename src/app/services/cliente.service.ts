@@ -53,14 +53,15 @@ export class ClienteService {
     const nombreArchivo = cliente.id.toString();
 
     await this.cloudStorageService.subirArchivoUri(
+      // Aca estaba el error, se estaba pasando el nombre del archivo antes que el de la carpeta
       this.carpeta,
       nombreArchivo,
       cliente.file
     );
 
     const fotoUrl = await this.cloudStorageService.traerUrlPorNombre(
-      nombreArchivo,
-      this.carpeta
+      this.carpeta,
+      nombreArchivo
     );
     if (fotoUrl === undefined) {
       throw new Error('Hubo un problema al recuperar la URL de la foto');
@@ -154,6 +155,4 @@ export class ClienteService {
       .traerPorId(doc.id, this.col)
       .pipe(map((doc) => Cliente.parseDoc(doc)));
   }
-
-
 }
