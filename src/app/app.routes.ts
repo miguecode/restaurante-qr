@@ -70,6 +70,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'abm-producto',
+    loadComponent: () =>
+      import('./components/pages/abm-producto/abm-producto.component').then(
+        (m) => m.AbmProductoComponent
+      ),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
