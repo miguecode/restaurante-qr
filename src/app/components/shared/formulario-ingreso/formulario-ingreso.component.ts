@@ -8,19 +8,20 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-formulario-ingreso',
   templateUrl: './formulario-ingreso.component.html',
   styleUrls: ['./formulario-ingreso.component.scss'],
   standalone: true,
-  imports: [IonContent, NgClass, ReactiveFormsModule],
+  imports: [IonContent, NgClass, ReactiveFormsModule, CommonModule],
 })
 export class FormularioIngresoComponent implements OnInit {
   loginForm: FormGroup;
   mensaje: string =
     'Bienvenido, para iniciar sesión tenés que ingresar tus datos correctamente.';
+  procesando: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +46,8 @@ export class FormularioIngresoComponent implements OnInit {
       return;
     }
 
+    this.procesando = true;
+
     try {
       await this.authService.iniciarSesion(correoActual, claveActual);
       console.log('Inicio de sesión exitoso');
@@ -52,6 +55,8 @@ export class FormularioIngresoComponent implements OnInit {
     } catch (error) {
       console.log('Error durante el inicio de sesión:', error);
       this.mensaje = 'No existe un usuario con ese correo y esa contraseña.';
+    } finally {
+      this.procesando = false;
     }
   }
 
@@ -63,17 +68,17 @@ export class FormularioIngresoComponent implements OnInit {
       });
     } else if (usuario === '2') {
       this.loginForm.patchValue({
-        correoActual: 'probando@gmail.com',
+        correoActual: 'romanr@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '3') {
       this.loginForm.patchValue({
-        correoActual: 'juanp@gmail.com',
+        correoActual: 'fsofia@yopmail.com',
         claveActual: '111111',
       });
     } else {
       this.loginForm.patchValue({
-        correoActual: 'sofig@gmail.com',
+        correoActual: 'carlosguz@yopmail.com',
         claveActual: '111111',
       });
     }
