@@ -110,13 +110,25 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 ### 🌟 Juan Pablo Dongo Huaman (Beta)
 - ✔️ Alta B (Empleado)  
 - ✔️ Alta D (Mesa) 
-- ✔️ ABM Empleado
-- ✔️ ABM Mesa
+- ✔️ ABM para Empleados
+- ✔️ ABM para Mesas
 #### 📅 Fecha de Inicio: 16/06
 #### ⌛ Fecha de Finalización: 21/06
 
 ### 🌟 Santiago Fernández (Gamma)
 - ✔️ Alta C (Cliente)
-- ✔️ ABM Cliente
+- ✔️ ABM para Clientes
 #### 📅 Fecha de Inicio: 21/06
 #### ⌛ Fecha de Finalización: 24/06
+
+## 📊 Informe y segunda corrección semanal (24/06)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Correcciones: se agregó el spinner de carga al formulario de ingreso y se ahora se oculta la pantalla negra del splash dinámico.
+- ✔️ ABM para Productos
+
+### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Generación de códigos QR en Mesas.
+- ✔️ Corrección en Login: se agregó el spinner de carga.
+
+### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ ABM para Clientes
