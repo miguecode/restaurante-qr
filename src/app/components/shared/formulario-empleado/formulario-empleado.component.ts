@@ -259,6 +259,7 @@ export class FormularioEmpleadoComponent implements OnInit {
       console.log(e.message);
     }
   }
+
   public recibirDataDniCuilQR($event: string) {
     this.nombre.setValue($event);
   }

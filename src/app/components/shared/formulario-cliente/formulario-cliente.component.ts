@@ -103,7 +103,7 @@ export class FormularioClienteComponent implements OnInit {
   }
 
   constructor(private clienteService: ClienteService) {
-    this.crearFormGroup();
+    
   }
 
   private crearFormGroup() {
@@ -162,7 +162,7 @@ export class FormularioClienteComponent implements OnInit {
   }
 
   public ngOnInit() {
-    console.log('');
+    this.crearFormGroup();
   }
 
   private async alta() {
@@ -190,8 +190,10 @@ export class FormularioClienteComponent implements OnInit {
     cliente.setApellido(this.apellido.value);
     cliente.setDni(this.dni.value);
     cliente.setFile(this.foto.value);
+    console.log(this.foto.value)
     if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
       cliente.setUrlFoto(this.cliente.foto);
+      console.log(this.cliente.foto)
     }
     cliente.setCorreo(this.correo.value);
     if (this.modoAlta) {
@@ -242,6 +244,7 @@ export class FormularioClienteComponent implements OnInit {
         const source = await fetch(image.webPath);
         const blob = await source.blob();
         this.fotoBlob = URL.createObjectURL(blob);
+        console.log(image.webPath);
         this.foto.setValue(image.webPath);
       }
     } catch (e: any) {
