@@ -67,8 +67,8 @@ export class ClienteService {
 
     if (cliente.file !== undefined) {
       await this.cloudStorageService.subirArchivoUri(
-        this.carpeta,
         nombreArchivo,
+        this.carpeta,
         cliente.file
       );
 
