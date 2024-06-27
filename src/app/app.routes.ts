@@ -35,6 +35,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'push-noti',
+    loadComponent: () =>
+      import(
+        './components/pages/push-notification/push-notification.component'
+      ).then((m) => m.PushNotificationComponent),
+  },
+  {
     path: '**',
     redirectTo: 'home',
     pathMatch: 'full',
