@@ -37,7 +37,6 @@ export class FormularioClienteComponent implements OnInit {
   formAlta!: FormGroup;
   formModificar!: FormGroup;
   formBaja!: FormGroup;
-  mensaje: string = 'Recordá completar todos los campos correctamente.';
   fotoBlob: any = undefined;
   procesando: boolean = false;
 
@@ -109,19 +108,38 @@ export class FormularioClienteComponent implements OnInit {
   private crearFormGroup() {
     if (this.modoAlta) {
       this.formAlta = new FormGroup({
-        nombre: new FormControl('', [Validators.required]),
-        apellido: new FormControl('', [Validators.required]),
-        dni: new FormControl(0, [
+        nombre: new FormControl('', 
+        [ 
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra()
+        ]),
+        apellido: new FormControl('', 
+        [ 
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(0, 
+        [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        correo: new FormControl('', [Validators.required, Validators.email]),
-        clave: new FormControl('', [
+        correo: new FormControl('', 
+        [ 
+          Validators.required,
+          Validators.email,
+          Validators.required,
+        ]),
+        clave: new FormControl('', 
+        [
           Validators.required,
           Validators.min(6),
-          Validators.max(30),
         ]),
       });
     } else if (this.modoModificar) {
@@ -189,7 +207,12 @@ export class FormularioClienteComponent implements OnInit {
     cliente.setNombre(this.nombre.value);
     cliente.setApellido(this.apellido.value);
     cliente.setDni(this.dni.value);
-    cliente.setFile(this.foto.value);
+    if(this.foto.value !== null){
+      cliente.setFile(this.foto.value);
+    }else{
+      throw new Error('errorfoto');
+    }
+    
     console.log(this.foto.value)
     if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
       cliente.setUrlFoto(this.cliente.foto);
@@ -219,6 +242,21 @@ export class FormularioClienteComponent implements OnInit {
       }, 1500);
     } catch (e: any) {
       console.log(e.message);
+
+      switch(e.code){
+        case 'auth/email-already-in-use':
+          e.message = "El email esta en uso";
+          break;
+        case 'auth/invalid-email':
+          e.message = "Introduzca un email valido";
+          break;
+        case 'auth/missing-password':
+          e.message = "Introduzca una contraseña por favor";
+          break;
+        default:
+          e.message = "Por favor ingrese bien sus datos";
+          break;
+      } 
       await Swalert.toastError(e.message);
     } finally {
       this.procesando = false;
@@ -264,6 +302,16 @@ export class FormularioClienteComponent implements OnInit {
     this.foto.setValue(undefined);
     this.correo.setValue('');
     this.clave.setValue('');
+  }
+
+  private validarPalabra(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid =
+        /^[a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+)*$/.test(
+          control.value
+        );
+      return valid ? null : { invalidName: true };
+    };
   }
 
 }

@@ -32,8 +32,8 @@ export class ClienteService {
   private async registrarAuth(cliente: Cliente) {
     try {
       await this.authService.registrar(cliente.correo, cliente.clave);
-    } catch (e) {
-      throw new Error('Ya existe un usuario con ese correo');
+    } catch (e : any) {
+      throw new Error(e.message);
     }
   }
 
