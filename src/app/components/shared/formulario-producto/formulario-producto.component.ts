@@ -102,10 +102,18 @@ export class FormularioProductoComponent implements OnInit {
   private crearFormGroup() {
     if (this.modoAlta) {
       this.formAlta = new FormGroup({
-        nombre: new FormControl('', [Validators.required]),
-        descripcion: new FormControl('', [Validators.required]),
-        tiempo: new FormControl(0, [Validators.required, Validators.min(1)]),
-        precio: new FormControl(0, [Validators.required, Validators.min(1)]),
+        nombre: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
+        descripcion: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
+        tiempo: new FormControl(null, [Validators.required, Validators.min(1)]),
+        precio: new FormControl(null, [Validators.required, Validators.min(1)]),
         fotoUno: new FormControl(undefined, [Validators.required]),
         fotoDos: new FormControl(undefined, [Validators.required]),
         fotoTres: new FormControl(undefined, [Validators.required]),
@@ -113,10 +121,18 @@ export class FormularioProductoComponent implements OnInit {
     } else if (this.modoModificar) {
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
-        nombre: new FormControl('', [Validators.required]),
-        descripcion: new FormControl('', [Validators.required]),
-        tiempo: new FormControl(0, [Validators.required, Validators.min(1)]),
-        precio: new FormControl(0, [Validators.required, Validators.min(1)]),
+        nombre: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
+        descripcion: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ]),
+        tiempo: new FormControl(null, [Validators.required, Validators.min(1)]),
+        precio: new FormControl(null, [Validators.required, Validators.min(1)]),
         fotoUno: new FormControl(undefined, [Validators.required]),
         fotoDos: new FormControl(undefined, [Validators.required]),
         fotoTres: new FormControl(undefined, [Validators.required]),

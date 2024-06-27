@@ -4,29 +4,53 @@
     <form [formGroup]="formAlta">
       <!-- #region Nombre -->
       <div class="form-group control-nombre">
-        <label>Nombre del producto</label>
+        <label>Nombre</label>
         <input class="form-control" type="text" formControlName="nombre" />
+        @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+        <div class="alert alert-danger" role="alert">Nombre no válido</div>
+        } }
       </div>
       <!-- #endregion Nombre -->
 
       <!-- #region Descripción -->
       <div class="form-group control-descripcion">
-        <label>Descripción del producto</label>
+        <label>Descripción</label>
         <input class="form-control" type="text" formControlName="descripcion" />
+        @if (descripcion) { @if (descripcion.invalid && (descripcion.dirty)) {
+        <div class="alert alert-danger" role="alert">Descripción no válida</div>
+        } }
       </div>
       <!-- #endregion Descripción -->
 
       <!-- #region Tiempo de Elaboración -->
       <div class="form-group control-tiempo-elaboracion">
         <label>Tiempo de elaboración (minutos)</label>
-        <input class="form-control" type="number" formControlName="tiempo" />
+        <input
+          class="form-control"
+          type="number"
+          formControlName="tiempo"
+          min="1"
+          max="9999"
+        />
+        @if(tiempo) { @if(tiempo.invalid && (tiempo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Tiempo no válido</div>
+        } }
       </div>
       <!-- #endregion Tiempo de Elaboración -->
 
       <!-- #region Precio -->
       <div class="form-group control-precio">
         <label>Precio</label>
-        <input class="form-control" type="number" formControlName="precio" />
+        <input
+          class="form-control"
+          type="number"
+          formControlName="precio"
+          min="1"
+          max="999999"
+        />
+        @if(precio) { @if(precio.invalid && (precio.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Precio no válido</div>
+        } }
       </div>
       <!-- #endregion Precio -->
 
@@ -62,7 +86,7 @@
       <div class="form-group control-accion">
         <button
           class="btn btn-primary"
-          [disabled]="procesando"
+          [disabled]="procesando || formAlta.invalid"
           (click)="accion()"
         >
           <div *ngIf="procesando">
@@ -109,6 +133,9 @@
       <div class="form-group control-nombre">
         <label>Nombre del producto</label>
         <input class="form-control" type="text" formControlName="nombre" />
+        @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+        <div class="alert alert-danger" role="alert">Nombre no válido</div>
+        } }
       </div>
       <!-- #endregion Nombre -->
 
@@ -116,6 +143,9 @@
       <div class="form-group control-descripcion">
         <label>Descripción del producto</label>
         <input class="form-control" type="text" formControlName="descripcion" />
+        @if (descripcion) { @if (descripcion.invalid && (descripcion.dirty)) {
+        <div class="alert alert-danger" role="alert">Descripción no válida</div>
+        } }
       </div>
       <!-- #endregion Descripción -->
 
@@ -123,6 +153,9 @@
       <div class="form-group control-tiempo-elaboracion">
         <label>Tiempo de elaboración (minutos)</label>
         <input class="form-control" type="number" formControlName="tiempo" />
+        @if(tiempo) { @if(tiempo.invalid && (tiempo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Tiempo no válido</div>
+        } }
       </div>
       <!-- #endregion Tiempo de Elaboración -->
 
@@ -130,6 +163,9 @@
       <div class="form-group control-precio">
         <label>Precio</label>
         <input class="form-control" type="number" formControlName="precio" />
+        @if(precio) { @if(precio.invalid && (precio.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Precio no válido</div>
+        } }
       </div>
       <!-- #endregion Precio -->
 
