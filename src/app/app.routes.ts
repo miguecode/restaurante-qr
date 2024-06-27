@@ -77,6 +77,13 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'push-notification',
+    loadComponent: () =>
+      import(
+        './components/pages/push-notification/push-notification.component'
+      ).then((m) => m.PushNotificationComponent),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
