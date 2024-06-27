@@ -10,6 +10,9 @@
           type="number"
           formControlName="cantidadMaxima"
         />
+        <span *ngIf="isValidField('cantidadMaxima')" class="form-text text-danger small-error">
+          {{getFieldError('cantidadMaxima')}}
+        </span>
       </div>
       <!-- #endregion Cantidad Maxima de Clientes -->
 
@@ -17,11 +20,14 @@
       <div class="form-group control-tipo">
         <label>Tipo de mesa</label>
         <select class="form-control" formControlName="tipo">
-          <option value="">Seleccionar</option>
+          <option value="" disabled selected>Seleccionar...</option>
           <option *ngFor="let item of tiposMesas" [value]="item">
             {{ item | capitalize }}
           </option>
         </select>
+        <span *ngIf="isValidField('tipo')" class="form-text text-danger small-error">
+          {{getFieldError('tipo')}}
+        </span>
       </div>
       <!-- #endregion Tipo -->
 
@@ -34,6 +40,9 @@
           </button>
           <img [src]="fotoBlob" />
         </div>
+        <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
+          {{getFieldError('foto')}}
+        </span>
       </div>
       <!-- #endregion Foto -->
 
@@ -94,6 +103,9 @@
           readonly
           formControlName="cantidadClientes"
         />
+        <span *ngIf="isValidField('cantidadClientes')" class="form-text text-danger small-error">
+          {{getFieldError('cantidadClientes')}}
+        </span>
       </div>
       <!-- #endregion Cantidad Maxima de Clientes -->
 
@@ -105,6 +117,9 @@
           type="number"
           formControlName="cantidadMaxima"
         />
+        <span *ngIf="isValidField('cantidadMaxima')" class="form-text text-danger small-error">
+          {{getFieldError('cantidadMaxima')}}
+        </span>
       </div>
       <!-- #endregion Cantidad Maxima de Clientes -->
 
@@ -117,6 +132,9 @@
             {{ item | capitalize }}
           </option>
         </select>
+        <span *ngIf="isValidField('tipo')" class="form-text text-danger small-error">
+          {{getFieldError('tipo')}}
+        </span>
       </div>
       <!-- #endregion Tipo -->
 
@@ -133,6 +151,9 @@
           </button>
           <img [src]="fotoBlob === undefined ? mesa.foto : fotoBlob" />
         </div>
+        <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
+          {{getFieldError('foto')}}
+        </span>
       </div>
       <!-- #endregion Foto -->
 
@@ -143,6 +164,11 @@
           [disabled]="procesando"
           (click)="accion()"
         >
+          <div *ngIf="formModificar.invalid">
+            <div class="alert hide alert-danger" role="alert">
+              Completa todos los campos antes de continuar.
+            </div>
+          </div>
           <div *ngIf="procesando">
             <div class="loader-container">
               <span class="loader"></span>
