@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { PushNotifications } from '@capacitor/push-notifications';
 import { Platform } from '@ionic/angular';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
@@ -7,6 +8,8 @@ import { Swalert } from 'src/app/classes/utils/swalert.class';
   selector: 'app-push-notification',
   templateUrl: './push-notification.component.html',
   styleUrls: ['./push-notification.component.scss'],
+  standalone: true,
+  imports: [RouterLink],
 })
 export class PushNotificationComponent implements OnInit {
   inputValue: string = '';

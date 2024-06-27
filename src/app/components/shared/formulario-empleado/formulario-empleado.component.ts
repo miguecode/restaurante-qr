@@ -261,17 +261,11 @@ export class FormularioEmpleadoComponent implements OnInit {
     }
   }
   public recibirDataDniCuilQR($event: string) {
-    try {
-      const source = TraductorQr.DniEjemplarA($event);
-      this.dni.setValue(source.dni);
-      this.cuil.setValue(source.cuil);
-      this.dni.markAsDirty();
-      this.cuil.markAsDirty();
-    } catch (e: any) {
-      setTimeout(() => {
-        Swalert.toastError(e.message);
-      }, 5000);
-    }
+    const source = TraductorQr.DniEjemplarA($event);
+    this.dni.setValue(source.dni);
+    this.cuil.setValue(source.cuil);
+    this.dni.markAsDirty();
+    this.cuil.markAsDirty();
   }
 
   public async accion() {
