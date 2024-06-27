@@ -120,3 +120,24 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - ✔️ ABM Cliente
 #### 📅 Fecha de Inicio: 21/06
 #### ⌛ Fecha de Finalización: 25/06
+
+-- --
+
+## 🛠️ Actualización de responsabilidades e informe (27/06)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Mejoras en los formularios: mostrar errores y estilos
+- Guards y estructura del Home
+#### 📅 Fecha de Inicio: 26/06
+#### ⌛ Fecha de Finalización: Pendiente
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Creación e inicialización de Push Notification
+- ✔️ Creación e inicialización de la función para enviar correos
+#### 📅 Fecha de Inicio: 26/06
+#### ⌛ Fecha de Finalización: Pendiente
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Creación e inicialización de Push Notification
+- ✔️ Mejoras en los formularios: mostrar errores y estilos
+#### 📅 Fecha de Inicio: 24/06
+#### ⌛ Fecha de Finalización: Pendiente
