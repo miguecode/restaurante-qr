@@ -97,15 +97,15 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 -- --
 
 
-## 🛠️ Actualización de responsabilidades e informe (21/06)
+## 🛠️ Actualización de responsabilidades e informe (25/06)
 ### 🌟 Gil Miguel Ángel (Alfa)
 - ✔️ Correcciones de la entrega anterior y estructura del proyecto
 - ✔️ Alta A (Dueño y Supervisor)
+- ✔️ Alta E (Producto)
 - ✔️ ABM para Dueños y Supervisores
-- Alta E (Producto)
-- ABM para Producto
+- ✔️ ABM para Producto
 #### 📅 Fecha de Inicio: 19/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 25/06
 
 ### 🌟 Juan Pablo Dongo Huaman (Beta)
 - ✔️ Alta B (Empleado)  
@@ -119,4 +119,4 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - ✔️ Alta C (Cliente)
 - ✔️ ABM Cliente
 #### 📅 Fecha de Inicio: 21/06
-#### ⌛ Fecha de Finalización: 24/06
+#### ⌛ Fecha de Finalización: 25/06
