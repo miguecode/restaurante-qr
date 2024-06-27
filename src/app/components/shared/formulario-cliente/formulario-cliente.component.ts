@@ -139,7 +139,7 @@ export class FormularioClienteComponent implements OnInit {
         clave: new FormControl('', 
         [
           Validators.required,
-          Validators.min(6),
+          Validators.minLength(6),
         ]),
       });
     } else if (this.modoModificar) {
@@ -197,6 +197,7 @@ export class FormularioClienteComponent implements OnInit {
   }
 
   private getCliente() {
+    
     let cliente = new Cliente();
     if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
       cliente = this.cliente;
@@ -230,9 +231,21 @@ export class FormularioClienteComponent implements OnInit {
       this.procesando = true;
 
       if (this.modoAlta) {
-        await this.alta();
+        if (this.formAlta.invalid) {
+          this.formAlta.markAllAsTouched();
+          console.log("invalid form");
+          return;
+        } else {
+          await this.alta();
+        }
       } else if (this.modoModificar) {
-        await this.modificar();
+        if (this.formModificar.invalid) {
+          this.formModificar.markAllAsTouched();
+          console.log("invalid form");
+          return;
+        } else{
+          await this.modificar();
+        }
       } else if (this.modoBaja) {
         await this.baja();
       }
@@ -312,6 +325,49 @@ export class FormularioClienteComponent implements OnInit {
         );
       return valid ? null : { invalidName: true };
     };
+  }
+
+  isValidField(field: string): boolean | null {
+    let control = null;
+    if(this.modoAlta){
+      control = this.formAlta.get(field);
+    } else {
+      control = this.formModificar.get(field);
+    }
+
+    return control?.errors && control?.touched || null;
+  }
+
+  getFieldError(field: string): string | null {
+    let control = null;
+    if(this.modoAlta){
+      control = this.formAlta.get(field);
+    } else {
+      control = this.formModificar.get(field);
+    }
+
+    if (!control || !control.errors) return null;
+
+    const errors = control.errors;
+    for (const key of Object.keys(errors)) {
+      switch (key) {
+        case 'required':
+          return "Este campo es requerido";
+        case 'minlength':
+          return `Minimo ${errors['minlength'].requiredLength} caracteres.`;
+        case 'maxlength':
+          return `Maximo ${errors['maxlength'].requiredLength} caracteres.`;
+        case 'min':
+          return `Como minimo debe ser ${errors['min'].min}.`;
+        case 'max':
+          return `Como maximo debe ser ${errors['max'].max}.`;
+        case 'pattern':
+          return "Formato inválido";
+        case 'email':
+          return "Email invalido";
+      }
+    }
+    return null;
   }
 
 }

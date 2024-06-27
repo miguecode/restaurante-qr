@@ -7,9 +7,9 @@
         <div class="form-group control-nombre">
           <label>Nombre</label>
           <input class="form-control" type="text" formControlName="nombre" />
-          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
-            <div class="alert alert-danger" role="alert">Nombre no válido</div>
-          } }
+          <span *ngIf="isValidField('nombre')" class="form-text text-danger small-error">
+            {{getFieldError('nombre')}}
+          </span>
         </div>
         <!-- #endregion Nombre -->
 
@@ -17,11 +17,9 @@
         <div class="form-group control-apellido">
           <label>Apellido</label>
           <input class="form-control" type="text" formControlName="apellido" />
-          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
-            <div class="alert hide alert-danger" role="alert">
-              Apellido no válido
-            </div>
-          } }
+          <span *ngIf="isValidField('apellido')" class="form-text text-danger small-error">
+            {{getFieldError('apellido')}}
+          </span>
         </div>
         <!-- #endregion Apellido -->
       </div>
@@ -37,11 +35,9 @@
             ></app-qr-scanner>
             <input class="form-control" type="text" formControlName="dni" />
           </div>
-          @if (dni) { @if (dni.invalid && dni.dirty) {
-            <div class="alert hide alert-danger" role="alert">
-              D.N.I no válido
-            </div>
-          } }
+          <span *ngIf="isValidField('dni')" class="form-text text-danger small-error">
+            {{getFieldError('dni')}}
+          </span>
         </div>
         <!-- #endregion DNI -->
       </div>
@@ -55,6 +51,9 @@
           </button>
           <img [src]="fotoBlob" />
         </div>
+        <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
+          {{getFieldError('foto')}}
+        </span>
       </div>
       <!-- #endregion Foto -->
 
@@ -67,9 +66,9 @@
           placeholder="ejemplo@entidad.com"
           formControlName="correo"
         />
-        @if (correo) { @if (correo.invalid && (correo.dirty)) {
-          <div class="alert hide alert-danger" role="alert">Correo no válido</div>
-        } }
+        <span *ngIf="isValidField('correo')" class="form-text text-danger small-error">
+          {{getFieldError('correo')}}
+        </span>
       </div>
       <!-- #endregion Correo -->
 
@@ -82,10 +81,9 @@
           placeholder="******"
           formControlName="clave"
         />
-        @if (clave; as aux) { @if (aux.invalid &&
-          (aux.dirty)) {
-          <div class="alert hide alert-danger" role="alert">Clave no válida</div>
-        }}
+        <span *ngIf="isValidField('clave')" class="form-text text-danger small-error">
+          {{getFieldError('clave')}}
+        </span>
       </div>
       <!-- #endregion Clave -->
 
@@ -142,9 +140,9 @@
         <div class="form-group control-nombre">
           <label>Nombre</label>
           <input class="form-control" type="text" formControlName="nombre" />
-          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
-            <div class="alert alert-danger" role="alert">Nombre no válido</div>
-          } }
+          <span *ngIf="isValidField('nombre')" class="form-text text-danger small-error">
+            {{getFieldError('nombre')}}
+          </span>
         </div>
         <!-- #endregion Nombre -->
 
@@ -152,11 +150,9 @@
         <div class="form-group control-apellido">
           <label>Apellido</label>
           <input class="form-control" type="text" formControlName="apellido" />
-          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
-            <div class="alert hide alert-danger" role="alert">
-              Apellido no válido
-            </div>
-          } }
+          <span *ngIf="isValidField('apellido')" class="form-text text-danger small-error">
+            {{getFieldError('apellido')}}
+          </span>
         </div>
         <!-- #endregion Apellido -->
       </div>
@@ -172,11 +168,9 @@
               readonly
               formControlName="dni"
             />
-            @if (dni) { @if (dni.invalid && dni.dirty) {
-              <div class="alert hide alert-danger" role="alert">
-                D.N.I no válido
-              </div>
-            } }
+            <span *ngIf="isValidField('dni')" class="form-text text-danger small-error">
+              {{getFieldError('dni')}}
+            </span>
           </div>
         </div>
         <!-- #endregion DNI -->
@@ -195,6 +189,9 @@
           </button>
           <img [src]="fotoBlob === undefined ? cliente.foto : fotoBlob" />
         </div>
+        <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
+          {{getFieldError('foto')}}
+        </span>
       </div>
       <!-- #endregion Foto -->
 
@@ -208,9 +205,9 @@
           placeholder="ejemplo@entidad.com"
           formControlName="correo"
         />
-        @if (correo) { @if (correo.invalid && (correo.dirty)) {
-          <div class="alert hide alert-danger" role="alert">Correo no válido</div>
-        } }
+        <span *ngIf="isValidField('correo')" class="form-text text-danger small-error">
+          {{getFieldError('correo')}}
+        </span>
       </div>
       <!-- #endregion Correo -->
 
