@@ -7,6 +7,9 @@
         <div class="form-group control-nombre">
           <label>Nombre</label>
           <input class="form-control" type="text" formControlName="nombre" />
+          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+          <div class="alert alert-danger" role="alert">Nombre no válido</div>
+          } }
         </div>
         <!-- #endregion Nombre -->
 
@@ -14,9 +17,14 @@
         <div class="form-group control-apellido">
           <label>Apellido</label>
           <input class="form-control" type="text" formControlName="apellido" />
+          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
+          <div class="alert hide alert-danger" role="alert">
+            Apellido no válido
+          </div>
+          } }
         </div>
-        <!-- #endregion Apellido -->
       </div>
+      <!-- #endregion Apellido -->
 
       <div class="area">
         <!-- #region DNI -->
@@ -29,6 +37,11 @@
             ></app-qr-scanner>
             <input class="form-control" type="text" formControlName="dni" />
           </div>
+          @if (dni) { @if (dni.invalid && dni.dirty) {
+          <div class="alert hide alert-danger" role="alert">
+            D.N.I no válido
+          </div>
+          } }
         </div>
         <!-- #endregion DNI -->
 
@@ -42,9 +55,12 @@
             ></app-qr-scanner>
             <input class="form-control" type="text" formControlName="cuil" />
           </div>
+          @if (cuil) { @if (cuil.invalid && (cuil.dirty)) {
+          <div class="alert hide alert-danger" role="alert">CUIL no válido</div>
+          }}
         </div>
-        <!-- #endregion CUIL -->
       </div>
+      <!-- #endregion CUIL -->
 
       <!-- #region Foto -->
       <div class="form-group control-foto">
@@ -53,7 +69,9 @@
           <button class="btn btn-primary" (click)="tomarFoto()">
             {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
           </button>
-          <img [src]="fotoBlob" />
+          @if (fotoBlob) {
+          <img class="img-baja" [src]="fotoBlob" />
+          }
         </div>
       </div>
       <!-- #endregion Foto -->
@@ -79,6 +97,9 @@
           placeholder="ejemplo@entidad.com"
           formControlName="correo"
         />
+        @if (correo) { @if (correo.invalid && (correo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Correo no válido</div>
+        } }
       </div>
       <!-- #endregion Correo -->
 
@@ -91,6 +112,9 @@
           placeholder="******"
           formControlName="clave"
         />
+        @if (clave) { @if (clave.invalid && (clave.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Clave no válida</div>
+        }}
       </div>
       <!-- #endregion Clave -->
 
@@ -98,7 +122,7 @@
       <div class="form-group control-accion">
         <button
           class="btn btn-primary"
-          [disabled]="procesando"
+          [disabled]="procesando || formAlta.invalid"
           (click)="accion()"
         >
           <div *ngIf="procesando">
@@ -147,6 +171,9 @@
         <div class="form-group control-nombre">
           <label>Nombre</label>
           <input class="form-control" type="text" formControlName="nombre" />
+          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+          <div class="alert alert-danger" role="alert">Nombre no válido</div>
+          } }
         </div>
         <!-- #endregion Nombre -->
 
@@ -154,9 +181,14 @@
         <div class="form-group control-apellido">
           <label>Apellido</label>
           <input class="form-control" type="text" formControlName="apellido" />
+          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
+          <div class="alert hide alert-danger" role="alert">
+            Apellido no válido
+          </div>
+          } }
         </div>
-        <!-- #endregion Apellido -->
       </div>
+      <!-- #endregion Apellido -->
 
       <div class="area">
         <!-- #region DNI -->
@@ -170,6 +202,11 @@
               formControlName="dni"
             />
           </div>
+          @if (dni) { @if (dni.invalid && dni.dirty) {
+          <div class="alert hide alert-danger" role="alert">
+            D.N.I no válido
+          </div>
+          } }
         </div>
         <!-- #endregion DNI -->
 
@@ -183,6 +220,11 @@
               readonly
               formControlName="cuil"
             />
+            @if (cuil) { @if (cuil.invalid && (cuil.dirty)) {
+            <div class="alert hide alert-danger" role="alert">
+              CUIL no válido
+            </div>
+            }}
           </div>
         </div>
         <!-- #endregion CUIL -->
@@ -226,6 +268,9 @@
           placeholder="ejemplo@entidad.com"
           formControlName="correo"
         />
+        @if (correo) { @if (correo.invalid && (correo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Correo no válido</div>
+        } }
       </div>
       <!-- #endregion Correo -->
 
@@ -233,7 +278,7 @@
       <div class="form-group control-accion">
         <button
           class="btn btn-primary"
-          [disabled]="procesando"
+          [disabled]="procesando || formModificar.invalid"
           (click)="accion()"
         >
           <div *ngIf="procesando">

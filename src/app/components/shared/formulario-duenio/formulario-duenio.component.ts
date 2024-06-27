@@ -142,7 +142,6 @@ export class FormularioDuenioComponent implements OnInit {
           Validators.maxLength(12),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
         clave: new FormControl(null, [
           Validators.required,
@@ -152,40 +151,66 @@ export class FormularioDuenioComponent implements OnInit {
     } else if (this.modoModificar) {
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
-        nombre: new FormControl('', [Validators.required]),
-        apellido: new FormControl('', [Validators.required]),
-        dni: new FormControl(0, [
+        nombre: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
         ]),
-        cuil: new FormControl(0, [
+        apellido: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000000),
-          Validators.max(99999999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        cuil: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(10),
+          Validators.maxLength(12),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     } else if (this.modoBaja) {
       this.formBaja = new FormGroup({
         id: new FormControl(0, []),
-        nombre: new FormControl('', [Validators.required]),
-        apellido: new FormControl('', [Validators.required]),
-        dni: new FormControl(0, [
+        nombre: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
         ]),
-        cuil: new FormControl(0, [
+        apellido: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000000),
-          Validators.max(99999999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        cuil: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(10),
+          Validators.maxLength(12),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
+        clave: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
       });
     }
 

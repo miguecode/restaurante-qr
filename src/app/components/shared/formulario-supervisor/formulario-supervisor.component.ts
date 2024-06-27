@@ -1,9 +1,12 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { Supervisor } from 'src/app/classes/supervisor';
@@ -114,44 +117,65 @@ export class FormularioSupervisorComponent implements OnInit {
   private crearFormGroup() {
     if (this.modoAlta) {
       this.formAlta = new FormGroup({
-        nombre: new FormControl('', [Validators.required]),
-        apellido: new FormControl('', [Validators.required]),
-        dni: new FormControl(0, [
+        nombre: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
         ]),
-        cuil: new FormControl(0, [
+        apellido: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000000),
-          Validators.max(99999999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        cuil: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(10),
+          Validators.maxLength(12),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
-        clave: new FormControl('', [
+        clave: new FormControl(null, [
           Validators.required,
-          Validators.min(6),
-          Validators.max(30),
+          Validators.minLength(6),
         ]),
       });
     } else if (this.modoModificar) {
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
-        nombre: new FormControl('', [Validators.required]),
-        apellido: new FormControl('', [Validators.required]),
-        dni: new FormControl(0, [
+        nombre: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
         ]),
-        cuil: new FormControl(0, [
+        apellido: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000000),
-          Validators.max(99999999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        cuil: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(10),
+          Validators.maxLength(12),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     } else if (this.modoBaja) {
@@ -170,7 +194,6 @@ export class FormularioSupervisorComponent implements OnInit {
           Validators.max(99999999999),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
-        tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     }
@@ -184,7 +207,7 @@ export class FormularioSupervisorComponent implements OnInit {
       this.correo.setValue(this.supervisor.correo);
     }
   }
-  private Supervisor() {
+  private getSupervisor() {
     let supervisor = new Supervisor();
     if (
       (this.modoModificar || this.modoBaja) &&
@@ -213,15 +236,15 @@ export class FormularioSupervisorComponent implements OnInit {
     return supervisor;
   }
   private async alta() {
-    await this.supervisorService.alta(this.Supervisor());
+    await this.supervisorService.alta(this.getSupervisor());
     await Swalert.toastSuccess('Alta realizada exitosamente');
   }
   private async baja() {
-    await this.supervisorService.bajaLogica(this.Supervisor());
+    await this.supervisorService.bajaLogica(this.getSupervisor());
     await Swalert.toastSuccess('Baja realizada exitosamente');
   }
   private async modificar() {
-    await this.supervisorService.modificar(this.Supervisor());
+    await this.supervisorService.modificar(this.getSupervisor());
     await Swalert.toastSuccess('Modificacion realizada exitosamente');
   }
 
@@ -291,5 +314,15 @@ export class FormularioSupervisorComponent implements OnInit {
     this.fotoBlob = undefined;
     this.correo.setValue('');
     this.clave.setValue('');
+  }
+
+  private validarPalabra(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const valid =
+        /^[a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+( [a-zA-ZáéíóúÁÉÍÓÚñÑ'’-]+)*$/.test(
+          control.value
+        );
+      return valid ? null : { invalidName: true };
+    };
   }
 }
