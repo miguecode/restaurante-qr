@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
 .page-container {
   padding: 10px;
 }
@@ -33,15 +39,15 @@ img {
   border-radius: 50%;
   top: 12px;
   right: 12px;
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 
 .card {
-  background-color: lightgrey;
-  color: black;
+  background-color: #323232;
+  color: #fff;
   padding: 12px;
   margin-bottom: 15px;
-  height: 240px;
+  height: 305px;
 }
 
 .card button {
@@ -59,22 +65,30 @@ img {
 }
 
 .boton-alta {
-  background-color: green;
+  background: transparent;
+  border: solid 2px rgb(65, 158, 65);
   position: absolute;
   top: 10px;
   right: 10px;
   width: 100px;
+  text-align: center;
 }
 
 .boton-modificar {
-  background-color: orange;
+  background: transparent;
+  border: solid 2px rgb(208, 151, 58);
   right: 12px;
   bottom: 12px;
 }
 
 .boton-baja {
-  background-color: red;
+  background: transparent;
+  border: solid 2px rgb(164, 45, 45);
   left: 12px;
   bottom: 12px;
 }
 // #endregion Botones ABM
+
+span {
+  font-weight: bold;
+}

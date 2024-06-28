@@ -11,6 +11,7 @@ import { Duenio } from 'src/app/classes/duenio';
 import { DuenioService } from 'src/app/services/duenio.service';
 import { FormularioDuenioComponent } from '../../shared/formulario-duenio/formulario-duenio.component';
 import { RouterLink } from '@angular/router';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-abm-duenio',
@@ -27,6 +28,7 @@ import { RouterLink } from '@angular/router';
     NgIf,
     NgFor,
     FormularioDuenioComponent,
+    CapitalizePipe,
   ],
 })
 export class AbmDuenioComponent implements OnInit {

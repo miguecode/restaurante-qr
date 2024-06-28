@@ -11,6 +11,7 @@ import { Supervisor } from 'src/app/classes/supervisor';
 import { SupervisorService } from 'src/app/services/supervisor.service';
 import { FormularioSupervisorComponent } from '../../shared/formulario-supervisor/formulario-supervisor.component';
 import { RouterLink } from '@angular/router';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-abm-supervisor',
@@ -27,6 +28,7 @@ import { RouterLink } from '@angular/router';
     NgIf,
     NgFor,
     FormularioSupervisorComponent,
+    CapitalizePipe,
   ],
 })
 export class AbmSupervisorComponent implements OnInit {
