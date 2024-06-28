@@ -204,7 +204,7 @@ export class FormularioDuenioComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(12),
         ]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined),
         correo: new FormControl('', [Validators.required, Validators.email]),
         clave: new FormControl(null, [
           Validators.required,

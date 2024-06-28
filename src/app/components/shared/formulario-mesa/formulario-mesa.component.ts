@@ -98,7 +98,7 @@ export class FormularioMesaComponent implements OnInit {
           Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined),
       });
 
       if (this.mesa !== undefined) {
@@ -121,7 +121,7 @@ export class FormularioMesaComponent implements OnInit {
           Validators.max(99999999),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined),
       });
 
       if (this.mesa !== undefined) {
@@ -133,7 +133,7 @@ export class FormularioMesaComponent implements OnInit {
   }
   private getMesa() {
     let mesa = new Mesa();
-    if(this.cantidadMaxima.value && this.tipo.value && this.foto.value){
+    if (this.cantidadMaxima.value && this.tipo.value && this.foto.value) {
       if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
         mesa = this.mesa;
       }
@@ -150,10 +150,9 @@ export class FormularioMesaComponent implements OnInit {
         mesa.setUrlFoto(this.mesa.foto);
       }
       return mesa;
-    } else{
-      throw new Error("Introduzca bien los datos.")
+    } else {
+      throw new Error('Introduzca bien los datos.');
     }
-   
   }
   private async alta() {
     const mesa = await this.mesaService.alta(this.getMesa());
@@ -207,11 +206,10 @@ export class FormularioMesaComponent implements OnInit {
     try {
       this.procesando = true;
 
-      
       if (this.modoAlta) {
         if (this.formAlta.invalid) {
           this.formAlta.markAllAsTouched();
-          console.log("invalid form");
+          console.log('invalid form');
           return;
         } else {
           await this.alta();
@@ -219,9 +217,9 @@ export class FormularioMesaComponent implements OnInit {
       } else if (this.modoModificar) {
         if (this.formModificar.invalid) {
           this.formModificar.markAllAsTouched();
-          console.log("invalid form");
+          console.log('invalid form');
           return;
-        } else{
+        } else {
           await this.modificar();
         }
       } else if (this.modoBaja) {
@@ -252,18 +250,18 @@ export class FormularioMesaComponent implements OnInit {
 
   isValidField(field: string): boolean | null {
     let control = null;
-    if(this.modoAlta){
+    if (this.modoAlta) {
       control = this.formAlta.get(field);
     } else {
       control = this.formModificar.get(field);
     }
 
-    return control?.errors && control?.touched || null;
+    return (control?.errors && control?.touched) || null;
   }
 
   getFieldError(field: string): string | null {
     let control = null;
-    if(this.modoAlta){
+    if (this.modoAlta) {
       control = this.formAlta.get(field);
     } else {
       control = this.formModificar.get(field);
@@ -275,7 +273,7 @@ export class FormularioMesaComponent implements OnInit {
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
-          return "Este campo es requerido";
+          return 'Este campo es requerido';
         case 'minlength':
           return `Minimo ${errors['minlength'].requiredLength} caracteres.`;
         case 'maxlength':
@@ -285,9 +283,9 @@ export class FormularioMesaComponent implements OnInit {
         case 'max':
           return `Como maximo debe ser ${errors['max'].max}.`;
         case 'pattern':
-          return "Formato inválido";
+          return 'Formato inválido';
         case 'email':
-          return "Email invalido";
+          return 'Email invalido';
       }
     }
     return null;

@@ -10,9 +10,9 @@ import { sendEmailVerification } from '@firebase/auth';
   providedIn: 'root',
 })
 export class SupervisorService {
-  private col = 'supervisors';
-  private carpeta = 'supervisors';
-  private supervisors: Supervisor[] = [];
+  private col = 'supervisores';
+  private carpeta = 'supervisores';
+  private supervisores: Supervisor[] = [];
   private flagObservable: boolean = false;
 
   constructor(
@@ -21,7 +21,7 @@ export class SupervisorService {
     private cloudStorageService: CloudStorageService
   ) {
     this.traerTodosObservable().subscribe((l) => {
-      this.supervisors = l;
+      this.supervisores = l;
       this.flagObservable = true;
     });
   }
@@ -29,11 +29,11 @@ export class SupervisorService {
   private traerTodos() {
     return new Promise<Supervisor[]>((resolver) => {
       if (this.flagObservable === true) {
-        resolver(this.supervisors);
+        resolver(this.supervisores);
       }
 
       setTimeout(() => {
-        resolver(this.supervisors);
+        resolver(this.supervisores);
       }, 5000); // Este valor se puede bajar, pero no mucho
     });
   }
@@ -110,6 +110,7 @@ export class SupervisorService {
       await this.registrarAuth(supervisor);
       await this.cerrarSesionAuth();
       await this.setId(supervisor);
+      supervisor.habilitado = true;
       await this.insertarFoto(supervisor); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
       await this.insertarDoc(supervisor);
       return supervisor; // Esta linea se puede borrar, solo la use para debugear

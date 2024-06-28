@@ -63,22 +63,22 @@ export class FormularioIngresoComponent implements OnInit {
   autocompletar(usuario: string) {
     if (usuario === '1') {
       this.loginForm.patchValue({
-        correoActual: 'junmigue7@gmail.com',
+        correoActual: 'mmariaf@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '2') {
       this.loginForm.patchValue({
-        correoActual: 'romanr@yopmail.com',
+        correoActual: 'pablinhern@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '3') {
       this.loginForm.patchValue({
-        correoActual: 'fsofia@yopmail.com',
+        correoActual: 'matir@yopmail.com',
         claveActual: '111111',
       });
     } else {
       this.loginForm.patchValue({
-        correoActual: 'carlosguz@yopmail.com',
+        correoActual: 'crisprz@yopmail.com',
         claveActual: '111111',
       });
     }

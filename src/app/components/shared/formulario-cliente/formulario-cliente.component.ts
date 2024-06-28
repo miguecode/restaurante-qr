@@ -147,14 +147,25 @@ export class FormularioClienteComponent implements OnInit {
     } else if (this.modoModificar) {
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
-        nombre: new FormControl('', [Validators.required]),
-        apellido: new FormControl('', [Validators.required]),
-        dni: new FormControl(0, [
+        nombre: new FormControl(null, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
         ]),
-        foto: new FormControl(undefined, [Validators.required]),
+        apellido: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        foto: new FormControl(undefined),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     } else if (this.modoBaja) {
@@ -167,7 +178,7 @@ export class FormularioClienteComponent implements OnInit {
           Validators.min(10000000),
           Validators.max(99999999),
         ]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     }

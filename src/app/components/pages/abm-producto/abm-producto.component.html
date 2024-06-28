@@ -29,7 +29,9 @@
       <div class="cartas">
         <div *ngFor="let item of lista">
           <div class="card">
-            <label style="text-align: center">{{ item.id }}</label>
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
             <label><span>NOMBRE: </span>{{ item.nombre }}</label>
             <label><span>DESCRIPCIÓN: </span>{{ item.descripcion }}</label>
             <label><span>TIEMPO: </span>{{ item.tiempo }} min.</label>

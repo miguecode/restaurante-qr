@@ -110,6 +110,7 @@ export class DuenioService {
       await this.registrarAuth(duenio);
       await this.cerrarSesionAuth();
       await this.setId(duenio);
+      duenio.habilitado = true;
       await this.insertarFoto(duenio); // !OJO! el file que se le asigna a la entidad debe ser [Uri]
       await this.insertarDoc(duenio);
       return duenio; // Esta linea se puede borrar, solo la use para debugear
