@@ -17,6 +17,7 @@ import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { IonContent } from '@ionic/angular/standalone';
+import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 
 @Component({
   selector: 'app-formulario-duenio',
@@ -286,7 +287,11 @@ export class FormularioDuenioComponent implements OnInit {
     }
   }
   public recibirDataDniCuilQR($event: string) {
-    this.nombre.setValue($event);
+    const source = TraductorQr.DniEjemplarA($event);
+    this.dni.setValue(source.dni);
+    this.cuil.setValue(source.cuil);
+    this.dni.markAsDirty();
+    this.cuil.markAsDirty();
   }
 
   public async accion() {
