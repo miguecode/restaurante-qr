@@ -89,7 +89,7 @@ export class FormularioMesaComponent implements OnInit {
         id: new FormControl(0, []),
         cantidadClientes: new FormControl(0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
           Validators.max(8),
         ]),
         cantidadMaxima: new FormControl(0, [
@@ -112,16 +112,15 @@ export class FormularioMesaComponent implements OnInit {
         id: new FormControl(0, []),
         cantidadClientes: new FormControl(0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
           Validators.max(8),
         ]),
         cantidadMaxima: new FormControl(0, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.min(1),
+          Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined),
       });
 
       if (this.mesa !== undefined) {
