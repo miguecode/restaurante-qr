@@ -1,5 +1,5 @@
 <div class="formulario-container">
-  <div *ngIf="modoAlta === true">
+  <div>
     <!-- #region Formulario Alta -->
     <form [formGroup]="formAlta">
       <div class="area">
@@ -130,7 +130,7 @@
         <button
           class="btn btn-primary"
           [disabled]="procesando"
-          (click)="handlerTerminado.emit()"
+          (click)="goTo('login')"
         >
           Cancelar
         </button>

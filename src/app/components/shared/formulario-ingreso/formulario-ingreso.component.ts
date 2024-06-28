@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import {
@@ -15,7 +15,7 @@ import { CommonModule, NgClass } from '@angular/common';
   templateUrl: './formulario-ingreso.component.html',
   styleUrls: ['./formulario-ingreso.component.scss'],
   standalone: true,
-  imports: [IonContent, NgClass, ReactiveFormsModule, CommonModule],
+  imports: [IonContent, NgClass, ReactiveFormsModule, CommonModule, RouterLink],
 })
 export class FormularioIngresoComponent implements OnInit {
   loginForm: FormGroup;

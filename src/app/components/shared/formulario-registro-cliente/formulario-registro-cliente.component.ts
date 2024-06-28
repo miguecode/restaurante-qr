@@ -7,6 +7,7 @@ import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-formulario-registro-cliente',
@@ -21,7 +22,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
   @Input() modoBaja: boolean = false;
   @Input() modoModificar: boolean = false;
   @Input() cliente: Cliente | undefined = undefined;
-  @Output() handlerTerminado: EventEmitter<void> = new EventEmitter<void>();
+
 
   formRegistrar!: FormGroup;
   formAlta!: FormGroup;
@@ -31,12 +32,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
   procesando: boolean = false;
 
   get nombre() {
-    if (this.modoAlta) {
-      return this.formAlta.get('nombre') as FormControl;
-    } else if (this.modoModificar) {
-      return this.formModificar.get('nombre') as FormControl;
-    }
-    return this.formBaja.get('nombre') as FormControl;
+    return this.formAlta.get('nombre') as FormControl;
   }
 
   get apellido() {
@@ -59,10 +55,9 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     return this.formAlta.get('clave') as FormControl;
   }
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private clienteService: ClienteService, private router: Router) {}
 
   private crearFormGroup() {
-    if (this.modoAlta) {
       this.formAlta = new FormGroup({
         nombre: new FormControl('', [
           Validators.required,
@@ -93,7 +88,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
           Validators.minLength(6),
         ]),
       });
-    }
+  
   }
 
   public ngOnInit() {
@@ -116,16 +111,9 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     } else {
       throw new Error('errorfoto');
     }
-
-    console.log(this.foto.value);
-    if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
-      cliente.setUrlFoto(this.cliente.foto);
-      console.log(this.cliente.foto);
-    }
     cliente.setCorreo(this.correo.value);
-    if (this.modoAlta) {
-      cliente.setClave(this.clave.value);
-    }
+    cliente.setClave(this.clave.value);
+    
     return cliente;
   }
 
@@ -133,18 +121,16 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     try {
       this.procesando = true;
 
-      if (this.modoAlta) {
-        if (this.formAlta.invalid) {
-          this.formAlta.markAllAsTouched();
-          console.log('invalid form');
-          return;
-        } else {
-          await this.alta();
-        }
-      } 
-
+      if (this.formAlta.invalid) {
+        this.formAlta.markAllAsTouched();
+        console.log('invalid form');
+        return;
+      } else {
+        await this.alta();
+      }
+      
       setTimeout(() => {
-        this.handlerTerminado.emit();
+        this.goTo('login')
       }, 1500);
     } catch (e: any) {
       console.log(e.message);
@@ -224,23 +210,14 @@ export class FormularioRegistroClienteComponent  implements OnInit {
 
   isValidField(field: string): boolean | null {
     let control = null;
-    if (this.modoAlta) {
-      control = this.formAlta.get(field);
-    } else {
-      control = this.formModificar.get(field);
-    }
+    control = this.formAlta.get(field);
 
     return (control?.errors && control?.touched) || null;
   }
 
   getFieldError(field: string): string | null {
     let control = null;
-    if (this.modoAlta) {
-      control = this.formAlta.get(field);
-    } else {
-      control = this.formModificar.get(field);
-    }
-
+    control = this.formAlta.get(field);
     if (!control || !control.errors) return null;
 
     const errors = control.errors;
@@ -263,6 +240,11 @@ export class FormularioRegistroClienteComponent  implements OnInit {
       }
     }
     return null;
+  }
+
+  goTo(path : string)
+  {
+    this.router.navigate([path]);
   }
 
 }

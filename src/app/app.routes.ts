@@ -21,6 +21,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./components/pages/sign-in/sign-in.component').then(
+        (m) => m.SignInComponent
+      ),
+  },
+
+  {
     path: 'home',
     loadComponent: () =>
       import('./components/pages/home/home.component').then(
