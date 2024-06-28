@@ -37,8 +37,8 @@ export const routes: Routes = [
   {
     path: 'abm-cliente',
     loadComponent: () =>
-      import('./components/pages/abm-cliente/abm-cliente.component').then(
-        (m) => m.AbmClienteComponent
+      import('./components/pages/abm-clientes/abm-clientes.component').then(
+        (m) => m.AbmClientesComponent
       ),
   },
   {
@@ -56,13 +56,6 @@ export const routes: Routes = [
       ),
   },
   {
-    path: 'abm-cliente',
-    loadComponent: () =>
-      import('./components/pages/abm-cliente/abm-cliente.component').then(
-        (m) => m.AbmClienteComponent
-      ),
-  },
-  {
     path: 'abm-mesa',
     loadComponent: () =>
       import('./components/pages/abm-mesa/abm-mesa.component').then(
@@ -75,6 +68,13 @@ export const routes: Routes = [
       import('./components/pages/abm-producto/abm-producto.component').then(
         (m) => m.AbmProductoComponent
       ),
+  },
+  {
+    path: 'push-notification',
+    loadComponent: () =>
+      import(
+        './components/pages/push-notification/push-notification.component'
+      ).then((m) => m.PushNotificationComponent),
   },
   {
     path: '**',
