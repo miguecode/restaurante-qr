@@ -44,9 +44,7 @@ export class FormularioDuenioComponent implements OnInit {
   formAlta!: FormGroup;
   formModificar!: FormGroup;
   formBaja!: FormGroup;
-  tiposDuenios: string[] = [];
   procesando: boolean = false;
-
   fotoBlob: any = undefined;
 
   get id() {
@@ -175,7 +173,7 @@ export class FormularioDuenioComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(12),
         ]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined), // Le quité el 'required' para evitar un error la modificar
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     } else if (this.modoBaja) {

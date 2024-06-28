@@ -133,9 +133,9 @@ export class FormularioProductoComponent implements OnInit {
         ]),
         tiempo: new FormControl(null, [Validators.required, Validators.min(1)]),
         precio: new FormControl(null, [Validators.required, Validators.min(1)]),
-        fotoUno: new FormControl(undefined, [Validators.required]),
-        fotoDos: new FormControl(undefined, [Validators.required]),
-        fotoTres: new FormControl(undefined, [Validators.required]),
+        fotoUno: new FormControl(undefined),
+        fotoDos: new FormControl(undefined),
+        fotoTres: new FormControl(undefined),
       });
 
       if (this.producto !== undefined) {

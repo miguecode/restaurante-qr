@@ -2,7 +2,10 @@
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
-      <div *ngIf="!esAlta && !esModificar && !esBaja">
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
         <ion-title> ABM Dueños </ion-title>
       </div>
 
@@ -36,8 +39,7 @@
             >
             <label><span>DNI: </span>{{ item.dni }}</label>
             <label><span>CUIL: </span>{{ item.cuil }}</label>
-            <img [src]="item.foto" />
-            <!-- <label>ROL: {{ item.rol }}</label> -->
+            <img class="img-perfil" [src]="item.foto" />
             <label
               ><span>ROL: </span>
               {{ (item.rol === "duenio" ? "dueño" : item.rol) | capitalize }}

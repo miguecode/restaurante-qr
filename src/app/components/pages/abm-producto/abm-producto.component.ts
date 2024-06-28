@@ -13,6 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Producto } from 'src/app/classes/producto';
 import { FormularioProductoComponent } from 'src/app/components/shared/formulario-producto/formulario-producto.component';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { ProductoService } from 'src/app/services/producto.service';
 
 @Component({
@@ -37,6 +38,7 @@ import { ProductoService } from 'src/app/services/producto.service';
     NgFor,
     NgIf,
     FormularioProductoComponent,
+    CapitalizePipe,
   ],
 })
 export class AbmProductoComponent implements OnInit {

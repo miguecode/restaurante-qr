@@ -4,10 +4,6 @@
   font-family: "Baloo 2", sans-serif;
 }
 
-ion-content {
-  background: #860106;
-}
-
 .page-container {
   padding: 10px;
 }
@@ -36,7 +32,7 @@ ion-content {
 // #endregion Footer
 
 // #region Listado
-img {
+.img-perfil {
   position: absolute;
   height: 70px;
   width: 70px;
@@ -95,4 +91,18 @@ img {
 
 span {
   font-weight: bold;
+}
+
+.boton-atras {
+  background-color: transparent;
+  display: inline;
+  color: #fff;
+  margin-left: 5px;
+  margin-top: 4px;
+  width: 60px;
+  padding: 0px;
+}
+
+.titulo {
+  display: flex;
 }

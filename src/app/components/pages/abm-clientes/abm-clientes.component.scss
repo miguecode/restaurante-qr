@@ -1,84 +1,108 @@
-.page-container {
-    padding: 10px;
-  }
-  
-  // #region Header
-  .header {
-    display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    flex-direction: row;
-  }
-  // #endregion Header
-  
-  // #region Footer
-  .footer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: row;
-  }
-  .footer button {
-    width: 100%;
-    margin-right: 7px;
-    margin-left: 7px;
-  }
-  // #endregion Footer
-  
-  // #region Listado
-  img {
-    position: absolute;
-    height: 70px;
-    width: 70px;
-    border-radius: 50%;
-    top: 12px;
-    right: 12px;
-    border: 2px solid black;
-  }
-  
-  .card {
-    background-color: lightgrey;
-    color: black;
-    padding: 12px;
-    margin-bottom: 15px;
-    height: 240px;
-  }
-  
-  .card button {
-    position: absolute;
-    width: auto;
-  }
-  // #endregion Listado
-  
-  // #region Botones ABM
-  .boton-alta,
-  .boton-baja,
-  .boton-modificar {
-    border: 0px solid black;
-    color: white;
-  }
-  
-  .boton-alta {
-    background-color: green;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 100px;
-  }
-  
-  .boton-modificar {
-    background-color: orange;
-    right: 12px;
-    bottom: 12px;
-  }
-  
-  .boton-baja {
-    background-color: red;
-    left: 12px;
-    bottom: 12px;
-  }
-  // #endregion Botones ABM
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
 
-  label{
-    margin-top: 7px;
-  }
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
+.page-container {
+  padding: 10px;
+}
+
+// #region Header
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+// #endregion Header
+
+// #region Footer
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+}
+.footer button {
+  width: 100%;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+// #endregion Footer
+
+// #region Listado
+.img-perfil {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  top: 12px;
+  right: 12px;
+  // border: 2px solid black;
+}
+
+.card {
+  background-color: #323232;
+  color: #fff;
+  padding: 12px;
+  margin-bottom: 15px;
+  height: 225px;
+}
+
+.card button {
+  position: absolute;
+  width: auto;
+}
+// #endregion Listado
+
+// #region Botones ABM
+.boton-alta,
+.boton-baja,
+.boton-modificar {
+  border: 0px solid black;
+  color: white;
+}
+
+.boton-alta {
+  background: transparent;
+  border: solid 2px rgb(65, 158, 65);
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 100px;
+  text-align: center;
+}
+
+.boton-modificar {
+  background: transparent;
+  border: solid 2px rgb(208, 151, 58);
+  right: 12px;
+  bottom: 12px;
+}
+
+.boton-baja {
+  background: transparent;
+  border: solid 2px rgb(164, 45, 45);
+  left: 12px;
+  bottom: 12px;
+}
+// #endregion Botones ABM
+
+span {
+  font-weight: bold;
+}
+
+.boton-atras {
+  background-color: transparent;
+  display: inline;
+  color: #fff;
+  margin-left: 5px;
+  margin-top: 4px;
+  width: 60px;
+  padding: 0px;
+}
+
+.titulo {
+  display: flex;
+}

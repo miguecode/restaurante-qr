@@ -185,7 +185,7 @@ export class FormularioEmpleadoComponent implements OnInit {
           Validators.minLength(10),
           Validators.maxLength(12),
         ]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined), // Le saqué el 'required' para evitar un error al modificar
         tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });

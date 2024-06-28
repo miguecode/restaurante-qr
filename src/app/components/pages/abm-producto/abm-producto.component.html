@@ -2,15 +2,19 @@
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
-      <ion-title *ngIf="!esAlta && !esModificar && !esBaja">
-        ABM productos
-      </ion-title>
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> ABM Productos </ion-title>
+      </div>
+
       <ion-title *ngIf="esAlta">Alta producto</ion-title>
       <ion-title *ngIf="esModificar">Modificar producto</ion-title>
       <ion-title *ngIf="esBaja">Baja producto</ion-title>
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
-          Alta
+          CREAR
         </button>
       </div>
     </div>
@@ -26,10 +30,10 @@
         <div *ngFor="let item of lista">
           <div class="card">
             <label style="text-align: center">{{ item.id }}</label>
-            <label>NOMBRE: {{ item.nombre }}</label>
-            <label>DESCRIPCIÓN: {{ item.descripcion }}</label>
-            <label>TIEMPO: {{ item.tiempo }} min</label>
-            <label>PRECIO: ${{ item.precio }}</label>
+            <label><span>NOMBRE: </span>{{ item.nombre }}</label>
+            <label><span>DESCRIPCIÓN: </span>{{ item.descripcion }}</label>
+            <label><span>TIEMPO: </span>{{ item.tiempo }} min.</label>
+            <label><span>PRECIO: </span>${{ item.precio }}</label>
             <img class="img-qr" [src]="item.qr" />
             <!-- Muestro sólo la foto 1 -->
             <img class="img-foto" [src]="item.fotoUno" />
@@ -39,13 +43,13 @@
               class="btn btn-secondary boton-modificar"
               (click)="productoSeleccionado = item; esModificar = true"
             >
-              Modificar
+              MODIFICAR
             </button>
             <button
               class="btn btn-secondary boton-baja"
               (click)="productoSeleccionado = item; esBaja = true"
             >
-              Baja
+              ELIMINAR
             </button>
           </div>
         </div>

@@ -215,7 +215,7 @@
       <div class="form-group control-accion">
         <button
           class="btn btn-primary"
-          [disabled]="procesando"
+          [disabled]="procesando || formModificar.invalid"
           (click)="accion()"
         >
           <div *ngIf="procesando">
