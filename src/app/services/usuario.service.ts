@@ -15,14 +15,15 @@ import { Usuario } from '../classes/padres/usuario';
 })
 export class UsuarioService {
   public static ACCESOS_RAPIDOS: Usuario[] = [
-    { correo: 'jp@jp.com', clave: '123abc' } as Usuario,
-    { correo: 'mg@mg.com', clave: '123abc' } as Usuario,
-    { correo: 'st@st.com', clave: '123abc' } as Usuario,
+    { correo: 'jp@jp.com', clave: '111111' } as Usuario,
+    { correo: 'mg@mg.com', clave: '111111' } as Usuario,
+    { correo: 'st@st.com', clave: '111111' } as Usuario,
   ];
   private duenios: Duenio[] = [];
   private supervisores: Supervisor[] = [];
   private empleados: Empleado[] = [];
   private clientes: Cliente[] = [];
+  private flagObservables: boolean[] = [false, false, false, false];
 
   constructor(
     private authService: AuthService,
@@ -31,37 +32,61 @@ export class UsuarioService {
     private empleadoService: EmpleadoService,
     private clienteService: ClienteService
   ) {
-    /* Todavia no tiene su parseDoc()
-    this.duenioService.traerTodosObservable().subscribe((listaDocs) => {
-      if (listaDocs) {
-        this.duenios = listaDocs.map((a) => Duenio.parseDoc(a));
-      }
+    /* Todavia no esta desarrollado
+    this.duenioService.traerTodosObservable().subscribe((l) => {
+        this.duenios = l;
+        this.flagObservables[0] = true;
     });
     */
 
-    /* Todavia no tiene su parseDoc()
-    this.supervisorService.traerTodosObservable().subscribe((listaDocs) => {
-      if (listaDocs) {
-        this.supervisores = listaDocs.map((e) => Supervisor.parseDoc(e));
-      }
+    /* Todavia no esta desarrollado
+    this.supervisorService.traerTodosObservable().subscribe((l) => {
+        this.supervisores = l;
+        this.flagObservables[1] = true;
     });
     */
 
-    this.empleadoService.traerTodosObservable().subscribe((listaDocs) => {
-      if (listaDocs) {
-        this.empleados = listaDocs.map((e) => Empleado.parseDoc(e));
-      }
+    this.empleadoService.traerTodosObservable().subscribe((l) => {
+      this.empleados = l;
+      this.flagObservables[2] = true;
     });
 
-    /* Todavia no tiene su parseDoc()
-    this.clienteService.traerTodosObservable().subscribe((listaDocs) => {
-      if (listaDocs) {
-        this.clientes = listaDocs.map((p) => Cliente.parseDoc(p));
-      }
+    /* Todavia no esta desarrollado
+    this.clienteService.traerTodosObservable().subscribe((l) => {
+        this.clientes = l;
+        this.flagObservables[3] = true;
     });
     */
   }
 
+  private traerTodos() {
+    return new Promise<(Duenio | Supervisor | Empleado | Cliente)[]>(
+      (resolver) => {
+        if (
+          this.flagObservables[0] === true &&
+          this.flagObservables[1] === true &&
+          this.flagObservables[2] === true &&
+          this.flagObservables[3] === true
+        ) {
+          resolver([
+            ...this.duenios,
+            ...this.supervisores,
+            ...this.empleados,
+            ...this.clientes,
+          ]);
+        }
+
+        setTimeout(() => {
+          resolver([
+            ...this.duenios,
+            ...this.supervisores,
+            ...this.empleados,
+            ...this.clientes,
+          ]);
+        }, 5000); // Este valor se puede bajar, pero no mucho
+      }
+    );
+  }
   private async iniciarSesionAuth(usuario: Usuario) {
     try {
       await this.authService.iniciarSesion(usuario.correo, usuario.clave);
@@ -90,15 +115,11 @@ export class UsuarioService {
   }
   private async getUsuarioBd() {
     const correo = await this.getCorreoAuth();
+    const lista = await this.traerTodos();
     let usuario: (Duenio | Supervisor | Empleado | Cliente) | undefined =
       undefined;
 
-    for (let item of [
-      ...this.duenios,
-      ...this.supervisores,
-      ...this.empleados,
-      ...this.clientes,
-    ]) {
+    for (let item of lista) {
       if (item.correo === correo) {
         usuario = item;
         break;
@@ -117,7 +138,7 @@ export class UsuarioService {
     const usuario = await this.getUsuarioBd();
     if (usuario === undefined) {
       throw new Error(
-        'El usuario no existe en la bd o hay lentitud de conexion'
+        'El usuario no existe en la base de datos o hay lentitud de conexion'
       );
     }
 
@@ -129,13 +150,6 @@ export class UsuarioService {
   }
   public async iniciarSesion(usuario: Usuario) {
     try {
-      /*
-      console.log([
-        ...this.administradores,
-        ...this.especialistas,
-        ...this.pacientes,
-      ]);
-      */
       await this.iniciarSesionAuth(usuario);
 
       /* Aca se valida si verifico su correo, lo dejo comentado porque al hacer el Alta todavia no envia el correo de verficacion
