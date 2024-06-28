@@ -3,8 +3,15 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'home',
+    redirectTo: 'splash',
     pathMatch: 'full',
+  },
+  {
+    path: 'splash',
+    loadComponent: () =>
+      import('./components/pages/splash/splash.component').then(
+        (m) => m.SplashComponent
+      ),
   },
   {
     path: 'iniciar-sesion',
