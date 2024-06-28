@@ -126,18 +126,18 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 ## 🛠️ Actualización de responsabilidades e informe (27/06)
 ### 🌟 Gil Miguel Ángel (Alfa)
 - ✔️ Mejoras en los formularios: mostrar errores y estilos
-- Guards y estructura del Home
+- ✔️ Mejoras visuales en los menús ABM
 #### 📅 Fecha de Inicio: 26/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 28/06
 
 - ### 🌟 Juan Pablo Dongo Huaman (Beta)
 - ✔️ Creación e inicialización de Push Notification
 - ✔️ Creación e inicialización de la función para enviar correos
 #### 📅 Fecha de Inicio: 26/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 28/06
 
 ### 🌟 Santiago Fernández (Gamma)
 - ✔️ Creación e inicialización de Push Notification
 - ✔️ Mejoras en los formularios: mostrar errores y estilos
 #### 📅 Fecha de Inicio: 24/06
-#### ⌛ Fecha de Finalización: Pendiente
+#### ⌛ Fecha de Finalización: 27/06
