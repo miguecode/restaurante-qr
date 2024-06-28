@@ -4,5 +4,11 @@ const config: CapacitorConfig = {
   appId: 'com.segundo.parcial',
   appName: 'SP Restaurante',
   webDir: 'www',
+  plugins: {
+    SplashScreen: {
+      launchAutoHide: false,
+      showSpinner: false,
+    },
+  },
 };
 export default config;
