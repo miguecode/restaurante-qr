@@ -16,6 +16,7 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { confirmarClaveValidator } from 'src/app/classes/utils/claveValidator';
 
 @Component({
   selector: 'app-formulario-registro-cliente',
@@ -61,6 +62,10 @@ export class FormularioRegistroClienteComponent implements OnInit {
     return this.formAlta.get('clave') as FormControl;
   }
 
+  get repetirClave() {
+    return this.formAlta.get('repetirClave') as FormControl;
+  }
+
   constructor(private clienteService: ClienteService, private router: Router) {}
 
   private crearFormGroup() {
@@ -93,7 +98,11 @@ export class FormularioRegistroClienteComponent implements OnInit {
         Validators.required,
         Validators.minLength(6),
       ]),
-    });
+      repetirClave: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+    }, confirmarClaveValidator());
   }
 
   public ngOnInit() {
@@ -241,6 +250,8 @@ export class FormularioRegistroClienteComponent implements OnInit {
           return 'Formato inválido';
         case 'email':
           return 'Email invalido';
+        case 'noCoincide':
+          return 'La contraseña no coincide con la anterior';
       }
     }
     return null;

@@ -127,6 +127,25 @@
       </div>
       <!-- #endregion Clave -->
 
+      <!-- #region Repetir Clave -->
+      <div class="form-group control-clave">
+        <label>Confirmar clave</label>
+        <input class="form-control" type="password" formControlName="repetirClave" />
+        <span
+          *ngIf="isValidField('repetirClave')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("repetirClave") }}
+        </span>
+        <span
+          *ngIf="!isValidField('repetirClave')"
+          class="form-text text-danger small-error"
+        >
+          <br />
+        </span>
+      </div>
+      <!-- #endregion Repetir Clave -->
+
       <!-- #region Boton Alta -->
       <div class="form-group control-accion">
         <button
