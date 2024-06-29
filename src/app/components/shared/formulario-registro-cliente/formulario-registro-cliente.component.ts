@@ -1,5 +1,13 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Cliente } from 'src/app/classes/cliente';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
@@ -16,13 +24,11 @@ import { Router } from '@angular/router';
   templateUrl: './formulario-registro-cliente.component.html',
   styleUrls: ['./formulario-registro-cliente.component.scss'],
 })
-export class FormularioRegistroClienteComponent  implements OnInit {
-
+export class FormularioRegistroClienteComponent implements OnInit {
   @Input() modoAlta: boolean = false;
   @Input() modoBaja: boolean = false;
   @Input() modoModificar: boolean = false;
   @Input() cliente: Cliente | undefined = undefined;
-
 
   formRegistrar!: FormGroup;
   formAlta!: FormGroup;
@@ -58,37 +64,36 @@ export class FormularioRegistroClienteComponent  implements OnInit {
   constructor(private clienteService: ClienteService, private router: Router) {}
 
   private crearFormGroup() {
-      this.formAlta = new FormGroup({
-        nombre: new FormControl('', [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
-        ]),
-        apellido: new FormControl('', [
-          Validators.required,
-          Validators.minLength(2),
-          Validators.maxLength(20),
-          this.validarPalabra(),
-        ]),
-        dni: new FormControl(0, [
-          Validators.required,
-          Validators.pattern(/^\d+$/),
-          Validators.minLength(7),
-          Validators.maxLength(9),
-        ]),
-        foto: new FormControl(undefined, [Validators.required]),
-        correo: new FormControl('', [
-          Validators.required,
-          Validators.email,
-          Validators.required,
-        ]),
-        clave: new FormControl('', [
-          Validators.required,
-          Validators.minLength(6),
-        ]),
-      });
-  
+    this.formAlta = new FormGroup({
+      nombre: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20),
+        this.validarPalabra(),
+      ]),
+      apellido: new FormControl('', [
+        Validators.required,
+        Validators.minLength(2),
+        Validators.maxLength(20),
+        this.validarPalabra(),
+      ]),
+      dni: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d+$/),
+        Validators.minLength(7),
+        Validators.maxLength(9),
+      ]),
+      foto: new FormControl(undefined, [Validators.required]),
+      correo: new FormControl('', [
+        Validators.required,
+        Validators.email,
+        Validators.required,
+      ]),
+      clave: new FormControl('', [
+        Validators.required,
+        Validators.minLength(6),
+      ]),
+    });
   }
 
   public ngOnInit() {
@@ -99,7 +104,6 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     await this.clienteService.alta(this.getCliente());
     await Swalert.toastSuccess('Alta realizada exitosamente');
   }
- 
 
   private getCliente() {
     let cliente = new Cliente();
@@ -113,7 +117,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     }
     cliente.setCorreo(this.correo.value);
     cliente.setClave(this.clave.value);
-    
+
     return cliente;
   }
 
@@ -128,9 +132,9 @@ export class FormularioRegistroClienteComponent  implements OnInit {
       } else {
         await this.alta();
       }
-      
+
       setTimeout(() => {
-        this.goTo('login')
+        this.goTo('login');
       }, 1500);
     } catch (e: any) {
       console.log(e.message);
@@ -242,9 +246,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     return null;
   }
 
-  goTo(path : string)
-  {
+  goTo(path: string) {
     this.router.navigate([path]);
   }
-
 }
