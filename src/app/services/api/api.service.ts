@@ -42,4 +42,17 @@ export class ApiService {
       xhttp.send();
     });
   }
+
+  public async enviarCorreo(receptor: Usuario, aceptacion: boolean) {
+    const ENDPOINT = `https://sp-restaurante-brigada-binaria-api.onrender.com/send-mail`;
+    return fetch(ENDPOINT, {
+      method: 'POST',
+      body: JSON.stringify({
+        aceptacion: aceptacion,
+        nombreUsuario: receptor.nombre,
+        mail: receptor.correo,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }
