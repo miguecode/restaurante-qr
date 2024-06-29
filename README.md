@@ -141,3 +141,23 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - ✔️ Mejoras en los formularios: mostrar errores y estilos
 #### 📅 Fecha de Inicio: 24/06
 #### ⌛ Fecha de Finalización: 27/06
+
+-- -- 
+
+## 🛠️ Actualización de responsabilidades e informe (28/06)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Desarrollo del Home con validaciones, spinner y correcciones en los ABM
+- ✔️ Estilos para el form de registro para clientes
+#### 📅 Fecha de Inicio: 27/06
+#### ⌛ Fecha de Finalización: 28/06
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Hosting de API para las funcionalidades de Push Notification y correos
+#### 📅 Fecha de Inicio: 27/06
+#### ⌛ Fecha de Finalización: 28/06
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Creación y funcionalidad para el form de registro para clientes (correspondiente al Punto 1)
+- ✔️ Correcciones en ABMs
+#### 📅 Fecha de Inicio: 28/06
+#### ⌛ Fecha de Finalización: 28/06
