@@ -19,6 +19,6 @@ export class SplashComponent implements OnInit {
     }, 150);
     setTimeout(() => {
       this.router.navigateByUrl('/login');
-    }, 5000);
+    }, 2500);
   }
 }

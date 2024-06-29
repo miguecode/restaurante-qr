@@ -17,6 +17,15 @@ import { Supervisor } from 'src/app/classes/supervisor';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { SeccionAbmsComponent } from './seccion-abms/seccion-abms.component';
 import { Usuario } from 'src/app/classes/padres/usuario';
+import { Swalert } from 'src/app/classes/utils/swalert.class';
+import { Producto } from 'src/app/classes/producto';
+import { Mesa } from 'src/app/classes/mesa';
+import { MesaService } from 'src/app/services/mesa.service';
+import { ProductoService } from 'src/app/services/producto.service';
+import { EmpleadoService } from 'src/app/services/empleado.service';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { DuenioService } from 'src/app/services/duenio.service';
+import { SupervisorService } from 'src/app/services/supervisor.service';
 
 @Component({
   selector: 'app-home',
@@ -41,38 +50,95 @@ import { Usuario } from 'src/app/classes/padres/usuario';
   ],
 })
 export class HomeComponent implements OnInit {
-  usuarioActual: Empleado | Duenio | Supervisor | Cliente | undefined =
-    undefined;
-  mostrarSpinner: boolean = true;
+  usuario: Usuario | undefined = undefined;
+  mostrarSpinner: boolean = false;
   mostrarAbms: boolean = false;
 
-  constructor(private usuarioService: UsuarioService) {}
+  listaDuenios: Duenio[] = [];
+  listaSupervisores: Supervisor[] = [];
+  listaEmpleados: Empleado[] = [];
+  listaClientes: Cliente[] = [];
+  listaMesas: Mesa[] = [];
+  listaProductos: Producto[] = [];
 
-  ngOnInit(): void {
-    this.getUsuarioActual();
+  usuarioEsEmpleado: boolean = false;
+  usuarioEsEsDuenio: boolean = false;
+  usuarioEsSupervisor: boolean = false;
+  usuarioEsCliente: boolean = false;
+  usuarioTipoEmpleado: string = '';
+
+  constructor(
+    private usuarioService: UsuarioService,
+    private duenioService: DuenioService,
+    private supervisorService: SupervisorService,
+    private empleadoService: EmpleadoService,
+    private clienteSerivice: ClienteService,
+    private mesaService: MesaService,
+    private productoService: ProductoService
+  ) {}
+
+  private async cargarDatosImportantes() {
+    this.duenioService.traerTodosObservable().subscribe((l) => {
+      this.listaDuenios = l;
+    });
+
+    this.supervisorService.traerTodosObservable().subscribe((l) => {
+      this.listaSupervisores = l;
+    });
+
+    this.empleadoService.traerTodosObservable().subscribe((l) => {
+      this.listaEmpleados = l;
+    });
+
+    this.clienteSerivice.traerTodosObservable().subscribe((l) => {
+      this.listaClientes = l;
+    });
+
+    this.mesaService.traerTodosObservable().subscribe((l) => {
+      this.listaMesas = l;
+    });
+
+    this.productoService.traerTodosObservable().subscribe((l) => {
+      this.listaProductos = l;
+    });
+
+    this.usuario = await this.usuarioService.getUsuarioBd();
+
+    this.usuarioEsEsDuenio = this.usuario instanceof Duenio;
+    this.usuarioEsSupervisor = this.usuario instanceof Supervisor;
+    this.usuarioEsEmpleado = this.usuario instanceof Empleado;
+    this.usuarioEsCliente = this.usuario instanceof Cliente;
+
+    if (this.usuario instanceof Empleado) {
+      this.usuarioTipoEmpleado = this.usuario.tipo;
+    }
+
+    console.log('listaDuenios', this.listaDuenios);
+    console.log('listaSupervisores', this.listaSupervisores);
+    console.log('listaEmpleados', this.listaEmpleados);
+    console.log('listaClientes', this.listaClientes);
+    console.log('listaMesas', this.listaMesas);
+    console.log('listaProductos', this.listaProductos);
+
+    console.log('usuarioEsEsDuenio', this.usuarioEsEsDuenio);
+    console.log('usuarioEsSupervisor', this.usuarioEsSupervisor);
+    console.log('usuarioEsEmpleado', this.usuarioEsEmpleado);
+    console.log('usuarioEsCliente', this.usuarioEsCliente);
+
+    console.log('usuarioTipoEmpleado', this.usuarioTipoEmpleado);
+
+    console.log('usuario', this.usuario);
   }
 
-  async getUsuarioActual() {
-    this.mostrarSpinner = true;
+  async ngOnInit() {
     try {
-      this.usuarioActual = await this.usuarioService.getUsuarioBd();
-    } catch (error) {
-      console.error('Error obteniendo usuario:', error);
+      this.mostrarSpinner = true;
+      await this.cargarDatosImportantes();
+    } catch (e: any) {
+      Swalert.toastError(e.message);
+      console.log(e.message);
     } finally {
       this.mostrarSpinner = false;
-      console.log(this.usuarioActual);
     }
-  }
-
-  esEmpleado() {
-    return this.usuarioActual instanceof Empleado;
-  }
-
-  getTipo() {
-    if (this.usuarioActual instanceof Empleado) {
-      return this.usuarioActual.tipo;
-    }
-
-    return '';
   }
 }

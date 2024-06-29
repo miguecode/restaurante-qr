@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
 
 * {
   margin: 0;
@@ -30,6 +30,8 @@ ion-title {
   height: 98%;
   margin-top: 5px;
 }
+
+/*
 ion-button {
   --background: #1e1e1e;
   flex-basis: calc(60% - 1px);
@@ -41,6 +43,7 @@ ion-button {
   text-align: center;
   color: #860106;
 }
+  */
 
 // #region loader
 .loader-container {
@@ -74,7 +77,6 @@ ion-button {
 }
 // #endregion loader
 
-
 .boton-atras {
   background-color: transparent;
   display: inline;
@@ -88,3 +90,28 @@ ion-button {
 .titulo {
   display: flex;
 }
+
+// #region Modificacion de CSS
+
+.home-container {
+  height: 100%;
+  width: 100%;
+}
+.router-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
+  grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
+  padding: 5px;
+  gap: 5px;
+}
+.router-container ion-button {
+  --background: #1e1e1e;
+  --color: #860106;
+  height: 100%;
+  width: 100%;
+  font-size: 40px;
+}
+
+// #endregion Modificacion de CSS
