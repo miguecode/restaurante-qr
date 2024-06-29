@@ -141,3 +141,48 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - ✔️ Mejoras en los formularios: mostrar errores y estilos
 #### 📅 Fecha de Inicio: 24/06
 #### ⌛ Fecha de Finalización: 27/06
+
+-- -- 
+
+## 🛠️ Actualización de responsabilidades e informe (28/06)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Desarrollo del Home con validaciones, spinner y correcciones en los ABM
+- ✔️ Estilos para el form de registro para clientes
+#### 📅 Fecha de Inicio: 27/06
+#### ⌛ Fecha de Finalización: 28/06
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Hosting de API para las funcionalidades de Push Notification y correos
+#### 📅 Fecha de Inicio: 27/06
+#### ⌛ Fecha de Finalización: 28/06
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Creación y funcionalidad para el form de registro para clientes (correspondiente al Punto 1)
+- ✔️ Correcciones en ABMs
+#### 📅 Fecha de Inicio: 28/06
+#### ⌛ Fecha de Finalización: 28/06
+
+-- -- 
+
+### 🎨 Pantallas actualizadas
+
+- Diseño de ABM anterior (ya no usado)
+<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a520d93d-555b-47e8-86c2-7b892ab46517" width="400"/>
+
+- Diseño de ABM Actual
+<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/02f19f5a-a6d6-49c4-95fa-e75da5be4fea" width="500"/>
+
+- Diseño para los formularios anterior
+<img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/d5c24232-717f-4260-a152-23c2bcd89d17" width="500"/>
+
+- Diseño para los formularios actual
+
+
+
+
+
+
+
+
+
+
