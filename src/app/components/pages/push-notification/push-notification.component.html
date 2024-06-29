@@ -1,2 +1,6 @@
 <input class="form-control" type="text" [value]="inputValue" />
+<button class="btn btn-primary" (click)="notificar(1)">
+  Notificar un emplaedo
+</button>
 <button class="btn btn-primary" routerLink="/home">Home</button>
+{{ responseValue | json }}

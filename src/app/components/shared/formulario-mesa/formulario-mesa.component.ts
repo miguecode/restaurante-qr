@@ -78,8 +78,8 @@ export class FormularioMesaComponent implements OnInit {
       this.formAlta = new FormGroup({
         cantidadMaxima: new FormControl(0, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.min(1),
+          Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
         foto: new FormControl(undefined, [Validators.required]),
@@ -89,7 +89,7 @@ export class FormularioMesaComponent implements OnInit {
         id: new FormControl(0, []),
         cantidadClientes: new FormControl(0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
           Validators.max(8),
         ]),
         cantidadMaxima: new FormControl(0, [
@@ -98,37 +98,30 @@ export class FormularioMesaComponent implements OnInit {
           Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined, []),
       });
-
-      if (this.mesa !== undefined) {
-        this.id.setValue(this.mesa.id);
-        this.cantidadClientes.setValue(this.mesa.cantidadClientes);
-        this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
-        this.tipo.setValue(this.mesa.tipo);
-      }
     } else if (this.modoBaja) {
       this.formBaja = new FormGroup({
         id: new FormControl(0, []),
         cantidadClientes: new FormControl(0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
           Validators.max(8),
         ]),
         cantidadMaxima: new FormControl(0, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.min(1),
+          Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
       });
+    }
 
-      if (this.mesa !== undefined) {
-        this.id.setValue(this.mesa.id);
-        this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
-        this.tipo.setValue(this.mesa.tipo);
-      }
+    if (this.mesa !== undefined) {
+      this.id.setValue(this.mesa.id);
+      this.cantidadClientes.setValue(this.mesa.cantidadClientes);
+      this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
+      this.tipo.setValue(this.mesa.tipo);
     }
   }
   private getMesa() {

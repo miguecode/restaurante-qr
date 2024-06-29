@@ -159,7 +159,7 @@ export class FormularioEmpleadoComponent implements OnInit {
           Validators.min(10000000000),
           Validators.max(99999999999),
         ]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined, []),
         tipo: new FormControl('', [Validators.required]),
         correo: new FormControl('', [Validators.required, Validators.email]),
       });

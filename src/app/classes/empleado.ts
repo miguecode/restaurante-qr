@@ -3,6 +3,7 @@ import { Usuario } from './padres/usuario';
 export class Empleado extends Usuario {
   public cuil: number;
   public tipo: string;
+  public token: string;
 
   public static TIPOS = [
     'cocinero',
@@ -22,6 +23,7 @@ export class Empleado extends Usuario {
     this.rol = 'empleado';
     this.cuil = 0;
     this.tipo = '';
+    this.token = '';
   }
 
   setId(id: number) {

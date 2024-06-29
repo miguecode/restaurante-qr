@@ -15,7 +15,7 @@ import { Usuario } from '../classes/padres/usuario';
 })
 export class UsuarioService {
   public static ACCESOS_RAPIDOS: Usuario[] = [
-    { correo: 'jp@jp.com', clave: '111111' } as Usuario,
+    { correo: 'matir@yopmail.com', clave: '111111' } as Usuario,
     { correo: 'mg@mg.com', clave: '111111' } as Usuario,
     { correo: 'st@st.com', clave: '111111' } as Usuario,
   ];
@@ -113,7 +113,7 @@ export class UsuarioService {
 
     return verificoCorreo;
   }
-  private async getUsuarioBd() {
+  public async getUsuarioBd() {
     const correo = await this.getCorreoAuth();
     const lista = await this.traerTodos();
     let usuario: (Duenio | Supervisor | Empleado | Cliente) | undefined =
