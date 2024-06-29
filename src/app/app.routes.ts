@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { noLogeadoGuard } from './guards/no-logeado.guard';
 
 export const routes: Routes = [
   {
@@ -75,6 +76,13 @@ export const routes: Routes = [
       import(
         './components/pages/push-notification/push-notification.component'
       ).then((m) => m.PushNotificationComponent),
+  },
+  {
+    path: 'seccion-abms',
+    loadComponent: () =>
+      import(
+        './components/pages/home/seccion-abms/seccion-abms.component'
+      ).then((m) => m.SeccionAbmsComponent),
   },
   {
     path: '**',

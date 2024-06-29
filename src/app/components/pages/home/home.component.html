@@ -8,27 +8,39 @@
   <ion-header collapse="condense">
     <ion-title>La Comanda</ion-title>
   </ion-header>
-  <div class="container-router">
-    <ion-button routerLink="/abm-duenio"
-      ><p>ABM<br />Dueño</p></ion-button
+
+  <div *ngIf="mostrarSpinner" class="loader-container">
+    <span class="loader"></span>
+  </div>
+
+  <div *ngIf="!mostrarAbms" class="container-router">
+    <ion-button
+      *ngIf="usuarioActual?.rol === 'duenio'"
+      routerLink="/seccion-abms"
+      ><p>Gestión<br />Entidades</p></ion-button
     >
-    <ion-button routerLink="/abm-supervisor"
-      ><p>ABM<br />Supervisor</p></ion-button
+    <ion-button
+      *ngIf="usuarioActual?.rol === 'supervisor'"
+      routerLink="/seccion-abms"
+      ><p>Agregar<br />Empleado</p></ion-button
     >
-    <ion-button routerLink="/abm-empleado"
-      ><p>ABM<br />Empleado</p></ion-button
+
+    @if (esEmpleado()) {
+    <ion-button
+      *ngIf="getTipo() === 'mozo' || getTipo() === 'metre'"
+      routerLink="/abm-cliente"
+      ><p>Agregar<br />Cliente</p></ion-button
     >
-    <ion-button routerLink="/abm-cliente"
-      ><p>ABM<br />Cliente</p></ion-button
+
+    <ion-button
+      *ngIf="getTipo() === 'cocinero' || getTipo() === 'bartender'"
+      routerLink="/abm-producto"
+      ><p>Agregar<br />Plato/Bebida</p></ion-button
     >
-    <ion-button routerLink="/abm-mesa"
-      ><p>ABM<br />Mesa</p></ion-button
-    >
-    <ion-button routerLink="/abm-producto"
-      ><p>ABM<br />Producto</p></ion-button
-    >
-    <ion-button routerLink="/push-notification"
-      ><p>Push<br />Notifications</p></ion-button
-    >
+
+    <!-- <ion-button *ngIf="getTipo() === 'repartidor'"
+        ><p>Hola<br />Repartidor</p></ion-button
+      > -->
+    }
   </div>
 </ion-content>

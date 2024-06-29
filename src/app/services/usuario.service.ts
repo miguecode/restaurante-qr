@@ -32,31 +32,25 @@ export class UsuarioService {
     private empleadoService: EmpleadoService,
     private clienteService: ClienteService
   ) {
-    /* Todavia no esta desarrollado
     this.duenioService.traerTodosObservable().subscribe((l) => {
-        this.duenios = l;
-        this.flagObservables[0] = true;
+      this.duenios = l;
+      this.flagObservables[0] = true;
     });
-    */
 
-    /* Todavia no esta desarrollado
     this.supervisorService.traerTodosObservable().subscribe((l) => {
-        this.supervisores = l;
-        this.flagObservables[1] = true;
+      this.supervisores = l;
+      this.flagObservables[1] = true;
     });
-    */
 
     this.empleadoService.traerTodosObservable().subscribe((l) => {
       this.empleados = l;
       this.flagObservables[2] = true;
     });
 
-    /* Todavia no esta desarrollado
     this.clienteService.traerTodosObservable().subscribe((l) => {
-        this.clientes = l;
-        this.flagObservables[3] = true;
+      this.clientes = l;
+      this.flagObservables[3] = true;
     });
-    */
   }
 
   private traerTodos() {
@@ -113,7 +107,7 @@ export class UsuarioService {
 
     return verificoCorreo;
   }
-  private async getUsuarioBd() {
+  public async getUsuarioBd() {
     const correo = await this.getCorreoAuth();
     const lista = await this.traerTodos();
     let usuario: (Duenio | Supervisor | Empleado | Cliente) | undefined =
