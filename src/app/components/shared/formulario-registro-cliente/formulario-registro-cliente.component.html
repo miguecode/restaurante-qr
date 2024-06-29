@@ -13,6 +13,12 @@
           >
             {{ getFieldError("nombre") }}
           </span>
+          <span
+            *ngIf="!isValidField('nombre')"
+            class="form-text text-danger small-error"
+          >
+            <br />
+          </span>
         </div>
         <!-- #endregion Nombre -->
 
@@ -47,6 +53,12 @@
           >
             {{ getFieldError("dni") }}
           </span>
+          <span
+            *ngIf="!isValidField('dni')"
+            class="form-text text-danger small-error"
+          >
+            <br />
+          </span>
         </div>
         <!-- #endregion DNI -->
       </div>
@@ -68,23 +80,30 @@
         >
           {{ getFieldError("foto") }}
         </span>
+        <span
+          *ngIf="!isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          <br />
+        </span>
       </div>
       <!-- #endregion Foto -->
 
       <!-- #region Correo -->
       <div class="form-group control-correo">
         <label>Correo</label>
-        <input
-          class="form-control"
-          type="text"
-          placeholder="ejemplo@entidad.com"
-          formControlName="correo"
-        />
+        <input class="form-control" type="text" formControlName="correo" />
         <span
           *ngIf="isValidField('correo')"
           class="form-text text-danger small-error"
         >
           {{ getFieldError("correo") }}
+        </span>
+        <span
+          *ngIf="!isValidField('correo')"
+          class="form-text text-danger small-error"
+        >
+          <br />
         </span>
       </div>
       <!-- #endregion Correo -->
@@ -92,17 +111,18 @@
       <!-- #region Clave -->
       <div class="form-group control-clave">
         <label>Clave</label>
-        <input
-          class="form-control"
-          type="password"
-          placeholder="******"
-          formControlName="clave"
-        />
+        <input class="form-control" type="password" formControlName="clave" />
         <span
           *ngIf="isValidField('clave')"
           class="form-text text-danger small-error"
         >
           {{ getFieldError("clave") }}
+        </span>
+        <span
+          *ngIf="!isValidField('clave')"
+          class="form-text text-danger small-error"
+        >
+          <br />
         </span>
       </div>
       <!-- #endregion Clave -->
@@ -139,3 +159,4 @@
     </form>
     <!-- #endregion Formulario Alta -->
   </div>
+</div>

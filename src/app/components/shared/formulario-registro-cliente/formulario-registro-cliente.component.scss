@@ -1,22 +1,43 @@
-.formulario-container {
-    background-color: lightgrey;
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Baloo 2", sans-serif;
+}
+
+formulario-container {
+    background-color: #1e1e1e;
     border-radius: 5px;
     padding: 7px;
   }
   
   input {
     width: 100%;
+    background: transparent;
+    height: 38px;
+    color: #fff;
+    border-color: #b72c2c;
+    padding-left: 5px;
+  }
+  input:focus {
+    background: transparent;
+    height: 38px;
+    color: #fff;
+    border-color: #b72c2c;
   }
   label {
-    color: black;
-    font-size: 18px;
+    color: #fff;
+    font-size: 20px;
+    font-weight: bold;
   }
   img {
     height: 70px;
     width: 70px;
     border-top-right-radius: 5px;
     border-bottom-right-radius: 5px;
-    border: 2px solid lightsalmon;
+    border: 2px solid #b72c2c;
   }
   
   .img-baja {
@@ -68,16 +89,25 @@
   }
   
   .control-foto button {
-    background-color: orange;
+    background: transparent;
+    border: 1px solid #b72c2c;
     width: 250px;
+    font-weight: bold;
+    font-size: 21px;
   }
   
   .control-accion button {
-    background-color: green;
+    background: #4b963c;
+    border: 1px solid #4b963c;
+    font-weight: bold;
+    height: 50px;
   }
   
   .control-cancelar button {
-    background-color: red;
+    background: #dc2121;
+    border: 1px solid #dc2121;
+    font-weight: bold;
+    height: 50px;
   }
   // #endregion Controles
   
