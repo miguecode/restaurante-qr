@@ -1,23 +1,96 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title> Blank </ion-title>
+    <div class="titulo">
+      <button class="boton-atras" (click)="cerrarSesion()">
+        <img src="../../../../assets/app/images/atras.png" />
+      </button>
+      <ion-title>La Comanda</ion-title>
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <div class="container-router">
-    <ion-button routerLink="/iniciar-sesion">
-      <ion-label>Router iniciar-sesion</ion-label>
-    </ion-button>
-    <ion-button routerLink="/abm-empleado">
-      <ion-label>Router abm-empleado</ion-label>
-    </ion-button>
-    <ion-button routerLink="/abm-mesa">
-      <ion-label>Router abm-mesa</ion-label>
-    </ion-button>
-    <ion-button routerLink="/push-noti">
-      <ion-label>Router push-noti</ion-label>
-    </ion-button>
-    <br />
+  <div class="home-container">
+    <div *ngIf="mostrarSpinner" class="loader-container">
+      <span class="loader"></span>
+    </div>
+
+    <div class="seccion-container">
+      <!-- ABM Dueño -->
+    </div>
+
+    <div class="seccion-container">
+      <!-- ABM Supervisor -->
+    </div>
+
+    <div class="seccion-container">
+      <!-- ABM Empleado -->
+    </div>
+
+    <div class="seccion-container">
+      <!-- ABM Mesa -->
+    </div>
+
+    <!-- class="container-router" -->
+    <div class="router-container">
+      <!-- #region Boton ABM Entidades -->
+      <div
+        *ngIf="
+          !mostrarAbms && usuario !== undefined && usuario.rol === 'duenio'
+        "
+      >
+        <ion-button routerLink="/seccion-abms">
+          <p>Gestión<br />Entidades</p>
+        </ion-button>
+      </div>
+      <!-- #endregion Boton ABM Entidades -->
+
+      <!-- #region Boton Alta Empleado -->
+      <div
+        *ngIf="
+          !mostrarAbms && usuario !== undefined && usuario.rol === 'supervisor'
+        "
+      >
+        <ion-button routerLink="/seccion-abms">
+          <p>Agregar<br />Empleado</p>
+        </ion-button>
+      </div>
+      <!-- #endregion Boton Alta Empleado -->
+
+      <!-- #region Boton Alta Cliente -->
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'mozo' || usuarioTipoEmpleado === 'metre')
+        "
+      >
+        <ion-button routerLink="/abm-cliente">
+          <p>Agregar<br />Cliente</p>
+        </ion-button>
+      </div>
+      <!-- #endregion Boton Alta Cliente -->
+
+      <!-- #region Boton Alta Producto -->
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'cocinero' ||
+            usuarioTipoEmpleado === 'bartender')
+        "
+      >
+        <ion-button routerLink="/abm-producto">
+          <p>Agregar<br />Plato/Bebida</p>
+        </ion-button>
+        <!-- #endregion Boton Alta Producto -->
+
+        <!-- #region Boton Repartidor -->
+        <!-- 
+        <ion-button *ngIf="usuarioTipoEmpleado === 'repartidor'">
+          <p>Hola<br />Repartidor</p>
+        </ion-button>
+        -->
+        <!-- #endregion Boton Repartidor -->
+      </div>
+    </div>
   </div>
 </ion-content>

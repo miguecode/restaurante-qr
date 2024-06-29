@@ -3,7 +3,6 @@ import { Usuario } from './padres/usuario';
 export class Empleado extends Usuario {
   public cuil: number;
   public tipo: string;
-  public token: string;
 
   public static TIPOS = [
     'cocinero',
@@ -48,6 +47,7 @@ export class Empleado extends Usuario {
       rol: empleado.rol,
       habilitado: empleado.habilitado.toString(),
       correo: empleado.correo,
+      token: empleado.token,
     };
   }
   static parseDoc(doc: any) {
@@ -62,6 +62,7 @@ export class Empleado extends Usuario {
     empleado.rol = doc.rol;
     empleado.habilitado = JSON.parse(doc.habilitado);
     empleado.correo = doc.correo;
+    empleado.token = doc.token;
     return empleado;
   }
   static parseDocArray(doc: any) {
@@ -76,6 +77,7 @@ export class Empleado extends Usuario {
     empleado.rol = doc['rol'];
     empleado.habilitado = JSON.parse(doc['habilitado']);
     empleado.correo = doc['correo'];
+    empleado.token = doc['token'];
     return empleado;
   }
 }

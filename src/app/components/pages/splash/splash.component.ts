@@ -13,12 +13,12 @@ import { IonContent } from '@ionic/angular/standalone';
 export class SplashComponent implements OnInit {
   constructor(public router: Router) {}
 
-  public ngOnInit() {
+  ngOnInit() {
     setTimeout(() => {
       SplashScreen.hide();
     }, 150);
     setTimeout(() => {
-      this.router.navigateByUrl('/home');
-    }, 5000);
+      this.router.navigateByUrl('/login');
+    }, 2500);
   }
 }

@@ -11,6 +11,7 @@ import { Empleado } from 'src/app/classes/empleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { FormularioEmpleadoComponent } from '../../shared/formulario-empleado/formulario-empleado.component';
 import { RouterLink } from '@angular/router';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-abm-empleado',
@@ -27,6 +28,7 @@ import { RouterLink } from '@angular/router';
     NgIf,
     NgFor,
     FormularioEmpleadoComponent,
+    CapitalizePipe,
   ],
 })
 export class AbmEmpleadoComponent implements OnInit {

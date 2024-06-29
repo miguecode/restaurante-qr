@@ -1,0 +1,184 @@
+<div class="formulario-container">
+  <div>
+    <!-- #region Formulario Alta -->
+    <form [formGroup]="formAlta">
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+          <span
+            *ngIf="isValidField('nombre')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("nombre") }}
+          </span>
+          <span
+            *ngIf="!isValidField('nombre')"
+            class="form-text text-danger small-error"
+          >
+            <br />
+          </span>
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+          <span
+            *ngIf="isValidField('apellido')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("apellido") }}
+          </span>
+        </div>
+        <!-- #endregion Apellido -->
+      </div>
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="dni" />
+          </div>
+          <span
+            *ngIf="isValidField('dni')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("dni") }}
+          </span>
+          <span
+            *ngIf="!isValidField('dni')"
+            class="form-text text-danger small-error"
+          >
+            <br />
+          </span>
+        </div>
+        <!-- #endregion DNI -->
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
+          </button>
+          @if (fotoBlob) {
+          <img [src]="fotoBlob" />
+          }
+        </div>
+        <span
+          *ngIf="isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("foto") }}
+        </span>
+        <span
+          *ngIf="!isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          <br />
+        </span>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input class="form-control" type="text" formControlName="correo" />
+        <span
+          *ngIf="isValidField('correo')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("correo") }}
+        </span>
+        <span
+          *ngIf="!isValidField('correo')"
+          class="form-text text-danger small-error"
+        >
+          <br />
+        </span>
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Clave -->
+      <div class="form-group control-clave">
+        <label>Clave</label>
+        <input class="form-control" type="password" formControlName="clave" />
+        <span
+          *ngIf="isValidField('clave')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("clave") }}
+        </span>
+        <span
+          *ngIf="!isValidField('clave')"
+          class="form-text text-danger small-error"
+        >
+          <br />
+        </span>
+      </div>
+      <!-- #endregion Clave -->
+
+      <!-- #region Repetir Clave -->
+      <div class="form-group control-clave">
+        <label>Confirmar clave</label>
+        <input
+          class="form-control"
+          type="password"
+          formControlName="repetirClave"
+        />
+        <span
+          *ngIf="isValidField('repetirClave')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("repetirClave") }}
+        </span>
+        <span
+          *ngIf="!isValidField('repetirClave')"
+          class="form-text text-danger small-error"
+        >
+          <br />
+        </span>
+      </div>
+      <!-- #endregion Repetir Clave -->
+
+      <!-- #region Boton Alta -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Alta -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="goTo('login')"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Alta -->
+  </div>
+</div>

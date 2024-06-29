@@ -1,3 +1,13 @@
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
+ion-content {
+  --background: #860106;
+}
+
 .page-container {
   padding: 15px;
 }
@@ -5,7 +15,7 @@
 // #region Header
 .header {
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-direction: row;
 }
@@ -33,7 +43,7 @@
   border-radius: 50%;
   top: 12px;
   right: 12px;
-  border: 2px solid black;
+  // border: 2px solid black;
 }
 .img-qr {
   position: absolute;
@@ -46,17 +56,17 @@
 }
 
 .card {
-  background-color: lightgrey;
-  color: black;
+  // background-color: #323232;
+  background-color: #3d1214;
+  color: #fff;
   padding: 12px;
   margin-bottom: 15px;
-  height: 180px;
+  height: 195px;
 }
 
 .card button {
   position: absolute;
   width: auto;
-  margin-bottom: 0px;
 }
 // #endregion Listado
 
@@ -64,25 +74,51 @@
 .boton-alta,
 .boton-baja,
 .boton-modificar {
+  background: #323232;
   border: 0px solid black;
   color: white;
 }
 
 .boton-alta {
-  background-color: green;
+  border: solid 2px rgb(65, 158, 65);
+  position: absolute;
+  top: 10px;
+  right: 10px;
   width: 100px;
-  margin-right: 7px;
+  text-align: center;
 }
 
 .boton-modificar {
-  background-color: orange;
+  border: solid 2px rgb(208, 151, 58);
   right: 12px;
   bottom: 12px;
 }
 
 .boton-baja {
-  background-color: red;
+  border: solid 2px rgb(164, 45, 45);
   left: 12px;
   bottom: 12px;
 }
 // #endregion Botones ABM
+
+span {
+  font-weight: bold;
+}
+
+.boton-atras {
+  background-color: transparent;
+  display: inline;
+  color: #fff;
+  margin-left: 5px;
+  margin-top: 4px;
+  width: 60px;
+  padding: 0px;
+}
+
+.titulo {
+  display: flex;
+}
+
+.id-span {
+  font-size: 25px;
+}

@@ -1,6 +1,7 @@
+import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -9,9 +10,22 @@ import {
   IonButton,
   IonLabel,
 } from '@ionic/angular/standalone';
+import { Cliente } from 'src/app/classes/cliente';
+import { Duenio } from 'src/app/classes/duenio';
+import { Empleado } from 'src/app/classes/empleado';
+import { Supervisor } from 'src/app/classes/supervisor';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { SeccionAbmsComponent } from './seccion-abms/seccion-abms.component';
+import { Usuario } from 'src/app/classes/padres/usuario';
+import { Swalert } from 'src/app/classes/utils/swalert.class';
+import { Producto } from 'src/app/classes/producto';
 import { Mesa } from 'src/app/classes/mesa';
-import { ApiService } from 'src/app/services/api/api.service';
-import { CloudStorageService } from 'src/app/services/firebase/cloud-storage.service';
+import { MesaService } from 'src/app/services/mesa.service';
+import { ProductoService } from 'src/app/services/producto.service';
+import { EmpleadoService } from 'src/app/services/empleado.service';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { DuenioService } from 'src/app/services/duenio.service';
+import { SupervisorService } from 'src/app/services/supervisor.service';
 
 @Component({
   selector: 'app-home',
@@ -31,45 +45,106 @@ import { CloudStorageService } from 'src/app/services/firebase/cloud-storage.ser
     IonToolbar,
     IonTitle,
     IonContent,
+    CommonModule,
+    SeccionAbmsComponent,
   ],
 })
 export class HomeComponent implements OnInit {
-  source1: any = undefined;
-  source2: any = undefined;
+  usuario: Usuario | undefined = undefined;
+  mostrarSpinner: boolean = false;
+  mostrarAbms: boolean = false;
+
+  listaDuenios: Duenio[] = [];
+  listaSupervisores: Supervisor[] = [];
+  listaEmpleados: Empleado[] = [];
+  listaClientes: Cliente[] = [];
+  listaMesas: Mesa[] = [];
+  listaProductos: Producto[] = [];
+
+  usuarioEsEmpleado: boolean = false;
+  usuarioEsEsDuenio: boolean = false;
+  usuarioEsSupervisor: boolean = false;
+  usuarioEsCliente: boolean = false;
+  usuarioTipoEmpleado: string = '';
 
   constructor(
-    private apiService: ApiService,
-    private cloudStorageService: CloudStorageService
+    private usuarioService: UsuarioService,
+    private duenioService: DuenioService,
+    private supervisorService: SupervisorService,
+    private empleadoService: EmpleadoService,
+    private clienteService: ClienteService,
+    private mesaService: MesaService,
+    private productoService: ProductoService,
+    private router: Router
   ) {}
 
-  public ngOnInit() {
-    console.log('');
+  private async cargarDatosImportantes() {
+    this.duenioService.traerTodosObservable().subscribe((l) => {
+      this.listaDuenios = l;
+    });
+
+    this.supervisorService.traerTodosObservable().subscribe((l) => {
+      this.listaSupervisores = l;
+    });
+
+    this.empleadoService.traerTodosObservable().subscribe((l) => {
+      this.listaEmpleados = l;
+    });
+
+    this.clienteService.traerTodosObservable().subscribe((l) => {
+      this.listaClientes = l;
+    });
+
+    this.mesaService.traerTodosObservable().subscribe((l) => {
+      this.listaMesas = l;
+    });
+
+    this.productoService.traerTodosObservable().subscribe((l) => {
+      this.listaProductos = l;
+    });
+
+    this.usuario = await this.usuarioService.getUsuarioBd();
+
+    this.usuarioEsEsDuenio = this.usuario instanceof Duenio;
+    this.usuarioEsSupervisor = this.usuario instanceof Supervisor;
+    this.usuarioEsEmpleado = this.usuario instanceof Empleado;
+    this.usuarioEsCliente = this.usuario instanceof Cliente;
+
+    if (this.usuario instanceof Empleado) {
+      this.usuarioTipoEmpleado = this.usuario.tipo;
+    }
+
+    console.log('listaDuenios', this.listaDuenios);
+    console.log('listaSupervisores', this.listaSupervisores);
+    console.log('listaEmpleados', this.listaEmpleados);
+    console.log('listaClientes', this.listaClientes);
+    console.log('listaMesas', this.listaMesas);
+    console.log('listaProductos', this.listaProductos);
+
+    console.log('usuarioEsEsDuenio', this.usuarioEsEsDuenio);
+    console.log('usuarioEsSupervisor', this.usuarioEsSupervisor);
+    console.log('usuarioEsEmpleado', this.usuarioEsEmpleado);
+    console.log('usuarioEsCliente', this.usuarioEsCliente);
+
+    console.log('usuarioTipoEmpleado', this.usuarioTipoEmpleado);
+
+    console.log('usuario', this.usuario);
   }
 
-  public async generarQr() {
-    const m1 = new Mesa();
-    const m2 = new Mesa();
-    m1.id = 1000;
-    m2.id = 1500;
+  async ngOnInit() {
+    try {
+      this.mostrarSpinner = true;
+      await this.cargarDatosImportantes();
+    } catch (e: any) {
+      Swalert.toastError(e.message);
+      console.log(e.message);
+    } finally {
+      this.mostrarSpinner = false;
+    }
+  }
 
-    const s1 = await this.apiService.generarQrMesa(m1);
-    const s2 = await this.apiService.generarQrMesa(m2);
-
-    this.source1 = s1.png;
-    this.source2 = s2.png;
-
-    console.log('png mesa 100', s1.png);
-    console.log('png mesa 500', s1.png);
-
-    await this.cloudStorageService.subirArchivoBase64(
-      'qr-mesa-test',
-      m1.id.toString(),
-      s1.base64
-    );
-    await this.cloudStorageService.subirArchivoBase64(
-      'qr-mesa-test',
-      m2.id.toString(),
-      s2.base64
-    );
+  async cerrarSesion() {
+    await this.usuarioService.cerrarSesion();
+    this.router.navigateByUrl('/login');
   }
 }

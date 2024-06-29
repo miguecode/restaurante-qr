@@ -1,6 +1,17 @@
 <input class="form-control" type="text" [value]="inputValue" />
-<button class="btn btn-primary" (click)="notificar(1)">
-  Notificar un emplaedo
+
+<button class="btn btn-primary" (click)="notificar()">
+  Notificar PUSH a 1 Usuario
 </button>
-<button class="btn btn-primary" routerLink="/home">Home</button>
+
+<button class="btn btn-success" (click)="enviarCorreo(true)">
+  Enviar correo ACEPTACION
+</button>
+
+<button class="btn btn-danger" (click)="enviarCorreo(false)">
+  Enviar correo RECHAZADO
+</button>
+
+<button class="btn btn-warning" routerLink="/home">Home</button>
+
 {{ responseValue | json }}

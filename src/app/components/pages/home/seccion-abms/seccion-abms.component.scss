@@ -1,0 +1,86 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
+
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
+ion-content {
+  --background: #860106;
+}
+
+.page-container {
+  padding: 10px;
+}
+
+// #region Header
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+// #endregion Header
+
+.router-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
+  grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
+  padding: 5px;
+  gap: 2px;
+}
+ion-button {
+  --background: #1e1e1e;
+  flex-basis: calc(60% - 1px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 40px;
+  text-align: center;
+  color: #860106;
+}
+
+// #region loader
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 400%;
+}
+.loader {
+  margin-top: 22%;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: inline-block;
+  border-top: 3px solid var(--t1-color2);
+  border-right: 3px solid transparent;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+// #endregion loader
+
+.boton-atras {
+  background-color: transparent;
+  display: inline;
+  color: #fff;
+  margin-left: 5px;
+  margin-top: 4px;
+  width: 60px;
+  padding: 0px;
+}
+
+.titulo {
+  display: flex;
+}

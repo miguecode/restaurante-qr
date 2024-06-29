@@ -1,0 +1,110 @@
+<div class="contenedor">
+  <div class="wrapper">
+    <h1 style="user-select: none">Iniciar Sesión</h1>
+    <form [formGroup]="loginForm">
+      <div class="input-box">
+        <input
+          type="email"
+          formControlName="correoActual"
+          placeholder="Correo"
+          required
+        />
+        <i class="bx bxs-envelope"></i>
+      </div>
+      <div class="input-box">
+        <input
+          type="password"
+          formControlName="claveActual"
+          placeholder="Contraseña"
+          required
+        />
+        <i class="bx bxs-lock-alt"></i>
+      </div>
+      <button
+        type="submit"
+        (click)="ingresar()"
+        class="btn"
+        [disabled]="procesando"
+      >
+        <div *ngIf="procesando">
+          <div class="loader-container">
+            <span class="loader"></span>
+          </div>
+        </div>
+        <div *ngIf="!procesando">Ingresar</div>
+      </button>
+      <p class="mensaje" [ngClass]="{ error: loginForm.invalid }" id="mensaje">
+        {{ mensaje }}
+      </p>
+      <br />
+      <p>
+        ¿No tenés cuenta?
+        <a [routerLink]="['/register']" routerLinkActive="router-link-active"
+          >¡Regístrate!</a
+        >
+      </p>
+      <p>
+        O también podés
+        <a (click)="autocompletar('0')" id="anonimo">ingresar como anónimo</a>
+      </p>
+    </form>
+  </div>
+
+  <br />
+  <div class="accesos">
+    <div>
+      <h3 style="text-align: center">Accesos Rápidos</h3>
+    </div>
+    <div class="imagenes">
+      <figure>
+        <button
+          (click)="autocompletar('1')"
+          class="acceso-btn"
+          [disabled]="procesando"
+        >
+          <img id="accesoDueño" src="../../../../assets/app/images/dueño.png" />
+        </button>
+        Dueño
+      </figure>
+      <figure>
+        <button
+          (click)="autocompletar('2')"
+          class="acceso-btn"
+          [disabled]="procesando"
+        >
+          <img
+            id="accesoSupervisor"
+            src="../../../../assets/app/images/supervisor.png"
+          />
+        </button>
+        Supervisor
+      </figure>
+      <figure>
+        <button
+          (click)="autocompletar('3')"
+          class="acceso-btn"
+          [disabled]="procesando"
+        >
+          <img
+            id="accesoEmpleado"
+            src="../../../../assets/app/images/empleado.png"
+          />
+        </button>
+        Empleado
+      </figure>
+      <figure>
+        <button
+          (click)="autocompletar('4')"
+          class="acceso-btn"
+          [disabled]="procesando"
+        >
+          <img
+            id="accesoCliente"
+            src="../../../../assets/app/images/cliente.png"
+          />
+        </button>
+        Cliente
+      </figure>
+    </div>
+  </div>
+</div>

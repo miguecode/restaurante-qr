@@ -11,6 +11,7 @@ export class Usuario {
   public habilitado: boolean;
   public correo: string;
   public clave: string;
+  public token: string;
 
   constructor() {
     this.id = 0;
@@ -23,6 +24,7 @@ export class Usuario {
     this.habilitado = false;
     this.correo = '';
     this.clave = '';
+    this.token = '';
   }
 
   setNombre(nombre: string) {
@@ -45,5 +47,9 @@ export class Usuario {
   }
   setClave(clave: string) {
     this.clave = clave;
+  }
+
+  setToken(token: string) {
+    this.token = token;
   }
 }

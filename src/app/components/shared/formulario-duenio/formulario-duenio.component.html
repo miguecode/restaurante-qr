@@ -1,0 +1,402 @@
+<div class="formulario-container">
+  <div *ngIf="modoAlta === true">
+    <!-- #region Formulario Alta -->
+    <form [formGroup]="formAlta">
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+          <div class="alert alert-danger" role="alert">Nombre no válido</div>
+          } }
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
+          <div class="alert hide alert-danger" role="alert">
+            Apellido no válido
+          </div>
+          } }
+        </div>
+      </div>
+      <!-- #endregion Apellido -->
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="dni" />
+          </div>
+          @if (dni) { @if (dni.invalid && dni.dirty) {
+          <div class="alert hide alert-danger" role="alert">
+            D.N.I no válido
+          </div>
+          } }
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)="recibirDataDniCuilQR($event)"
+            ></app-qr-scanner>
+            <input class="form-control" type="text" formControlName="cuil" />
+          </div>
+          @if (cuil) { @if (cuil.invalid && (cuil.dirty)) {
+          <div class="alert hide alert-danger" role="alert">CUIL no válido</div>
+          }}
+        </div>
+      </div>
+      <!-- #endregion CUIL -->
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
+          </button>
+          @if (fotoBlob) {
+          <img [src]="fotoBlob" />
+          }
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+        @if (correo) { @if (correo.invalid && (correo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Correo no válido</div>
+        } }
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Clave -->
+      <div class="form-group control-clave">
+        <label>Clave</label>
+        <input
+          class="form-control"
+          type="password"
+          placeholder="******"
+          formControlName="clave"
+        />
+        @if (clave) { @if (clave.invalid && (clave.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Clave no válida</div>
+        }}
+      </div>
+      <!-- #endregion Clave -->
+
+      <!-- #region Boton Alta -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando || formAlta.invalid"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Alta -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+  </div>
+  <!-- #endregion Formulario Alta -->
+
+  <div *ngIf="modoModificar === true && duenio !== undefined">
+    <!-- #region Formulario Modificar -->
+    <form [formGroup]="formModificar">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>ID</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+          @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+          <div class="alert alert-danger" role="alert">Nombre no válido</div>
+          } }
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+          @if(apellido) { @if(apellido.invalid && (apellido.dirty)) {
+          <div class="alert hide alert-danger" role="alert">
+            Apellido no válido
+          </div>
+          } }
+        </div>
+      </div>
+      <!-- #endregion Apellido -->
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+            @if (dni) { @if (dni.invalid && dni.dirty) {
+            <div class="alert hide alert-danger" role="alert">
+              D.N.I no válido
+            </div>
+            } }
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="cuil"
+            />
+            @if (cuil) { @if (cuil.invalid && (cuil.dirty)) {
+            <div class="alert hide alert-danger" role="alert">
+              CUIL no válido
+            </div>
+            }}
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{
+              fotoBlob === undefined && duenio.foto === undefined
+                ? "Tomar foto"
+                : "Cambiar foto"
+            }}
+          </button>
+          <img [src]="fotoBlob === undefined ? duenio.foto : fotoBlob" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+        @if (correo) { @if (correo.invalid && (correo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Correo no válido</div>
+        } }
+      </div>
+
+      <!-- #endregion Correo -->
+
+      <!-- #region Boton Modificar -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando || formModificar.invalid"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Modificar -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Modificar -->
+  </div>
+
+  <div *ngIf="modoBaja === true && duenio !== undefined">
+    <!-- #region Formulario Baja -->
+    <form [formGroup]="formBaja">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de duenio</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
+      </div>
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+
+        <!-- #region CUIL -->
+        <div class="form-group control-cuil">
+          <label>CUIL</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="cuil"
+            />
+          </div>
+        </div>
+        <!-- #endregion CUIL -->
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img class="img-baja" [src]="duenio.foto" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Boton Baja -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Baja -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Baja -->
+  </div>
+</div>
