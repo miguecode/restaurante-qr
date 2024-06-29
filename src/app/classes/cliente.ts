@@ -6,6 +6,7 @@ export class Cliente extends Usuario {
   constructor() {
     super();
     this.correoVerificado = false;
+    this.rol = 'cliente';
   }
 
   setId(id: number) {

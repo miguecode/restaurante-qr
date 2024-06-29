@@ -76,9 +76,14 @@ export class FormularioIngresoComponent implements OnInit {
         correoActual: 'matir@yopmail.com',
         claveActual: '111111',
       });
-    } else {
+    } else if (usuario === '4') {
       this.loginForm.patchValue({
         correoActual: 'crisprz@yopmail.com',
+        claveActual: '111111',
+      });
+    } else {
+      this.loginForm.patchValue({
+        correoActual: 'anonimo@yopmail.com',
         claveActual: '111111',
       });
     }
