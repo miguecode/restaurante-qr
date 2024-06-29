@@ -65,7 +65,6 @@
 
       <!-- #region Foto -->
       <div class="form-group control-foto">
-        <label>Foto</label>
         <div class="input-group" style="text-align: center">
           <button class="btn btn-primary" (click)="tomarFoto()">
             {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
@@ -130,7 +129,11 @@
       <!-- #region Repetir Clave -->
       <div class="form-group control-clave">
         <label>Confirmar clave</label>
-        <input class="form-control" type="password" formControlName="repetirClave" />
+        <input
+          class="form-control"
+          type="password"
+          formControlName="repetirClave"
+        />
         <span
           *ngIf="isValidField('repetirClave')"
           class="form-text text-danger small-error"
