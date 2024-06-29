@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Mesa } from 'src/app/classes/mesa';
+import { Usuario } from 'src/app/classes/padres/usuario';
 import { Producto } from 'src/app/classes/producto';
 
 @Injectable({
