@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { SplashScreen } from '@capacitor/splash-screen';
 import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
@@ -10,13 +11,14 @@ import { IonContent } from '@ionic/angular/standalone';
   imports: [IonContent],
 })
 export class SplashComponent implements OnInit {
-  constructor(public router: Router) {
-    setTimeout(() => {
-      this.router.navigateByUrl('');
-    }, 2000);
-  }
+  constructor(public router: Router) {}
 
   ngOnInit() {
-    console.log('Splash dinámico');
+    setTimeout(() => {
+      SplashScreen.hide();
+    }, 150);
+    setTimeout(() => {
+      this.router.navigateByUrl('/login');
+    }, 5000);
   }
 }

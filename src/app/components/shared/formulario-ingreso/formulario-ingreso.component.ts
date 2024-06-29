@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import {
@@ -8,19 +8,20 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { NgClass } from '@angular/common';
+import { CommonModule, NgClass } from '@angular/common';
 
 @Component({
   selector: 'app-formulario-ingreso',
   templateUrl: './formulario-ingreso.component.html',
   styleUrls: ['./formulario-ingreso.component.scss'],
   standalone: true,
-  imports: [IonContent, NgClass, ReactiveFormsModule],
+  imports: [IonContent, NgClass, ReactiveFormsModule, CommonModule, RouterLink],
 })
 export class FormularioIngresoComponent implements OnInit {
   loginForm: FormGroup;
   mensaje: string =
     'Bienvenido, para iniciar sesión tenés que ingresar tus datos correctamente.';
+  procesando: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -45,6 +46,8 @@ export class FormularioIngresoComponent implements OnInit {
       return;
     }
 
+    this.procesando = true;
+
     try {
       await this.authService.iniciarSesion(correoActual, claveActual);
       console.log('Inicio de sesión exitoso');
@@ -52,28 +55,30 @@ export class FormularioIngresoComponent implements OnInit {
     } catch (error) {
       console.log('Error durante el inicio de sesión:', error);
       this.mensaje = 'No existe un usuario con ese correo y esa contraseña.';
+    } finally {
+      this.procesando = false;
     }
   }
 
   autocompletar(usuario: string) {
     if (usuario === '1') {
       this.loginForm.patchValue({
-        correoActual: 'junmigue7@gmail.com',
+        correoActual: 'mmariaf@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '2') {
       this.loginForm.patchValue({
-        correoActual: 'probando@gmail.com',
+        correoActual: 'pablinhern@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '3') {
       this.loginForm.patchValue({
-        correoActual: 'juanp@gmail.com',
+        correoActual: 'matir@yopmail.com',
         claveActual: '111111',
       });
     } else {
       this.loginForm.patchValue({
-        correoActual: 'sofig@gmail.com',
+        correoActual: 'crisprz@yopmail.com',
         claveActual: '111111',
       });
     }

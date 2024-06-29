@@ -1,0 +1,101 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header">
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> ABM Productos </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta producto</ion-title>
+      <ion-title *ngIf="esModificar">Modificar producto</ion-title>
+      <ion-title *ngIf="esBaja">Baja producto</ion-title>
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
+          CREAR
+        </button>
+      </div>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div *ngIf="!esAlta && !esModificar && !esBaja">
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of lista">
+          <div class="card">
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>NOMBRE: </span>{{ item.nombre }}</label>
+            <label><span>DESCRIPCIÓN: </span>{{ item.descripcion }}</label>
+            <label><span>TIEMPO: </span>{{ item.tiempo }} min.</label>
+            <label><span>PRECIO: </span>${{ item.precio }}</label>
+            <img class="img-qr" [src]="item.qr" />
+            <!-- Muestro sólo la foto 1 -->
+            <img class="img-foto" [src]="item.fotoUno" />
+            <!-- <img class="img-foto" [src]="item.fotoDos" /> -->
+            <!-- <img class="img-foto" [src]="item.fotoTres" /> -->
+            <button
+              class="btn btn-secondary boton-modificar"
+              (click)="productoSeleccionado = item; esModificar = true"
+            >
+              MODIFICAR
+            </button>
+            <button
+              class="btn btn-secondary boton-baja"
+              (click)="productoSeleccionado = item; esBaja = true"
+            >
+              ELIMINAR
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+
+    <div *ngIf="esAlta">
+      <!-- #region Formulario Modo Alta -->
+      <app-formulario-producto
+        [modoAlta]="true"
+        (handlerTerminado)="esAlta = false"
+      ></app-formulario-producto>
+      <!-- #endregion Formulario Modo Alta -->
+    </div>
+
+    <div *ngIf="esModificar && productoSeleccionado !== undefined">
+      <!-- #region Formulario Modo Modificar -->
+      <app-formulario-producto
+        [modoModificar]="true"
+        [producto]="productoSeleccionado"
+        (handlerTerminado)="
+          productoSeleccionado = undefined; esModificar = false
+        "
+      ></app-formulario-producto>
+      <!-- #endregion Formulario Modo Modificar -->
+    </div>
+
+    <div *ngIf="esBaja && productoSeleccionado !== undefined">
+      <!-- #region Formulario Modo Baja -->
+      <app-formulario-producto
+        [modoBaja]="true"
+        [producto]="productoSeleccionado"
+        (handlerTerminado)="productoSeleccionado = undefined; esBaja = false"
+      ></app-formulario-producto>
+      <!-- #endregion Formulario Modo Baja -->
+    </div>
+  </div>
+</ion-content>
+
+<!-- <ion-footer [translucent]="true">
+  <ion-toolbar>
+    <div class="footer">
+      <button class="btn btn-primary" routerLink="/home">Home</button>
+    </div>
+  </ion-toolbar>
+</ion-footer> -->

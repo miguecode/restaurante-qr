@@ -7,8 +7,16 @@
         <div class="form-group control-nombre">
           <label>Nombre</label>
           <input class="form-control" type="text" formControlName="nombre" />
+<<<<<<< HEAD
           <span *ngIf="isValidField('nombre')" class="form-text text-danger small-error">
             {{getFieldError('nombre')}}
+=======
+          <span
+            *ngIf="isValidField('nombre')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("nombre") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           </span>
         </div>
         <!-- #endregion Nombre -->
@@ -17,8 +25,16 @@
         <div class="form-group control-apellido">
           <label>Apellido</label>
           <input class="form-control" type="text" formControlName="apellido" />
+<<<<<<< HEAD
           <span *ngIf="isValidField('apellido')" class="form-text text-danger small-error">
             {{getFieldError('apellido')}}
+=======
+          <span
+            *ngIf="isValidField('apellido')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("apellido") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           </span>
         </div>
         <!-- #endregion Apellido -->
@@ -35,8 +51,16 @@
             ></app-qr-scanner>
             <input class="form-control" type="text" formControlName="dni" />
           </div>
+<<<<<<< HEAD
           <span *ngIf="isValidField('dni')" class="form-text text-danger small-error">
             {{getFieldError('dni')}}
+=======
+          <span
+            *ngIf="isValidField('dni')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("dni") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           </span>
         </div>
         <!-- #endregion DNI -->
@@ -49,10 +73,22 @@
           <button class="btn btn-primary" (click)="tomarFoto()">
             {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
           </button>
+<<<<<<< HEAD
           <img [src]="fotoBlob" />
         </div>
         <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
           {{getFieldError('foto')}}
+=======
+          @if (fotoBlob) {
+          <img [src]="fotoBlob" />
+          }
+        </div>
+        <span
+          *ngIf="isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("foto") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Foto -->
@@ -66,8 +102,16 @@
           placeholder="ejemplo@entidad.com"
           formControlName="correo"
         />
+<<<<<<< HEAD
         <span *ngIf="isValidField('correo')" class="form-text text-danger small-error">
           {{getFieldError('correo')}}
+=======
+        <span
+          *ngIf="isValidField('correo')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("correo") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Correo -->
@@ -81,8 +125,16 @@
           placeholder="******"
           formControlName="clave"
         />
+<<<<<<< HEAD
         <span *ngIf="isValidField('clave')" class="form-text text-danger small-error">
           {{getFieldError('clave')}}
+=======
+        <span
+          *ngIf="isValidField('clave')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("clave") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Clave -->
@@ -118,6 +170,7 @@
       <!-- #endregion Boton Cancelar -->
     </form>
     <!-- #endregion Formulario Alta -->
+<<<<<<< HEAD
   </div>
 
   <div *ngIf="modoModificar === true && cliente !== undefined">
@@ -291,6 +344,249 @@
         <!-- #endregion DNI -->
 
        
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div style="text-align: center">
+          <img class="img-baja" [src]="cliente.foto" />
+        </div>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Boton Baja -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Baja -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Baja -->
+=======
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
+  </div>
+
+  <div *ngIf="modoModificar === true && cliente !== undefined">
+    <!-- #region Formulario Modificar -->
+    <form [formGroup]="formModificar">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de cliente</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+          <span
+            *ngIf="isValidField('nombre')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("nombre") }}
+          </span>
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+          <span
+            *ngIf="isValidField('apellido')"
+            class="form-text text-danger small-error"
+          >
+            {{ getFieldError("apellido") }}
+          </span>
+        </div>
+        <!-- #endregion Apellido -->
+      </div>
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+            <span
+              *ngIf="isValidField('dni')"
+              class="form-text text-danger small-error"
+            >
+              {{ getFieldError("dni") }}
+            </span>
+          </div>
+        </div>
+        <!-- #endregion DNI -->
+      </div>
+
+      <!-- #region Foto -->
+      <div class="form-group control-foto">
+        <label>Foto</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto()">
+            {{
+              fotoBlob === undefined && cliente.foto === undefined
+                ? "Tomar foto"
+                : "Cambiar foto"
+            }}
+          </button>
+          <img [src]="fotoBlob === undefined ? cliente.foto : fotoBlob" />
+        </div>
+        <span
+          *ngIf="isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("foto") }}
+        </span>
+      </div>
+      <!-- #endregion Foto -->
+
+      <!-- #region Correo -->
+      <div class="form-group control-correo">
+        <label>Correo</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          placeholder="ejemplo@entidad.com"
+          formControlName="correo"
+        />
+        <span
+          *ngIf="isValidField('correo')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("correo") }}
+        </span>
+      </div>
+      <!-- #endregion Correo -->
+
+      <!-- #region Boton Modificar -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Modificar -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Modificar -->
+  </div>
+
+  <div *ngIf="modoBaja === true && cliente !== undefined">
+    <!-- #region Formulario Baja -->
+    <form [formGroup]="formBaja">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Numero de cliente</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <div class="area">
+        <!-- #region Nombre -->
+        <div class="form-group control-nombre">
+          <label>Nombre</label>
+          <input class="form-control" type="text" formControlName="nombre" />
+        </div>
+        <!-- #endregion Nombre -->
+
+        <!-- #region Apellido -->
+        <div class="form-group control-apellido">
+          <label>Apellido</label>
+          <input class="form-control" type="text" formControlName="apellido" />
+        </div>
+        <!-- #endregion Apellido -->
+      </div>
+
+      <div class="area">
+        <!-- #region DNI -->
+        <div class="form-group control-dni">
+          <label>D.N.I.</label>
+          <div class="input-group">
+            <input
+              class="form-control"
+              type="text"
+              readonly
+              formControlName="dni"
+            />
+          </div>
+        </div>
+        <!-- #endregion DNI -->
       </div>
 
       <!-- #region Foto -->

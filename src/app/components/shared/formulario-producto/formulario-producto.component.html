@@ -1,0 +1,351 @@
+<div class="card formulario-container">
+  <div *ngIf="modoAlta === true">
+    <!-- #region Formulario Alta -->
+    <form [formGroup]="formAlta">
+      <!-- #region Nombre -->
+      <div class="form-group control-nombre">
+        <label>Nombre</label>
+        <input class="form-control" type="text" formControlName="nombre" />
+        @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+        <div class="alert alert-danger" role="alert">Nombre no válido</div>
+        } }
+      </div>
+      <!-- #endregion Nombre -->
+
+      <!-- #region Descripción -->
+      <div class="form-group control-descripcion">
+        <label>Descripción</label>
+        <input class="form-control" type="text" formControlName="descripcion" />
+        @if (descripcion) { @if (descripcion.invalid && (descripcion.dirty)) {
+        <div class="alert alert-danger" role="alert">Descripción no válida</div>
+        } }
+      </div>
+      <!-- #endregion Descripción -->
+
+      <!-- #region Tiempo de Elaboración -->
+      <div class="form-group control-tiempo-elaboracion">
+        <label>Tiempo de elaboración (minutos)</label>
+        <input
+          class="form-control"
+          type="number"
+          formControlName="tiempo"
+          min="1"
+          max="9999"
+        />
+        @if(tiempo) { @if(tiempo.invalid && (tiempo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Tiempo no válido</div>
+        } }
+      </div>
+      <!-- #endregion Tiempo de Elaboración -->
+
+      <!-- #region Precio -->
+      <div class="form-group control-precio">
+        <label>Precio</label>
+        <input
+          class="form-control"
+          type="number"
+          formControlName="precio"
+          min="1"
+          max="999999"
+        />
+        @if(precio) { @if(precio.invalid && (precio.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Precio no válido</div>
+        } }
+      </div>
+      <!-- #endregion Precio -->
+
+      <!-- #region Fotos -->
+      <div class="form-group control-fotos">
+        <label>Fotos</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto('fotoUno')">
+            {{ fotoUnoBlob === undefined ? "Tomar foto 1" : "Cambiar foto 1" }}
+          </button>
+          @if (fotoUnoBlob) {
+          <img [src]="fotoUnoBlob" />
+          }
+
+          <button class="btn btn-primary" (click)="tomarFoto('fotoDos')">
+            {{ fotoDosBlob === undefined ? "Tomar foto 2" : "Cambiar foto 2" }}
+          </button>
+          @if (fotoDosBlob) {
+          <img [src]="fotoDosBlob" />
+          }
+
+          <button class="btn btn-primary" (click)="tomarFoto('fotoTres')">
+            {{ fotoTresBlob === undefined ? "Tomar foto 3" : "Cambiar foto 3" }}
+          </button>
+          @if (fotoTresBlob) {
+          <img [src]="fotoTresBlob" />
+          }
+        </div>
+      </div>
+      <!-- #endregion Fotos -->
+
+      <!-- #region Boton Alta -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando || formAlta.invalid"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Alta -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Alta -->
+  </div>
+
+  <div *ngIf="modoModificar === true && producto !== undefined">
+    <!-- #region Formulario Modificar -->
+    <form [formGroup]="formModificar">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Id del producto</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <!-- #region Nombre -->
+      <div class="form-group control-nombre">
+        <label>Nombre del producto</label>
+        <input class="form-control" type="text" formControlName="nombre" />
+        @if (nombre) { @if (nombre.invalid && (nombre.dirty)) {
+        <div class="alert alert-danger" role="alert">Nombre no válido</div>
+        } }
+      </div>
+      <!-- #endregion Nombre -->
+
+      <!-- #region Descripción -->
+      <div class="form-group control-descripcion">
+        <label>Descripción del producto</label>
+        <input class="form-control" type="text" formControlName="descripcion" />
+        @if (descripcion) { @if (descripcion.invalid && (descripcion.dirty)) {
+        <div class="alert alert-danger" role="alert">Descripción no válida</div>
+        } }
+      </div>
+      <!-- #endregion Descripción -->
+
+      <!-- #region Tiempo de Elaboración -->
+      <div class="form-group control-tiempo-elaboracion">
+        <label>Tiempo de elaboración (minutos)</label>
+        <input class="form-control" type="number" formControlName="tiempo" />
+        @if(tiempo) { @if(tiempo.invalid && (tiempo.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Tiempo no válido</div>
+        } }
+      </div>
+      <!-- #endregion Tiempo de Elaboración -->
+
+      <!-- #region Precio -->
+      <div class="form-group control-precio">
+        <label>Precio</label>
+        <input class="form-control" type="number" formControlName="precio" />
+        @if(precio) { @if(precio.invalid && (precio.dirty)) {
+        <div class="alert hide alert-danger" role="alert">Precio no válido</div>
+        } }
+      </div>
+      <!-- #endregion Precio -->
+
+      <!-- #region Fotos -->
+      <div class="form-group control-fotos">
+        <label>Fotos</label>
+        <div class="input-group" style="text-align: center">
+          <button class="btn btn-primary" (click)="tomarFoto('fotoUno')">
+            {{
+              fotoUnoBlob === undefined && producto.fotoUno === undefined
+                ? "Tomar foto 1"
+                : "Cambiar foto 1"
+            }}
+          </button>
+          <img
+            [src]="fotoUnoBlob === undefined ? producto.fotoUno : fotoUnoBlob"
+          />
+
+          <button class="btn btn-primary" (click)="tomarFoto('fotoDos')">
+            {{
+              fotoDosBlob === undefined && producto.fotoDos === undefined
+                ? "Tomar foto 2"
+                : "Cambiar foto 2"
+            }}
+          </button>
+          <img
+            [src]="fotoDosBlob === undefined ? producto.fotoDos : fotoDosBlob"
+          />
+
+          <button class="btn btn-primary" (click)="tomarFoto('fotoTres')">
+            {{
+              fotoTresBlob === undefined && producto.fotoTres === undefined
+                ? "Tomar foto 3"
+                : "Cambiar foto 3"
+            }}
+          </button>
+          <img
+            [src]="
+              fotoTresBlob === undefined ? producto.fotoTres : fotoTresBlob
+            "
+          />
+        </div>
+      </div>
+      <!-- #endregion Fotos -->
+
+      <!-- #region Boton Modificar -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando || formModificar.invalid"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Modificar -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Modificar -->
+  </div>
+
+  <div *ngIf="modoBaja === true && producto !== undefined">
+    <!-- #region Formulario Baja -->
+    <form [formGroup]="formBaja">
+      <!-- #region Id -->
+      <div class="form-group control-id">
+        <label>Id del producto</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="id"
+        />
+      </div>
+      <!-- #endregion Id -->
+
+      <!-- #region Nombre -->
+      <div class="form-group control-nombre">
+        <label>Nombre del producto</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          formControlName="nombre"
+        />
+      </div>
+      <!-- #endregion Nombre -->
+
+      <!-- #region Descripción -->
+      <div class="form-group control-descripcion">
+        <label>Descripción del producto</label>
+        <input
+          class="form-control"
+          type="text"
+          readonly
+          formControlName="descripcion"
+        />
+      </div>
+      <!-- #endregion Descripción -->
+
+      <!-- #region Tiempo de Elaboración -->
+      <div class="form-group control-tiempo-elaboracion">
+        <label>Tiempo de elaboración (minutos)</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="tiempo"
+        />
+      </div>
+      <!-- #endregion Tiempo de Elaboración -->
+
+      <!-- #region Precio -->
+      <div class="form-group control-precio">
+        <label>Precio</label>
+        <input
+          class="form-control"
+          type="number"
+          readonly
+          formControlName="precio"
+        />
+      </div>
+      <!-- #endregion Precio -->
+
+      <!-- #region Fotos -->
+      <div class="form-group control-fotos">
+        <label>Fotos</label>
+        <div style="text-align: center">
+          <img class="img-baja" [src]="producto.fotoUno" />
+          <img class="img-baja" [src]="producto.fotoDos" />
+          <img class="img-baja" [src]="producto.fotoTres" />
+        </div>
+      </div>
+      <!-- #endregion Fotos -->
+
+      <!-- #region Boton Baja -->
+      <div class="form-group control-accion">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="accion()"
+        >
+          <div *ngIf="procesando">
+            <div class="loader-container">
+              <span class="loader"></span>
+            </div>
+          </div>
+          <div *ngIf="!procesando">Realizar</div>
+        </button>
+      </div>
+      <!-- #endregion Boton Baja -->
+
+      <!-- #region Boton Cancelar -->
+      <div class="form-group control-cancelar">
+        <button
+          class="btn btn-primary"
+          [disabled]="procesando"
+          (click)="handlerTerminado.emit()"
+        >
+          Cancelar
+        </button>
+      </div>
+      <!-- #endregion Boton Cancelar -->
+    </form>
+    <!-- #endregion Formulario Baja -->
+  </div>
+</div>

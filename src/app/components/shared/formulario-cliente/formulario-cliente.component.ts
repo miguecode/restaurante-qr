@@ -17,16 +17,35 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
+<<<<<<< HEAD
+=======
+import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
 
 @Component({
   selector: 'app-formulario-cliente',
   templateUrl: './formulario-cliente.component.html',
   styleUrls: ['./formulario-cliente.component.scss'],
   standalone: true,
+<<<<<<< HEAD
   imports: [IonButton, IonIcon, IonContent, ReactiveFormsModule, CommonModule, QrScannerComponent, CapitalizePipe, JsonPipe]
 })
 export class FormularioClienteComponent implements OnInit {
 
+=======
+  imports: [
+    IonButton,
+    IonIcon,
+    IonContent,
+    ReactiveFormsModule,
+    CommonModule,
+    QrScannerComponent,
+    CapitalizePipe,
+    JsonPipe,
+  ],
+})
+export class FormularioClienteComponent implements OnInit {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
   @Input() modoAlta: boolean = false;
   @Input() modoBaja: boolean = false;
   @Input() modoModificar: boolean = false;
@@ -54,6 +73,7 @@ export class FormularioClienteComponent implements OnInit {
       return this.formModificar.get('nombre') as FormControl;
     }
     return this.formBaja.get('nombre') as FormControl;
+<<<<<<< HEAD
   }
 
   get apellido() {
@@ -103,11 +123,61 @@ export class FormularioClienteComponent implements OnInit {
 
   constructor(private clienteService: ClienteService) {
     
+=======
   }
+
+  get apellido() {
+    if (this.modoAlta) {
+      return this.formAlta.get('apellido') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('apellido') as FormControl;
+    }
+    return this.formBaja.get('apellido') as FormControl;
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
+  }
+
+  get dni() {
+    if (this.modoAlta) {
+      return this.formAlta.get('dni') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('dni') as FormControl;
+    }
+    return this.formBaja.get('dni') as FormControl;
+  }
+
+  get foto() {
+    if (this.modoAlta) {
+      return this.formAlta.get('foto') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('foto') as FormControl;
+    }
+    return this.formBaja.get('foto') as FormControl;
+  }
+
+  get correo() {
+    if (this.modoAlta) {
+      return this.formAlta.get('correo') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('correo') as FormControl;
+    }
+    return this.formBaja.get('correo') as FormControl;
+  }
+
+  get clave() {
+    if (this.modoAlta) {
+      return this.formAlta.get('clave') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('clave') as FormControl;
+    }
+    return this.formBaja.get('clave') as FormControl;
+  }
+
+  constructor(private clienteService: ClienteService) {}
 
   private crearFormGroup() {
     if (this.modoAlta) {
       this.formAlta = new FormGroup({
+<<<<<<< HEAD
         nombre: new FormControl('', 
         [ 
           Validators.required,
@@ -117,27 +187,48 @@ export class FormularioClienteComponent implements OnInit {
         ]),
         apellido: new FormControl('', 
         [ 
+=======
+        nombre: new FormControl('', [
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           Validators.required,
           Validators.minLength(2),
           Validators.maxLength(20),
           this.validarPalabra(),
         ]),
+<<<<<<< HEAD
         dni: new FormControl(0, 
         [
+=======
+        apellido: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(0, [
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           Validators.required,
           Validators.pattern(/^\d+$/),
           Validators.minLength(7),
           Validators.maxLength(9),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
+<<<<<<< HEAD
         correo: new FormControl('', 
         [ 
+=======
+        correo: new FormControl('', [
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           Validators.required,
           Validators.email,
           Validators.required,
         ]),
+<<<<<<< HEAD
         clave: new FormControl('', 
         [
+=======
+        clave: new FormControl('', [
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           Validators.required,
           Validators.minLength(6),
         ]),
@@ -145,6 +236,7 @@ export class FormularioClienteComponent implements OnInit {
     } else if (this.modoModificar) {
       this.formModificar = new FormGroup({
         id: new FormControl(0, []),
+<<<<<<< HEAD
         nombre: new FormControl('', [Validators.required]),
         apellido: new FormControl('', [Validators.required]),
         dni: new FormControl(0, [
@@ -153,6 +245,27 @@ export class FormularioClienteComponent implements OnInit {
           Validators.max(99999999),
         ]),
         foto: new FormControl(undefined, [Validators.required]),
+=======
+        nombre: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        apellido: new FormControl(null, [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl(null, [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        foto: new FormControl(undefined),
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     } else if (this.modoBaja) {
@@ -165,7 +278,11 @@ export class FormularioClienteComponent implements OnInit {
           Validators.min(10000000),
           Validators.max(99999999),
         ]),
+<<<<<<< HEAD
         foto: new FormControl(undefined, [Validators.required]),
+=======
+        foto: new FormControl(undefined),
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         correo: new FormControl('', [Validators.required, Validators.email]),
       });
     }
@@ -197,7 +314,10 @@ export class FormularioClienteComponent implements OnInit {
   }
 
   private getCliente() {
+<<<<<<< HEAD
     
+=======
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
     let cliente = new Cliente();
     if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
       cliente = this.cliente;
@@ -208,6 +328,7 @@ export class FormularioClienteComponent implements OnInit {
     cliente.setNombre(this.nombre.value);
     cliente.setApellido(this.apellido.value);
     cliente.setDni(this.dni.value);
+<<<<<<< HEAD
     if(this.foto.value !== null){
       cliente.setFile(this.foto.value);
     }else{
@@ -218,6 +339,18 @@ export class FormularioClienteComponent implements OnInit {
     if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
       cliente.setUrlFoto(this.cliente.foto);
       console.log(this.cliente.foto)
+=======
+    if (this.foto.value !== null) {
+      cliente.setFile(this.foto.value);
+    } else {
+      throw new Error('errorfoto');
+    }
+
+    console.log(this.foto.value);
+    if ((this.modoModificar || this.modoBaja) && this.cliente !== undefined) {
+      cliente.setUrlFoto(this.cliente.foto);
+      console.log(this.cliente.foto);
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
     }
     cliente.setCorreo(this.correo.value);
     if (this.modoAlta) {
@@ -233,7 +366,11 @@ export class FormularioClienteComponent implements OnInit {
       if (this.modoAlta) {
         if (this.formAlta.invalid) {
           this.formAlta.markAllAsTouched();
+<<<<<<< HEAD
           console.log("invalid form");
+=======
+          console.log('invalid form');
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           return;
         } else {
           await this.alta();
@@ -241,9 +378,15 @@ export class FormularioClienteComponent implements OnInit {
       } else if (this.modoModificar) {
         if (this.formModificar.invalid) {
           this.formModificar.markAllAsTouched();
+<<<<<<< HEAD
           console.log("invalid form");
           return;
         } else{
+=======
+          console.log('invalid form');
+          return;
+        } else {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           await this.modificar();
         }
       } else if (this.modoBaja) {
@@ -256,6 +399,7 @@ export class FormularioClienteComponent implements OnInit {
     } catch (e: any) {
       console.log(e.message);
 
+<<<<<<< HEAD
       switch(e.code){
         case 'auth/email-already-in-use':
           e.message = "El email esta en uso";
@@ -270,6 +414,22 @@ export class FormularioClienteComponent implements OnInit {
           e.message = "Por favor ingrese bien sus datos";
           break;
       } 
+=======
+      switch (e.code) {
+        case 'auth/email-already-in-use':
+          e.message = 'El email esta en uso';
+          break;
+        case 'auth/invalid-email':
+          e.message = 'Introduzca un email valido';
+          break;
+        case 'auth/missing-password':
+          e.message = 'Introduzca una contraseña por favor';
+          break;
+        default:
+          e.message = 'Por favor ingrese bien sus datos';
+          break;
+      }
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       await Swalert.toastError(e.message);
     } finally {
       this.procesando = false;
@@ -304,7 +464,13 @@ export class FormularioClienteComponent implements OnInit {
   }
 
   public recibirDataDniCuilQR($event: string) {
+<<<<<<< HEAD
     this.nombre.setValue($event);
+=======
+    const source = TraductorQr.DniEjemplarA($event);
+    this.dni.setValue(source.dni);
+    this.dni.markAsDirty();
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
   }
 
   public limpiar() {
@@ -329,18 +495,30 @@ export class FormularioClienteComponent implements OnInit {
 
   isValidField(field: string): boolean | null {
     let control = null;
+<<<<<<< HEAD
     if(this.modoAlta){
+=======
+    if (this.modoAlta) {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       control = this.formAlta.get(field);
     } else {
       control = this.formModificar.get(field);
     }
 
+<<<<<<< HEAD
     return control?.errors && control?.touched || null;
+=======
+    return (control?.errors && control?.touched) || null;
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
   }
 
   getFieldError(field: string): string | null {
     let control = null;
+<<<<<<< HEAD
     if(this.modoAlta){
+=======
+    if (this.modoAlta) {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       control = this.formAlta.get(field);
     } else {
       control = this.formModificar.get(field);
@@ -352,7 +530,11 @@ export class FormularioClienteComponent implements OnInit {
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
+<<<<<<< HEAD
           return "Este campo es requerido";
+=======
+          return 'Este campo es requerido';
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         case 'minlength':
           return `Minimo ${errors['minlength'].requiredLength} caracteres.`;
         case 'maxlength':
@@ -362,12 +544,22 @@ export class FormularioClienteComponent implements OnInit {
         case 'max':
           return `Como maximo debe ser ${errors['max'].max}.`;
         case 'pattern':
+<<<<<<< HEAD
           return "Formato inválido";
         case 'email':
           return "Email invalido";
+=======
+          return 'Formato inválido';
+        case 'email':
+          return 'Email invalido';
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       }
     }
     return null;
   }
+<<<<<<< HEAD
 
 }
+=======
+}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b

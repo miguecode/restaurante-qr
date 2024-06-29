@@ -44,7 +44,7 @@ export class Empleado extends Usuario {
       foto: empleado.foto,
       tipo: empleado.tipo,
       rol: empleado.rol,
-      habilitado: empleado.habilitado,
+      habilitado: empleado.habilitado.toString(),
       correo: empleado.correo,
     };
   }
@@ -72,7 +72,7 @@ export class Empleado extends Usuario {
     empleado.foto = doc['foto'];
     empleado.tipo = doc['tipo'];
     empleado.rol = doc['rol'];
-    empleado.habilitado = doc['habilitado'];
+    empleado.habilitado = JSON.parse(doc['habilitado']);
     empleado.correo = doc['correo'];
     return empleado;
   }

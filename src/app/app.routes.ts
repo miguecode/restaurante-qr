@@ -21,6 +21,14 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'register',
+    loadComponent: () =>
+      import('./components/pages/sign-in/sign-in.component').then(
+        (m) => m.SignInComponent
+      ),
+  },
+
+  {
     path: 'home',
     loadComponent: () =>
       import('./components/pages/home/home.component').then(
@@ -29,23 +37,9 @@ export const routes: Routes = [
   },
   {
     path: 'abm-duenio',
-    loadChildren: () =>
-      import('./components/pages/abm-duenio/abm-duenio.routes').then(
-        (m) => m.routes
-      ),
-  },
-  {
-    path: 'abm-supervisor',
-    loadChildren: () =>
-      import('./components/pages/abm-supervisor/abm-supervisor.routes').then(
-        (m) => m.routes
-      ),
-  },
-  {
-    path: 'abm-empleado',
     loadComponent: () =>
-      import('./components/pages/abm-empleado/abm-empleado.component').then(
-        (m) => m.AbmEmpleadoComponent
+      import('./components/pages/abm-duenio/abm-duenio.component').then(
+        (m) => m.AbmDuenioComponent
       ),
   },
   {
@@ -56,11 +50,49 @@ export const routes: Routes = [
       ),
   },
   {
+    path: 'abm-supervisor',
+    loadComponent: () =>
+      import('./components/pages/abm-supervisor/abm-supervisor.component').then(
+        (m) => m.AbmSupervisorComponent
+      ),
+  },
+  {
+    path: 'abm-empleado',
+    loadComponent: () =>
+      import('./components/pages/abm-empleado/abm-empleado.component').then(
+        (m) => m.AbmEmpleadoComponent
+      ),
+  },
+  {
+<<<<<<< HEAD
+    path: 'abm-cliente',
+    loadComponent: () =>
+      import('./components/pages/abm-clientes/abm-clientes.component').then(
+        (m) => m.AbmClientesComponent
+      ),
+  },
+  {
+=======
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
     path: 'abm-mesa',
     loadComponent: () =>
       import('./components/pages/abm-mesa/abm-mesa.component').then(
         (m) => m.AbmMesaComponent
       ),
+  },
+  {
+    path: 'abm-producto',
+    loadComponent: () =>
+      import('./components/pages/abm-producto/abm-producto.component').then(
+        (m) => m.AbmProductoComponent
+      ),
+  },
+  {
+    path: 'push-notification',
+    loadComponent: () =>
+      import(
+        './components/pages/push-notification/push-notification.component'
+      ).then((m) => m.PushNotificationComponent),
   },
   {
     path: '**',

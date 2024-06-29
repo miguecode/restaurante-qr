@@ -13,6 +13,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Mesa } from 'src/app/classes/mesa';
 import { FormularioMesaComponent } from 'src/app/components/shared/formulario-mesa/formulario-mesa.component';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { MesaService } from 'src/app/services/mesa.service';
 
 @Component({
@@ -37,6 +38,7 @@ import { MesaService } from 'src/app/services/mesa.service';
     NgFor,
     NgIf,
     FormularioMesaComponent,
+    CapitalizePipe,
   ],
 })
 export class AbmMesaComponent implements OnInit {

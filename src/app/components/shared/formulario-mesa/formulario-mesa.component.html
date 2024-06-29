@@ -10,8 +10,16 @@
           type="number"
           formControlName="cantidadMaxima"
         />
+<<<<<<< HEAD
         <span *ngIf="isValidField('cantidadMaxima')" class="form-text text-danger small-error">
           {{getFieldError('cantidadMaxima')}}
+=======
+        <span
+          *ngIf="isValidField('cantidadMaxima')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("cantidadMaxima") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Cantidad Maxima de Clientes -->
@@ -25,8 +33,16 @@
             {{ item | capitalize }}
           </option>
         </select>
+<<<<<<< HEAD
         <span *ngIf="isValidField('tipo')" class="form-text text-danger small-error">
           {{getFieldError('tipo')}}
+=======
+        <span
+          *ngIf="isValidField('tipo')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("tipo") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Tipo -->
@@ -38,10 +54,20 @@
           <button class="btn btn-primary" (click)="tomarFoto()">
             {{ fotoBlob === undefined ? "Tomar foto" : "Cambiar foto" }}
           </button>
+          @if (fotoBlob) {
           <img [src]="fotoBlob" />
+          }
         </div>
+<<<<<<< HEAD
         <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
           {{getFieldError('foto')}}
+=======
+        <span
+          *ngIf="isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("foto") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Foto -->
@@ -103,8 +129,16 @@
           readonly
           formControlName="cantidadClientes"
         />
+<<<<<<< HEAD
         <span *ngIf="isValidField('cantidadClientes')" class="form-text text-danger small-error">
           {{getFieldError('cantidadClientes')}}
+=======
+        <span
+          *ngIf="isValidField('cantidadClientes')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("cantidadClientes") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Cantidad Maxima de Clientes -->
@@ -117,8 +151,16 @@
           type="number"
           formControlName="cantidadMaxima"
         />
+<<<<<<< HEAD
         <span *ngIf="isValidField('cantidadMaxima')" class="form-text text-danger small-error">
           {{getFieldError('cantidadMaxima')}}
+=======
+        <span
+          *ngIf="isValidField('cantidadMaxima')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("cantidadMaxima") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Cantidad Maxima de Clientes -->
@@ -132,8 +174,16 @@
             {{ item | capitalize }}
           </option>
         </select>
+<<<<<<< HEAD
         <span *ngIf="isValidField('tipo')" class="form-text text-danger small-error">
           {{getFieldError('tipo')}}
+=======
+        <span
+          *ngIf="isValidField('tipo')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("tipo") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Tipo -->
@@ -151,8 +201,16 @@
           </button>
           <img [src]="fotoBlob === undefined ? mesa.foto : fotoBlob" />
         </div>
+<<<<<<< HEAD
         <span *ngIf="isValidField('foto')" class="form-text text-danger small-error">
           {{getFieldError('foto')}}
+=======
+        <span
+          *ngIf="isValidField('foto')"
+          class="form-text text-danger small-error"
+        >
+          {{ getFieldError("foto") }}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </span>
       </div>
       <!-- #endregion Foto -->

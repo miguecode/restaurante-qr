@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
 
 ion-content {
-  --background: url("../../../../assets/fondo.jpg");
+  --background: #9b0000;
   background-size: contain;
 }
 
@@ -215,6 +215,12 @@ ion-content {
     -webkit-animation-timing-function: ease-out;
     animation-timing-function: ease-out;
   }
+}
+
+.background {
+  height: 100%;
+  width: 100%;
+  background: url("../../../../assets/fondo.jpg");
 }
 
 .container img {

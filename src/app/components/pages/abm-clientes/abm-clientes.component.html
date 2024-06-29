@@ -1,10 +1,14 @@
+<<<<<<< HEAD
 <p>
   abm-clientes works!
 </p>
+=======
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
 <ion-header [translucent]="true">
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
+<<<<<<< HEAD
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <ion-title> ABM Cliente </ion-title>
       </div>
@@ -16,6 +20,22 @@
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
           Alta
+=======
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> ABM Clientes </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta Cliente</ion-title>
+      <ion-title *ngIf="esModificar">Modificar Cliente</ion-title>
+      <ion-title *ngIf="esBaja">Baja Cliente</ion-title>
+
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
+          CREAR
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         </button>
       </div>
     </div>
@@ -30,6 +50,7 @@
       <div class="cartas">
         <div *ngFor="let item of lista">
           <div class="card">
+<<<<<<< HEAD
             <label style="text-align: center">{{ item.id }}</label>
             <label>NOMBRE:{{ item.nombre }}</label>
             <label>APELLIDO:{{ item.apellido }}</label>
@@ -37,17 +58,43 @@
             <img [src]="item.foto" />
             <label>HABILITADO:{{ item.habilitado }}</label>
             <label>CORREO:{{ item.correo }}</label>
+=======
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>NOMBRE: </span>{{ item.nombre | capitalize }}</label>
+            <label
+              ><span>APELLIDO: </span>{{ item.apellido | capitalize }}</label
+            >
+            <label><span>DNI: </span>{{ item.dni }}</label>
+            <img class="img-perfil" [src]="item.foto" />
+            <label
+              ><span>ESTADO: </span>
+              {{
+                item.habilitado === true ? "Habilitado" : "Inhabilitado"
+              }}</label
+            >
+            <label><span>CORREO: </span>{{ item.correo }}</label>
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
             <button
               class="btn btn-secondary boton-modificar"
               (click)="clienteSeleccionado = item; esModificar = true"
             >
+<<<<<<< HEAD
               Modificar
+=======
+              MODIFICAR
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
             </button>
             <button
               class="btn btn-secondary boton-baja"
               (click)="clienteSeleccionado = item; esBaja = true"
             >
+<<<<<<< HEAD
               Baja
+=======
+              ELIMINAR
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
             </button>
           </div>
         </div>
@@ -88,10 +135,18 @@
   </div>
 </ion-content>
 
+<<<<<<< HEAD
 <ion-footer [translucent]="true">
+=======
+<!-- <ion-footer [translucent]="true">
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
   <ion-toolbar>
     <div class="footer">
       <button class="btn btn-primary" routerLink="/home">Home</button>
     </div>
   </ion-toolbar>
+<<<<<<< HEAD
 </ion-footer>
+=======
+</ion-footer> -->
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b

@@ -2,17 +2,20 @@
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
-      <div *ngIf="!esAlta && !esModificar && !esBaja">
-        <ion-title> ABM empleados </ion-title>
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> ABM Empleados </ion-title>
       </div>
 
-      <ion-title *ngIf="esAlta">Alta empleado</ion-title>
-      <ion-title *ngIf="esModificar">Modificar empleado</ion-title>
-      <ion-title *ngIf="esBaja">Baja empleado</ion-title>
+      <ion-title *ngIf="esAlta">Alta Empleado</ion-title>
+      <ion-title *ngIf="esModificar">Modificar Empleado</ion-title>
+      <ion-title *ngIf="esBaja">Baja Empleado</ion-title>
 
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
-          Alta
+          CREAR
         </button>
       </div>
     </div>
@@ -27,27 +30,36 @@
       <div class="cartas">
         <div *ngFor="let item of lista">
           <div class="card">
-            <label style="text-align: center">{{ item.id }}</label>
-            <label>NOMBRE:{{ item.nombre }}</label>
-            <label>APELLIDO:{{ item.apellido }}</label>
-            <label>DNI:{{ item.dni }}</label>
-            <label>CUIL:{{ item.cuil }}</label>
-            <img [src]="item.foto" />
-            <label>TIPO:{{ item.tipo }}</label>
-            <label>ROL:{{ item.rol }}</label>
-            <label>HABILITADO:{{ item.habilitado }}</label>
-            <label>CORREO:{{ item.correo }}</label>
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>NOMBRE: </span>{{ item.nombre | capitalize }}</label>
+            <label
+              ><span>APELLIDO: </span>{{ item.apellido | capitalize }}</label
+            >
+            <label><span>DNI: </span>{{ item.dni }}</label>
+            <label><span>CUIL: </span>{{ item.cuil }}</label>
+            <img class="img-perfil" [src]="item.foto" />
+            <label><span>TIPO: </span>{{ item.tipo | capitalize }}</label>
+            <label><span>ROL: </span>{{ item.rol | capitalize }}</label>
+            <label
+              ><span>ESTADO: </span>
+              {{
+                item.habilitado === true ? "Habilitado" : "Inhabilitado"
+              }}</label
+            >
+            <label><span>CORREO: </span>{{ item.correo }}</label>
             <button
               class="btn btn-secondary boton-modificar"
               (click)="empleadoSeleccionado = item; esModificar = true"
             >
-              Modificar
+              MODIFICAR
             </button>
             <button
               class="btn btn-secondary boton-baja"
               (click)="empleadoSeleccionado = item; esBaja = true"
             >
-              Baja
+              ELIMINAR
             </button>
           </div>
         </div>
@@ -88,10 +100,10 @@
   </div>
 </ion-content>
 
-<ion-footer [translucent]="true">
+<!-- <ion-footer [translucent]="true">
   <ion-toolbar>
     <div class="footer">
       <button class="btn btn-primary" routerLink="/home">Home</button>
     </div>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

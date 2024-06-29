@@ -2,15 +2,19 @@
   <ion-toolbar>
     <!-- #region Titulo -->
     <div class="header">
-      <ion-title *ngIf="!esAlta && !esModificar && !esBaja">
-        ABM mesas
-      </ion-title>
-      <ion-title *ngIf="esAlta">Alta mesa</ion-title>
-      <ion-title *ngIf="esModificar">Modificar mesa</ion-title>
-      <ion-title *ngIf="esBaja">Baja mesa</ion-title>
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> ABM Mesas </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta Mesa</ion-title>
+      <ion-title *ngIf="esModificar">Modificar Mesa</ion-title>
+      <ion-title *ngIf="esBaja">Baja Mesa</ion-title>
       <div *ngIf="!esAlta && !esModificar && !esBaja">
         <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
-          Alta
+          CREAR
         </button>
       </div>
     </div>
@@ -25,22 +29,30 @@
       <div class="cartas">
         <div *ngFor="let item of lista">
           <div class="card">
-            <label style="text-align: center">{{ item.id }}</label>
-            <label>CANT-CLI: {{ item.cantidadClientes }}</label>
-            <label>CANT-MAX: {{ item.cantidadMaxima }}</label>
-            <label>TIPO: {{ item.tipo }}</label>
-            <img [src]="item.foto" />
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>CANT-CLI: </span>{{ item.cantidadClientes }}</label>
+            <label><span>CANT-MÁX: </span>{{ item.cantidadMaxima }}</label>
+            <label
+              ><span>TIPO: </span
+              >{{
+                (item.tipo === "estandar" ? "estándar" : item.tipo) | capitalize
+              }}</label
+            >
+            <img class="img-qr" [src]="item.qr" />
+            <img class="img-foto" [src]="item.foto" />
             <button
               class="btn btn-secondary boton-modificar"
               (click)="mesaSeleccionada = item; esModificar = true"
             >
-              Modificar
+              MODIFICAR
             </button>
             <button
               class="btn btn-secondary boton-baja"
               (click)="mesaSeleccionada = item; esBaja = true"
             >
-              Baja
+              ELIMINAR
             </button>
           </div>
         </div>
@@ -79,10 +91,10 @@
   </div>
 </ion-content>
 
-<ion-footer [translucent]="true">
+<!-- <ion-footer [translucent]="true">
   <ion-toolbar>
     <div class="footer">
       <button class="btn btn-primary" routerLink="/home">Home</button>
     </div>
   </ion-toolbar>
-</ion-footer>
+</ion-footer> -->

@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header">
+      <div class="titulo" *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="boton-atras" routerLink="/home">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> ABM Dueños </ion-title>
+      </div>
+
+      <ion-title *ngIf="esAlta">Alta Dueño</ion-title>
+      <ion-title *ngIf="esModificar">Modificar Dueño</ion-title>
+      <ion-title *ngIf="esBaja">Baja Dueño</ion-title>
+
+      <div *ngIf="!esAlta && !esModificar && !esBaja">
+        <button class="btn btn-secondary boton-alta" (click)="esAlta = true">
+          CREAR
+        </button>
+      </div>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div *ngIf="!esAlta && !esModificar && !esBaja">
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of lista">
+          <div class="card">
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>NOMBRE: </span>{{ item.nombre | capitalize }}</label>
+            <label
+              ><span>APELLIDO: </span>{{ item.apellido | capitalize }}</label
+            >
+            <label><span>DNI: </span>{{ item.dni }}</label>
+            <label><span>CUIL: </span>{{ item.cuil }}</label>
+            <img class="img-perfil" [src]="item.foto" />
+            <label
+              ><span>ROL: </span>
+              {{ (item.rol === "duenio" ? "dueño" : item.rol) | capitalize }}
+            </label>
+            <label
+              ><span>ESTADO: </span>
+              {{
+                item.habilitado === true ? "Habilitado" : "Inhabilitado"
+              }}</label
+            >
+            <label><span>CORREO: </span>{{ item.correo }}</label>
+            <button
+              class="btn btn-secondary boton-modificar"
+              (click)="duenioSeleccionado = item; esModificar = true"
+            >
+              MODIFICAR
+            </button>
+            <button
+              class="btn btn-secondary boton-baja"
+              (click)="duenioSeleccionado = item; esBaja = true"
+            >
+              ELIMINAR
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+
+    <div *ngIf="esAlta">
+      <!-- #region Formulario Modo Alta -->
+      <app-formulario-duenio
+        [modoAlta]="true"
+        (handlerTerminado)="esAlta = false"
+      ></app-formulario-duenio>
+      <!-- #endregion Formulario Modo Alta -->
+    </div>
+
+    <div *ngIf="esModificar && duenioSeleccionado !== undefined">
+      <!-- #region Formulario Modo Modificar -->
+      <app-formulario-duenio
+        [modoModificar]="true"
+        [duenio]="duenioSeleccionado"
+        (handlerTerminado)="duenioSeleccionado = undefined; esModificar = false"
+      ></app-formulario-duenio>
+      <!-- #endregion Formulario Modo Modificar -->
+    </div>
+
+    <div *ngIf="esBaja && duenioSeleccionado !== undefined">
+      <!-- #region Formulario Modo Baja -->
+      <app-formulario-duenio
+        [modoBaja]="true"
+        [duenio]="duenioSeleccionado"
+        (handlerTerminado)="duenioSeleccionado = undefined; esBaja = false"
+      ></app-formulario-duenio>
+      <!-- #endregion Formulario Modo Baja -->
+    </div>
+  </div>
+</ion-content>
+
+<!-- <ion-footer [translucent]="true">
+  <ion-toolbar>
+    <div class="footer">
+      <button class="btn btn-primary" routerLink="/home">Home</button>
+    </div>
+  </ion-toolbar>
+</ion-footer> -->

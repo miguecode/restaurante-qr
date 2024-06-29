@@ -89,7 +89,7 @@ export class FormularioMesaComponent implements OnInit {
         id: new FormControl(0, []),
         cantidadClientes: new FormControl(0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
           Validators.max(8),
         ]),
         cantidadMaxima: new FormControl(0, [
@@ -98,7 +98,7 @@ export class FormularioMesaComponent implements OnInit {
           Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
+        foto: new FormControl(undefined),
       });
 
       if (this.mesa !== undefined) {
@@ -112,16 +112,15 @@ export class FormularioMesaComponent implements OnInit {
         id: new FormControl(0, []),
         cantidadClientes: new FormControl(0, [
           Validators.required,
-          Validators.min(1),
+          Validators.min(0),
           Validators.max(8),
         ]),
         cantidadMaxima: new FormControl(0, [
           Validators.required,
-          Validators.min(10000000),
-          Validators.max(99999999),
+          Validators.min(1),
+          Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, [Validators.required]),
       });
 
       if (this.mesa !== undefined) {
@@ -133,7 +132,11 @@ export class FormularioMesaComponent implements OnInit {
   }
   private getMesa() {
     let mesa = new Mesa();
+<<<<<<< HEAD
     if(this.cantidadMaxima.value && this.tipo.value && this.foto.value){
+=======
+    if (this.cantidadMaxima.value && this.tipo.value && this.foto.value) {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
         mesa = this.mesa;
       }
@@ -150,10 +153,16 @@ export class FormularioMesaComponent implements OnInit {
         mesa.setUrlFoto(this.mesa.foto);
       }
       return mesa;
+<<<<<<< HEAD
     } else{
       throw new Error("Introduzca bien los datos.")
     }
    
+=======
+    } else {
+      throw new Error('Introduzca bien los datos.');
+    }
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
   }
   private async alta() {
     const mesa = await this.mesaService.alta(this.getMesa());
@@ -211,7 +220,11 @@ export class FormularioMesaComponent implements OnInit {
       if (this.modoAlta) {
         if (this.formAlta.invalid) {
           this.formAlta.markAllAsTouched();
+<<<<<<< HEAD
           console.log("invalid form");
+=======
+          console.log('invalid form');
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           return;
         } else {
           await this.alta();
@@ -219,9 +232,15 @@ export class FormularioMesaComponent implements OnInit {
       } else if (this.modoModificar) {
         if (this.formModificar.invalid) {
           this.formModificar.markAllAsTouched();
+<<<<<<< HEAD
           console.log("invalid form");
           return;
         } else{
+=======
+          console.log('invalid form');
+          return;
+        } else {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
           await this.modificar();
         }
       } else if (this.modoBaja) {
@@ -252,18 +271,30 @@ export class FormularioMesaComponent implements OnInit {
 
   isValidField(field: string): boolean | null {
     let control = null;
+<<<<<<< HEAD
     if(this.modoAlta){
+=======
+    if (this.modoAlta) {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       control = this.formAlta.get(field);
     } else {
       control = this.formModificar.get(field);
     }
 
+<<<<<<< HEAD
     return control?.errors && control?.touched || null;
+=======
+    return (control?.errors && control?.touched) || null;
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
   }
 
   getFieldError(field: string): string | null {
     let control = null;
+<<<<<<< HEAD
     if(this.modoAlta){
+=======
+    if (this.modoAlta) {
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       control = this.formAlta.get(field);
     } else {
       control = this.formModificar.get(field);
@@ -275,7 +306,11 @@ export class FormularioMesaComponent implements OnInit {
     for (const key of Object.keys(errors)) {
       switch (key) {
         case 'required':
+<<<<<<< HEAD
           return "Este campo es requerido";
+=======
+          return 'Este campo es requerido';
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
         case 'minlength':
           return `Minimo ${errors['minlength'].requiredLength} caracteres.`;
         case 'maxlength':
@@ -285,9 +320,15 @@ export class FormularioMesaComponent implements OnInit {
         case 'max':
           return `Como maximo debe ser ${errors['max'].max}.`;
         case 'pattern':
+<<<<<<< HEAD
           return "Formato inválido";
         case 'email':
           return "Email invalido";
+=======
+          return 'Formato inválido';
+        case 'email':
+          return 'Email invalido';
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
       }
     }
     return null;

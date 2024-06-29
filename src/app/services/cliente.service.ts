@@ -155,4 +155,8 @@ export class ClienteService {
       .traerPorId(doc.id, this.col)
       .pipe(map((doc) => Cliente.parseDoc(doc)));
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
