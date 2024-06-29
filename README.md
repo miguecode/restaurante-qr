@@ -166,13 +166,16 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 ### 🎨 Pantallas actualizadas
 
+- Pantalla para el inicio de sesión
+<img src="[https://github.com/Leumig/brigada-binaria-2024/assets/103081146/d5c24232-717f-4260-a152-23c2bcd89d17](https://github.com/Leumig/brigada-binaria-2024/assets/103081146/4d3fbee0-c770-4bef-b45a-4cfcdfc50d49)" width="500"/>
+
 - Diseño de ABM anterior (ya no usado)
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a520d93d-555b-47e8-86c2-7b892ab46517" width="400"/>
 
 - Diseño de ABM Actual
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/02f19f5a-a6d6-49c4-95fa-e75da5be4fea" width="500"/>
 
-- Diseño para los formularios anterior
+- Diseño para los formularios anterior (ya no usados)
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/d5c24232-717f-4260-a152-23c2bcd89d17" width="500"/>
 
 - Diseño para los formularios actual
