@@ -66,6 +66,6 @@ export class PushNotificationService {
     );
   }
   public getToken() {
-    return this.token === undefined ? '' : this.token.toString();
+    return this.token === undefined ? '' : this.token.value;
   }
 }
