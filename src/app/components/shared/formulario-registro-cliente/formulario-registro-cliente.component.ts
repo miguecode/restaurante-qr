@@ -17,6 +17,7 @@ import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { confirmarClaveValidator } from 'src/app/classes/utils/claveValidator';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-formulario-registro-cliente',
@@ -66,7 +67,7 @@ export class FormularioRegistroClienteComponent implements OnInit {
     return this.formAlta.get('repetirClave') as FormControl;
   }
 
-  constructor(private clienteService: ClienteService, private router: Router) {}
+  constructor(private clienteService: ClienteService, private router: Router, private apiServ: ApiService) {}
 
   private crearFormGroup() {
     this.formAlta = new FormGroup({
@@ -110,6 +111,7 @@ export class FormularioRegistroClienteComponent implements OnInit {
   }
 
   private async alta() {
+    await this.apiServ.notificarRegistro();
     await this.clienteService.alta(this.getCliente());
     await Swalert.toastSuccess('Alta realizada exitosamente');
   }

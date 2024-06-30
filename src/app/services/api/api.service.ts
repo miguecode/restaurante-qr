@@ -3,6 +3,7 @@ import { Mesa } from 'src/app/classes/mesa';
 import { Usuario } from 'src/app/classes/padres/usuario';
 import { Producto } from 'src/app/classes/producto';
 import { UsuarioService } from '../usuario.service';
+import { Estado } from 'src/app/classes/cliente';
 
 @Injectable({
   providedIn: 'root',
@@ -124,6 +125,19 @@ export class ApiService {
       body: JSON.stringify({
         title: `Mensaje de ${usuario.correo}`,
         body: mensaje,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  public async notificarRegistro() {
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-duenios`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-duenios`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `Mensaje del sistema`,
+        body: `Se registro un nuevo cliente.`,
       }),
       headers: { 'Content-Type': 'application/json' },
     });

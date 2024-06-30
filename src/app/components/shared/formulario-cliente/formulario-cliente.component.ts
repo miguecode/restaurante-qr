@@ -12,12 +12,13 @@ import {
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { IonButton, IonIcon, IonContent } from '@ionic/angular/standalone';
-import { Cliente } from 'src/app/classes/cliente';
+import { Cliente, Estado } from 'src/app/classes/cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-formulario-cliente',
@@ -110,7 +111,7 @@ export class FormularioClienteComponent implements OnInit {
     return this.formBaja.get('clave') as FormControl;
   }
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(private clienteService: ClienteService, private apiService: ApiService) {}
 
   private crearFormGroup() {
     if (this.modoAlta) {
@@ -220,6 +221,7 @@ export class FormularioClienteComponent implements OnInit {
     cliente.setNombre(this.nombre.value);
     cliente.setApellido(this.apellido.value);
     cliente.setDni(this.dni.value);
+    cliente.estado = Estado.aceptado;
     if (this.foto.value !== null) {
       cliente.setFile(this.foto.value);
     } else {

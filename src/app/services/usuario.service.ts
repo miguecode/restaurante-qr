@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Empleado } from '../classes/empleado';
 import { Supervisor } from '../classes/supervisor';
 import { Duenio } from '../classes/duenio';
-import { Cliente } from '../classes/cliente';
+import { Cliente, Estado } from '../classes/cliente';
 import { DuenioService } from './duenio.service';
 import { SupervisorService } from './supervisor.service';
 import { AuthService } from './firebase/auth.service';
@@ -49,8 +49,8 @@ export class UsuarioService {
       this.flagObservables[2] = true;
     });
 
-    this.clienteService.traerTodosObservable().subscribe((l) => {
-      this.clientes = l;
+    this.clienteService.traerTodosObservable().subscribe((clientes : Cliente[]) => {
+      this.clientes = clientes;
       this.flagObservables[3] = true;
     });
   }
@@ -223,6 +223,18 @@ export class UsuarioService {
         throw new Error('Tu cuenta se encuentra deshabilitada');
       }
       */
+
+      const usuarioBd = await this.getUsuarioBd();
+      if (usuarioBd instanceof Cliente && usuarioBd.estado === Estado.pendiente) {
+        throw new Error('pendiente');
+      } else{
+        if(usuarioBd instanceof Cliente && usuarioBd.estado === Estado.rechazado) {
+          throw new Error('rechazada');
+        }
+      }
+
+
+
     } catch (e: any) {
       await this.cerrarSesionAuth();
       throw new Error(e.message);

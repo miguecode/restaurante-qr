@@ -59,9 +59,17 @@ export class FormularioIngresoComponent implements OnInit {
       } as Usuario);
       console.log('Inicio de sesión exitoso');
       this.router.navigate(['/home']);
-    } catch (error) {
+    } catch (error : any) {
       console.log('Error durante el inicio de sesión:', error);
-      this.mensaje = 'No existe un usuario con ese correo y esa contraseña.';
+      if(error.message === 'pendiente'){
+        this.mensaje = 'Su cuenta esta pendiente a habilitarse';
+      } else{
+        if(error.message === 'rechazada'){
+          this.mensaje = 'Su cuenta esta rechazada';
+        } else{
+          this.mensaje = 'No existe un usuario con ese correo y esa contraseña.';
+        }
+      }
     } finally {
       this.procesando = false;
     }
