@@ -127,8 +127,7 @@ export class PushNotificationComponent implements OnInit {
       console.log(e.message);
     }
   }
-  public async generarToken() {
-    await this.pushNotificationService.crearToken();
+  public async verToken() {
     this.tokenValue = this.pushNotificationService.getToken();
   }
 }
