@@ -1,75 +1,134 @@
+import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { PushNotifications } from '@capacitor/push-notifications';
-import { Platform } from '@ionic/angular';
+import { Empleado } from 'src/app/classes/empleado';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
+import { ApiService } from 'src/app/services/api/api.service';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
+import { IonContent } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-push-notification',
   templateUrl: './push-notification.component.html',
   styleUrls: ['./push-notification.component.scss'],
   standalone: true,
-  imports: [RouterLink],
+  imports: [IonContent, FormsModule, RouterLink, JsonPipe],
 })
 export class PushNotificationComponent implements OnInit {
-  inputValue: string = '';
-  constructor(private plt: Platform) {}
+  tokenValue: string = '';
+  responseValue: any = 'Esperando respuesta del API';
+  nombreValue: string = '';
+  correoValue: string = '';
+  constructor(
+    private apiService: ApiService,
+    private usuarioService: UsuarioService,
+    private pushNotificationService: PushNotificationService
+  ) {}
 
-  ngOnInit() {
-    if (this.plt.is('android')) {
-      this.addListeners();
-      this.registerNotificacions();
+  ngOnInit() {}
+
+  public async notificarUnUsuario() {
+    try {
+      let e = new Empleado();
+      e.nombre = 'kevin';
+      e.token = this.tokenValue;
+      let r = await this.apiService.notificarUnUsuario(e, `Hola ${e.nombre}`);
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
     }
-    Swalert.toastSuccess(`Hola`);
+  }
+  public async notificarMozos() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_MOZO,
+        `Notificando a todos los mozos`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarBartenders() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_BARTENDER,
+        `Notificando a todos los bartenders`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarCocineros() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_COCINERO,
+        `Notificando a todos los cocineros`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarDuenios() {
+    try {
+      let r = await this.apiService.notificarDuenios(
+        `Notificando a todos los dueños`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarSupervisores() {
+    try {
+      let r = await this.apiService.notificarSupervisores(
+        `Notificando a todos los supervisores`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
   }
 
-  async registerNotificacions() {
-    let permStatus = await PushNotifications.checkPermissions();
+  public async enviarCorreo(aceptacion: boolean) {
+    try {
+      let e = new Empleado();
+      e.nombre = 'juan pablo';
+      e.correo = this.correoValue;
 
-    if (permStatus.receive === 'prompt') {
-      permStatus = await PushNotifications.requestPermissions();
+      let r = await this.apiService.enviarCorreo(e, aceptacion);
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
     }
-
-    if (permStatus.receive !== 'granted') {
-      Swalert.toastError(`User denied permissions!`);
-      console.log('User denied permissions!');
-    }
-
-    await PushNotifications.register();
   }
-
-  async addListeners() {
-    await PushNotifications.addListener('registration', (token) => {
-      this.inputValue = token.value;
-      Swalert.toastSuccess(`Registration token: ${token.value}`);
-      console.log('Registration token: ', token.value);
-    });
-
-    await PushNotifications.addListener('registrationError', (e) => {
-      Swalert.toastError(`Registration error: ${e.error}`);
-      console.log('Registration error: ', e.error);
-    });
-
-    await PushNotifications.addListener(
-      'pushNotificationReceived',
-      (notification) => {
-        Swalert.toastSuccess(`Push notification received: ${notification}`);
-        console.log('Push notification received: ', notification);
-      }
-    );
-
-    await PushNotifications.addListener(
-      'pushNotificationActionPerformed',
-      (notification) => {
-        Swalert.toastSuccess(
-          `Push notification action performed: ACTIONID:${notification.actionId} || INPUTVALUE:${notification.inputValue}`
-        );
-        console.log(
-          'Push notification action performed: ',
-          notification.actionId,
-          notification.inputValue
-        );
-      }
-    );
+  public async generarToken() {
+    await this.pushNotificationService.crearToken();
+    this.tokenValue = this.pushNotificationService.getToken();
   }
 }

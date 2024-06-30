@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -74,7 +74,8 @@ export class HomeComponent implements OnInit {
     private empleadoService: EmpleadoService,
     private clienteSerivice: ClienteService,
     private mesaService: MesaService,
-    private productoService: ProductoService
+    private productoService: ProductoService,
+    private router: Router
   ) {}
 
   private async cargarDatosImportantes() {
@@ -140,5 +141,10 @@ export class HomeComponent implements OnInit {
     } finally {
       this.mostrarSpinner = false;
     }
+  }
+
+  async cerrarSesion() {
+    await this.usuarioService.cerrarSesion();
+    this.router.navigateByUrl('/login');
   }
 }

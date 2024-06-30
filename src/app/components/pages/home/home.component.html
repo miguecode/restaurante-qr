@@ -1,6 +1,16 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>La Comanda</ion-title>
+    <div class="titulo">
+      <button class="boton-atras" (click)="cerrarSesion()">
+        <img src="../../../../assets/images/atras.png" />
+      </button>
+
+      <ion-title>La Comanda</ion-title>
+
+      <button class="btn btn-success" routerLink="/push-notification">
+        Test PUSH
+      </button>
+    </div>
   </ion-toolbar>
 </ion-header>
 

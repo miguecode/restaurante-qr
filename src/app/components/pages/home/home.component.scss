@@ -91,11 +91,20 @@ ion-button {
   display: flex;
 }
 
+.titulo ion-title {
+  margin-right: 35px;
+}
+
 // #region Modificacion de CSS
 
 .home-container {
   height: 100%;
   width: 100%;
+}
+.seccion-container {
+  height: 100%;
+  width: 100%;
+  background-color: yellow;
 }
 .router-container {
   height: 100%;

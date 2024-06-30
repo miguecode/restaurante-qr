@@ -9,6 +9,7 @@ import { AuthService } from './firebase/auth.service';
 import { EmpleadoService } from './empleado.service';
 import { ClienteService } from './cliente.service';
 import { Usuario } from '../classes/padres/usuario';
+import { PushNotificationService } from './utils/push-notification.service';
 
 @Injectable({
   providedIn: 'root',
@@ -30,7 +31,8 @@ export class UsuarioService {
     private duenioService: DuenioService,
     private supervisorService: SupervisorService,
     private empleadoService: EmpleadoService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private pushNotificationService: PushNotificationService
   ) {
     this.duenioService.traerTodosObservable().subscribe((l) => {
       this.duenios = l;
@@ -139,12 +141,74 @@ export class UsuarioService {
     return usuario.rol;
   }
 
+  private async setToken() {
+    let usuario = await this.getUsuarioBd();
+
+    if (usuario.token.length > 0) {
+      return;
+    }
+
+    await this.pushNotificationService.crearToken();
+    usuario.token = this.pushNotificationService.getToken();
+
+    if (usuario instanceof Duenio) {
+      await this.duenioService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Supervisor) {
+      await this.supervisorService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Empleado) {
+      await this.empleadoService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Cliente) {
+      await this.clienteService.modificarDoc(usuario);
+      return;
+    }
+  }
+  private async deleteToken() {
+    let usuario = await this.getUsuarioBd();
+
+    if (usuario.token.length === 0) {
+      return;
+    }
+
+    usuario.token = '';
+
+    if (usuario instanceof Duenio) {
+      await this.duenioService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Supervisor) {
+      await this.supervisorService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Empleado) {
+      await this.empleadoService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Cliente) {
+      await this.clienteService.modificarDoc(usuario);
+      return;
+    }
+  }
+
   public async cerrarSesion() {
-    return this.cerrarSesionAuth();
+    await this.cerrarSesionAuth();
+    await this.deleteToken();
   }
   public async iniciarSesion(usuario: Usuario) {
     try {
       await this.iniciarSesionAuth(usuario);
+      await this.setToken();
 
       /* Aca se valida si verifico su correo, lo dejo comentado porque al hacer el Alta todavia no envia el correo de verficacion
       const verificoCorreoAuth = await this.getVerificoCorreoAuth();

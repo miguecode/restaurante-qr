@@ -32,7 +32,7 @@ export class ClienteService {
   private async registrarAuth(cliente: Cliente) {
     try {
       await this.authService.registrar(cliente.correo, cliente.clave);
-    } catch (e : any) {
+    } catch (e: any) {
       throw new Error(e.message);
     }
   }
@@ -93,7 +93,7 @@ export class ClienteService {
     }
   }
 
-  private async modificarDoc(cliente: Cliente) {
+  public async modificarDoc(cliente: Cliente) {
     const doc = Cliente.toDoc(cliente);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }
