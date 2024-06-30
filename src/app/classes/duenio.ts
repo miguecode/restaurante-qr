@@ -27,6 +27,7 @@ export class Duenio extends Usuario {
       rol: duenio.rol,
       habilitado: duenio.habilitado,
       correo: duenio.correo,
+      token: duenio.token,
     };
   }
   static parseDoc(doc: any) {
@@ -40,6 +41,7 @@ export class Duenio extends Usuario {
     duenio.rol = doc.rol;
     duenio.habilitado = JSON.parse(doc.habilitado);
     duenio.correo = doc.correo;
+    duenio.token = doc.token;
     return duenio;
   }
   static parseDocArray(doc: any) {
@@ -53,6 +55,7 @@ export class Duenio extends Usuario {
     duenio.rol = doc['rol'];
     duenio.habilitado = doc['habilitado'];
     duenio.correo = doc['correo'];
+    duenio.token = doc['token'];
     return duenio;
   }
 }

@@ -23,6 +23,7 @@ export class Cliente extends Usuario {
       rol: cliente.rol,
       habilitado: cliente.habilitado,
       correo: cliente.correo,
+      token: cliente.token,
     };
   }
   static parseDoc(doc: any) {
@@ -36,6 +37,7 @@ export class Cliente extends Usuario {
     cliente.habilitado = JSON.parse(doc.habilitado);
     cliente.correo = doc.correo;
     cliente.correo = doc.correo;
+    cliente.token = doc.token;
     return cliente;
   }
   static parseDocArray(doc: any) {
@@ -48,6 +50,7 @@ export class Cliente extends Usuario {
     cliente.rol = doc['rol'];
     cliente.habilitado = doc['habilitado'];
     cliente.correo = doc['correo'];
+    cliente.token = doc['token'];
     return cliente;
   }
 }
