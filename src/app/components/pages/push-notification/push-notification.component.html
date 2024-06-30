@@ -103,7 +103,12 @@
 
     <div class="form-group">
       <textarea class="form-control" style="height: 500px">
-        {{ responseValue | json }}
+        "response-api": {
+          {{ responseValue | json }}
+        },
+        "token": {
+          {{ tokenValue | json }}
+        }
       </textarea>
     </div>
   </div>
