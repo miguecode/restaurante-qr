@@ -9,6 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { CommonModule, NgClass } from '@angular/common';
+import { Usuario } from 'src/app/classes/padres/usuario';
+import { UsuarioService } from 'src/app/services/usuario.service';
 
 @Component({
   selector: 'app-formulario-ingreso',
@@ -26,7 +28,8 @@ export class FormularioIngresoComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private usuarioService: UsuarioService
   ) {
     this.loginForm = this.fb.group({
       correoActual: ['', [Validators.required, Validators.email]],
@@ -49,7 +52,11 @@ export class FormularioIngresoComponent implements OnInit {
     this.procesando = true;
 
     try {
-      await this.authService.iniciarSesion(correoActual, claveActual);
+      //await this.authService.iniciarSesion(correoActual, claveActual);
+      await this.usuarioService.iniciarSesion({
+        correo: correoActual,
+        clave: claveActual,
+      } as Usuario);
       console.log('Inicio de sesión exitoso');
       this.router.navigate(['/home']);
     } catch (error) {
