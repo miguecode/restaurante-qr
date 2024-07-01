@@ -27,33 +27,25 @@
     </div>
 
     <div class="router-container">
-      <!-- #region Boton ABM Entidades -->
-      <div
-        *ngIf="
-          !mostrarAbms && usuario !== undefined && usuario.rol === 'duenio'
-        "
-      >
+      <!-- #region Accesos de Dueño -->
+      <div *ngIf="!mostrarAbms && usuarioEsEsDuenio">
         <button class="btn btn-primary" routerLink="/seccion-abms">
           <label>Gestión</label>
           <label>Entidades</label>
         </button>
       </div>
-      <!-- #endregion Boton ABM Entidades -->
+      <!-- #endregion Accesos de Dueño -->
 
-      <!-- #region Boton ABM Empleado -->
-      <div
-        *ngIf="
-          !mostrarAbms && usuario !== undefined && usuario.rol === 'supervisor'
-        "
-      >
+      <!-- #region Accesos de Supervisor -->
+      <div *ngIf="!mostrarAbms && usuarioEsSupervisor">
         <button class="btn btn-primary" routerLink="/seccion-abms">
           <label>Agregar</label>
           <label>Empleado</label>
         </button>
       </div>
-      <!-- #endregion Boton ABM Empleado -->
+      <!-- #endregion Accesos de Supervisor -->
 
-      <!-- #region Boton ABM Cliente -->
+      <!-- #region Accesos de Empleado -->
       <div
         *ngIf="
           usuarioEsEmpleado &&
@@ -65,9 +57,7 @@
           <label>Cliente</label>
         </button>
       </div>
-      <!-- #endregion Boton ABM Cliente -->
 
-      <!-- #region Boton ABM Producto -->
       <div
         *ngIf="
           usuarioEsEmpleado &&
@@ -79,21 +69,39 @@
           <label>Agregar</label>
           <label>Plato o Bebida</label>
         </button>
-        <!-- #endregion Boton ABM Producto -->
       </div>
+      <!-- #endregion Accesos de Empleado -->
+
+      <!-- #region Accesos De Cliente -->
       <div *ngIf="usuarioEsCliente">
-        <button class="btn btn-primary" routerLink="/encuestas">
+        <button class="btn btn-primary" (click)="escanearQrMesa()">
+          <label>Escanear código QR</label>
+          <label>de Mesa</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" routerLink="/seccion-encuestas">
           <label>Encuestas</label>
         </button>
-        <button class="btn btn-primary" routerLink="/lista-espera">
-          <!-- <app-qr-scanner
-              [nombreBtn]="'QR'"
-              (handlerData)=''
-          ></app-qr-scanner> -->
-          <label>Escanear codigo QR</label>
-          <label>Lista de espera</label>
+      </div>
+
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" (click)="escanearQrIngresoLocal()">
+          <label>Escanear código QR</label>
+          <label>de ingreso al local</label>
         </button>
       </div>
+      <!-- #endregion Accesos De Cliente -->
+
+      <!-- #region Accesos Metre -->
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'metre'">
+        <button class="btn btn-primary" routerLink="/asignar-cliente-mesa">
+          <label>Vincular</label>
+          <label>Mesa</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos Metre -->
     </div>
   </div>
 </ion-content>

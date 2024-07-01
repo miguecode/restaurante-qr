@@ -8,6 +8,9 @@
 }
 
 // #region Header
+ion-toolbar {
+  --background: #1e1e1e;
+}
 .header-container {
   display: flex;
   justify-content: center;
@@ -77,7 +80,7 @@ ion-content {
   font-weight: bold;
 }
 button label {
-  margin: -15px;
+  margin: -13px;
 }
 // #endregion Content
 

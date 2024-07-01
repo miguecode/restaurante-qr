@@ -1,4 +1,5 @@
 import { url } from 'inspector';
+import { Cliente } from './cliente';
 
 export class Mesa {
   public id: number;
@@ -14,6 +15,10 @@ export class Mesa {
   public static M_DISCAPACITADOS: string = Mesa.TIPOS[1];
   public static M_ESTANDAR: string = Mesa.TIPOS[2];
 
+  public idCliente: number;
+  public nombreCliente: string;
+  public apellidoCliente: string;
+
   public constructor() {
     this.id = 0;
     this.cantidadClientes = 0;
@@ -22,6 +27,10 @@ export class Mesa {
     this.foto = '';
     this.file = undefined;
     this.qr = '';
+
+    this.idCliente = 0;
+    this.nombreCliente = '';
+    this.apellidoCliente = '';
   }
 
   public static toDoc(mesa: Mesa) {
@@ -32,6 +41,10 @@ export class Mesa {
       tipo: mesa.tipo,
       foto: mesa.foto,
       qr: mesa.qr,
+
+      idCliente: mesa.idCliente,
+      nombreCliente: mesa.nombreCliente,
+      apellidoCliente: mesa.apellidoCliente,
     };
   }
   public static parseDoc(doc: any) {
@@ -42,6 +55,10 @@ export class Mesa {
     mesa.tipo = doc.tipo;
     mesa.foto = doc.foto;
     mesa.qr = doc.qr;
+
+    mesa.idCliente = doc.idCliente;
+    mesa.nombreCliente = doc.nombreCliente;
+    mesa.apellidoCliente = doc.apellidoCliente;
     return mesa;
   }
   public static parseDocArray(doc: any) {
@@ -52,6 +69,10 @@ export class Mesa {
     mesa.tipo = doc['tipo'];
     mesa.foto = doc['foto'];
     mesa.qr = doc['qr'];
+
+    mesa.idCliente = doc['idCliente'];
+    mesa.nombreCliente = doc['nombreCliente'];
+    mesa.apellidoCliente = doc['apellidoCliente'];
     return mesa;
   }
 
@@ -72,5 +93,11 @@ export class Mesa {
   }
   public setUrlFoto(urlFoto: string) {
     this.foto = urlFoto;
+  }
+
+  public setCliente(cliente: Cliente) {
+    this.idCliente = cliente.id;
+    this.nombreCliente = cliente.nombre;
+    this.apellidoCliente = cliente.apellido;
   }
 }
