@@ -9,6 +9,9 @@ const config: CapacitorConfig = {
       launchAutoHide: false,
       showSpinner: false,
     },
+    PushNotifications: {
+      presentationOptions: ['badge', 'sound', 'alert'],
+    },
   },
 };
 

@@ -1,18 +1,19 @@
-import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Empleado } from 'src/app/classes/empleado';
 import { Mesa } from 'src/app/classes/mesa';
-import { UsuarioService } from '../usuario.service';
-import { Observable } from 'rxjs';
 import { Usuario } from 'src/app/classes/padres/usuario';
-import { access } from 'fs';
-import { Cliente } from 'src/app/classes/cliente';
 import { Producto } from 'src/app/classes/producto';
+import { UsuarioService } from '../usuario.service';
+import { Estado } from 'src/app/classes/cliente';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ApiService {
+  private consumirLocal: boolean = false;
+  private comandaApiWeb: string =
+    'https://sp-restaurante-brigada-binaria-api.onrender.com';
+  private localPuerto: string = '4000';
+
   constructor(private usuarioService: UsuarioService) {}
 
   public async generarQrMesa(mesa: Mesa) {
@@ -31,7 +32,6 @@ export class ApiService {
       xhttp.send();
     });
   }
-
   public async generarQrProducto(producto: Producto) {
     return new Promise<any>((resolver) => {
       const URL_ENDPOINT = `https://quickchart.io/qr?format=base64&margin=1&text=${producto.id}`;
@@ -50,8 +50,9 @@ export class ApiService {
   }
 
   public async enviarCorreo(receptor: Usuario, aceptacion: boolean) {
-    const ENDPOINT = `https://sp-restaurante-brigada-binaria-api.onrender.com/send-mail`;
-    return fetch(ENDPOINT, {
+    const LOCALHOST = `http://localhost:${this.localPuerto}/enviar-correo`;
+    const HOSTING = `${this.comandaApiWeb}/enviar-correo`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
         aceptacion: aceptacion,
@@ -61,35 +62,84 @@ export class ApiService {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-
   public async notificarUnUsuario(usuario: Usuario, mensaje: string) {
-    const userLog = await this.usuarioService.getUsuarioBd();
-    const ENDPOINT = `https://sp-restaurante-brigada-binaria-api.onrender.com/notify`;
-    return fetch(ENDPOINT, {
+    const usuarioLogeado = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-uno`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-uno`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
-        title: `Aviso de ${userLog.correo}`,
+        title: `Mensaje de ${usuarioLogeado.correo}`,
         body: mensaje,
         token: usuario.token,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
   }
-  public async notificarDuenios(mensaje: string) {}
-  public async notificarSupervisores(mensaje: string) {}
-  public async notificarEmpleados(mensaje: string) {
+  public async notificarEmpleados(tipoEmpleado: string, mensaje: string) {
     const usuario = await this.usuarioService.getUsuarioBd();
-    const ENDPOINT = `https://sp-restaurante-brigada-binaria-api.onrender.com/notify-role`;
-    return fetch(ENDPOINT, {
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-empleados`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-empleados`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
         title: `Mensaje de ${usuario.correo}`,
         body: mensaje,
-        role: 'empleado',
+        employeeType: tipoEmpleado,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
   }
-  public async notificarTipoEmpleados(tipoEmpleado: string, mensaje: string) {}
-  public async notificarClientes(mensaje: string) {}
+  public async notificarDuenios(mensaje: string) {
+    const usuario = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-duenios`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-duenios`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `Mensaje de ${usuario.correo}`,
+        body: mensaje,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  public async notificarSupervisores(mensaje: string) {
+    const usuario = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-supervisores`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-supervisores`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `Mensaje de ${usuario.correo}`,
+        body: mensaje,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+  public async notificarClientes(mensaje: string) {
+    const usuario = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-clientes`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-clientes`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `Mensaje de ${usuario.correo}`,
+        body: mensaje,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  public async notificarRegistro() {
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-duenios`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-duenios`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `Mensaje del sistema`,
+        body: `Se registro un nuevo cliente.`,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
 }

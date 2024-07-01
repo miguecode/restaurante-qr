@@ -98,8 +98,15 @@ export class FormularioMesaComponent implements OnInit {
           Validators.max(8),
         ]),
         tipo: new FormControl('', [Validators.required]),
-        foto: new FormControl(undefined, []),
+        foto: new FormControl(undefined),
       });
+
+      if (this.mesa !== undefined) {
+        this.id.setValue(this.mesa.id);
+        this.cantidadClientes.setValue(this.mesa.cantidadClientes);
+        this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
+        this.tipo.setValue(this.mesa.tipo);
+      }
     } else if (this.modoBaja) {
       this.formBaja = new FormGroup({
         id: new FormControl(0, []),
@@ -115,33 +122,36 @@ export class FormularioMesaComponent implements OnInit {
         ]),
         tipo: new FormControl('', [Validators.required]),
       });
-    }
 
-    if (this.mesa !== undefined) {
-      this.id.setValue(this.mesa.id);
-      this.cantidadClientes.setValue(this.mesa.cantidadClientes);
-      this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
-      this.tipo.setValue(this.mesa.tipo);
+      if (this.mesa !== undefined) {
+        this.id.setValue(this.mesa.id);
+        this.cantidadMaxima.setValue(this.mesa.cantidadMaxima);
+        this.tipo.setValue(this.mesa.tipo);
+      }
     }
   }
   private getMesa() {
     let mesa = new Mesa();
-    if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
-      mesa = this.mesa;
+    if (this.cantidadMaxima.value && this.tipo.value && this.foto.value) {
+      if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
+        mesa = this.mesa;
+      }
+      if (this.modoModificar || this.modoBaja) {
+        mesa.setId(this.id.value);
+      }
+      if (this.modoModificar) {
+        mesa.setCantidadClientes(this.cantidadClientes.value);
+      }
+      mesa.setCantidadMaxima(this.cantidadMaxima.value);
+      mesa.setTipo(this.tipo.value);
+      mesa.setFile(this.foto.value);
+      if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
+        mesa.setUrlFoto(this.mesa.foto);
+      }
+      return mesa;
+    } else {
+      throw new Error('Introduzca bien los datos.');
     }
-    if (this.modoModificar || this.modoBaja) {
-      mesa.setId(this.id.value);
-    }
-    if (this.modoModificar) {
-      mesa.setCantidadClientes(this.cantidadClientes.value);
-    }
-    mesa.setCantidadMaxima(this.cantidadMaxima.value);
-    mesa.setTipo(this.tipo.value);
-    mesa.setFile(this.foto.value);
-    if ((this.modoModificar || this.modoBaja) && this.mesa !== undefined) {
-      mesa.setUrlFoto(this.mesa.foto);
-    }
-    return mesa;
   }
   private async alta() {
     const mesa = await this.mesaService.alta(this.getMesa());
@@ -196,9 +206,21 @@ export class FormularioMesaComponent implements OnInit {
       this.procesando = true;
 
       if (this.modoAlta) {
-        await this.alta();
+        if (this.formAlta.invalid) {
+          this.formAlta.markAllAsTouched();
+          console.log('invalid form');
+          return;
+        } else {
+          await this.alta();
+        }
       } else if (this.modoModificar) {
-        await this.modificar();
+        if (this.formModificar.invalid) {
+          this.formModificar.markAllAsTouched();
+          console.log('invalid form');
+          return;
+        } else {
+          await this.modificar();
+        }
       } else if (this.modoBaja) {
         await this.baja();
       } else {
@@ -223,5 +245,48 @@ export class FormularioMesaComponent implements OnInit {
     this.cantidadMaxima.setValue(0);
     this.tipo.setValue('');
     this.foto.setValue(undefined);
+  }
+
+  isValidField(field: string): boolean | null {
+    let control = null;
+    if (this.modoAlta) {
+      control = this.formAlta.get(field);
+    } else {
+      control = this.formModificar.get(field);
+    }
+
+    return (control?.errors && control?.touched) || null;
+  }
+
+  getFieldError(field: string): string | null {
+    let control = null;
+    if (this.modoAlta) {
+      control = this.formAlta.get(field);
+    } else {
+      control = this.formModificar.get(field);
+    }
+
+    if (!control || !control.errors) return null;
+
+    const errors = control.errors;
+    for (const key of Object.keys(errors)) {
+      switch (key) {
+        case 'required':
+          return 'Este campo es requerido';
+        case 'minlength':
+          return `Minimo ${errors['minlength'].requiredLength} caracteres.`;
+        case 'maxlength':
+          return `Maximo ${errors['maxlength'].requiredLength} caracteres.`;
+        case 'min':
+          return `Como minimo debe ser ${errors['min'].min}.`;
+        case 'max':
+          return `Como maximo debe ser ${errors['max'].max}.`;
+        case 'pattern':
+          return 'Formato inválido';
+        case 'email':
+          return 'Email invalido';
+      }
+    }
+    return null;
   }
 }

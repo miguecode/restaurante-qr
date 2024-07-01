@@ -1,26 +1,59 @@
 @import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
 
 * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-family: "Baloo 2", sans-serif;
 }
 
-ion-content {
-  --background: #860106;
-}
-
-.page-container {
-  padding: 10px;
-}
-
 // #region Header
-.header {
+.header-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
-  flex-direction: row;
+  background-color: #1e1e1e;
+}
+.inicio,
+.titulo {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40px;
+  margin: 5px;
+}
+.inicio {
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.inicio button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.inicio i {
+  margin-right: 8%;
+}
+.titulo {
+  position: absolute;
+  right: 30px;
+}
+.titulo label {
+  margin-top: -2.5%;
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
 }
 // #endregion Header
 
+// #region Content
+ion-content {
+  --background: #860106;
+}
+.content-container {
+  height: 100%;
+  width: 100%;
+}
 .router-container {
   height: 100%;
   width: 100%;
@@ -28,19 +61,25 @@ ion-content {
   grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
   grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
   padding: 5px;
-  gap: 2px;
+  gap: 5px;
 }
-ion-button {
-  --background: #1e1e1e;
-  flex-basis: calc(60% - 1px);
+.router-container button {
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
+  border: 0px solid black;
+  background: #1e1e1e;
+  color: #860106;
+  height: 100%;
   width: 100%;
   font-size: 40px;
-  text-align: center;
-  color: #860106;
+  font-weight: bold;
 }
+button label {
+  margin: -15px;
+}
+// #endregion Content
 
 // #region loader
 .loader-container {
@@ -70,17 +109,3 @@ ion-button {
   }
 }
 // #endregion loader
-
-.boton-atras {
-  background-color: transparent;
-  display: inline;
-  color: #fff;
-  margin-left: 5px;
-  margin-top: 4px;
-  width: 60px;
-  padding: 0px;
-}
-
-.titulo {
-  display: flex;
-}

@@ -1,65 +1,136 @@
 import { JsonPipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { Empleado } from 'src/app/classes/empleado';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { ApiService } from 'src/app/services/api/api.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
+import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
+import { IonContent } from '@ionic/angular/standalone';
+import { Estado } from 'src/app/classes/cliente';
 
 @Component({
   selector: 'app-push-notification',
   templateUrl: './push-notification.component.html',
   styleUrls: ['./push-notification.component.scss'],
   standalone: true,
-  imports: [RouterLink, JsonPipe],
+  imports: [IonContent, FormsModule, RouterLink, JsonPipe],
 })
-export class PushNotificationComponent implements OnInit {
-  inputValue: string = 'esperando';
-  responseValue: any = 'esperando';
+export class PushNotificationComponent {
+  tokenValue: string = '';
+  responseValue: any = 'Esperando respuesta del API';
+  nombreValue: string = '';
+  correoValue: string = '';
+  estadoA : Estado = Estado.aceptado;
+  estadoR : Estado = Estado.rechazado;
   constructor(
     private apiService: ApiService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private pushNotificationService: PushNotificationService
   ) {}
 
-  ngOnInit() {}
+  
 
-  public async notificar() {
+  public async notificarUnUsuario() {
     try {
-      await this.usuarioService.iniciarSesion(
-        UsuarioService.ACCESOS_RAPIDOS[0]
-      );
-
       let e = new Empleado();
       e.nombre = 'kevin';
-      e.token = '';
-      //'eJze0zyIQh60-wgVh26VfS:APA91bE2Nsh5-yz06txuE9JmV5arTYChM3J6YZGoRkn9yUTxAzJpJQ9GvkRoR7gy5-WliuhJdk4uaJcQF2ECsrpqrw8zQ3YndZtZLHH8RfolHYmAbcpEetPxMFeNbh5xO0wxv-GINbzN';
-
+      e.token = this.tokenValue;
       let r = await this.apiService.notificarUnUsuario(e, `Hola ${e.nombre}`);
       this.responseValue = await r.json();
 
-      await Swalert.toastSuccess(JSON.stringify(this.responseValue));
       console.log(this.responseValue);
     } catch (e: any) {
-      this.responseValue = e;
-      await Swalert.toastError(e.message);
+      this.responseValue = e.message;
       console.log(e.message);
     }
   }
+  public async notificarMozos() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_MOZO,
+        `Notificando a todos los mozos`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarBartenders() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_BARTENDER,
+        `Notificando a todos los bartenders`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarCocineros() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_COCINERO,
+        `Notificando a todos los cocineros`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarDuenios() {
+    try {
+      let r = await this.apiService.notificarDuenios(
+        `Notificando a todos los dueños`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+  public async notificarSupervisores() {
+    try {
+      let r = await this.apiService.notificarSupervisores(
+        `Notificando a todos los supervisores`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
+
   public async enviarCorreo(aceptacion: boolean) {
     try {
       let e = new Empleado();
       e.nombre = 'juan pablo';
-      e.correo = 'juanpid29@gmail.com';
+      e.correo = this.correoValue;
 
       let r = await this.apiService.enviarCorreo(e, aceptacion);
       this.responseValue = await r.json();
 
-      await Swalert.toastSuccess(JSON.stringify(this.responseValue));
       console.log(this.responseValue);
     } catch (e: any) {
-      this.responseValue = e;
-      await Swalert.toastError(e.message);
+      this.responseValue = e.message;
       console.log(e.message);
     }
+  }
+  public async verToken() {
+    this.tokenValue = this.pushNotificationService.getToken();
   }
 }

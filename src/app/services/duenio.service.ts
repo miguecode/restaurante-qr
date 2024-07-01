@@ -93,7 +93,7 @@ export class DuenioService {
     console.log(doc);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
-  private async modificarDoc(duenio: Duenio) {
+  public async modificarDoc(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }

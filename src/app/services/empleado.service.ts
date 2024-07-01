@@ -93,7 +93,7 @@ export class EmpleadoService {
     console.log(doc);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
-  private async modificarDoc(empleado: Empleado) {
+  public async modificarDoc(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }

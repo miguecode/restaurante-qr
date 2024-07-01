@@ -27,6 +27,7 @@ export class Supervisor extends Usuario {
       rol: supervisor.rol,
       habilitado: supervisor.habilitado,
       correo: supervisor.correo,
+      token: supervisor.token,
     };
   }
   static parseDoc(doc: any) {
@@ -40,6 +41,7 @@ export class Supervisor extends Usuario {
     supervisor.rol = doc.rol;
     supervisor.habilitado = JSON.parse(doc.habilitado);
     supervisor.correo = doc.correo;
+    supervisor.token = doc.token;
     return supervisor;
   }
   static parseDocArray(doc: any) {
@@ -53,6 +55,7 @@ export class Supervisor extends Usuario {
     supervisor.rol = doc['rol'];
     supervisor.habilitado = doc['habilitado'];
     supervisor.correo = doc['correo'];
+    supervisor.token = doc['token'];
     return supervisor;
   }
 }

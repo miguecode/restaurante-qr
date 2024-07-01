@@ -1,17 +1,112 @@
-<input class="form-control" type="text" [value]="inputValue" />
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <div class="form-group">
+      <div class="input-group">
+        <button class="btn btn-success" style="width: 30%" (click)="verToken()">
+          Ver Token
+        </button>
+        <input
+          class="form-control"
+          placeholder="Token de Dispositivo"
+          type="text"
+          readonly
+          [value]="tokenValue"
+        />
+      </div>
+    </div>
 
-<button class="btn btn-primary" (click)="notificar()">
-  Notificar PUSH a 1 Usuario
-</button>
+    <div class="form-group">
+      <button class="btn btn-primary" (click)="notificarUnUsuario()">
+        Notificar PUSH a 1 Usuario
+      </button>
+    </div>
 
-<button class="btn btn-success" (click)="enviarCorreo(true)">
-  Enviar correo ACEPTACION
-</button>
+    <div class="form-group">
+      <button class="btn btn-secondary" (click)="notificarMozos()">
+        Notificar PUSH a los Mozos
+      </button>
+    </div>
 
-<button class="btn btn-danger" (click)="enviarCorreo(false)">
-  Enviar correo RECHAZADO
-</button>
+    <div class="form-group">
+      <button class="btn btn-success" (click)="notificarBartenders()">
+        Notificar PUSH a los Bartenders
+      </button>
+    </div>
 
-<button class="btn btn-warning" routerLink="/home">Home</button>
+    <div class="form-group">
+      <button class="btn btn-warning" (click)="notificarCocineros()">
+        Notificar PUSH a los Cocineros
+      </button>
+    </div>
 
-{{ responseValue | json }}
+    <div class="form-group">
+      <button class="btn btn-danger" (click)="notificarDuenios()">
+        Notificar PUSH a los Dueños
+      </button>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-info" (click)="notificarSupervisores()">
+        Notificar PUSH a los Supervisores
+      </button>
+    </div>
+
+    <div class="form-group">
+      <div class="input-group">
+        <button
+          class="btn btn-warning"
+          style="width: 30%"
+          (click)="nombreValue = ''"
+        >
+          Nombre Receptor
+        </button>
+        <input
+          class="form-control"
+          placeholder="Nombre"
+          type="text"
+          [(ngModel)]="nombreValue"
+        />
+      </div>
+
+      <div class="input-group">
+        <button
+          class="btn btn-warning"
+          style="width: 30%"
+          (click)="correoValue = ''"
+        >
+          Correo Receptor
+        </button>
+        <input
+          class="form-control"
+          placeholder="Correo Electronico"
+          type="text"
+          [(ngModel)]="correoValue"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-success" (click)="enviarCorreo(true)">
+        Enviar Correo de ACEPTACION
+      </button>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-danger" (click)="enviarCorreo(false)">
+        Enviar Correo de RECHAZADO
+      </button>
+    </div>
+
+    <div class="form-group">
+      <button class="btn btn-warning" routerLink="/home">Home</button>
+    </div>
+
+    <div class="form-group">
+      <textarea class="form-control" style="height: 500px">
+        "response-api": {
+          {{ responseValue | json }}
+        }
+      </textarea>
+    </div>
+  </div>
+</ion-content>

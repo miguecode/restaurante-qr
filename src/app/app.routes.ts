@@ -15,7 +15,7 @@ export const routes: Routes = [
   {
     path: 'splash',
     loadComponent: () =>
-      import('./components/pages/splash2/splash.component').then(
+      import('./components/pages/splash/splash.component').then(
         (m) => m.SplashComponent
       ),
     canActivate: [splashGuard],

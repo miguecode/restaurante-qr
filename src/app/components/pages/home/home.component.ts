@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterLink } from '@angular/router';
+import { NavigationEnd, Router, RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -26,6 +26,7 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { DuenioService } from 'src/app/services/duenio.service';
 import { SupervisorService } from 'src/app/services/supervisor.service';
+import { filter, firstValueFrom, isObservable } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -72,13 +73,11 @@ export class HomeComponent implements OnInit {
     private duenioService: DuenioService,
     private supervisorService: SupervisorService,
     private empleadoService: EmpleadoService,
-    private clienteService: ClienteService,
+    private clienteSerivice: ClienteService,
     private mesaService: MesaService,
     private productoService: ProductoService,
     private router: Router
-  ) {}
-
-  private async cargarDatosImportantes() {
+  ) {
     this.duenioService.traerTodosObservable().subscribe((l) => {
       this.listaDuenios = l;
     });
@@ -91,7 +90,7 @@ export class HomeComponent implements OnInit {
       this.listaEmpleados = l;
     });
 
-    this.clienteService.traerTodosObservable().subscribe((l) => {
+    this.clienteSerivice.traerTodosObservable().subscribe((l) => {
       this.listaClientes = l;
     });
 
@@ -102,7 +101,9 @@ export class HomeComponent implements OnInit {
     this.productoService.traerTodosObservable().subscribe((l) => {
       this.listaProductos = l;
     });
+  }
 
+  private async cargarDatosImportantes() {
     this.usuario = await this.usuarioService.getUsuarioBd();
 
     this.usuarioEsEsDuenio = this.usuario instanceof Duenio;
@@ -134,12 +135,22 @@ export class HomeComponent implements OnInit {
   async ngOnInit() {
     try {
       this.mostrarSpinner = true;
-      await this.cargarDatosImportantes();
+      this.router.events
+        .pipe(filter((event) => event instanceof NavigationEnd))
+        .subscribe(async () => {
+          try {
+            this.mostrarSpinner = true;
+            await this.cargarDatosImportantes();
+          } catch (e: any) {
+            Swalert.toastError(e.message);
+            console.log(e.message);
+          } finally {
+            this.mostrarSpinner = false;
+          }
+        });
     } catch (e: any) {
       Swalert.toastError(e.message);
       console.log(e.message);
-    } finally {
-      this.mostrarSpinner = false;
     }
   }
 

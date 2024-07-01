@@ -1,5 +1,3 @@
-import { url } from 'inspector';
-
 export class Usuario {
   public id: number;
   public nombre: string;
