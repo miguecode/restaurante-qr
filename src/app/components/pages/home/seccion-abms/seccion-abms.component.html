@@ -1,34 +1,46 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <!-- #region Titulo -->
-    <div class="header">
-      <div class="titulo">
-        <button class="boton-atras" routerLink="/home">
-          <img src="../../../../assets/images/atras.png" />
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
         </button>
-        <ion-title> Gestión Entidades </ion-title>
+      </div>
+
+      <div class="titulo">
+        <label> Gestión Entidades </label>
       </div>
     </div>
-    <!-- #endregion Titulo -->
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <div class="container-router">
-    <ion-button routerLink="/abm-duenio"
-      ><p>ABM<br />Dueño</p></ion-button
-    >
-    <ion-button routerLink="/abm-supervisor"
-      ><p>ABM<br />Supervisor</p></ion-button
-    >
-    <ion-button routerLink="/abm-mesa"
-      ><p>ABM<br />Mesa</p></ion-button
-    >
-    <ion-button routerLink="/abm-empleado"
-      ><p>ABM<br />Empleado</p></ion-button
-    >
-    <ion-button routerLink="/listado-clientes"
-      ><p>Listado<br />Clientes</p></ion-button
-    >
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <div class="router-container">
+      <button class="btn btn-primary" routerLink="/abm-duenio">
+        <label>ABM</label>
+        <label>Dueños</label>
+      </button>
+
+      <button class="btn btn-primary" routerLink="/abm-supervisor">
+        <label>ABM</label>
+        <label>Supervisores</label>
+      </button>
+
+      <button class="btn btn-primary" routerLink="/abm-mesa">
+        <label>ABM</label>
+        <label>Mesas</label>
+      </button>
+
+      <button class="btn btn-primary" routerLink="/abm-empleado">
+        <label>ABM</label>
+        <label>Empleados</label>
+      </button>
+
+      <button class="btn btn-primary" routerLink="/listado-clientes">
+        <label>Listado</label>
+        <label>Clientes</label>
+      </button>
+    </div>
   </div>
 </ion-content>

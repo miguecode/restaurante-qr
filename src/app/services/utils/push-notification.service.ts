@@ -10,9 +10,7 @@ export class PushNotificationService {
   private token: Token | undefined = undefined;
 
   constructor(private plataform: Platform) {
-    if (this.plataform.is('android')) {
-      this.addListeners();
-    }
+    this.addListeners();
   }
 
   public async crearToken() {
@@ -32,38 +30,40 @@ export class PushNotificationService {
     }
   }
   public async addListeners() {
-    await PushNotifications.addListener('registration', (token) => {
-      this.token = token;
-      Swalert.toastSuccess(`Registration token: ${token.value}`);
-      console.log('Registration token: ', token.value);
-    });
+    if (this.plataform.is('android')) {
+      await PushNotifications.addListener('registration', (token) => {
+        this.token = token;
+        Swalert.toastSuccess(`Registration token: ${token.value}`);
+        console.log('Registration token: ', token.value);
+      });
 
-    await PushNotifications.addListener('registrationError', (e) => {
-      Swalert.toastError(`Registration error: ${e.error}`);
-      console.log('Registration error: ', e.error);
-    });
+      await PushNotifications.addListener('registrationError', (e) => {
+        Swalert.toastError(`Registration error: ${e.error}`);
+        console.log('Registration error: ', e.error);
+      });
 
-    await PushNotifications.addListener(
-      'pushNotificationReceived',
-      (notification) => {
-        Swalert.toastSuccess(`Push notification received: ${notification}`);
-        console.log('Push notification received: ', notification);
-      }
-    );
+      await PushNotifications.addListener(
+        'pushNotificationReceived',
+        (notification) => {
+          Swalert.toastSuccess(`Push notification received: ${notification}`);
+          console.log('Push notification received: ', notification);
+        }
+      );
 
-    await PushNotifications.addListener(
-      'pushNotificationActionPerformed',
-      (notification) => {
-        Swalert.toastSuccess(
-          `Push notification action performed: ACTIONID:${notification.actionId} || INPUTVALUE:${notification.inputValue}`
-        );
-        console.log(
-          'Push notification action performed: ',
-          notification.actionId,
-          notification.inputValue
-        );
-      }
-    );
+      await PushNotifications.addListener(
+        'pushNotificationActionPerformed',
+        (notification) => {
+          Swalert.toastSuccess(
+            `Push notification action performed: ACTIONID:${notification.actionId} || INPUTVALUE:${notification.inputValue}`
+          );
+          console.log(
+            'Push notification action performed: ',
+            notification.actionId,
+            notification.inputValue
+          );
+        }
+      );
+    }
   }
   public getToken() {
     return this.token === undefined ? '' : this.token.value;

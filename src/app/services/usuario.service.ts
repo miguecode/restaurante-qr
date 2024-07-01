@@ -49,10 +49,12 @@ export class UsuarioService {
       this.flagObservables[2] = true;
     });
 
-    this.clienteService.traerTodosObservable().subscribe((clientes : Cliente[]) => {
-      this.clientes = clientes;
-      this.flagObservables[3] = true;
-    });
+    this.clienteService
+      .traerTodosObservable()
+      .subscribe((clientes: Cliente[]) => {
+        this.clientes = clientes;
+        this.flagObservables[3] = true;
+      });
   }
 
   private traerTodos() {
@@ -208,33 +210,22 @@ export class UsuarioService {
   public async iniciarSesion(usuario: Usuario) {
     try {
       await this.iniciarSesionAuth(usuario);
-      await this.setToken();
-
-      /* Aca se valida si verifico su correo, lo dejo comentado porque al hacer el Alta todavia no envia el correo de verficacion
-      const verificoCorreoAuth = await this.getVerificoCorreoAuth();
-      if (verificoCorreoAuth === false) {
-        throw new Error('Todavia no verificaste tu correo');
-      }
-      */
-
-      /* Aca se valida si fue habilitado o no por la entidad superior (jefe), todavia no me fije bien en el pdf como es eso, pero lo dejo comentado.
-      const usuarioBd = await this.getUsuarioBd();
-      if (usuarioBd instanceof Empleado && usuarioBd.habilitado === false) {
-        throw new Error('Tu cuenta se encuentra deshabilitada');
-      }
-      */
+      //await this.setToken();
 
       const usuarioBd = await this.getUsuarioBd();
-      if (usuarioBd instanceof Cliente && usuarioBd.estado === Estado.pendiente) {
+      if (
+        usuarioBd instanceof Cliente &&
+        usuarioBd.estado === Estado.pendiente
+      ) {
         throw new Error('pendiente');
-      } else{
-        if(usuarioBd instanceof Cliente && usuarioBd.estado === Estado.rechazado) {
+      } else {
+        if (
+          usuarioBd instanceof Cliente &&
+          usuarioBd.estado === Estado.rechazado
+        ) {
           throw new Error('rechazada');
         }
       }
-
-
-
     } catch (e: any) {
       await this.cerrarSesionAuth();
       throw new Error(e.message);

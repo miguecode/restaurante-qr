@@ -7,45 +7,88 @@
   font-family: "Baloo 2", sans-serif;
 }
 
-ion-content {
-  --background: #860106;
-  display: flex;
-  justify-content: center;
-}
-
-ion-title {
-  background: #1e1e1e;
-  font-size: 45px;
-  text-align: center;
-  font-weight: bold;
-  color: #fff;
-}
-
-.container-router {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  gap: 3px;
-  align-items: stretch;
-  height: 98%;
-  margin-top: 5px;
-}
-
-/*
-ion-button {
-  --background: #1e1e1e;
-  flex-basis: calc(60% - 1px);
+// #region Header
+.header-container {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 4%;
-  font-size: 40px;
-  text-align: center;
-  color: #860106;
+  background-color: #1e1e1e;
 }
-  */
+.cerrar-sesion,
+.titulo,
+.test-push {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40px;
+  margin: 5px;
+}
+.cerrar-sesion {
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.cerrar-sesion button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.cerrar-sesion i {
+  margin-right: 8%;
+}
+.titulo label {
+  margin-top: -4%;
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
+}
+.test-push {
+  position: absolute;
+  right: 2px;
+}
+.test-push button {
+  border: 0px solid black;
+  background-color: #860106;
+  color: white;
+  width: 80px;
+}
+// #endregion Header
 
-// #region loader
+// #region Content
+ion-content {
+  --background: #860106;
+}
+.content-container {
+  height: 100%;
+  width: 100%;
+}
+.router-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
+  grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
+  padding: 5px;
+  gap: 5px;
+}
+.router-container button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0px solid black;
+  background: #1e1e1e;
+  color: #860106;
+  height: 100%;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bold;
+}
+button label {
+  margin: -15px;
+}
+// #endregion Content
+
+// #region Loader
 .loader-container {
   position: fixed;
   top: 0;
@@ -75,53 +118,4 @@ ion-button {
     transform: rotate(360deg);
   }
 }
-// #endregion loader
-
-.boton-atras {
-  background-color: transparent;
-  display: inline;
-  color: #fff;
-  margin-left: 5px;
-  margin-top: 4px;
-  width: 60px;
-  padding: 0px;
-}
-
-.titulo {
-  display: flex;
-  background-color: #1e1e1e;
-}
-
-.titulo ion-title {
-  margin-right: 35px;
-}
-
-// #region Modificacion de CSS
-
-.home-container {
-  height: 100%;
-  width: 100%;
-}
-.seccion-container {
-  height: 100%;
-  width: 100%;
-  background-color: yellow;
-}
-.router-container {
-  height: 100%;
-  width: 100%;
-  display: grid;
-  grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
-  grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
-  padding: 5px;
-  gap: 5px;
-}
-.router-container ion-button {
-  --background: #1e1e1e;
-  --color: #860106;
-  height: 100%;
-  width: 100%;
-  font-size: 40px;
-}
-
-// #endregion Modificacion de CSS
+// #endregion Loader
