@@ -13,16 +13,16 @@ import { Cliente } from 'src/app/classes/cliente';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 import { ClienteService } from 'src/app/services/cliente.service';
-import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { confirmarClaveValidator } from 'src/app/classes/utils/claveValidator';
 import { ApiService } from 'src/app/services/api/api.service';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 
 @Component({
   selector: 'app-formulario-registro-cliente',
   standalone: true,
-  imports: [QrScannerComponent, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './formulario-registro-cliente.component.html',
   styleUrls: ['./formulario-registro-cliente.component.scss'],
 })
@@ -67,43 +67,51 @@ export class FormularioRegistroClienteComponent implements OnInit {
     return this.formAlta.get('repetirClave') as FormControl;
   }
 
-  constructor(private clienteService: ClienteService, private router: Router, private apiServ: ApiService) {}
+  constructor(
+    private clienteService: ClienteService,
+    private router: Router,
+    private apiServ: ApiService,
+    private barcodeScanningService: BarcodeScanningService
+  ) {}
 
   private crearFormGroup() {
-    this.formAlta = new FormGroup({
-      nombre: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20),
-        this.validarPalabra(),
-      ]),
-      apellido: new FormControl('', [
-        Validators.required,
-        Validators.minLength(2),
-        Validators.maxLength(20),
-        this.validarPalabra(),
-      ]),
-      dni: new FormControl('', [
-        Validators.required,
-        Validators.pattern(/^\d+$/),
-        Validators.minLength(7),
-        Validators.maxLength(9),
-      ]),
-      foto: new FormControl(undefined, [Validators.required]),
-      correo: new FormControl('', [
-        Validators.required,
-        Validators.email,
-        Validators.required,
-      ]),
-      clave: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-      repetirClave: new FormControl('', [
-        Validators.required,
-        Validators.minLength(6),
-      ]),
-    }, confirmarClaveValidator());
+    this.formAlta = new FormGroup(
+      {
+        nombre: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        apellido: new FormControl('', [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+          this.validarPalabra(),
+        ]),
+        dni: new FormControl('', [
+          Validators.required,
+          Validators.pattern(/^\d+$/),
+          Validators.minLength(7),
+          Validators.maxLength(9),
+        ]),
+        foto: new FormControl(undefined, [Validators.required]),
+        correo: new FormControl('', [
+          Validators.required,
+          Validators.email,
+          Validators.required,
+        ]),
+        clave: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+        repetirClave: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+      },
+      confirmarClaveValidator()
+    );
   }
 
   public ngOnInit() {
@@ -197,8 +205,9 @@ export class FormularioRegistroClienteComponent implements OnInit {
     }
   }
 
-  public recibirDataDniCuilQR($event: string) {
-    const source = TraductorQr.DniEjemplarA($event);
+  public async escanearDniCuil() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    const source = TraductorQr.DniEjemplarA(dataQr);
     this.dni.setValue(source.dni);
     this.dni.markAsDirty();
   }

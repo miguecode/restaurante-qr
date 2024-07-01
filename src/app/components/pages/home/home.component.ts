@@ -27,6 +27,8 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { DuenioService } from 'src/app/services/duenio.service';
 import { SupervisorService } from 'src/app/services/supervisor.service';
 import { filter, firstValueFrom, isObservable } from 'rxjs';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
+import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 
 @Component({
   selector: 'app-home',
@@ -76,6 +78,7 @@ export class HomeComponent implements OnInit {
     private clienteSerivice: ClienteService,
     private mesaService: MesaService,
     private productoService: ProductoService,
+    private barcodeScanningService: BarcodeScanningService,
     private router: Router
   ) {
     this.duenioService.traerTodosObservable().subscribe((l) => {
@@ -157,5 +160,14 @@ export class HomeComponent implements OnInit {
   async cerrarSesion() {
     await this.usuarioService.cerrarSesion();
     this.router.navigateByUrl('/login');
+  }
+
+  async escanearQrMesa() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    Swalert.toastSuccess(TraductorQr.mesa(dataQr));
+  }
+  async escanearQrIngresoLocal() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    Swalert.toastSuccess(TraductorQr.ingresoLocal(dataQr).toString());
   }
 }

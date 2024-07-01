@@ -60,6 +60,20 @@ export class PushNotificationComponent {
       console.log(e.message);
     }
   }
+  public async notificarMaitre() {
+    try {
+      let r = await this.apiService.notificarEmpleados(
+        Empleado.T_METRE,
+        `Un cliente se ha unido a la lista de espera`
+      );
+      this.responseValue = await r.json();
+
+      console.log(this.responseValue);
+    } catch (e: any) {
+      this.responseValue = e.message;
+      console.log(e.message);
+    }
+  }
   public async notificarBartenders() {
     try {
       let r = await this.apiService.notificarEmpleados(

@@ -91,6 +91,7 @@ export const routes: Routes = [
       import('./components/pages/abm-producto/abm-producto.component').then(
         (m) => m.AbmProductoComponent
       ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
     path: 'push-notification',
@@ -98,6 +99,7 @@ export const routes: Routes = [
       import(
         './components/pages/push-notification/push-notification.component'
       ).then((m) => m.PushNotificationComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
     path: 'seccion-abms',
@@ -105,6 +107,14 @@ export const routes: Routes = [
       import(
         './components/pages/home/seccion-abms/seccion-abms.component'
       ).then((m) => m.SeccionAbmsComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'listado-clientes',
+    loadComponent: () =>
+      import(
+        './components/pages/listado-clientes-registro/listado-clientes-registro.component'
+      ).then((m) => m.ListadoClientesRegistroComponent),
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
