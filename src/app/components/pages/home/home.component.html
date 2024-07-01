@@ -81,6 +81,19 @@
         </button>
         <!-- #endregion Boton ABM Producto -->
       </div>
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" routerLink="/encuestas">
+          <label>Encuestas</label>
+        </button>
+        <button class="btn btn-primary" routerLink="/lista-espera">
+          <!-- <app-qr-scanner
+              [nombreBtn]="'QR'"
+              (handlerData)=''
+          ></app-qr-scanner> -->
+          <label>Escanear codigo QR</label>
+          <label>Lista de espera</label>
+        </button>
+      </div>
     </div>
   </div>
 </ion-content>

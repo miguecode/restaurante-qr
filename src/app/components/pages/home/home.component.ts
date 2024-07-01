@@ -27,28 +27,30 @@ import { ClienteService } from 'src/app/services/cliente.service';
 import { DuenioService } from 'src/app/services/duenio.service';
 import { SupervisorService } from 'src/app/services/supervisor.service';
 import { filter, firstValueFrom, isObservable } from 'rxjs';
+import { QrScannerComponent } from "../../shared/qr-scanner/qr-scanner.component";
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
-  standalone: true,
-  imports: [
-    RouterLink,
-    IonLabel,
-    IonButton,
-    FormsModule,
-    IonContent,
-    IonTitle,
-    IonToolbar,
-    IonHeader,
-    IonHeader,
-    IonToolbar,
-    IonTitle,
-    IonContent,
-    CommonModule,
-    SeccionAbmsComponent,
-  ],
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.scss'],
+    standalone: true,
+    imports: [
+        RouterLink,
+        IonLabel,
+        IonButton,
+        FormsModule,
+        IonContent,
+        IonTitle,
+        IonToolbar,
+        IonHeader,
+        IonHeader,
+        IonToolbar,
+        IonTitle,
+        IonContent,
+        CommonModule,
+        SeccionAbmsComponent,
+        QrScannerComponent
+    ]
 })
 export class HomeComponent implements OnInit {
   usuario: Usuario | undefined = undefined;

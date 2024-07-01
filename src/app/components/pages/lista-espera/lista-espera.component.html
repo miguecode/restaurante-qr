@@ -1,0 +1,48 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header">
+      <div class="titulo">
+        <button class="boton-atras" routerLink="/seccion-abms">
+          <img src="../../../../assets/images/atras.png" />
+        </button>
+        <ion-title> Listado de clientes </ion-title>
+      </div>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div>
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of listaClientes">
+          <div class="card">
+            <label style="text-align: center"
+              ><span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>NOMBRE: </span>{{ item.nombre | capitalize }}</label>
+            <label
+              ><span>APELLIDO: </span>{{ item.apellido | capitalize }}</label
+            >
+            <label><span>DNI: </span>{{ item.dni }}</label>
+            <img class="img-perfil" [src]="item.foto" />
+            <label
+              ><span>Fecha de ingreso: </span>
+              {{
+                item.fechaListaEspera
+              }}</label
+            >
+            <label><span>CORREO: </span>{{ item.correo }}</label>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+  </div>
+
+</ion-content>
+
+

@@ -3,8 +3,8 @@ import { Usuario } from './padres/usuario';
 export class Cliente extends Usuario {
   
   estado: Estado;
-  //estadoListaEspera : boolean = false;
-  //fechaListaEspera : Date | undefined;
+  estadoListaEspera : boolean = false;
+  fechaListaEspera : Date | undefined;
   // La idea seria que cuando se escanea el qr de lista de espera, se cambie el estadoListaEspera a true, y se inicialize la fecha del momento
 
   constructor() {
@@ -28,6 +28,8 @@ export class Cliente extends Usuario {
       habilitado: cliente.habilitado,
       correo: cliente.correo,
       estado: cliente.estado,
+      estadoListaEspera: cliente.estadoListaEspera,
+      fechaListaEspera: cliente.fechaListaEspera,
       token: cliente.token,
     };
   }
@@ -43,6 +45,8 @@ export class Cliente extends Usuario {
     cliente.correo = doc.correo;
     cliente.correo = doc.correo;
     cliente.estado = doc.estado;
+    cliente.estadoListaEspera = JSON.parse(doc.estadoListaEspera);
+    cliente.fechaListaEspera = doc.fechaListaEspera;
     cliente.token = doc.token;
     return cliente;
   }
@@ -57,6 +61,8 @@ export class Cliente extends Usuario {
     cliente.habilitado = doc['habilitado'];
     cliente.correo = doc['correo'];
     cliente.estado = doc['estado'];
+    cliente.estadoListaEspera = doc['estadoListaEspera'];
+    cliente.fechaListaEspera = doc['fechaListaEspera'];
     cliente.token = doc['token'];
     return cliente;
   }
@@ -64,7 +70,6 @@ export class Cliente extends Usuario {
 }
 
 export enum Estado{
-  
   pendiente = 'pendiente',
   aceptado = 'aceptado',
   rechazado = 'rechazado'
