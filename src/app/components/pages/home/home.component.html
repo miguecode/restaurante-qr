@@ -73,7 +73,34 @@
       <!-- #endregion Accesos de Empleado -->
 
       <!-- #region Accesos De Cliente -->
-      <div *ngIf="usuarioEsCliente">
+      <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
+        <button class="btn btn-primary" routerLink="/seccion-menu">
+          <label>Menú</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
+        <button class="btn btn-primary" routerLink="/seccion-chat">
+          <label>Consultar al Mozo</label>
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          usuarioEsCliente && !usuarioEstaEnListaEspera && !usuarioTieneMesa
+        "
+      >
+        <button class="btn btn-primary" (click)="escanearQrIngresoLocal()">
+          <label>Escanear código QR</label>
+          <label>de ingreso al local</label>
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          usuarioEsCliente && usuarioEstaEnListaEspera && !usuarioTieneMesa
+        "
+      >
         <button class="btn btn-primary" (click)="escanearQrMesa()">
           <label>Escanear código QR</label>
           <label>de Mesa</label>
@@ -86,14 +113,7 @@
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente && !usuarioEstaEnListaEspera">
-        <button class="btn btn-primary" (click)="escanearQrIngresoLocal()">
-          <label>Escanear código QR</label>
-          <label>de ingreso al local</label>
-        </button>
-      </div>
-
-      <div *ngIf="usuarioEstaEnListaEspera">
+      <div *ngIf="usuarioEsCliente && usuarioEstaEnListaEspera">
         <div class="reloj">
           <img src="../../../../assets/images/reloj.gif" /> <br />
           <h2>En lista de espera...</h2>

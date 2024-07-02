@@ -73,6 +73,7 @@ export class HomeComponent implements OnInit {
   usuarioTipoEmpleado: string = '';
 
   usuarioEstaEnListaEspera: boolean = false;
+  usuarioTieneMesa: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -125,6 +126,9 @@ export class HomeComponent implements OnInit {
 
     if (this.usuario instanceof Cliente) {
       this.usuarioEstaEnListaEspera = this.usuario.estadoListaEspera;
+      this.usuario.idMesa !== 0
+        ? (this.usuarioTieneMesa = true)
+        : (this.usuarioTieneMesa = false);
     }
 
     console.log('listaDuenios', this.listaDuenios);
