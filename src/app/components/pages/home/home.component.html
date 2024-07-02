@@ -96,9 +96,12 @@
 
       <!-- #region Accesos Metre -->
       <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'metre'">
-        <button class="btn btn-primary" routerLink="/asignar-cliente-mesa">
-          <label>Vincular</label>
-          <label>Mesa</label>
+        <button
+          class="btn btn-primary"
+          routerLink="/asignar-cliente-mesa-empleado"
+        >
+          <label>Asignar</label>
+          <label>Mesa a Cliente</label>
         </button>
       </div>
       <!-- #endregion Accesos Metre -->
