@@ -4,6 +4,9 @@ import { CloudStorageService } from './firebase/cloud-storage.service';
 import { Mesa } from '../classes/mesa';
 import { map } from 'rxjs';
 import { ApiService } from './api/api.service';
+import { Router } from '@angular/router';
+import { Cliente } from '../classes/cliente';
+import { Empleado } from '../classes/empleado';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +20,8 @@ export class MesaService {
   constructor(
     private firestoreService: FirestoreService,
     private cloudStorageService: CloudStorageService,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private router: Router
   ) {
     this.traerTodosObservable().subscribe((l) => {
       this.mesas = l;
@@ -35,6 +39,15 @@ export class MesaService {
         resolver(this.mesas);
       }, 5000); // Este valor se puede bajar, pero no mucho
     });
+  }
+  public async traerPorId(idMesa: number) {
+    const l = await this.traerTodos();
+    for (let item of l) {
+      if (item.id === idMesa) {
+        return item;
+      }
+    }
+    return undefined;
   }
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
@@ -124,6 +137,75 @@ export class MesaService {
   public async modificar(mesa: Mesa) {
     await this.modificarFoto(mesa);
     await this.modificarDoc(mesa);
+  }
+
+  /* Solo usar al Escanear QrMesa */
+  public async accesoDeClientePorQrMesa(idMesa: number, cliente: Cliente) {
+    const m = await this.traerPorId(idMesa);
+
+    if (m === undefined) {
+      throw new Error(
+        'La mesa no existe en la base de datos o hay lentitud en la conexión'
+      );
+    }
+
+    // El Cliente NO esta en Lista De Espera (Fila)
+    if (cliente.estadoListaEspera === false) {
+      throw new Error(
+        'Para poder acceder a una Mesa, es necesario estar en la lista de espera'
+      );
+    }
+
+    // Esta ocupada y ES la mesa del Cliente
+    if (m.idCliente !== 0 && m.idCliente === cliente.id) {
+      this.router.navigateByUrl(`/detalle-mesa-qr/${idMesa}`);
+      return;
+    }
+
+    // Esta ocupada y NO ES la mesa del Cliente
+    if (m.idCliente !== 0 && m.idCliente !== cliente.id) {
+      this.router.navigateByUrl(`/estado-mesa-qr/${idMesa}`);
+      return;
+    }
+
+    // Esta libre
+    if (m.idCliente === 0) {
+      this.router.navigateByUrl(`/asignar-cliente-mesa-qr/${idMesa}`);
+      return;
+    }
+
+    /* No esta en los 13 Puntos
+      // SI tiene reserva
+      if (m.idReserva !== 0) {
+        if (m.idCliente === cliente.id) {
+          this.router.navigateByUrl(`/asignar-cliente-mesa-qr/:${idMesa}`);
+          return;
+        }
+  
+        if (m.idCliente !== cliente.id) {
+          this.router.navigateByUrl(`/estado-mesa-qr/:${idMesa}`);
+          return;
+        }
+      }
+  
+      // NO tiene reserva
+      if (m.idCliente === 0 && m.idReserva === 0) {
+        this.router.navigateByUrl(`/asignar-cliente-mesa-qr/:${idMesa}`);
+        return;
+      }
+      */
+  }
+  /* Solo usar al Escanear QrMesa */
+  public async accesoDeEmpleadoPorQrMesa(idMesa: number, empleado: Empleado) {
+    const m = await this.traerPorId(idMesa);
+
+    if (m === undefined) {
+      throw new Error(
+        'La mesa no existe en la base de datos o hay lentitud en la conexión'
+      );
+    }
+
+    this.router.navigateByUrl(`/estado-mesa-qr/:${idMesa}`);
   }
 
   public traerTodosObservable() {

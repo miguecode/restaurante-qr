@@ -173,7 +173,21 @@ export class HomeComponent implements OnInit {
 
   async escanearQrMesa() {
     const dataQr = await this.barcodeScanningService.escanearQr();
-    Swalert.toastSuccess(TraductorQr.mesa(dataQr));
+    const usuario = await this.usuarioService.getUsuarioBd();
+    const source = TraductorQr.mesa(dataQr);
+
+    try {
+      await Swalert.toastSuccess(source.toString());
+      if (source !== false) {
+        if (usuario instanceof Cliente) {
+          await this.mesaService.accesoDeClientePorQrMesa(source, usuario);
+        } else if (usuario instanceof Empleado) {
+          await this.mesaService.accesoDeEmpleadoPorQrMesa(source, usuario);
+        }
+      }
+    } catch (e: any) {
+      Swalert.toastError(e.message);
+    }
   }
   async escanearQrIngresoLocal() {
     const dataQr = await this.barcodeScanningService.escanearQr();
