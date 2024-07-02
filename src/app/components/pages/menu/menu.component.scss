@@ -52,6 +52,7 @@ ion-content {
   padding: 12px;
   margin-bottom: 15px;
   height: 225px;
+  transition: 0.3s !important;
 }
 
 .card button {
@@ -68,6 +69,8 @@ ion-content {
   border-radius: 7px;
   right: 12px;
   bottom: 12px;
+  width: 120px !important;
+  font-weight: bold;
 }
 
 // #region span
@@ -130,3 +133,20 @@ span {
 }
 // #endregion Footer
 
+// #region Card seleccionada
+
+.card-seleccionada {
+  background-color: #ffffffcc;
+  color: #000;
+
+  .descripcion {
+    color: #232323;
+  }
+
+  button {
+    background: #860106;
+    color: #fff;
+    width: 105px;
+  }
+}
+// #endregion Card seleccionada
