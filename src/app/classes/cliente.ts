@@ -5,6 +5,7 @@ export class Cliente extends Usuario {
   estadoListaEspera: boolean;
   fechaListaEspera: Date;
   // La idea seria que cuando se escanea el qr de lista de espera, se cambie el estadoListaEspera a true, y se inicialize la fecha del momento
+  idMesa: number;
 
   constructor() {
     super();
@@ -12,6 +13,7 @@ export class Cliente extends Usuario {
     this.rol = 'cliente';
     this.estadoListaEspera = false;
     this.fechaListaEspera = new Date();
+    this.idMesa = 0;
   }
 
   setId(id: number) {
@@ -32,6 +34,7 @@ export class Cliente extends Usuario {
       estadoListaEspera: cliente.estadoListaEspera.toString(),
       fechaListaEspera: cliente.fechaListaEspera.toISOString(),
       token: cliente.token,
+      idMesa: cliente.idMesa,
     };
   }
   static parseDoc(doc: any) {
@@ -49,6 +52,7 @@ export class Cliente extends Usuario {
     cliente.estadoListaEspera = JSON.parse(doc.estadoListaEspera);
     cliente.fechaListaEspera = new Date(doc.fechaListaEspera);
     cliente.token = doc.token;
+    cliente.idMesa = doc.idMesa;
     return cliente;
   }
   static parseDocArray(doc: any) {
@@ -65,6 +69,7 @@ export class Cliente extends Usuario {
     cliente.estadoListaEspera = JSON.parse(doc['estadoListaEspera']);
     cliente.fechaListaEspera = new Date(doc['fechaListaEspera']);
     cliente.token = doc['token'];
+    cliente.idMesa = doc['idMesa'];
     return cliente;
   }
 }
