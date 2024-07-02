@@ -1,4 +1,5 @@
 import { Usuario } from './padres/usuario';
+import { Estado } from './utils/enumerado';
 
 export class Cliente extends Usuario {
   estado: Estado;
@@ -72,10 +73,4 @@ export class Cliente extends Usuario {
     cliente.idMesa = doc['idMesa'];
     return cliente;
   }
-}
-
-export enum Estado {
-  pendiente = 'pendiente',
-  aceptado = 'aceptado',
-  rechazado = 'rechazado',
 }

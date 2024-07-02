@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Empleado } from '../classes/empleado';
 import { Supervisor } from '../classes/supervisor';
 import { Duenio } from '../classes/duenio';
-import { Cliente, Estado } from '../classes/cliente';
+import { Cliente } from '../classes/cliente';
 import { DuenioService } from './duenio.service';
 import { SupervisorService } from './supervisor.service';
 import { AuthService } from './firebase/auth.service';
@@ -10,6 +10,7 @@ import { EmpleadoService } from './empleado.service';
 import { ClienteService } from './cliente.service';
 import { Usuario } from '../classes/padres/usuario';
 import { PushNotificationService } from './utils/push-notification.service';
+import { Estado } from '../classes/utils/enumerado';
 
 @Injectable({
   providedIn: 'root',

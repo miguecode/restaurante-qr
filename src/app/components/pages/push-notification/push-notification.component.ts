@@ -8,7 +8,7 @@ import { ApiService } from 'src/app/services/api/api.service';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
 import { IonContent } from '@ionic/angular/standalone';
-import { Estado } from 'src/app/classes/cliente';
+import { Estado } from 'src/app/classes/utils/enumerado';
 
 @Component({
   selector: 'app-push-notification',
@@ -22,15 +22,13 @@ export class PushNotificationComponent {
   responseValue: any = 'Esperando respuesta del API';
   nombreValue: string = '';
   correoValue: string = '';
-  estadoA : Estado = Estado.aceptado;
-  estadoR : Estado = Estado.rechazado;
+  estadoA: Estado = Estado.aceptado;
+  estadoR: Estado = Estado.rechazado;
   constructor(
     private apiService: ApiService,
     private usuarioService: UsuarioService,
     private pushNotificationService: PushNotificationService
   ) {}
-
-  
 
   public async notificarUnUsuario() {
     try {

@@ -12,13 +12,14 @@ import {
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { IonButton, IonIcon, IonContent } from '@ionic/angular/standalone';
-import { Cliente, Estado } from 'src/app/classes/cliente';
+import { Cliente } from 'src/app/classes/cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CommonModule, JsonPipe } from '@angular/common';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 import { ApiService } from 'src/app/services/api/api.service';
 import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
+import { Estado } from 'src/app/classes/utils/enumerado';
 
 @Component({
   selector: 'app-formulario-cliente',

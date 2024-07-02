@@ -134,10 +134,10 @@
       </div>
 
       <div *ngIf="usuarioEsCliente && usuarioEstaEnListaEspera">
-        <div class="reloj">
-          <img src="../../../../assets/images/reloj.gif" /> <br />
-          <h2>En lista de espera...</h2>
-        </div>
+        <button class="btn btn-primary reloj" [disabled]="true">
+          <img src="../../../../assets/images/reloj.gif" />
+          <label>En lista de espera...</label>
+        </button>
       </div>
       <!-- #endregion Accesos De Cliente -->
 

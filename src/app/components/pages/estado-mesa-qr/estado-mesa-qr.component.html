@@ -1,3 +1,39 @@
-<p>
-  estado-mesa-qr works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <!-- #region Confirmacion -->
+    <div *ngIf="mesa !== undefined">
+      <div class="card card-mesa">
+        <label style="text-align: center">
+          <span class="id-span">{{ mesa.id }} </span>
+        </label>
+        <label>
+          <span>CANT-CLI: </span>
+          {{ mesa.cantidadClientes }}
+        </label>
+        <label>
+          <span>CANT-MÁX: </span>
+          {{ mesa.cantidadMaxima }}
+        </label>
+        <label>
+          <span>TIPO: </span>
+          {{ (mesa.tipo === "estandar" ? "estándar" : mesa.tipo) | capitalize }}
+        </label>
+        <img class="mesa-qr" [src]="mesa.qr" />
+        <img class="mesa-foto" [src]="mesa.foto" />
+      </div>
+    </div>
+    <!-- #endregion Confirmacion -->
+  </div>
+</ion-content>
