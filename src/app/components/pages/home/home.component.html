@@ -86,11 +86,18 @@
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <div *ngIf="usuarioEsCliente && !usuarioEstaEnListaEspera">
         <button class="btn btn-primary" (click)="escanearQrIngresoLocal()">
           <label>Escanear código QR</label>
           <label>de ingreso al local</label>
         </button>
+      </div>
+
+      <div *ngIf="usuarioEstaEnListaEspera">
+        <div class="reloj">
+          <img src="../../../../assets/images/reloj.gif" /> <br />
+          <h2>En lista de espera...</h2>
+        </div>
       </div>
       <!-- #endregion Accesos De Cliente -->
 
