@@ -11,13 +11,14 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { Producto } from 'src/app/classes/producto';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { ProductoService } from 'src/app/services/producto.service';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-formulario-producto',
   templateUrl: './formulario-producto.component.html',
   styleUrls: ['./formulario-producto.component.scss'],
   standalone: true,
-  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor],
+  imports: [FormsModule, ReactiveFormsModule, NgIf, NgFor, CapitalizePipe],
 })
 export class FormularioProductoComponent implements OnInit {
   @Input() modoAlta: boolean = false;
@@ -33,6 +34,7 @@ export class FormularioProductoComponent implements OnInit {
   fotoUnoBlob: any;
   fotoDosBlob: any;
   fotoTresBlob: any;
+  tiposProductos: string[] = [];
 
   get id() {
     if (this.modoModificar) {
@@ -96,6 +98,14 @@ export class FormularioProductoComponent implements OnInit {
     }
     return this.formBaja.get('fotoTres') as FormControl;
   }
+  get tipo() {
+    if (this.modoAlta) {
+      return this.formAlta.get('tipo') as FormControl;
+    } else if (this.modoModificar) {
+      return this.formModificar.get('tipo') as FormControl;
+    }
+    return this.formBaja.get('tipo') as FormControl;
+  }
 
   constructor(private productoService: ProductoService) {}
 
@@ -117,6 +127,7 @@ export class FormularioProductoComponent implements OnInit {
         fotoUno: new FormControl(undefined, [Validators.required]),
         fotoDos: new FormControl(undefined, [Validators.required]),
         fotoTres: new FormControl(undefined, [Validators.required]),
+        tipo: new FormControl('', [Validators.required]),
       });
     } else if (this.modoModificar) {
       this.formModificar = new FormGroup({
@@ -136,6 +147,7 @@ export class FormularioProductoComponent implements OnInit {
         fotoUno: new FormControl(undefined),
         fotoDos: new FormControl(undefined),
         fotoTres: new FormControl(undefined),
+        tipo: new FormControl('', [Validators.required]),
       });
 
       if (this.producto !== undefined) {
@@ -155,6 +167,7 @@ export class FormularioProductoComponent implements OnInit {
         fotoUno: new FormControl(undefined, [Validators.required]),
         fotoDos: new FormControl(undefined, [Validators.required]),
         fotoTres: new FormControl(undefined, [Validators.required]),
+        tipo: new FormControl('', [Validators.required]),
       });
 
       if (this.producto !== undefined) {
@@ -163,6 +176,7 @@ export class FormularioProductoComponent implements OnInit {
         this.descripcion.setValue(this.producto.descripcion);
         this.tiempo.setValue(this.producto.tiempo);
         this.precio.setValue(this.producto.precio);
+        this.tipo.setValue(this.producto.tipo);
       }
     }
   }
@@ -182,6 +196,7 @@ export class FormularioProductoComponent implements OnInit {
     producto.setFileUno(this.fotoUno.value);
     producto.setFileDos(this.fotoDos.value);
     producto.setFileTres(this.fotoTres.value);
+    producto.setTipo(this.tipo.value);
     if ((this.modoModificar || this.modoBaja) && this.producto !== undefined) {
       producto.setUrlFotoUno(this.producto.fotoUno);
       producto.setUrlFotoDos(this.producto.fotoDos);
@@ -209,6 +224,7 @@ export class FormularioProductoComponent implements OnInit {
   }
 
   public ngOnInit() {
+    this.tiposProductos = Producto.TIPOS;
     this.crearFormGroup();
   }
 
@@ -282,6 +298,7 @@ export class FormularioProductoComponent implements OnInit {
     this.descripcion.setValue('');
     this.tiempo.setValue(0);
     this.precio.setValue(0);
+    this.tipo.setValue('');
     this.fotoUno.setValue(undefined);
     this.fotoDos.setValue(undefined);
     this.fotoTres.setValue(undefined);

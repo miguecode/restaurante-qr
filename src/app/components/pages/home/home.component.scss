@@ -122,3 +122,27 @@ button label {
   }
 }
 // #endregion Loader
+
+// #region reloj
+.reloj img {
+  height: 50px;
+  width: 50px;
+  margin-top: -15px;
+  margin-bottom: 13px;
+}
+/*
+  .reloj {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    text-align: center;
+    background: #fff;
+    padding: 5px;
+    border-radius: 10px;
+    margin: 10px;
+    border: 15px solid #421213;
+    color: #421213;
+  }
+    */
+// #endregion reloj

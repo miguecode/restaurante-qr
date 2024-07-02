@@ -29,6 +29,9 @@ import { SupervisorService } from 'src/app/services/supervisor.service';
 import { filter, firstValueFrom, isObservable } from 'rxjs';
 import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
+import { ApiService } from 'src/app/services/api/api.service';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-home',
@@ -50,12 +53,14 @@ import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
     IonContent,
     CommonModule,
     SeccionAbmsComponent,
+    MenuComponent,
   ],
 })
 export class HomeComponent implements OnInit {
-  usuario: Usuario | undefined = undefined;
+  usuario: Usuario | Cliente | undefined = undefined;
   mostrarSpinner: boolean = false;
   mostrarAbms: boolean = false;
+  mostrarMenu: boolean = false;
 
   listaDuenios: Duenio[] = [];
   listaSupervisores: Supervisor[] = [];
@@ -70,6 +75,9 @@ export class HomeComponent implements OnInit {
   usuarioEsCliente: boolean = false;
   usuarioTipoEmpleado: string = '';
 
+  usuarioEstaEnListaEspera: boolean = false;
+  usuarioTieneMesa: boolean = false;
+
   constructor(
     private usuarioService: UsuarioService,
     private duenioService: DuenioService,
@@ -79,7 +87,8 @@ export class HomeComponent implements OnInit {
     private mesaService: MesaService,
     private productoService: ProductoService,
     private barcodeScanningService: BarcodeScanningService,
-    private router: Router
+    private router: Router,
+    private apiServ: ApiService
   ) {
     this.duenioService.traerTodosObservable().subscribe((l) => {
       this.listaDuenios = l;
@@ -116,6 +125,13 @@ export class HomeComponent implements OnInit {
 
     if (this.usuario instanceof Empleado) {
       this.usuarioTipoEmpleado = this.usuario.tipo;
+    }
+
+    if (this.usuario instanceof Cliente) {
+      this.usuarioEstaEnListaEspera = this.usuario.estadoListaEspera;
+      this.usuario.idMesa !== 0
+        ? (this.usuarioTieneMesa = true)
+        : (this.usuarioTieneMesa = false);
     }
 
     console.log('listaDuenios', this.listaDuenios);
@@ -164,10 +180,43 @@ export class HomeComponent implements OnInit {
 
   async escanearQrMesa() {
     const dataQr = await this.barcodeScanningService.escanearQr();
-    Swalert.toastSuccess(TraductorQr.mesa(dataQr));
+    const usuario = await this.usuarioService.getUsuarioBd();
+    const source = TraductorQr.mesa(dataQr);
+
+    try {
+      await Swalert.toastSuccess(source.toString());
+      if (source !== false) {
+        if (usuario instanceof Cliente) {
+          await this.mesaService.accesoDeClientePorQrMesa(source, usuario);
+        } else if (usuario instanceof Empleado) {
+          await this.mesaService.accesoDeEmpleadoPorQrMesa(source, usuario);
+        }
+      }
+    } catch (e: any) {
+      Swalert.toastError(e.message);
+    }
   }
   async escanearQrIngresoLocal() {
     const dataQr = await this.barcodeScanningService.escanearQr();
-    Swalert.toastSuccess(TraductorQr.ingresoLocal(dataQr).toString());
+    // Swalert.toastSuccess(TraductorQr.ingresoLocal(dataQr).toString());
+
+    if (
+      TraductorQr.ingresoLocal(dataQr) &&
+      this.usuario !== undefined &&
+      this.usuario instanceof Cliente
+    ) {
+      await this.apiServ.notificarEmpleados(
+        Empleado.T_METRE,
+        'Un nuevo cliente se anotó en la lista de espera'
+      );
+      this.usuario.estadoListaEspera = true;
+      this.usuario.fechaListaEspera = new Date();
+      await this.clienteSerivice.modificarDoc(this.usuario);
+      await Swalert.toastSuccess(
+        'Te registraste en la Lista de Espera correctamente'
+      );
+    } else {
+      await Swalert.toastError('El QR escaneado no es correcto');
+    }
   }
 }

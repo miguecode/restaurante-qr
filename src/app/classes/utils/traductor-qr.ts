@@ -24,17 +24,17 @@ export class TraductorQr {
   static producto(dataQr: string) {
     const data = TraductorQr.entidadRestaurante(dataQr);
     if (data.entidad === 'producto') {
-      return data.id;
+      return Number(data.id);
     }
-    return '';
+    return false;
   }
 
   static mesa(dataQr: string) {
     const data = TraductorQr.entidadRestaurante(dataQr);
     if (data.entidad === 'mesa') {
-      return data.id;
+      return Number(data.id);
     }
-    return '';
+    return false;
   }
 
   static ingresoLocal(dataQr: string) {

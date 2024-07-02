@@ -6,6 +6,7 @@ export class Producto {
   public descripcion: string;
   public tiempo: number;
   public precio: number;
+  public tipo: string;
   public fotoUno: string;
   public fotoDos: string;
   public fotoTres: string;
@@ -14,12 +15,18 @@ export class Producto {
   public fileTres: any;
   public qr: string;
 
+  public static TIPOS = ['bebida', 'comida', 'postre'];
+  public static T_BEBIDA: string = Producto.TIPOS[0];
+  public static T_COMIDA: string = Producto.TIPOS[1];
+  public static T_POSTRE: string = Producto.TIPOS[2];
+
   public constructor() {
     this.id = 0;
     this.nombre = '';
     this.descripcion = '';
     this.tiempo = 0;
     this.precio = 0;
+    this.tipo = '';
     this.fotoUno = '';
     this.fotoDos = '';
     this.fotoTres = '';
@@ -36,6 +43,7 @@ export class Producto {
       descripcion: producto.descripcion,
       tiempo: producto.tiempo.toString(),
       precio: producto.precio.toString(),
+      tipo: producto.tipo,
       fotoUno: producto.fotoUno,
       fotoDos: producto.fotoDos,
       fotoTres: producto.fotoTres,
@@ -50,6 +58,7 @@ export class Producto {
     producto.descripcion = doc.descripcion;
     producto.tiempo = Number(doc.tiempo);
     producto.precio = Number(doc.precio);
+    producto.tipo = doc.tipo;
     producto.fotoUno = doc.fotoUno;
     producto.fotoDos = doc.fotoDos;
     producto.fotoTres = doc.fotoTres;
@@ -64,6 +73,7 @@ export class Producto {
     producto.descripcion = doc['descripcion'];
     producto.tiempo = Number(doc['tiempo']);
     producto.precio = Number(doc['precio']);
+    producto.tipo = doc['tipo'];
     producto.fotoUno = doc['fotoUno'];
     producto.fotoDos = doc['fotoDos'];
     producto.fotoTres = doc['fotoTres'];
@@ -89,6 +99,10 @@ export class Producto {
 
   public setPrecio(precio: number) {
     this.precio = precio;
+  }
+
+  public setTipo(tipo: string) {
+    this.tipo = tipo;
   }
 
   public setFileUno(file: any) {

@@ -13,6 +13,13 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
+    path: 'test-pedido',
+    loadComponent: () =>
+      import('./components/pages/test-pedido/test-pedido.component').then(
+        (m) => m.TestPedidoComponent
+      ),
+  },
+  {
     path: 'splash',
     loadComponent: () =>
       import('./components/pages/splash/splash.component').then(
@@ -115,6 +122,38 @@ export const routes: Routes = [
       import(
         './components/pages/listado-clientes-registro/listado-clientes-registro.component'
       ).then((m) => m.ListadoClientesRegistroComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'asignar-cliente-mesa-empleado',
+    loadComponent: () =>
+      import(
+        './components/pages/asignar-cliente-mesa-empleado/asignar-cliente-mesa-empleado.component'
+      ).then((m) => m.AsignarClienteMesaComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'asignar-cliente-mesa-qr/:idMesa',
+    loadComponent: () =>
+      import(
+        './components/pages/asignar-mesa-cliente-qr/asignar-mesa-cliente-qr.component'
+      ).then((m) => m.AsignarMesaClienteQrComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'detalle-mesa-qr/:idMesa',
+    loadComponent: () =>
+      import(
+        './components/pages/detalle-mesa-qr/detalle-mesa-qr.component'
+      ).then((m) => m.DetalleMesaQrComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'estado-mesa-qr/:idMesa',
+    loadComponent: () =>
+      import('./components/pages/estado-mesa-qr/estado-mesa-qr.component').then(
+        (m) => m.EstadoMesaQrComponent
+      ),
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {

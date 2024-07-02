@@ -54,6 +54,18 @@
       </div>
       <!-- #endregion Precio -->
 
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo</label>
+        <select class="form-control" formControlName="tipo">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let item of tiposProductos" [value]="item">
+            {{ item | capitalize }}
+          </option>
+        </select>
+      </div>
+      <!-- #endregion Tipo -->
+
       <!-- #region Fotos -->
       <div class="form-group control-fotos">
         <label>Fotos</label>
@@ -168,6 +180,18 @@
         } }
       </div>
       <!-- #endregion Precio -->
+
+      <!-- #region Tipo -->
+      <div class="form-group control-tipo">
+        <label>Tipo</label>
+        <select class="form-control" formControlName="tipo">
+          <option value="">Seleccionar</option>
+          <option *ngFor="let item of tiposProductos" [value]="item">
+            {{ item | capitalize }}
+          </option>
+        </select>
+      </div>
+      <!-- #endregion Tipo -->
 
       <!-- #region Fotos -->
       <div class="form-group control-fotos">
