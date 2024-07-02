@@ -29,6 +29,8 @@ import { SupervisorService } from 'src/app/services/supervisor.service';
 import { filter, firstValueFrom, isObservable } from 'rxjs';
 import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-home',
@@ -53,7 +55,7 @@ import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
   ],
 })
 export class HomeComponent implements OnInit {
-  usuario: Usuario | undefined = undefined;
+  usuario: Usuario | Cliente | undefined = undefined;
   mostrarSpinner: boolean = false;
   mostrarAbms: boolean = false;
 
@@ -79,7 +81,8 @@ export class HomeComponent implements OnInit {
     private mesaService: MesaService,
     private productoService: ProductoService,
     private barcodeScanningService: BarcodeScanningService,
-    private router: Router
+    private router: Router,
+    private apiServ: ApiService
   ) {
     this.duenioService.traerTodosObservable().subscribe((l) => {
       this.listaDuenios = l;
@@ -168,6 +171,25 @@ export class HomeComponent implements OnInit {
   }
   async escanearQrIngresoLocal() {
     const dataQr = await this.barcodeScanningService.escanearQr();
-    Swalert.toastSuccess(TraductorQr.ingresoLocal(dataQr).toString());
+    // Swalert.toastSuccess(TraductorQr.ingresoLocal(dataQr).toString());
+
+    if (
+      TraductorQr.ingresoLocal(dataQr) &&
+      this.usuario !== undefined &&
+      this.usuario instanceof Cliente
+    ) {
+      await this.apiServ.notificarEmpleados(
+        Empleado.T_METRE,
+        'Un nuevo cliente se anotó en la lista de espera'
+      );
+      this.usuario.estadoListaEspera = true;
+      this.usuario.fechaListaEspera = new Date();
+      await this.clienteSerivice.modificarDoc(this.usuario);
+      await Swalert.toastSuccess(
+        'Te registraste en la Lista de Espera correctamente'
+      );
+    } else {
+      await Swalert.toastError('El QR escaneado no es correcto');
+    }
   }
 }
