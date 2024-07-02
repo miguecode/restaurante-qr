@@ -1,0 +1,57 @@
+<ion-header [translucent]="true">
+  <ion-content [fullscreen]="true">
+    <div class="page-container">
+      <div *ngIf="!esperandoConfirmacion">
+        <!-- #region Listado -->
+        <div class="cartas">
+          <div *ngFor="let item of lista">
+            <div class="card">
+              <div class="contenedor-flex">
+                <div class="fotos-card">
+                  <img class="img-foto-1" [src]="item.fotoUno" />
+                  <img class="img-foto-2" [src]="item.fotoDos" />
+                  <img class="img-foto-3" [src]="item.fotoTres" />
+                </div>
+              </div>
+
+              <label
+                ><span class="nombre">{{ item.nombre }}</span></label
+              >
+              <label
+                ><span class="descripcion">{{ item.descripcion }}</span></label
+              >
+              <label
+                ><span class="precio">${{ item.precio }}</span></label
+              >
+              <label
+                ><span class="descripcion"
+                  >{{ item.tiempo }} min. aprox.</span
+                ></label
+              >
+              <button
+                class="btn btn-secondary boton-agregar"
+                (click)="toggleAgregar(item)"
+              >
+                {{ productoEstaSeleccionado(item) ? "QUITAR" : "AGREGAR" }}
+              </button>
+            </div>
+          </div>
+        </div>
+        <!-- #endregion Listado -->
+      </div>
+    </div>
+  </ion-content>
+
+  <div class="footer">
+    <div *ngIf="productosSeleccionados.length > 0" class="info-pedido">
+      <label class="importe">Importe: </label>
+      <label>Demora: </label>
+    </div>
+    <button
+      class="btn-confirmar"
+      [disabled]="productosSeleccionados.length === 0"
+    >
+      Confirmar Pedido
+    </button>
+  </div>
+</ion-header>

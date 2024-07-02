@@ -2,17 +2,33 @@
   <ion-toolbar>
     <div class="header-container">
       <div class="cerrar-sesion">
-        <button class="btn btn-primary" (click)="cerrarSesion()">
+        <button
+          *ngIf="!mostrarMenu"
+          class="btn btn-primary"
+          (click)="cerrarSesion()"
+        >
           <i class="bi bi-box-arrow-left" style="font-size: 30px"></i>
+        </button>
+        <button
+          *ngIf="mostrarMenu"
+          class="btn btn-primary"
+          (click)="mostrarMenu = false"
+        >
+          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
         </button>
       </div>
 
       <div class="titulo">
-        <label>La Comanda</label>
+        <label *ngIf="!mostrarMenu">La Comanda</label>
+        <label *ngIf="mostrarMenu">Menú</label>
       </div>
 
       <div class="test-push">
-        <button class="btn btn-success" routerLink="/push-notification">
+        <button
+          *ngIf="!mostrarMenu"
+          class="btn btn-success"
+          routerLink="/push-notification"
+        >
           Test PUSH
         </button>
       </div>
@@ -26,7 +42,15 @@
       <span class="loader"></span>
     </div>
 
-    <div class="router-container">
+    <div *ngIf="mostrarMenu">
+      <app-menu
+        [usuario]="usuario"
+        [lista]="listaProductos"
+        [mostrarSpinner]="mostrarSpinner"
+      ></app-menu>
+    </div>
+
+    <div *ngIf="!mostrarMenu" class="router-container">
       <!-- #region Accesos de Dueño -->
       <div *ngIf="!mostrarAbms && usuarioEsEsDuenio">
         <button class="btn btn-primary" routerLink="/seccion-abms">
@@ -74,7 +98,7 @@
 
       <!-- #region Accesos De Cliente -->
       <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
-        <button class="btn btn-primary" routerLink="/seccion-menu">
+        <button class="btn btn-primary" (click)="mostrarMenu = true">
           <label>Menú</label>
         </button>
       </div>
@@ -96,11 +120,7 @@
         </button>
       </div>
 
-      <div
-        *ngIf="
-          usuarioEsCliente && usuarioEstaEnListaEspera && !usuarioTieneMesa
-        "
-      >
+      <div *ngIf="usuarioEsCliente && usuarioEstaEnListaEspera">
         <button class="btn btn-primary" (click)="escanearQrMesa()">
           <label>Escanear código QR</label>
           <label>de Mesa</label>

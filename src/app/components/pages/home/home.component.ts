@@ -31,6 +31,7 @@ import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
 import { ApiService } from 'src/app/services/api/api.service';
+import { MenuComponent } from '../menu/menu.component';
 
 @Component({
   selector: 'app-home',
@@ -52,12 +53,14 @@ import { ApiService } from 'src/app/services/api/api.service';
     IonContent,
     CommonModule,
     SeccionAbmsComponent,
+    MenuComponent,
   ],
 })
 export class HomeComponent implements OnInit {
   usuario: Usuario | Cliente | undefined = undefined;
   mostrarSpinner: boolean = false;
   mostrarAbms: boolean = false;
+  mostrarMenu: boolean = false;
 
   listaDuenios: Duenio[] = [];
   listaSupervisores: Supervisor[] = [];
