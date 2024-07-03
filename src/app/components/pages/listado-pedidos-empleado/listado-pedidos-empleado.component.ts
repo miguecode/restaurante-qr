@@ -1,7 +1,12 @@
 import { CommonModule, DatePipe } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { IonHeader, IonToolbar, IonContent, IonTitle } from "@ionic/angular/standalone";
+import {
+  IonHeader,
+  IonToolbar,
+  IonContent,
+  IonTitle,
+} from '@ionic/angular/standalone';
 import { Empleado } from 'src/app/classes/empleado';
 import { Usuario } from 'src/app/classes/padres/usuario';
 import { Pedido } from 'src/app/classes/pedido';
@@ -15,46 +20,66 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './listado-pedidos-empleado.component.html',
   styleUrls: ['./listado-pedidos-empleado.component.scss'],
   standalone: true,
-  imports: [IonTitle, IonContent, IonToolbar, IonHeader, CommonModule, DatePipe, RouterLink]
+  imports: [
+    IonTitle,
+    IonContent,
+    IonToolbar,
+    IonHeader,
+    CommonModule,
+    DatePipe,
+    RouterLink,
+  ],
 })
-export class ListadoPedidosEmpleadoComponent  implements OnInit {
-
+export class ListadoPedidosEmpleadoComponent implements OnInit {
   lista: any[] = [];
   public listaPedidos: Pedido[] = [];
-  
 
-  constructor(private pedidoService : PedidoService, private usuarioService : UsuarioService, private pushService: ApiService) {
-    
-   }
+  constructor(
+    private pedidoService: PedidoService,
+    private usuarioService: UsuarioService,
+    private pushService: ApiService
+  ) {}
 
   async ngOnInit() {
     const usuario = await this.usuarioService.getUsuarioBd();
     console.log(usuario);
-    if(usuario instanceof Empleado){
+    if (usuario instanceof Empleado) {
       console.log(usuario.tipo);
-      if(usuario.tipo === Empleado.T_COCINERO){
+      if (usuario.tipo === Empleado.T_COCINERO) {
         this.pedidoService.traerTodosObservable().subscribe((l) => {
-          const fa = l.filter((p) => p.confirmadoMozo === true && p.estado === Estado.pedidoElaborando && (p.tipo === "cocina" || p.tipo === "postre"));
-          fa.sort((a,b) => a.fecha.getTime() - b.fecha.getTime())
+          const fa = l.filter(
+            (p) =>
+              p.confirmadoMozo === true &&
+              p.estado === Estado.pedidoElaborando &&
+              (p.tipo === 'comida' || p.tipo === 'postre')
+          );
+          fa.sort((a, b) => a.fecha.getTime() - b.fecha.getTime());
           this.listaPedidos = fa;
           console.log(this.listaPedidos);
         });
-      } else{
-        if(usuario.tipo == Empleado.T_BARTENDER){
+      } else {
+        if (usuario.tipo == Empleado.T_BARTENDER) {
           this.pedidoService.traerTodosObservable().subscribe((l) => {
-            const fa = l.filter((p) => p.confirmadoMozo === true && p.estado === Estado.pedidoElaborando && p.tipo === "bebida");
-            fa.sort((a,b) => a.fecha.getTime() - b.fecha.getTime())
+            const fa = l.filter(
+              (p) =>
+                p.confirmadoMozo === true &&
+                p.estado === Estado.pedidoElaborando &&
+                p.tipo === 'bebida'
+            );
+            fa.sort((a, b) => a.fecha.getTime() - b.fecha.getTime());
             this.listaPedidos = fa;
           });
         }
       }
     }
-
   }
 
-  async realizar(pedido : Pedido){
+  async realizar(pedido: Pedido) {
     pedido.estado = Estado.pedidoTerminado;
-    await this.pushService.notificarEmpleados(Empleado.T_MOZO, `Notificando a todos los mozos`)
+    await this.pushService.notificarEmpleados(
+      Empleado.T_MOZO,
+      `Notificando a todos los mozos`
+    );
     await this.pedidoService.modificar(pedido);
   }
 
@@ -84,9 +109,6 @@ export class ListadoPedidosEmpleadoComponent  implements OnInit {
     // const anio = fecha.getFullYear();
     const hora = fecha.getHours().toString().padStart(2, '0');
     const minuto = fecha.getMinutes().toString().padStart(2, '0');
-    return `${this.getNombreDia(
-      fecha
-    )} ${hora}:${minuto}`;
+    return `${this.getNombreDia(fecha)} ${hora}:${minuto}`;
   }
-
 }
