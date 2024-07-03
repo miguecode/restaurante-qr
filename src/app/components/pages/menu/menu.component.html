@@ -1,56 +1,74 @@
-<ion-content [fullscreen]="true">
-  <div class="page-container">
-    <div *ngIf="!esperandoConfirmacion">
-      <!-- #region Listado -->
-      <div class="cartas">
-        <div *ngFor="let item of lista">
-          <div
-            class="card"
-            [ngClass]="{
-              'card-seleccionada': productoEstaSeleccionado(item)
-            }"
-          >
-            <div class="contenedor-flex">
-              <div class="fotos-card">
-                <img class="img-foto-1" [src]="item.fotoUno" />
-                <img class="img-foto-2" [src]="item.fotoDos" />
-                <img class="img-foto-3" [src]="item.fotoTres" />
-              </div>
-            </div>
+<div class="page-container">
+  <div *ngIf="mostrarSpinner" class="loader-container">
+    <span class="loader"></span>
+  </div>
 
-            <label
-              ><span class="nombre">{{ item.nombre }}</span></label
-            >
-            <label
-              ><span class="descripcion">{{ item.descripcion }}</span></label
-            >
-            <label
-              ><span class="precio">${{ item.precio }}</span></label
-            >
-            <label
-              ><span class="descripcion">{{ item.tiempo }} min.</span></label
-            >
-            <button
-              class="btn btn-secondary boton-agregar"
-              (click)="toggleAgregar(item)"
-            >
-              {{ productoEstaSeleccionado(item) ? "QUITAR" : "AGREGAR" }}
-            </button>
+  <div *ngIf="!esperandoConfirmacion">
+    <!-- #region Listado -->
+    <div class="cartas">
+      <div *ngFor="let item of lista">
+        <div
+          class="card"
+          [ngClass]="{
+            'card-seleccionada': productoEstaSeleccionado(item)
+          }"
+        >
+          <div class="contenedor-flex">
+            <div class="fotos-card">
+              <img class="img-foto-1" [src]="item.fotoUno" />
+              <img class="img-foto-2" [src]="item.fotoDos" />
+              <img class="img-foto-3" [src]="item.fotoTres" />
+            </div>
           </div>
+
+          <label
+            ><span class="nombre">{{ item.nombre }}</span></label
+          >
+          <label
+            ><span class="descripcion">{{ item.descripcion }}</span></label
+          >
+          <label
+            ><span class="precio">${{ item.precio }}</span></label
+          >
+          <label
+            ><span class="descripcion"
+              >{{ item.tiempo }} min. aprox.</span
+            ></label
+          >
+          <button
+            class="btn btn-secondary boton-agregar"
+            (click)="toggleAgregar(item)"
+          >
+            {{ productoEstaSeleccionado(item) ? "QUITAR" : "AGREGAR" }}
+          </button>
         </div>
       </div>
-      <!-- #endregion Listado -->
+      <br /><br />
+      @if (productosSeleccionados.length > 0) { <br />
+      <br />
+      }
+    </div>
+    <!-- #endregion Listado -->
+  </div>
+
+  <div class="container">
+    <div *ngIf="esperandoConfirmacion">
+      <button class="btn btn-primary reloj">
+        <img src="../../../../assets/images/reloj.gif" />
+        <label>Esperando confirmación...</label>
+      </button>
     </div>
   </div>
-</ion-content>
+</div>
 
-<div class="footer">
+<div class="footer" *ngIf="!esperandoConfirmacion">
   <div *ngIf="productosSeleccionados.length > 0" class="info-pedido">
     <label class="importe">Importe: ${{ importe }}</label>
-    <label>Demora: {{ tiempo }} min. aprox.</label>
+    <label>Demora: {{ tiempo }} min.</label>
   </div>
   <button
     class="btn-confirmar"
+    (click)="confirmarPedido()"
     [disabled]="productosSeleccionados.length === 0"
   >
     Confirmar Pedido
