@@ -93,13 +93,13 @@ export class ApiService {
     });
   }
   public async notificarEmpleados(tipoEmpleado: string, mensaje: string) {
-    const usuario = await this.usuarioService.getUsuarioBd();
+    // const usuario = await this.usuarioService.getUsuarioBd();
     const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-empleados`;
     const HOSTING = `${this.comandaApiWeb}/notificar-empleados`;
     return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
-        title: `Mensaje de ${usuario.correo}`,
+        title: `Mensaje del sistema`,
         body: mensaje,
         employeeType: tipoEmpleado,
       }),
