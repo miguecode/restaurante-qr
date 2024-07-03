@@ -16,6 +16,11 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Cliente } from 'src/app/classes/cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { firstValueFrom, isObservable } from 'rxjs';
+import { Empleado } from 'src/app/classes/empleado';
+import { UsuarioService } from 'src/app/services/usuario.service';
+import { Usuario } from 'src/app/classes/padres/usuario';
+import { Duenio } from 'src/app/classes/duenio';
+import { Supervisor } from 'src/app/classes/supervisor';
 
 @Component({
   selector: 'app-chat-mozo',
@@ -45,10 +50,12 @@ export class ChatMozoComponent implements OnInit {
   inputMensaje: any = '';
   deshabilitarBotonEnviar: boolean = false;
   mostrarSpinner: boolean = false;
-  cliente: Cliente | undefined = undefined;
+  usuario: Usuario | undefined = undefined;
+  idClienteParametros: number | undefined = undefined;
 
   constructor(
     private clienteService: ClienteService,
+    private usuarioService: UsuarioService,
     private chatService: ChatService,
     private route: ActivatedRoute
   ) {}
@@ -59,17 +66,18 @@ export class ChatMozoComponent implements OnInit {
     const obs = this.route.params;
     if (isObservable(obs)) {
       const paramsPromise = await firstValueFrom(obs);
-      const l = await this.clienteService.traerTodos();
+      this.idClienteParametros = Number(paramsPromise['idCliente']);
 
-      const c = l.find((c) => c.id === Number(paramsPromise['idCliente']));
-
-      if (c !== undefined) {
-        this.cliente = c;
+      const u: Usuario = await this.usuarioService.getUsuarioBd();
+      if (u !== undefined) {
+        this.usuario = u;
       }
 
       this.chatService.traerTodosObservable().subscribe(async (l) => {
         const c = l.find(
-          (c) => this.cliente !== undefined && c.idCliente === this.cliente.id
+          (c) =>
+            this.usuario !== undefined &&
+            c.idCliente === this.idClienteParametros
         );
 
         if (c !== undefined) {
@@ -82,8 +90,15 @@ export class ChatMozoComponent implements OnInit {
   }
 
   async enviarMensaje() {
-    if (this.inputMensaje !== '' && this.cliente !== undefined) {
-      await this.chatService.enviarMensaje(this.cliente.id, this.inputMensaje);
+    if (
+      this.inputMensaje !== '' &&
+      this.usuario !== undefined &&
+      this.idClienteParametros !== undefined
+    ) {
+      await this.chatService.enviarMensaje(
+        this.idClienteParametros,
+        this.inputMensaje
+      );
       this.actualizarScroll();
       this.inputMensaje = '';
     }
