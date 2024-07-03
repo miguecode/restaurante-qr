@@ -58,7 +58,7 @@ export class UsuarioService {
       });
   }
 
-  private traerTodos() {
+  public traerTodos() {
     return new Promise<(Duenio | Supervisor | Empleado | Cliente)[]>(
       (resolver) => {
         if (
