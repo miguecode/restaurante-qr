@@ -104,7 +104,7 @@
       </div>
 
       <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
-        <button class="btn btn-primary" routerLink="/seccion-chat">
+        <button class="btn btn-primary" (click)="clienteToChatMozo()">
           <label>Consultar al Mozo</label>
         </button>
       </div>
@@ -152,6 +152,15 @@
         </button>
       </div>
       <!-- #endregion Accesos Metre -->
+
+      <!-- #region Accesos Mozo -->
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/listado-chat">
+          <label>Listado de</label>
+          <label>Mensajes</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos Mozo -->
     </div>
   </div>
 </ion-content>

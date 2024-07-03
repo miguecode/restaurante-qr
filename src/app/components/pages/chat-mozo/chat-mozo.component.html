@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-label *ngIf="!mostrarSpinner" class="nombre-chat" slot="start">
+      <span>ID CLIENTE: {{ cliente?.id }}</span>
+    </ion-label>
+    <button class="btn btn-primary boton-salir" routerLink="/home">
+      <label>VOLVER</label>
+    </button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="" [fullscreen]="true">
+  <div
+    *ngIf="!mostrarSpinner && cliente !== undefined"
+    class="chat-container"
+    id="chat-container"
+  >
+    <div
+      *ngFor="let mensaje of listaMensajes"
+      class="mensaje"
+      [ngClass]="{
+        'mensaje-enviado': cliente.correo === mensaje.emisor,
+        'mensaje-recibido': cliente.correo !== mensaje.emisor
+      }"
+    >
+      <div class="mensaje-contenido">
+        <span
+          [ngClass]="{
+            'mensaje-enviado-informacion': cliente.correo === mensaje.emisor,
+            'mensaje-recibido-informacion': cliente.correo !== mensaje.emisor
+          }"
+        >
+          {{ cliente.correo === mensaje.emisor ? "Tú" : mensaje.emisor }}<br />
+          {{ mensaje.fechaEnvio | date : "dd/MM/yyyy HH:mm:ss" }}
+        </span>
+        <p class="mensaje-texto">{{ mensaje.texto }}</p>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="mostrarSpinner" class="loader-container">
+    <span class="loader"></span>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item class="input-texto">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Ingresa tu mensaje"
+        [(ngModel)]="inputMensaje"
+        (keydown.enter)="enviarMensaje()"
+      />
+    </ion-item>
+
+    <ion-button
+      class="boton-enviar-mensaje"
+      slot="end"
+      shape="round"
+      [disabled]="deshabilitarBotonEnviar"
+      (click)="enviarMensaje()"
+    >
+      <ion-icon name="send-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-footer>

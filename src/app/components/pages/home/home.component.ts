@@ -219,4 +219,14 @@ export class HomeComponent implements OnInit {
       await Swalert.toastError('El QR escaneado no es correcto');
     }
   }
+
+  public async clienteToChatMozo() {
+    if (this.usuario === undefined) {
+      this.usuario = await this.usuarioService.getUsuarioBd();
+    }
+
+    if (this.usuario instanceof Cliente) {
+      this.router.navigateByUrl(`/chat-mozo/${this.usuario.id}`);
+    }
+  }
 }

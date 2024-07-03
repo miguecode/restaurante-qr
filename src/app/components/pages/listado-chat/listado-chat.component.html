@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <button class="boton-atras" routerLink="/home">
+        <img src="../../../../assets/images/atras.png" />
+      </button>
+      <ion-title> Listado de Mensajes </ion-title>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <!-- #region Listado -->
+    <div class="cartas">
+      <div *ngFor="let item of lista">
+        <div class="card">
+          <label>
+            <span>ID Cliente: {{ item.idCliente }}</span>
+          </label>
+          <button
+            class="btn btn-secondary boton-ver-mensajes"
+            (click)="mozoToChatMozo(item)"
+          >
+            Ver mensajes
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion Listado -->
+  </div>
+</ion-content>

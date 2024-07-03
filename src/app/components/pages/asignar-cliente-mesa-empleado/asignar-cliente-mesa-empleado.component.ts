@@ -11,6 +11,7 @@ import { Cliente } from 'src/app/classes/cliente';
 import { Mesa } from 'src/app/classes/mesa';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
+import { ChatService } from 'src/app/services/chat.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { MesaService } from 'src/app/services/mesa.service';
 
@@ -42,6 +43,7 @@ export class AsignarClienteMesaComponent implements OnInit {
   constructor(
     private clienteService: ClienteService,
     private mesaService: MesaService,
+    private chatService: ChatService,
     private router: Router
   ) {
     this.clienteService.traerTodosObservable().subscribe((l) => {
@@ -71,6 +73,7 @@ export class AsignarClienteMesaComponent implements OnInit {
     await this.mesaService.modificar(this.mesaSeleccionada);
     this.clienteSeleccionado.estadoListaEspera = false;
     await this.clienteService.modificar(this.clienteSeleccionado);
+    await this.chatService.alta(this.clienteSeleccionado.id);
     this.mesaSeleccionada = undefined;
     this.clienteSeleccionado = undefined;
     this.mostrarClientes = true;

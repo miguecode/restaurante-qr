@@ -150,6 +150,22 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: 'chat-mozo/:idCliente',
+    loadComponent: () =>
+      import('./components/pages/chat-mozo/chat-mozo.component').then(
+        (m) => m.ChatMozoComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'listado-chat',
+    loadComponent: () =>
+      import('./components/pages/listado-chat/listado-chat.component').then(
+        (m) => m.ListadoChatComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
