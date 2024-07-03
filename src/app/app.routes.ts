@@ -190,6 +190,14 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: 'listado-pedidos-empleado',
+    loadComponent: () =>
+      import(
+        './components/pages/listado-pedidos-empleado/listado-pedidos-empleado.component'
+      ).then((m) => m.ListadoPedidosEmpleadoComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',

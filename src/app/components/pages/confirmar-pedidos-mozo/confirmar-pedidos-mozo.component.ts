@@ -31,7 +31,7 @@ import { PedidoService } from 'src/app/services/pedido.service';
     RouterLink,
   ],
 })
-export class ConfirmarPedidosMozoComponent implements OnInit {
+export class ConfirmarPedidosMozoComponent{
   lista: any[] = [];
   verDetalle: boolean = false;
   detallePedidoMesa: Pedido[] = [];
@@ -62,13 +62,13 @@ export class ConfirmarPedidosMozoComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
 
   async confirmarPedido(idMesa: number) {
     const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
     if (lpm !== undefined) {
       for (let p of lpm) {
         p.confirmadoMozo = true;
+        p.estado = Estado.pedidoElaborando;
         await this.pedidoService.modificar(p);
       }
     }

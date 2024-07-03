@@ -1,0 +1,43 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+     <ion-title> Listado de pedidos</ion-title>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div class="cartas">
+      <div *ngFor="let item of listaPedidos">
+        <div class="card carta-detalle-pedido">
+            <label style="text-align: center">
+              <span class="id-span">{{ item.id }}</span></label
+            >
+            <div class="contenedor-flex">
+              <div class="fotos-card">
+                <img class="img-foto-1" [src]="item.fotoUnoProducto" />
+              </div>
+            </div>
+            <label><span>Mesa: </span>{{ item.idMesa }}</label>
+            <label><span>Producto: </span>{{ item.nombreProducto }}</label>
+            <label><span>Descripcion: </span>{{ item.descripcionProducto }}</label>
+            <label><span>Fecha del pedido: </span>{{ formatoDia(item.fecha) }}</label>
+        
+            <button class="btn btn-secondary boton-ver-detalle" (click)="realizar(item)">
+              Realizado
+            </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+

@@ -18,6 +18,7 @@ export class Pedido {
   public fotoTresProducto: string;
   public nombreProducto: string;
   public descripcionProducto: string;
+  public fecha : Date;
 
   constructor() {
     this.id = 0;
@@ -36,6 +37,7 @@ export class Pedido {
     this.fotoTresProducto = '';
     this.nombreProducto = '';
     this.descripcionProducto = '';
+    this.fecha = new Date();
   }
 
   public static toDoc(pedido: Pedido) {
@@ -56,6 +58,7 @@ export class Pedido {
       fotoTresProducto: pedido.fotoTresProducto,
       nombreProducto: pedido.nombreProducto,
       descripcionProducto: pedido.descripcionProducto,
+      fecha: pedido.fecha.toISOString()
     };
   }
 
@@ -70,12 +73,13 @@ export class Pedido {
     // pedido.cantidad = Number(doc.cantidad);
     pedido.precio = doc.precio;
     pedido.confirmadoMozo = doc.confirmadoMozo;
-
+    pedido.estado = doc.estado
     pedido.fotoUnoProducto = doc.fotoUnoProducto;
     pedido.fotoDosProducto = doc.fotoDosProducto;
     pedido.fotoTresProducto = doc.fotoTresProducto;
     pedido.nombreProducto = doc.nombreProducto;
     pedido.descripcionProducto = doc.descripcionProducto;
+    pedido.fecha = new Date(doc.fecha);
     return pedido;
   }
 
@@ -90,12 +94,13 @@ export class Pedido {
     // pedido.cantidad = Number(doc['cantidad']);
     pedido.precio = doc['precio'];
     pedido.confirmadoMozo = doc['confirmadoMozo'];
-
+    pedido.estado = doc['estado'];
     pedido.fotoUnoProducto = doc['fotoUnoProducto'];
     pedido.fotoDosProducto = doc['fotoDosProducto'];
     pedido.fotoTresProducto = doc['fotoTresProducto'];
     pedido.nombreProducto = doc['nombreProducto'];
     pedido.descripcionProducto = doc['descripcionProducto'];
+    pedido.fecha = new Date(doc['fecha']);
     return pedido;
   }
 
@@ -112,5 +117,6 @@ export class Pedido {
     this.fotoTresProducto = producto.fotoTres;
     this.nombreProducto = producto.nombre;
     this.descripcionProducto = producto.descripcion;
+    this.fecha = new Date();
   }
 }

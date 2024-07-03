@@ -94,6 +94,12 @@
           <label>Plato o Bebida</label>
         </button>
       </div>
+
+      <div *ngIf="usuarioEsEmpleado && (usuarioTipoEmpleado === 'cocinero' || usuarioTipoEmpleado === 'bartender')">
+        <button class="btn btn-primary" routerLink="/listado-pedidos-empleado">
+          <label>Listado de pedidos</label>
+        </button>
+      </div>
       <!-- #endregion Accesos de Empleado -->
 
       <!-- #region Accesos De Cliente -->
