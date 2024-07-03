@@ -95,7 +95,13 @@
         </button>
       </div>
 
-      <div *ngIf="usuarioEsEmpleado && (usuarioTipoEmpleado === 'cocinero' || usuarioTipoEmpleado === 'bartender')">
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'cocinero' ||
+            usuarioTipoEmpleado === 'bartender')
+        "
+      >
         <button class="btn btn-primary" routerLink="/listado-pedidos-empleado">
           <label>Listado de pedidos</label>
         </button>
@@ -134,7 +140,7 @@
       </div>
 
       <div *ngIf="usuarioEsCliente">
-        <button class="btn btn-primary" routerLink="/seccion-encuestas">
+        <button class="btn btn-primary" routerLink="/listado-encuestas">
           <label>Encuestas</label>
         </button>
       </div>

@@ -1,0 +1,91 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <div *ngIf="!verDetalle" class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+      <div *ngIf="verDetalle" class="atras">
+        <button class="btn btn-primary" (click)="verDetalle = false">
+          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+        </button>
+      </div>
+      <ion-title> Listado de Encuestas </ion-title>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <div *ngIf="!verDetalle">
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of lista">
+          <div class="card">
+            <label>
+              <span>ID Usuario: {{ item.idUsuario }}</span>
+            </label>
+            <button
+              class="btn btn-secondary boton-ver-mensajes"
+              (click)="verDetalleEncuesta(item)"
+            >
+              Ver encuesta
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+
+    <div *ngIf="verDetalle && encuestaDetalle !== undefined">
+      <!-- #region Detalle -->
+      <div class="card detalle-encuesta">
+        <div class="form-group">
+          <label>
+            <span>ID Usuario: {{ encuestaDetalle.idUsuario }}</span>
+          </label>
+          <br />
+          <label>
+            <span>Fecha: {{ formatoDia(encuestaDetalle.fecha) }}</span>
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>{{ encuestaDetalle.preguntas[0].pregunta }}</span>
+          </label>
+          <input
+            class="input-fecha"
+            readonly
+            [value]="encuestaDetalle.respuestas[0]"
+          />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>{{ encuestaDetalle.preguntas[1].pregunta }}</span>
+          </label>
+          <input readonly [value]="encuestaDetalle.respuestas[1]" />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>{{ encuestaDetalle.preguntas[2].pregunta }}</span>
+          </label>
+          <input readonly [value]="encuestaDetalle.respuestas[2]" />
+        </div>
+
+        <div class="form-group">
+          <label>
+            <span>{{ encuestaDetalle.preguntas[3].pregunta }}</span>
+          </label>
+          <input readonly [value]="encuestaDetalle.respuestas[3]" />
+        </div>
+      </div>
+      <!-- #endregion Detalle -->
+    </div>
+  </div>
+</ion-content>

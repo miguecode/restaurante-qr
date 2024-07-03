@@ -198,6 +198,14 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: 'listado-encuestas',
+    loadComponent: () =>
+      import(
+        './components/pages/listado-encuestas/listado-encuestas.component'
+      ).then((m) => m.ListadoEncuestasComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
