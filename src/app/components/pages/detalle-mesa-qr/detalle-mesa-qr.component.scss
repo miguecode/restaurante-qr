@@ -109,3 +109,55 @@ button label {
   }
 }
 // #endregion Loader
+
+.mensaje-informativo {
+  width: 95%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  color: #860106;
+  padding: 20px;
+  margin: 8px 8px 0px 8px;
+
+  h1 {
+    text-align: center;
+    font-size: 29px;
+    font-weight: bold;
+  }
+
+  p {
+    text-align: center;
+    font-size: 24px;
+  }
+
+  img {
+    margin-top: 15px;
+  }
+}
+
+.cerrar-sesion,
+.titulo,
+.test-push {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40px;
+  margin: 5px;
+}
+.cerrar-sesion {
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.cerrar-sesion button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.cerrar-sesion i {
+  margin-right: 8%;
+}

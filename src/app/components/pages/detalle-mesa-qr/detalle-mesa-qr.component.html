@@ -1,37 +1,47 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <div class="header-container">
-      <div class="cerrar-sesion">
-        <button *ngIf="!mostrarMenu" class="btn btn-primary" routerLink="/home">
-          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
-        </button>
+<ion-toolbar>
+  <div class="header-container">
+    <div class="cerrar-sesion">
+      <button
+        *ngIf="!mostrarMenu && !mostrarEstado"
+        class="btn btn-primary"
+        routerLink="/home"
+      >
+        <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+      </button>
 
-        <button
-          *ngIf="mostrarMenu"
-          class="btn btn-primary"
-          (click)="mostrarMenu = false"
-        >
-          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
-        </button>
-      </div>
+      <button
+        *ngIf="mostrarMenu"
+        class="btn btn-primary"
+        (click)="mostrarMenu = false"
+      >
+        <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+      </button>
 
-      <div class="titulo">
-        <label *ngIf="!mostrarMenu">La Comanda</label>
-        <label *ngIf="mostrarMenu">Menú</label>
-      </div>
-
-      <div class="test-push">
-        <button
-          *ngIf="!mostrarMenu"
-          class="btn btn-success"
-          routerLink="/push-notification"
-        >
-          Test PUSH
-        </button>
-      </div>
+      <button
+        *ngIf="mostrarEstado"
+        class="btn btn-primary"
+        (click)="mostrarEstado = false"
+      >
+        <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+      </button>
     </div>
-  </ion-toolbar>
-</ion-header>
+
+    <div class="titulo">
+      <label *ngIf="!mostrarMenu">Mesa {{ idMesa }}</label>
+      <label *ngIf="mostrarMenu">Menú</label>
+    </div>
+
+    <div class="test-push">
+      <button
+        *ngIf="!mostrarMenu"
+        class="btn btn-success"
+        routerLink="/push-notification"
+      >
+        Test PUSH
+      </button>
+    </div>
+  </div>
+</ion-toolbar>
 
 <ion-content [fullscreen]="true">
   <div class="content-container">
@@ -47,7 +57,94 @@
       ></app-menu>
     </div>
 
-    <div *ngIf="!mostrarMenu" class="router-container">
+    <div
+      *ngIf="
+        !mostrarMenu &&
+        mostrarEstado &&
+        usuarioTienePedido &&
+        estadoPedido === 'pendiente'
+      "
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-check-circle-fill" style="font-size: 100px"></i>
+      <h1>Tu pedido está pendiente de confirmación</h1>
+      <p>
+        La <span>preparación del pedido</span> comenzará una vez que el
+        <span>mozo</span> lo confirme. Cuando lo haga, vas a poder volver a esta
+        sección para hacer el seguimiento del <span>estado de tu pedido</span>.
+      </p>
+    </div>
+
+    <div
+      *ngIf="
+        !mostrarMenu &&
+        mostrarEstado &&
+        usuarioTienePedido &&
+        estadoPedido === 'elaborando'
+      "
+      class="mensaje-informativo"
+    >
+      <img src="../../../../assets/images/reloj.gif" />
+      <h1>Tu pedido está en elaboración</h1>
+      <p>
+        El mozo ya <span>confirmó tu pedido</span> y se lo
+        <span>asignó a los distintos sectores</span>. Recordá que podés volver a
+        esta sección para <span>ver el estado del pedido</span>.
+      </p>
+    </div>
+
+    <div
+      *ngIf="
+        !mostrarMenu &&
+        mostrarEstado &&
+        usuarioTienePedido &&
+        estadoPedido === 'terminado'
+      "
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-check-circle-fill" style="font-size: 100px"></i>
+      <h1>Tu pedido está terminado</h1>
+      <p>
+        Todos los sectores <span>finalizaron la elaboración de tu pedido</span>,
+        ahora estás a la espera de que
+        <span>el mozo te lo entregue a tu mesa</span>.
+      </p>
+    </div>
+
+    <div
+      *ngIf="
+        !mostrarMenu &&
+        mostrarEstado &&
+        usuarioTienePedido &&
+        estadoPedido === 'entregado'
+      "
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-emoji-laughing-fill" style="font-size: 100px"></i>
+      <h1>Tu pedido ya fue entregado</h1>
+      <p>
+        El mozo dió por entregado tu pedido.
+        <span>¡Esperamos que lo disfrutes!</span>
+      </p>
+    </div>
+
+    <div
+      *ngIf="
+        !mostrarMenu &&
+        mostrarEstado &&
+        usuarioTienePedido &&
+        estadoPedido === 'pagado'
+      "
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-hand-thumbs-up-fill" style="font-size: 100px"></i>
+      <h1>Tu pedido ya está pago</h1>
+      <p>
+        Se concretó correctamente el pago por el pedido. Gracias por elegirnos.
+      </p>
+    </div>
+
+    <div *ngIf="!mostrarMenu && !mostrarEstado" class="router-container">
       <!-- #region Accesos De Cliente -->
 
       <div *ngIf="usuarioEsCliente">

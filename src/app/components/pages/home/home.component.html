@@ -19,7 +19,7 @@
       </div>
 
       <div class="titulo">
-        <label *ngIf="!mostrarMenu">Opciones de Mesa</label>
+        <label *ngIf="!mostrarMenu">La Comanda</label>
         <label *ngIf="mostrarMenu">Menú</label>
       </div>
 
@@ -95,7 +95,13 @@
         </button>
       </div>
 
-      <div *ngIf="usuarioEsEmpleado && (usuarioTipoEmpleado === 'cocinero' || usuarioTipoEmpleado === 'bartender')">
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'cocinero' ||
+            usuarioTipoEmpleado === 'bartender')
+        "
+      >
         <button class="btn btn-primary" routerLink="/listado-pedidos-empleado">
           <label>Listado de pedidos</label>
         </button>
@@ -127,7 +133,8 @@
       </div>
 
       <div *ngIf="usuarioEsCliente">
-        <button class="btn btn-primary" (click)="escanearQrMesa()">
+        <!-- <button class="btn btn-primary" (click)="escanearQrMesa()"> -->
+        <button class="btn btn-primary" routerLink="/detalle-mesa-qr/1">
           <label>Escanear código QR</label>
           <label>de Mesa</label>
         </button>

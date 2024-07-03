@@ -164,7 +164,8 @@ export class MesaService {
 
     // Esta ocupada y NO ES la mesa del Cliente
     if (m.idCliente !== 0 && m.idCliente !== cliente.id) {
-      this.router.navigateByUrl(`/estado-mesa-qr/${idMesa}`);
+      // this.router.navigateByUrl(`/estado-mesa-qr/${idMesa}`);
+      this.router.navigateByUrl(`/detalle-mesa-qr/${idMesa}`);
       return;
     }
 

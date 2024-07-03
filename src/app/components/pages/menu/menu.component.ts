@@ -64,8 +64,6 @@ export class MenuComponent implements OnInit {
 
   ngOnInit() {
     this.limpiarMenu();
-
-    this.esperandoConfirmacion = true;
   }
 
   async toggleAgregar(producto: Producto) {
