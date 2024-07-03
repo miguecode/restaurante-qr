@@ -1,4 +1,4 @@
-import { NgFor, NgIf } from '@angular/common';
+import { NgClass, NgFor, NgIf } from '@angular/common';
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
@@ -39,6 +39,7 @@ import { Usuario } from 'src/app/classes/padres/usuario';
     NgIf,
     FormularioProductoComponent,
     CapitalizePipe,
+    NgClass,
   ],
 })
 export class MenuComponent implements OnInit {
@@ -48,8 +49,11 @@ export class MenuComponent implements OnInit {
 
   productoSeleccionado: Producto | undefined = undefined;
   productosSeleccionados: Producto[] = [];
+  importe: number = 0;
+  tiempo: number = 0;
 
   esperandoConfirmacion: boolean = false;
+  expression: any;
 
   constructor() {}
 
@@ -67,10 +71,32 @@ export class MenuComponent implements OnInit {
     } else {
       this.productosSeleccionados.push(producto);
     }
+
+    this.calcularImporte();
+    this.calcularTiempo();
   }
 
   productoEstaSeleccionado(producto: Producto): boolean {
     return this.productosSeleccionados.some((p) => p.id === producto.id);
+  }
+
+  private calcularImporte() {
+    this.importe = this.productosSeleccionados.reduce(
+      (total, producto) => total + producto.precio,
+      0
+    );
+  }
+
+  private calcularTiempo() {
+    const totalTiempo = this.productosSeleccionados.reduce(
+      (total, producto) => total + producto.tiempo,
+      0
+    );
+    let tiempoCalculado = this.productosSeleccionados.length
+      ? totalTiempo / this.productosSeleccionados.length
+      : 0;
+
+    this.tiempo = Math.round(tiempoCalculado);
   }
 
   mostrarPedido() {

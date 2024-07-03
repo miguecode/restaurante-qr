@@ -14,6 +14,7 @@ import { NgFor, NgIf } from '@angular/common';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
+import { ChatService } from 'src/app/services/chat.service';
 
 @Component({
   selector: 'app-asignar-mesa-cliente-qr',
@@ -39,6 +40,7 @@ export class AsignarMesaClienteQrComponent implements OnInit {
     private usuarioService: UsuarioService,
     private mesaService: MesaService,
     private route: ActivatedRoute,
+    private chatService: ChatService,
     private router: Router
   ) {
     this.route.params.subscribe(async (p) => {
@@ -65,6 +67,7 @@ export class AsignarMesaClienteQrComponent implements OnInit {
     await this.mesaService.modificar(this.mesa);
     this.cliente.estadoListaEspera = false;
     await this.clienteService.modificar(this.cliente);
+    await this.chatService.alta(this.cliente.id);
     Swalert.toastSuccess('Mesa asignada correctamente');
     setTimeout(() => {
       this.router.navigateByUrl('/home');

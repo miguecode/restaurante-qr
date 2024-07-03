@@ -13,13 +13,6 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
   {
-    path: 'test-pedido',
-    loadComponent: () =>
-      import('./components/pages/test-pedido/test-pedido.component').then(
-        (m) => m.TestPedidoComponent
-      ),
-  },
-  {
     path: 'splash',
     loadComponent: () =>
       import('./components/pages/splash/splash.component').then(
@@ -153,6 +146,22 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./components/pages/estado-mesa-qr/estado-mesa-qr.component').then(
         (m) => m.EstadoMesaQrComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'chat-mozo/:idCliente',
+    loadComponent: () =>
+      import('./components/pages/chat-mozo/chat-mozo.component').then(
+        (m) => m.ChatMozoComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'listado-chat',
+    loadComponent: () =>
+      import('./components/pages/listado-chat/listado-chat.component').then(
+        (m) => m.ListadoChatComponent
       ),
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },

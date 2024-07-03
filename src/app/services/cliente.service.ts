@@ -25,6 +25,18 @@ export class ClienteService {
     });
   }
 
+  public traerTodos() {
+    return new Promise<Cliente[]>((resolver) => {
+      if (this.flagObservable === true) {
+        resolver(this.clientes);
+      }
+
+      setTimeout(() => {
+        resolver(this.clientes);
+      }, 5000); // Este valor se puede bajar, pero no mucho
+    });
+  }
+
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }
