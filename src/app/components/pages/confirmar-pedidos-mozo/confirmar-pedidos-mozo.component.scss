@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
 
 * {
   font-family: "Baloo 2", sans-serif;
@@ -61,7 +61,19 @@ ion-content {
 }
 // #endregion Listado
 
-.boton-agregar {
+.boton-ver-detalle {
+  background: #860106;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  right: 12px;
+  bottom: 12px;
+  width: 120px !important;
+  font-weight: bold;
+}
+
+.boton-confirmar {
   background: #860106;
   color: #fff;
   border: none;
@@ -127,7 +139,7 @@ span {
   width: 95%;
   height: 50px;
   font-size: 27px;
-  background-color:#860106 ;
+  background-color: #860106;
   border-radius: 10px;
   font-weight: bold;
 }
@@ -160,7 +172,6 @@ span {
 }
 // #endregion reloj
 
-
 .container {
   height: 100%;
   width: 100%;
@@ -183,7 +194,6 @@ span {
     font-size: 40px;
     font-weight: bold;
   }
-
 }
 button label {
   margin: -13px;
@@ -220,3 +230,57 @@ button label {
   }
 }
 // #endregion Loader
+
+.carta-pedido {
+  height: 100px;
+}
+
+.carta-detalle-pedido {
+  height: 225px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.boton-volver {
+  width: 98%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 50px;
+  font-size: 27px;
+  border: 0px solid black;
+  background-color: #860106;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 52px;
+  margin: 5px;
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.inicio button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.inicio button i {
+  margin-right: 8%;
+}

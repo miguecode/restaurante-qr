@@ -15,6 +15,10 @@ import { Producto } from 'src/app/classes/producto';
 import { FormularioProductoComponent } from 'src/app/components/shared/formulario-producto/formulario-producto.component';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { Usuario } from 'src/app/classes/padres/usuario';
+import { Pedido } from 'src/app/classes/pedido';
+import { PedidoService } from 'src/app/services/pedido.service';
+import { Swalert } from 'src/app/classes/utils/swalert.class';
+import { Cliente } from 'src/app/classes/cliente';
 
 @Component({
   selector: 'app-menu',
@@ -53,15 +57,14 @@ export class MenuComponent implements OnInit {
   tiempo: number = 0;
 
   esperandoConfirmacion: boolean = false;
-  expression: any;
 
-  constructor() {}
+  constructor(private pedidoService: PedidoService) {}
 
   ngOnInit() {
-    console.log('');
+    this.limpiarMenu();
   }
 
-  toggleAgregar(producto: Producto) {
+  async toggleAgregar(producto: Producto) {
     const index = this.productosSeleccionados.findIndex(
       (p) => p.id === producto.id
     );
@@ -74,6 +77,26 @@ export class MenuComponent implements OnInit {
 
     this.calcularImporte();
     this.calcularTiempo();
+  }
+
+  getPedido(producto: Producto) {
+    let pedido = new Pedido();
+    if (
+      producto.precio > 0 &&
+      producto.tiempo > 0 &&
+      this.usuario !== undefined
+    ) {
+      pedido.setProducto(producto);
+      pedido.confirmadoMozo = false;
+      pedido.idCliente = this.usuario.id;
+      if (this.usuario instanceof Cliente) {
+        pedido.idMesa = this.usuario.idMesa;
+      }
+    } else {
+      Swalert.toastError('El pedido tiene datos no válidos');
+    }
+
+    return pedido;
   }
 
   productoEstaSeleccionado(producto: Producto): boolean {
@@ -97,6 +120,37 @@ export class MenuComponent implements OnInit {
       : 0;
 
     this.tiempo = Math.round(tiempoCalculado);
+  }
+
+  async confirmarPedido() {
+    if (this.productosSeleccionados.length > 0) {
+      this.mostrarSpinner = true;
+
+      console.log(this.productosSeleccionados);
+
+      try {
+        for (const producto of this.productosSeleccionados) {
+          const pedido = this.getPedido(producto);
+          await this.pedidoService.alta(pedido);
+        }
+
+        this.esperandoConfirmacion = true;
+        this.limpiarMenu();
+        Swalert.toastSuccess('¡Pedido realizado exitosamente!');
+      } catch (error) {
+        Swalert.toastError('Error en el alta de pedido: ' + error);
+      } finally {
+        this.mostrarSpinner = false;
+      }
+    } else {
+      Swalert.toastError('No hay pedidos por hacer');
+    }
+  }
+
+  private limpiarMenu() {
+    this.importe = 0;
+    this.tiempo = 0;
+    this.productosSeleccionados = [];
   }
 
   mostrarPedido() {
