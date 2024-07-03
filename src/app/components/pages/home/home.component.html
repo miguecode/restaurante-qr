@@ -120,7 +120,7 @@
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente && usuarioEstaEnListaEspera">
+      <div *ngIf="usuarioEsCliente">
         <button class="btn btn-primary" (click)="escanearQrMesa()">
           <label>Escanear código QR</label>
           <label>de Mesa</label>
@@ -134,7 +134,7 @@
       </div>
 
       <div *ngIf="usuarioEsCliente && usuarioEstaEnListaEspera">
-        <button class="btn btn-primary reloj" [disabled]="true">
+        <button class="btn btn-primary reloj">
           <img src="../../../../assets/images/reloj.gif" />
           <label>En lista de espera...</label>
         </button>
