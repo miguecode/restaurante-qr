@@ -166,6 +166,30 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: 'confirmar-pedidos-mozo',
+    loadComponent: () =>
+      import(
+        './components/pages/confirmar-pedidos-mozo/confirmar-pedidos-mozo.component'
+      ).then((m) => m.ConfirmarPedidosMozoComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'entregar-pedidos-mozo',
+    loadComponent: () =>
+      import(
+        './components/pages/entregar-pedidos-mozo/entregar-pedidos-mozo.component'
+      ).then((m) => m.EntregarPedidosMozoComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'confirmar-pagos-mozo',
+    loadComponent: () =>
+      import(
+        './components/pages/confirmar-pagos-mozo/confirmar-pagos-mozo.component'
+      ).then((m) => m.ConfirmarPagosMozoComponent),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',

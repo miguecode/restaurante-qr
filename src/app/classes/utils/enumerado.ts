@@ -6,6 +6,8 @@ export enum Estado {
   rechazado = 'rechazado',
 
   pedidoPendiente = 'pendiente',
+  pedidoElaborando = 'elaborando',
   pedidoTerminado = 'terminado',
-  pedidoEnProceso = 'elaborando',
+  pedidoEntregado = 'entregado',
+  pedidoPagado = 'pagado',
 }

@@ -155,6 +155,27 @@
 
       <!-- #region Accesos Mozo -->
       <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/confirmar-pedidos-mozo">
+          <label>Confirmar</label>
+          <label>Pedidos</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/entregar-pedidos-mozo">
+          <label>Entregar</label>
+          <label>Pedidos</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/confirmar-pagos-mozo">
+          <label>Confirmar</label>
+          <label>Pagos</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
         <button class="btn btn-primary" routerLink="/listado-chat">
           <label>Listado de</label>
           <label>Mensajes</label>
