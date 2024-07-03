@@ -19,7 +19,7 @@
       </div>
 
       <div class="titulo">
-        <label *ngIf="!mostrarMenu">La Comanda</label>
+        <label *ngIf="!mostrarMenu">Opciones de Mesa</label>
         <label *ngIf="mostrarMenu">Menú</label>
       </div>
 
@@ -97,17 +97,17 @@
       <!-- #endregion Accesos de Empleado -->
 
       <!-- #region Accesos De Cliente -->
-      <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
+      <!-- <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
         <button class="btn btn-primary" (click)="mostrarMenu = true">
           <label>Menú</label>
         </button>
-      </div>
+      </div> -->
 
-      <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
+      <!-- <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
         <button class="btn btn-primary" (click)="clienteToChatMozo()">
           <label>Consultar al Mozo</label>
         </button>
-      </div>
+      </div> -->
 
       <div
         *ngIf="
@@ -127,13 +127,17 @@
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <!-- <div *ngIf="usuarioEsCliente">
         <button class="btn btn-primary" routerLink="/seccion-encuestas">
           <label>Encuestas</label>
         </button>
-      </div>
+      </div> -->
 
-      <div *ngIf="usuarioEsCliente && usuarioEstaEnListaEspera">
+      <div
+        *ngIf="
+          usuarioEsCliente && usuarioEstaEnListaEspera && !usuarioTieneMesa
+        "
+      >
         <button class="btn btn-primary reloj">
           <img src="../../../../assets/images/reloj.gif" />
           <label>En lista de espera...</label>

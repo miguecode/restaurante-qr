@@ -1,3 +1,79 @@
-<p>
-  detalle-mesa-qr works!
-</p>
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <div class="header-container">
+      <div class="cerrar-sesion">
+        <button *ngIf="!mostrarMenu" class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+        </button>
+
+        <button
+          *ngIf="mostrarMenu"
+          class="btn btn-primary"
+          (click)="mostrarMenu = false"
+        >
+          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+        </button>
+      </div>
+
+      <div class="titulo">
+        <label *ngIf="!mostrarMenu">La Comanda</label>
+        <label *ngIf="mostrarMenu">Menú</label>
+      </div>
+
+      <div class="test-push">
+        <button
+          *ngIf="!mostrarMenu"
+          class="btn btn-success"
+          routerLink="/push-notification"
+        >
+          Test PUSH
+        </button>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <div *ngIf="mostrarSpinner" class="loader-container">
+      <span class="loader"></span>
+    </div>
+
+    <div *ngIf="mostrarMenu">
+      <app-menu
+        [usuario]="usuario"
+        [lista]="listaProductos"
+        [mostrarSpinner]="mostrarSpinner"
+      ></app-menu>
+    </div>
+
+    <div *ngIf="!mostrarMenu" class="router-container">
+      <!-- #region Accesos De Cliente -->
+
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" (click)="mostrarEstado = true">
+          <label>Mi Pedido</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" (click)="mostrarMenu = true">
+          <label>Menú</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" (click)="clienteToChatMozo()">
+          <label>Consultar al Mozo</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsCliente">
+        <button class="btn btn-primary" routerLink="/seccion-encuestas">
+          <label>Encuestas</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos De Cliente -->
+    </div>
+  </div>
+</ion-content>
