@@ -1,0 +1,297 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
+
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
+ion-content {
+  --background: #860106;
+}
+
+.page-container {
+  padding: 15px;
+}
+
+// #region Header
+.header {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: row;
+}
+// #endregion Header
+
+// #region Listado
+.fotos-card {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 6px;
+  img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+  }
+}
+
+.img-qr {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  //border-radius: 50%;
+  bottom: 12px;
+  right: 40%;
+  border: 2px solid black;
+}
+
+.card {
+  background-color: #3d1214;
+  color: #fff;
+  padding: 12px;
+  margin-bottom: 15px;
+  height: 225px;
+  transition: 0.3s !important;
+}
+
+.card button {
+  position: absolute;
+  width: auto;
+}
+// #endregion Listado
+
+.boton-ver-detalle {
+  background: #860106;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  right: 12px;
+  bottom: 12px;
+  width: 120px !important;
+  font-weight: bold;
+}
+
+.boton-confirmar {
+  background: #860106;
+  color: #fff;
+  border: none;
+  font-size: 20px;
+  border-radius: 7px;
+  right: 12px;
+  bottom: 12px;
+  width: 120px !important;
+  font-weight: bold;
+}
+
+// #region span
+span {
+  font-weight: bold;
+}
+
+.nombre {
+  font-size: 25px;
+}
+.descripcion {
+  font-size: 15px;
+  color: #ffffffc0;
+}
+.precio {
+  font-size: 25px;
+}
+// #endregion span
+
+// #region Footer
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1c1c1c;
+  padding: 10px;
+  z-index: 1000;
+}
+.footer button {
+  width: 100%;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.info-pedido {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: start;
+  gap: 20px;
+}
+
+.importe {
+  font-size: 27px;
+  font-weight: bold;
+}
+
+
+// #endregion Footer
+
+// #region Card seleccionada
+
+.card-seleccionada {
+  background-color: #ffffffcc;
+  color: #000;
+
+  .descripcion {
+    color: #232323;
+  }
+
+  button {
+    background: #860106;
+    color: #fff;
+    width: 105px;
+  }
+}
+// #endregion Card seleccionada
+
+// #region reloj
+.reloj img {
+  height: 50px;
+  width: 50px;
+  // margin-top: -15px;
+  margin-bottom: 13px;
+}
+// #endregion reloj
+
+.container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  // grid-template-columns: repeat(1, 1fr);
+  // grid-template-rows: repeat(auto, 2fr);
+  padding: 5px;
+  gap: 5px;
+
+  button {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border: 0px solid black;
+    background: #1e1e1e;
+    color: #860106;
+    height: 100%;
+    width: 100%;
+    font-size: 40px;
+    font-weight: bold;
+  }
+}
+button label {
+  margin: -13px;
+}
+
+// #region Loader
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.772);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 16px solid #421213;
+  border-top: 16px solid #7d1216;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+// #endregion Loader
+
+.carta-pedido {
+  height: 100px;
+}
+
+.carta-detalle-pedido {
+  height: 425px;
+}
+
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+}
+
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.boton-volver {
+  width: 98%;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  height: 50px;
+  font-size: 27px;
+  border: 0px solid black;
+  background-color: #860106;
+  border-radius: 10px;
+  font-weight: bold;
+}
+
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 52px;
+  margin: 5px;
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.inicio button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.inicio button i {
+  margin-right: 8%;
+}
+
+.precio{
+  font-weight: 900;
+  font-size: 35px;
+}
+
+.precioTotal{
+  font-size: 30px;
+}
+
+.btn-confirmar {
+  width: 95%;
+  height: 50px;
+  font-size: 27px;
+  background-color:#520305 ;
+  border-radius: 10px;
+  font-weight: bold;
+}
