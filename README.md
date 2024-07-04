@@ -189,7 +189,7 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 #### ⌛ Fecha de Finalización: 30/06
 
 - ### 🌟 Juan Pablo Dongo Huaman (Beta)
-- ✔️ Modificaciones y mejoras generales de la API de los push notifiactions
+- ✔️ Modificaciones y mejoras generales de la API de los push notifications
 #### 📅 Fecha de Inicio: 29/06
 #### ⌛ Fecha de Finalización: 30/06
 
@@ -199,25 +199,33 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 #### 📅 Fecha de Inicio: 29/06
 #### ⌛ Fecha de Finalización: 30/06
 
+-- --
+
 ## 🛠️ Actualización de responsabilidades e informe (03/07)
 ### 🌟 Gil Miguel Ángel (Alfa)
 - ✔️ Punto 4 (Grupal)
 - ✔️ Punto 5 (Grupal)
-#### 📅 Fecha de Inicio: 29/06
-#### ⌛ Fecha de Finalización: 30/06
+- ✔️ Punto 6 (Sin la parte del Chat)
+- ✔️ Punto 7
+- ✔️ Desarrollo de rutas y estructura para el escaneo de Mesas
+- ✔️ Pantallas para el seguimiento del pedido del cliente 
+#### 📅 Fecha de Inicio: 30/06
+#### ⌛ Fecha de Finalización: 03/07
 
 - ### 🌟 Juan Pablo Dongo Huaman (Beta)
 - ✔️ Punto 4 (Grupal)
 - ✔️ Punto 5 (Grupal)
-- ✔️ Punto 6 (la parte del Chat)
-- ✔️ Punto 8 (Grupal)
-#### 📅 Fecha de Inicio: 29/06
-#### ⌛ Fecha de Finalización: 30/06
+- ✔️ Punto 6 (Sólo parte del Chat)
+- ✔️ Punto 8 
+- ✔️ Punto 9 (Sólo parte del Mozo)
+- ✔️ Lógica de Encuestas
+#### 📅 Fecha de Inicio: 30/06
+#### ⌛ Fecha de Finalización: 03/07
 
 ### 🌟 Santiago Fernández (Gamma)
 - ✔️ Punto 3
 - ✔️ Punto 4 (Grupal)
 - ✔️ Punto 5 (Grupal)
 - ✔️ Punto 9 (Sin la parte del Mozo)
-#### 📅 Fecha de Inicio: 29/06
-#### ⌛ Fecha de Finalización: 30/06
+#### 📅 Fecha de Inicio: 30/06
+#### ⌛ Fecha de Finalización: 03/07
