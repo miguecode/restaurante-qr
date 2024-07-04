@@ -93,7 +93,12 @@ export class FormularioIngresoComponent implements OnInit {
   }
 
   autocompletar(usuario: string) {
-    if (usuario === '1') {
+    if (usuario === '0') {
+      this.loginForm.patchValue({
+        correoActual: 'anonimo@yopmail.com',
+        claveActual: '111111',
+      });
+    } else if (usuario === '1') {
       this.loginForm.patchValue({
         correoActual: 'mmariaf@yopmail.com',
         claveActual: '111111',
@@ -105,37 +110,27 @@ export class FormularioIngresoComponent implements OnInit {
       });
     } else if (usuario === '3') {
       this.loginForm.patchValue({
-        correoActual: 'gomezegn@yopmail.com',
+        correoActual: 'crisprz@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '4') {
       this.loginForm.patchValue({
-        correoActual: 'crisprz@yopmail.com',
+        correoActual: 'laumrtnz@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '5') {
       this.loginForm.patchValue({
-        correoActual: 'anonimo@yopmail.com',
-        claveActual: '111111',
-      });
-    } else if (usuario === 'a') {
-      this.loginForm.patchValue({
         correoActual: 'matir@yopmail.com',
         claveActual: '111111',
       });
-    } else if (usuario === 'b') {
-      this.loginForm.patchValue({
-        correoActual: 'laumrtnz@yopmail.com',
-        claveActual: '111111',
-      });
-    } else if (usuario === 'c') {
+    } else if (usuario === '6') {
       this.loginForm.patchValue({
         correoActual: 'liocromo@yopmail.com',
         claveActual: '111111',
       });
-    } else if (usuario === 'd') {
+    } else if (usuario === '7') {
       this.loginForm.patchValue({
-        correoActual: 'micasiso@yopmail.com',
+        correoActual: '"micasiso@yopmail.com',
         claveActual: '111111',
       });
     }
