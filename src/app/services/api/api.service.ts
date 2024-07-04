@@ -159,7 +159,11 @@ export class ApiService {
     });
   }
 
-  public notificarPedidoCuenta(tipoEmpleado: string, mensaje: string, idMesa: number) {
+  public notificarPedidoCuenta(
+    tipoEmpleado: string,
+    mensaje: string,
+    idMesa: number
+  ) {
     //const usuario = await this.usuarioService.getUsuarioBd();
     const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-empleados`;
     const HOSTING = `${this.comandaApiWeb}/notificar-empleados`;
@@ -173,5 +177,4 @@ export class ApiService {
       headers: { 'Content-Type': 'application/json' },
     });
   }
-
 }

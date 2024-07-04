@@ -236,18 +236,20 @@ export class DetalleMesaQrComponent implements OnInit {
 
   async escanearQrPropina() {
     const dataQr = await this.barcodeScanningService.escanearQr();
-    const usuario = await this.usuarioService.getUsuarioBd();
-    // const source = TraductorQr.propina(dataQr);
+    // const usuario = await this.usuarioService.getUsuarioBd();
+    const source = TraductorQr.propina(dataQr);
 
     try {
-      // await Swalert.toastSuccess(source.toString());
-      // if (source !== false) {
-      //   if (usuario instanceof Cliente) {
-      //     await this.mesaService.accesoDeClientePorQrMesa(source, usuario);
-      //   } else if (usuario instanceof Empleado) {
-      //     await this.mesaService.accesoDeEmpleadoPorQrMesa(source, usuario);
-      //   }
-      // }
+      await Swalert.toastSuccess(
+        `Porcentaje de propina seleccionado: ${source.toString()}%`
+      );
+      if (source !== false) {
+        console.log(source);
+        if (this.usuario instanceof Cliente) {
+          this.usuario.propina = source;
+          await this.clienteSerivice.modificar(this.usuario);
+        }
+      }
     } catch (e: any) {
       Swalert.toastError(e.message);
     }
