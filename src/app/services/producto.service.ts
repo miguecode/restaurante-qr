@@ -184,7 +184,7 @@ export class ProductoService {
   public traerPorIdObservable(producto: Producto) {
     const doc = Producto.toDoc(producto);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Producto.parseDoc(doc)));
   }
 }

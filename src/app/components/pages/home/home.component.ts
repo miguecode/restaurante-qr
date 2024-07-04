@@ -26,7 +26,7 @@ import { EmpleadoService } from 'src/app/services/empleado.service';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { DuenioService } from 'src/app/services/duenio.service';
 import { SupervisorService } from 'src/app/services/supervisor.service';
-import { filter, firstValueFrom, isObservable } from 'rxjs';
+import { filter, firstValueFrom, isObservable, Observable } from 'rxjs';
 import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
@@ -78,6 +78,8 @@ export class HomeComponent implements OnInit {
   usuarioEstaEnListaEspera: boolean = false;
   usuarioTieneMesa: boolean = false;
 
+  private uObs!: Observable<Usuario>;
+
   constructor(
     private usuarioService: UsuarioService,
     private duenioService: DuenioService,
@@ -116,8 +118,6 @@ export class HomeComponent implements OnInit {
   }
 
   private async cargarDatosImportantes() {
-    this.usuario = await this.usuarioService.getUsuarioBd();
-
     this.usuarioEsEsDuenio = this.usuario instanceof Duenio;
     this.usuarioEsSupervisor = this.usuario instanceof Supervisor;
     this.usuarioEsEmpleado = this.usuario instanceof Empleado;
@@ -153,6 +153,7 @@ export class HomeComponent implements OnInit {
 
   async ngOnInit() {
     this.mostrarSpinner = true;
+    /*
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe(async () => {
@@ -166,6 +167,14 @@ export class HomeComponent implements OnInit {
           this.mostrarSpinner = false;
         }
       });
+      */
+
+    const uObs = await this.usuarioService.getUsuarioBdObservable();
+    uObs.subscribe((usuario: Duenio | Supervisor | Cliente) => {
+      this.usuario = usuario;
+      this.cargarDatosImportantes();
+      this.mostrarSpinner = false;
+    });
   }
 
   async cerrarSesion() {

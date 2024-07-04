@@ -149,6 +149,15 @@ export class MesaService {
       );
     }
 
+    // El Cliente ESTA vinculado a una Mesa
+    if (cliente.idMesa !== 0) {
+      this.apiService.notificarUnUsuario(
+        cliente,
+        `Tu Mesa asignada es la ${cliente.idMesa}`
+      );
+      throw new Error('Ya tenés asignada una Mesa');
+    }
+
     // El Cliente NO esta en Lista De Espera (Fila)
     if (cliente.estadoListaEspera === false) {
       throw new Error(
@@ -217,7 +226,7 @@ export class MesaService {
   public traerPorIdObservable(mesa: Mesa) {
     const doc = Mesa.toDoc(mesa);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Mesa.parseDoc(doc)));
   }
 }

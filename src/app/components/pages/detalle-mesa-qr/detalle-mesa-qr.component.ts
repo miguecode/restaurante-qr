@@ -99,7 +99,7 @@ export class DetalleMesaQrComponent implements OnInit {
     this.pedidosService.traerTodosObservable().subscribe((l) => {
       this.listaPedidos = l;
       console.log(this.listaPedidos);
-      this.cargarPedidosDeEstaMesa;
+      this.cargarPedidosDeEstaMesa();
       this.calcularEstadoPedido();
     });
   }
@@ -112,8 +112,8 @@ export class DetalleMesaQrComponent implements OnInit {
       if (isObservable(obs)) {
         const paramsPromise = await firstValueFrom(obs);
         this.idMesaParametros = Number(paramsPromise['idMesa']);
+        this.idMesa = this.idMesaParametros;
         this.mesa = await this.mesaService.traerPorId(this.idMesaParametros);
-        this.idMesa = this.mesa!.id;
 
         console.log(this.mesa);
 
