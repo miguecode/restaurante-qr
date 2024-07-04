@@ -10,6 +10,7 @@ import {
   IonButton,
   IonLabel,
   IonFooter,
+  IonItem,
 } from '@ionic/angular/standalone';
 import { Producto } from 'src/app/classes/producto';
 import { FormularioProductoComponent } from 'src/app/components/shared/formulario-producto/formulario-producto.component';
@@ -26,6 +27,7 @@ import { Cliente } from 'src/app/classes/cliente';
   styleUrls: ['./menu.component.scss'],
   standalone: true,
   imports: [
+    IonItem,
     IonFooter,
     IonLabel,
     IonButton,

@@ -236,3 +236,10 @@ a {
   cursor: pointer;
   text-decoration: underline;
 }
+
+.custom-fab-button {
+  width: 70px;
+  height: 70px;
+  --background: #2b2b2b;
+  --color: #fff;
+}

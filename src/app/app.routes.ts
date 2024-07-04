@@ -206,6 +206,14 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: 'alta-encuesta',
+    loadComponent: () =>
+      import('./components/pages/alta-encuesta/alta-encuesta.component').then(
+        (m) => m.AltaEncuestaComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',

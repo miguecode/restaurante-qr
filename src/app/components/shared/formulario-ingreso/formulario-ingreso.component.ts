@@ -1,6 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { IonContent } from '@ionic/angular/standalone';
+import {
+  IonContent,
+  IonFabButton,
+  IonFabList,
+  IonIcon,
+  IonFab,
+} from '@ionic/angular/standalone';
 import { AuthService } from 'src/app/services/firebase/auth.service';
 import {
   FormBuilder,
@@ -17,7 +23,17 @@ import { UsuarioService } from 'src/app/services/usuario.service';
   templateUrl: './formulario-ingreso.component.html',
   styleUrls: ['./formulario-ingreso.component.scss'],
   standalone: true,
-  imports: [IonContent, NgClass, ReactiveFormsModule, CommonModule, RouterLink],
+  imports: [
+    IonFab,
+    IonIcon,
+    IonFabList,
+    IonFabButton,
+    IonContent,
+    NgClass,
+    ReactiveFormsModule,
+    CommonModule,
+    RouterLink,
+  ],
 })
 export class FormularioIngresoComponent implements OnInit {
   loginForm: FormGroup;
@@ -97,9 +113,29 @@ export class FormularioIngresoComponent implements OnInit {
         correoActual: 'crisprz@yopmail.com',
         claveActual: '111111',
       });
-    } else {
+    } else if (usuario === '5') {
       this.loginForm.patchValue({
         correoActual: 'anonimo@yopmail.com',
+        claveActual: '111111',
+      });
+    } else if (usuario === 'a') {
+      this.loginForm.patchValue({
+        correoActual: 'matir@yopmail.com',
+        claveActual: '111111',
+      });
+    } else if (usuario === 'b') {
+      this.loginForm.patchValue({
+        correoActual: 'laumrtnz@yopmail.com',
+        claveActual: '111111',
+      });
+    } else if (usuario === 'c') {
+      this.loginForm.patchValue({
+        correoActual: 'liocromo@yopmail.com',
+        claveActual: '111111',
+      });
+    } else if (usuario === 'd') {
+      this.loginForm.patchValue({
+        correoActual: 'micasiso@yopmail.com',
         claveActual: '111111',
       });
     }

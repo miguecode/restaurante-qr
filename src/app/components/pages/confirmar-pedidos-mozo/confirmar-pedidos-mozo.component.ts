@@ -9,10 +9,13 @@ import {
   IonToolbar,
   IonFooter,
 } from '@ionic/angular/standalone';
+import { Empleado } from 'src/app/classes/empleado';
 import { Pedido } from 'src/app/classes/pedido';
 import { Estado } from 'src/app/classes/utils/enumerado';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
+import { ApiService } from 'src/app/services/api/api.service';
 import { PedidoService } from 'src/app/services/pedido.service';
+import { PushNotificationService } from 'src/app/services/utils/push-notification.service';
 
 @Component({
   selector: 'app-confirmar-pedidos-mozo',
@@ -31,7 +34,7 @@ import { PedidoService } from 'src/app/services/pedido.service';
     RouterLink,
   ],
 })
-export class ConfirmarPedidosMozoComponent{
+export class ConfirmarPedidosMozoComponent {
   lista: any[] = [];
   verDetalle: boolean = false;
   detallePedidoMesa: Pedido[] = [];
@@ -42,7 +45,7 @@ export class ConfirmarPedidosMozoComponent{
 
   private listaPedidos: Pedido[] = [];
 
-  constructor(private pedidoService: PedidoService) {
+  constructor(private pedidoService: PedidoService, private push: ApiService) {
     this.pedidoService.traerTodosObservable().subscribe((l) => {
       const fa = l.filter((p) => p.confirmadoMozo === false);
 
@@ -62,13 +65,25 @@ export class ConfirmarPedidosMozoComponent{
     });
   }
 
-
   async confirmarPedido(idMesa: number) {
     const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
     if (lpm !== undefined) {
       for (let p of lpm) {
         p.confirmadoMozo = true;
         p.estado = Estado.pedidoElaborando;
+        if (p.tipo === 'comida' || p.tipo === 'postre') {
+          await this.push.notificarEmpleados(
+            Empleado.T_COCINERO,
+            'Hay nuevos pedidos para elaborar'
+          );
+        }
+
+        if (p.tipo === 'bebida') {
+          await this.push.notificarEmpleados(
+            Empleado.T_BARTENDER,
+            'Hay nuevos pedidos para elaborar'
+          );
+        }
         await this.pedidoService.modificar(p);
       }
     }
