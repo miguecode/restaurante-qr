@@ -1,0 +1,35 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+     <ion-title> Detalle cuenta </ion-title>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div class="cartas">
+      <div class="card carta-detalle-pedido">
+        <div *ngFor="let item of pedidosCliente">
+          <label><span>Producto: </span>{{ item.nombreProducto }}</label>
+          <label><span>Precio x unidad: </span>{{ item.precio }}</label>
+        </div>
+        <!-- <label><span>Propina: </span>{{ item.precio }}</label> -->
+        <label><span>Precio total: </span>{{ importeTotal }}</label>
+        <button class="btn btn-secondary boton-ver-detalle" >
+          Pagar
+        </button>
+      </div>
+    </div>
+  </div>
+</ion-content>
+
+
+

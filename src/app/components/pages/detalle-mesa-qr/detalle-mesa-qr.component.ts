@@ -26,6 +26,7 @@ import { Usuario } from 'src/app/classes/padres/usuario';
 import { Duenio } from 'src/app/classes/duenio';
 import { Supervisor } from 'src/app/classes/supervisor';
 import { firstValueFrom, isObservable } from 'rxjs';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-detalle-mesa-qr',
@@ -78,7 +79,8 @@ export class DetalleMesaQrComponent implements OnInit {
     private productoService: ProductoService,
     private pedidosService: PedidoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private apiService: ApiService
   ) {
     this.mostrarEstado = false;
     this.mostrarMenu = false;
@@ -225,10 +227,12 @@ export class DetalleMesaQrComponent implements OnInit {
   }
 
   async pedirCuenta(idMesa: number) {
+    this.apiService.notificarPedidoCuenta(Empleado.T_MOZO,`El cliente de la mesa solicito la cuenta `,idMesa);
     /*
       Aca deberia pasar hacia el boton de qr de propinas,
       para despues ir al detalle de pedido
     */
+    this.router.navigateByUrl(`/detalle-cuenta`);
   }
 
 }

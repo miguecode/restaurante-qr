@@ -214,6 +214,14 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
+    path: 'detalle-cuenta',
+    loadComponent: () =>
+      import('./components/pages/detalle-cuenta/detalle-cuenta.component').then(
+        (m) => m.DetalleCuentaComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
     path: '**',
     redirectTo: 'login',
     pathMatch: 'full',
