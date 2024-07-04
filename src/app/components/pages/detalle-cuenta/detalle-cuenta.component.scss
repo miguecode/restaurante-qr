@@ -135,14 +135,7 @@ span {
   font-weight: bold;
 }
 
-.btn-confirmar {
-  width: 95%;
-  height: 50px;
-  font-size: 27px;
-  background-color: #860106;
-  border-radius: 10px;
-  font-weight: bold;
-}
+
 // #endregion Footer
 
 // #region Card seleccionada
@@ -236,7 +229,7 @@ button label {
 }
 
 .carta-detalle-pedido {
-  height: 225px;
+  height: 425px;
 }
 
 .header-container {
@@ -283,4 +276,22 @@ button label {
 }
 .inicio button i {
   margin-right: 8%;
+}
+
+.precio{
+  font-weight: 900;
+  font-size: 35px;
+}
+
+.precioTotal{
+  font-size: 30px;
+}
+
+.btn-confirmar {
+  width: 95%;
+  height: 50px;
+  font-size: 27px;
+  background-color:#520305 ;
+  border-radius: 10px;
+  font-weight: bold;
 }

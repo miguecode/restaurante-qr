@@ -230,11 +230,10 @@ export class UsuarioService {
   public async iniciarSesion(usuario: Usuario) {
     try {
       await this.iniciarSesionAuth(usuario);
-<<<<<<< HEAD
-      await this.setToken();
-=======
+      //await this.setToken();
+
       // await this.setToken();
->>>>>>> fd4c8c503d29daca05d4f2ebd0737db6e2f3edeb
+
 
       const usuarioBd = await this.getUsuarioBd();
       if (

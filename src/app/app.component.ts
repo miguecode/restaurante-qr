@@ -29,7 +29,7 @@ export class AppComponent {
       source.base64
     );
     */
-    this.router.navigateByUrl('splash');
+    //this.router.navigateByUrl('splash');
   }
 
   ionViewDitEnter() {

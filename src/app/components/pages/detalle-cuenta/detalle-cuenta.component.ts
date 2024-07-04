@@ -29,13 +29,16 @@ export class DetalleCuentaComponent  implements OnInit {
     this.pedidoService.traerTodosObservable().subscribe((l) => {
       const fa = l.filter((p) => p.idCliente === usuario.id);
       this.pedidosCliente = fa; 
+      this.obtenerPrecioTotal();
     });    
-       
+    
+    console.log(this.importeTotal);
   }
 
   obtenerPrecioTotal(){
     this.pedidosCliente.forEach(p => {
       this.importeTotal += p.precio;
+      console.log(this.importeTotal);
     });
     //falta sumarle la propina
   }
