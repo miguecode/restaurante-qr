@@ -176,10 +176,19 @@ export class MesaService {
       return;
     }
 
-    // Esta libre
-    if (m.idCliente === 0) {
+    // Esta libre y el cliente NO tiene mesa
+    if (m.idCliente === 0 && cliente.idMesa === 0) {
       this.router.navigateByUrl(`/asignar-cliente-mesa-qr/${idMesa}`);
       return;
+    }
+
+    // Esta libre y el cliente SI tiene mesa
+    if (m.idCliente === 0 && cliente.idMesa !== 0) {
+      await this.apiService.notificarUnUsuario(
+        cliente,
+        `Tu Mesa asignada es la ${cliente.idMesa}`
+      );
+      throw new Error('Ya tenés una mesa asignada');
     }
 
     /* No esta en los 13 Puntos
