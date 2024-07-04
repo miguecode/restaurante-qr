@@ -149,15 +149,6 @@ export class MesaService {
       );
     }
 
-    // El Cliente ESTA vinculado a una Mesa
-    if (cliente.idMesa !== 0) {
-      this.apiService.notificarUnUsuario(
-        cliente,
-        `Tu Mesa asignada es la ${cliente.idMesa}`
-      );
-      throw new Error('Ya tenés asignada una Mesa');
-    }
-
     // El Cliente NO esta en Lista De Espera (Fila)
     if (cliente.estadoListaEspera === false) {
       throw new Error(
@@ -174,6 +165,13 @@ export class MesaService {
     // Esta ocupada y NO ES la mesa del Cliente
     if (m.idCliente !== 0 && m.idCliente !== cliente.id) {
       // this.router.navigateByUrl(`/estado-mesa-qr/${idMesa}`);
+      // El Cliente ESTA vinculado a una Mesa
+      if (cliente.idMesa !== 0) {
+        await this.apiService.notificarUnUsuario(
+          cliente,
+          `Tu Mesa asignada es la ${cliente.idMesa}`
+        );
+      }
       this.router.navigateByUrl(`/detalle-mesa-qr/${idMesa}`);
       return;
     }
