@@ -152,25 +152,20 @@ export class HomeComponent implements OnInit {
   }
 
   async ngOnInit() {
-    try {
-      this.mostrarSpinner = true;
-      this.router.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
-        .subscribe(async () => {
-          try {
-            this.mostrarSpinner = true;
-            await this.cargarDatosImportantes();
-          } catch (e: any) {
-            Swalert.toastError(e.message);
-            console.log(e.message);
-          } finally {
-            this.mostrarSpinner = false;
-          }
-        });
-    } catch (e: any) {
-      Swalert.toastError(e.message);
-      console.log(e.message);
-    }
+    this.mostrarSpinner = true;
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(async () => {
+        try {
+          this.mostrarSpinner = true;
+          await this.cargarDatosImportantes();
+        } catch (e: any) {
+          Swalert.toastError(e.message);
+          console.log(e.message);
+        } finally {
+          this.mostrarSpinner = false;
+        }
+      });
   }
 
   async cerrarSesion() {

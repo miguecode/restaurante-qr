@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -13,18 +13,20 @@ import {
 import { Cliente } from 'src/app/classes/cliente';
 import { Empleado } from 'src/app/classes/empleado';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { Usuario } from 'src/app/classes/padres/usuario';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { Producto } from 'src/app/classes/producto';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { ProductoService } from 'src/app/services/producto.service';
 import { ClienteService } from 'src/app/services/cliente.service';
-import { filter } from 'rxjs';
 import { MenuComponent } from '../menu/menu.component';
 import { Pedido } from 'src/app/classes/pedido';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { Estado } from 'src/app/classes/utils/enumerado';
+import { Usuario } from 'src/app/classes/padres/usuario';
+import { Duenio } from 'src/app/classes/duenio';
+import { Supervisor } from 'src/app/classes/supervisor';
+import { firstValueFrom, isObservable } from 'rxjs';
 
 @Component({
   selector: 'app-detalle-mesa-qr',
@@ -49,7 +51,9 @@ import { Estado } from 'src/app/classes/utils/enumerado';
   ],
 })
 export class DetalleMesaQrComponent implements OnInit {
-  usuario: Usuario | Cliente | undefined = undefined;
+  usuario: Usuario | Duenio | Supervisor | Empleado | Cliente | undefined =
+    undefined;
+  mesa: Mesa | undefined = undefined;
   mostrarSpinner: boolean = false;
   mostrarMenu: boolean = false;
   mostrarEstado: boolean = false;
@@ -60,10 +64,10 @@ export class DetalleMesaQrComponent implements OnInit {
   listaProductos: Producto[] = [];
   listaPedidos: Pedido[] = [];
   listaPedidosDeEstaMesa: Pedido[] = [];
-  idMesa: number = 0;
   estadoPedido: string = '';
+  idMesaParametros: any = '';
+  idMesa: number = 0;
 
-  usuarioEsCliente: boolean = false;
   usuarioEstaEnListaEspera: boolean = false;
   usuarioTieneMesa: boolean = false;
   usuarioTienePedido: boolean = false;
@@ -74,6 +78,7 @@ export class DetalleMesaQrComponent implements OnInit {
     private mesaService: MesaService,
     private productoService: ProductoService,
     private pedidosService: PedidoService,
+    private route: ActivatedRoute,
     private router: Router
   ) {
     this.mostrarEstado = false;
@@ -93,51 +98,57 @@ export class DetalleMesaQrComponent implements OnInit {
 
     this.pedidosService.traerTodosObservable().subscribe((l) => {
       this.listaPedidos = l;
+      console.log(this.listaPedidos);
       this.cargarPedidosDeEstaMesa;
       this.calcularEstadoPedido();
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     try {
       this.mostrarSpinner = true;
-      this.router.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
-        .subscribe(async () => {
-          try {
-            this.mostrarSpinner = true;
-            await this.cargarDatosImportantes();
-          } catch (e: any) {
-            Swalert.toastError(e.message);
-            console.log(e.message);
-          } finally {
-            this.mostrarSpinner = false;
-          }
-        });
+      const obs = this.route.params;
+
+      if (isObservable(obs)) {
+        const paramsPromise = await firstValueFrom(obs);
+        this.idMesaParametros = Number(paramsPromise['idMesa']);
+        this.mesa = await this.mesaService.traerPorId(this.idMesaParametros);
+        this.idMesa = this.mesa!.id;
+
+        console.log(this.mesa);
+
+        const usuario = await this.usuarioService.getUsuarioBd();
+        if (usuario instanceof Cliente) {
+          this.usuario = usuario;
+          console.log('entro aca');
+          console.log(usuario);
+          this.cargarDatosImportantes();
+        }
+      }
     } catch (e: any) {
       Swalert.toastError(e.message);
       console.log(e.message);
+    } finally {
+      this.mostrarSpinner = false;
     }
   }
 
   private async cargarDatosImportantes() {
-    this.usuario = await this.usuarioService.getUsuarioBd();
-
     if (this.usuario instanceof Cliente) {
-      this.idMesa = this.usuario.idMesa;
-      this.usuarioEsCliente = true;
-      this.usuarioEstaEnListaEspera = this.usuario.estadoListaEspera;
+      this.usuarioEstaEnListaEspera = this.usuario!.estadoListaEspera;
       this.mostrarEstado = false;
       this.mostrarMenu = false;
       await this.cargarPedidosDeEstaMesa();
       await this.calcularEstadoPedido();
+      console.log(this.listaPedidos);
+      console.log(this.listaPedidosDeEstaMesa);
     }
   }
 
   private async cargarPedidosDeEstaMesa() {
     if (this.idMesa > 0) {
       this.listaPedidosDeEstaMesa = this.listaPedidos.filter(
-        (pedido) => pedido.idMesa === this.idMesa
+        (pedido) => pedido.idMesa === this.mesa!.id
       );
     }
   }
