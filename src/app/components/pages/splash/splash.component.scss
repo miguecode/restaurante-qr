@@ -223,11 +223,11 @@ ion-content {
   background: url("../../../../assets/fondo.jpg");
 }
 
-.container img {
+#icono{
   -webkit-animation: bounce-in-bck 1.1s both;
   animation: bounce-in-bck 1.1s both;
-  height: 250px;
-  margin-top: 25%;
+  height: 375px;
+  margin-top: 65%;
 }
 
 .header {
@@ -248,10 +248,7 @@ ion-content {
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 100px;
-  height: 7%;
   width: 100%;
-  font-size: 2.2rem;
 }
 
 p.external-paragraph {
@@ -260,6 +257,17 @@ p.external-paragraph {
   font-family: "Baloo 2", sans-serif;
   margin: 3px;
   color: white;
+}
+
+#nombre {
+  font-size: 2.2rem;
+  margin-bottom: 14px;
+}
+
+#curso {
+  margin-bottom: 40px;
+  height: 7%;
+  font-size: 3rem;
 }
 
 /* Media Queries for different screen sizes */

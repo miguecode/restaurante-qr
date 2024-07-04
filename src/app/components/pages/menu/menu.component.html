@@ -1,0 +1,77 @@
+<div class="page-container">
+  <div *ngIf="mostrarSpinner" class="loader-container">
+    <span class="loader"></span>
+  </div>
+
+  <div *ngIf="!esperandoConfirmacion">
+    <!-- #region Listado -->
+    <div class="cartas">
+      <div *ngFor="let item of lista">
+        <div
+          class="card"
+          [ngClass]="{
+            'card-seleccionada': productoEstaSeleccionado(item)
+          }"
+        >
+          <div class="contenedor-flex">
+            <div class="fotos-card">
+              <img class="img-foto-1" [src]="item.fotoUno" />
+              <img class="img-foto-2" [src]="item.fotoDos" />
+              <img class="img-foto-3" [src]="item.fotoTres" />
+            </div>
+          </div>
+
+          <label
+            ><span class="nombre">{{ item.nombre }}</span></label
+          >
+          <label
+            ><span class="descripcion">{{ item.descripcion }}</span></label
+          >
+          <label
+            ><span class="precio">${{ item.precio }}</span></label
+          >
+          <label
+            ><span class="descripcion"
+              >{{ item.tiempo }} min. aprox.</span
+            ></label
+          >
+          <button
+            class="btn btn-secondary boton-agregar"
+            (click)="toggleAgregar(item)"
+          >
+            {{ productoEstaSeleccionado(item) ? "QUITAR" : "AGREGAR" }}
+          </button>
+        </div>
+      </div>
+      <br /><br />
+      @if (productosSeleccionados.length > 0) { <br />
+      <br />
+      }
+    </div>
+    <!-- #endregion Listado -->
+  </div>
+
+  <div *ngIf="esperandoConfirmacion" class="mensaje-informativo">
+    <i class="bi bi-check-circle-fill" style="font-size: 100px"></i>
+    <h1>Tu pedido está pendiente de confirmación</h1>
+    <p>
+      La preparación del pedido comenzará una vez que el <span>mozo</span> lo
+      confirme. Recordá que <span>escaneando el código QR de tu mesa</span>, vas
+      a poder ir viendo el <span>estado actual de tu pedido</span>.
+    </p>
+  </div>
+</div>
+
+<div class="footer" *ngIf="!esperandoConfirmacion">
+  <div *ngIf="productosSeleccionados.length > 0" class="info-pedido">
+    <label class="importe">Importe: ${{ importe }}</label>
+    <label>Demora: {{ tiempo }} min.</label>
+  </div>
+  <button
+    class="btn-confirmar"
+    (click)="confirmarPedido()"
+    [disabled]="productosSeleccionados.length === 0"
+  >
+    Confirmar Pedido
+  </button>
+</div>

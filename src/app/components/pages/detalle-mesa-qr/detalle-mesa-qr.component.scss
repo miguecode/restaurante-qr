@@ -1,0 +1,167 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Baloo 2", sans-serif;
+}
+
+// #region Header
+ion-toolbar {
+  --background: #1e1e1e;
+}
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e1e1e;
+}
+.titulo,
+.test-push {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40px;
+  margin: 5px;
+}
+.titulo label {
+  margin-top: -4%;
+  font-size: 35px;
+  font-weight: bold;
+  color: white;
+}
+.test-push {
+  position: absolute;
+  right: 2px;
+}
+.test-push button {
+  border: 0px solid black;
+  background-color: #860106;
+  color: white;
+  width: 80px;
+}
+// #endregion Header
+
+// #region Content
+ion-content {
+  --background: #860106;
+}
+.content-container {
+  height: 100%;
+  width: 100%;
+}
+.router-container {
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
+  grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
+  padding: 5px;
+  gap: 5px;
+}
+.router-container button {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0px solid black;
+  background: #1e1e1e;
+  color: #860106;
+  height: 100%;
+  width: 100%;
+  font-size: 40px;
+  font-weight: bold;
+}
+button label {
+  margin: -13px;
+}
+// #endregion Content
+
+// #region Loader
+.loader-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.772);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+.loader {
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  border: 16px solid #421213;
+  border-top: 16px solid #7d1216;
+  animation: rotation 1s linear infinite;
+}
+
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+// #endregion Loader
+
+.mensaje-informativo {
+  width: 95%;
+  height: 95%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  background-color: #1c1c1c;
+  border-radius: 10px;
+  color: #860106;
+  padding: 20px;
+  margin: 8px 8px 0px 8px;
+
+  h1 {
+    text-align: center;
+    font-size: 29px;
+    font-weight: bold;
+  }
+
+  p {
+    text-align: center;
+    font-size: 24px;
+  }
+
+  img {
+    margin-top: 15px;
+  }
+}
+
+.cerrar-sesion,
+.titulo,
+.test-push {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40px;
+  margin: 5px;
+}
+.cerrar-sesion {
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.cerrar-sesion button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.cerrar-sesion i {
+  margin-right: 8%;
+}
+
+span {
+  font-weight: bold;
+}

@@ -37,7 +37,16 @@
         {{ mensaje }}
       </p>
       <br />
-      <p>¿No tenés cuenta? <a [routerLink]="['/register']" routerLinkActive="router-link-active" >¡Registrate!</a></p>
+      <p>
+        ¿No tenés cuenta?
+        <a [routerLink]="['/register']" routerLinkActive="router-link-active"
+          >¡Regístrate!</a
+        >
+      </p>
+      <p>
+        O también podés
+        <a (click)="autocompletar('0')" id="anonimo">ingresar como anónimo</a>
+      </p>
     </form>
   </div>
 
@@ -47,52 +56,96 @@
       <h3 style="text-align: center">Accesos Rápidos</h3>
     </div>
     <div class="imagenes">
-      <figure>
-        <button
-          (click)="autocompletar('1')"
-          class="acceso-btn"
-          [disabled]="procesando"
-        >
-          <img id="accesoDueño" src="../../../../assets/images/dueño.png" />
-        </button>
-        Dueño
-      </figure>
-      <figure>
-        <button
-          (click)="autocompletar('2')"
-          class="acceso-btn"
-          [disabled]="procesando"
-        >
-          <img
-            id="accesoSupervisor"
-            src="../../../../assets/images/supervisor.png"
-          />
-        </button>
-        Supervisor
-      </figure>
-      <figure>
-        <button
-          (click)="autocompletar('3')"
-          class="acceso-btn"
-          [disabled]="procesando"
-        >
-          <img
-            id="accesoEmpleado"
-            src="../../../../assets/images/empleado.png"
-          />
-        </button>
-        Empleado
-      </figure>
-      <figure>
-        <button
-          (click)="autocompletar('4')"
-          class="acceso-btn"
-          [disabled]="procesando"
-        >
-          <img id="accesoCliente" src="../../../../assets/images/cliente.png" />
-        </button>
-        Cliente
-      </figure>
+      <div class="linea">
+        <figure>
+          <button
+            (click)="autocompletar('1')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img id="accesoDueño" src="../../../../assets/images/dueño.png" />
+          </button>
+          Dueño
+        </figure>
+        <figure>
+          <button
+            (click)="autocompletar('2')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img
+              id="accesoSupervisor"
+              src="../../../../assets/images/supervisor.png"
+            />
+          </button>
+          Supervisor
+        </figure>
+        <figure>
+          <button
+            (click)="autocompletar('3')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img
+              id="accesoCliente"
+              src="../../../../assets/images/cliente.png"
+            />
+          </button>
+          Cliente
+        </figure>
+      </div>
+
+      <div class="linea">
+        <figure>
+          <button
+            (click)="autocompletar('4')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img id="accesoEmpleado" src="../../../../assets/images/mozo.png" />
+          </button>
+          Mozo
+        </figure>
+        <figure>
+          <button
+            (click)="autocompletar('5')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img
+              id="accesoEmpleado"
+              src="../../../../assets/images/metre.png"
+            />
+          </button>
+          Metre
+        </figure>
+        <figure>
+          <button
+            (click)="autocompletar('6')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img
+              id="accesoEmpleado"
+              src="../../../../assets/images/cocinero.png"
+            />
+          </button>
+          Cocinero
+        </figure>
+        <figure>
+          <button
+            (click)="autocompletar('7')"
+            class="acceso-btn"
+            [disabled]="procesando"
+          >
+            <img
+              id="accesoEmpleado"
+              src="../../../../assets/images/bartender.png"
+            />
+          </button>
+          Bartender
+        </figure>
+      </div>
     </div>
   </div>
 </div>

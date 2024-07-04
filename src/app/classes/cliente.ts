@@ -1,11 +1,20 @@
 import { Usuario } from './padres/usuario';
+import { Estado } from './utils/enumerado';
 
 export class Cliente extends Usuario {
-  correoVerificado: boolean;
+  estado: Estado;
+  estadoListaEspera: boolean;
+  fechaListaEspera: Date;
+  // La idea seria que cuando se escanea el qr de lista de espera, se cambie el estadoListaEspera a true, y se inicialize la fecha del momento
+  idMesa: number;
 
   constructor() {
     super();
-    this.correoVerificado = false;
+    this.estado = Estado.pendiente;
+    this.rol = 'cliente';
+    this.estadoListaEspera = false;
+    this.fechaListaEspera = new Date();
+    this.idMesa = 0;
   }
 
   setId(id: number) {
@@ -22,6 +31,11 @@ export class Cliente extends Usuario {
       rol: cliente.rol,
       habilitado: cliente.habilitado,
       correo: cliente.correo,
+      estado: cliente.estado,
+      estadoListaEspera: cliente.estadoListaEspera.toString(),
+      fechaListaEspera: cliente.fechaListaEspera.toISOString(),
+      token: cliente.token,
+      idMesa: cliente.idMesa,
     };
   }
   static parseDoc(doc: any) {
@@ -35,6 +49,11 @@ export class Cliente extends Usuario {
     cliente.habilitado = JSON.parse(doc.habilitado);
     cliente.correo = doc.correo;
     cliente.correo = doc.correo;
+    cliente.estado = doc.estado;
+    cliente.estadoListaEspera = JSON.parse(doc.estadoListaEspera);
+    cliente.fechaListaEspera = new Date(doc.fechaListaEspera);
+    cliente.token = doc.token;
+    cliente.idMesa = doc.idMesa;
     return cliente;
   }
   static parseDocArray(doc: any) {
@@ -47,6 +66,11 @@ export class Cliente extends Usuario {
     cliente.rol = doc['rol'];
     cliente.habilitado = doc['habilitado'];
     cliente.correo = doc['correo'];
+    cliente.estado = doc['estado'];
+    cliente.estadoListaEspera = JSON.parse(doc['estadoListaEspera']);
+    cliente.fechaListaEspera = new Date(doc['fechaListaEspera']);
+    cliente.token = doc['token'];
+    cliente.idMesa = doc['idMesa'];
     return cliente;
   }
 }

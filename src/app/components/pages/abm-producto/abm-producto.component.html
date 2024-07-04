@@ -36,6 +36,7 @@
             <label><span>DESCRIPCIÓN: </span>{{ item.descripcion }}</label>
             <label><span>TIEMPO: </span>{{ item.tiempo }} min.</label>
             <label><span>PRECIO: </span>${{ item.precio }}</label>
+            <label><span>TIPO: </span>{{ item.tipo | capitalize }}</label>
             <img class="img-qr" [src]="item.qr" />
             <!-- Muestro sólo la foto 1 -->
             <img class="img-foto" [src]="item.fotoUno" />

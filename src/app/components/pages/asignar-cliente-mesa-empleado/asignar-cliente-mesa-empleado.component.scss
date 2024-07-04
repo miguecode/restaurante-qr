@@ -1,0 +1,144 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Baloo 2", sans-serif;
+}
+
+// #region Header
+ion-header {
+  --background: #1e1e1e;
+}
+.header-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #1e1e1e;
+}
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 40px;
+  margin: 5px;
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.inicio button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.inicio i {
+  margin-right: 8%;
+}
+.cambiar-cliente {
+  position: absolute;
+  right: 2px;
+  top: 2px;
+  height: 40px;
+  margin: 5px;
+}
+.cambiar-cliente button {
+  background: #323232;
+  border: solid 2px rgb(65, 158, 65);
+  height: 40px;
+  width: 280px;
+}
+.cambiar-cliente label {
+  margin: 7px;
+}
+// #endregion Header
+
+// #region Listado Cliente
+.card-cliente {
+  background-color: #3d1214;
+  color: #fff;
+  padding: 12px;
+  margin-bottom: 15px;
+  height: 235px;
+}
+.card-cliente button {
+  position: absolute;
+}
+.cliente-foto {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  top: 12px;
+  right: 12px;
+}
+// #endregion Listado Cliente
+
+// #region Listado Mesa
+.card-mesa {
+  background-color: #3d1214;
+  color: #fff;
+  padding: 12px;
+  margin-bottom: 15px;
+  height: 195px;
+}
+.card-mesa button {
+  position: absolute;
+}
+.mesa-qr {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  bottom: 12px;
+  right: 40%;
+  border: 2px solid black;
+}
+.mesa-foto {
+  position: absolute;
+  height: 70px;
+  width: 70px;
+  border-radius: 50%;
+  top: 12px;
+  right: 12px;
+}
+// #endregion Listado Mesa
+
+.boton-seleccionar {
+  position: absolute;
+  background: #323232;
+  border: solid 2px rgb(208, 151, 58);
+  height: 40px;
+  width: 100px;
+  right: 12px;
+  bottom: 12px;
+}
+
+// #region Content
+ion-content {
+  --background: #860106;
+}
+.content-container {
+  width: 100%;
+  padding: 5px;
+}
+// #endregion Content
+
+// #region Footer
+ion-footer {
+  --background: #1e1e1e;
+}
+.footer-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.boton-asignar {
+  background: #323232;
+  border: solid 2px rgb(58, 86, 208);
+  height: 40px;
+  width: 95.25%;
+}
+// #endregion Footer
+
+.id-span {
+  font-size: 25px;
+}

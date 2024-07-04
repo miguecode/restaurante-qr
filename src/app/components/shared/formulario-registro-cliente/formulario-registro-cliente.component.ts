@@ -1,28 +1,36 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Cliente } from 'src/app/classes/cliente';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 import { ClienteService } from 'src/app/services/cliente.service';
-import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
+import { confirmarClaveValidator } from 'src/app/classes/utils/claveValidator';
+import { ApiService } from 'src/app/services/api/api.service';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 
 @Component({
   selector: 'app-formulario-registro-cliente',
   standalone: true,
-  imports: [QrScannerComponent, CommonModule, ReactiveFormsModule],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './formulario-registro-cliente.component.html',
   styleUrls: ['./formulario-registro-cliente.component.scss'],
 })
-export class FormularioRegistroClienteComponent  implements OnInit {
-
+export class FormularioRegistroClienteComponent implements OnInit {
   @Input() modoAlta: boolean = false;
   @Input() modoBaja: boolean = false;
   @Input() modoModificar: boolean = false;
   @Input() cliente: Cliente | undefined = undefined;
-
 
   formRegistrar!: FormGroup;
   formAlta!: FormGroup;
@@ -55,10 +63,20 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     return this.formAlta.get('clave') as FormControl;
   }
 
-  constructor(private clienteService: ClienteService, private router: Router) {}
+  get repetirClave() {
+    return this.formAlta.get('repetirClave') as FormControl;
+  }
+
+  constructor(
+    private clienteService: ClienteService,
+    private router: Router,
+    private apiServ: ApiService,
+    private barcodeScanningService: BarcodeScanningService
+  ) {}
 
   private crearFormGroup() {
-      this.formAlta = new FormGroup({
+    this.formAlta = new FormGroup(
+      {
         nombre: new FormControl('', [
           Validators.required,
           Validators.minLength(2),
@@ -71,7 +89,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
           Validators.maxLength(20),
           this.validarPalabra(),
         ]),
-        dni: new FormControl(0, [
+        dni: new FormControl('', [
           Validators.required,
           Validators.pattern(/^\d+$/),
           Validators.minLength(7),
@@ -87,8 +105,13 @@ export class FormularioRegistroClienteComponent  implements OnInit {
           Validators.required,
           Validators.minLength(6),
         ]),
-      });
-  
+        repetirClave: new FormControl('', [
+          Validators.required,
+          Validators.minLength(6),
+        ]),
+      },
+      confirmarClaveValidator()
+    );
   }
 
   public ngOnInit() {
@@ -96,10 +119,10 @@ export class FormularioRegistroClienteComponent  implements OnInit {
   }
 
   private async alta() {
+    await this.apiServ.notificarRegistro();
     await this.clienteService.alta(this.getCliente());
     await Swalert.toastSuccess('Alta realizada exitosamente');
   }
- 
 
   private getCliente() {
     let cliente = new Cliente();
@@ -113,7 +136,7 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     }
     cliente.setCorreo(this.correo.value);
     cliente.setClave(this.clave.value);
-    
+
     return cliente;
   }
 
@@ -128,9 +151,9 @@ export class FormularioRegistroClienteComponent  implements OnInit {
       } else {
         await this.alta();
       }
-      
+
       setTimeout(() => {
-        this.goTo('login')
+        this.goTo('login');
       }, 1500);
     } catch (e: any) {
       console.log(e.message);
@@ -182,8 +205,9 @@ export class FormularioRegistroClienteComponent  implements OnInit {
     }
   }
 
-  public recibirDataDniCuilQR($event: string) {
-    const source = TraductorQr.DniEjemplarA($event);
+  public async escanearDniCuil() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    const source = TraductorQr.DniEjemplarA(dataQr);
     this.dni.setValue(source.dni);
     this.dni.markAsDirty();
   }
@@ -237,14 +261,14 @@ export class FormularioRegistroClienteComponent  implements OnInit {
           return 'Formato inválido';
         case 'email':
           return 'Email invalido';
+        case 'noCoincide':
+          return 'La contraseña no coincide con la anterior';
       }
     }
     return null;
   }
 
-  goTo(path : string)
-  {
+  goTo(path: string) {
     this.router.navigate([path]);
   }
-
 }

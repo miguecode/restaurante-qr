@@ -9,6 +9,8 @@ import { AuthService } from './firebase/auth.service';
 import { EmpleadoService } from './empleado.service';
 import { ClienteService } from './cliente.service';
 import { Usuario } from '../classes/padres/usuario';
+import { PushNotificationService } from './utils/push-notification.service';
+import { Estado } from '../classes/utils/enumerado';
 
 @Injectable({
   providedIn: 'root',
@@ -30,36 +32,33 @@ export class UsuarioService {
     private duenioService: DuenioService,
     private supervisorService: SupervisorService,
     private empleadoService: EmpleadoService,
-    private clienteService: ClienteService
+    private clienteService: ClienteService,
+    private pushNotificationService: PushNotificationService
   ) {
-    /* Todavia no esta desarrollado
     this.duenioService.traerTodosObservable().subscribe((l) => {
-        this.duenios = l;
-        this.flagObservables[0] = true;
+      this.duenios = l;
+      this.flagObservables[0] = true;
     });
-    */
 
-    /* Todavia no esta desarrollado
     this.supervisorService.traerTodosObservable().subscribe((l) => {
-        this.supervisores = l;
-        this.flagObservables[1] = true;
+      this.supervisores = l;
+      this.flagObservables[1] = true;
     });
-    */
 
     this.empleadoService.traerTodosObservable().subscribe((l) => {
       this.empleados = l;
       this.flagObservables[2] = true;
     });
 
-    /* Todavia no esta desarrollado
-    this.clienteService.traerTodosObservable().subscribe((l) => {
-        this.clientes = l;
+    this.clienteService
+      .traerTodosObservable()
+      .subscribe((clientes: Cliente[]) => {
+        this.clientes = clientes;
         this.flagObservables[3] = true;
-    });
-    */
+      });
   }
 
-  private traerTodos() {
+  public traerTodos() {
     return new Promise<(Duenio | Supervisor | Empleado | Cliente)[]>(
       (resolver) => {
         if (
@@ -113,7 +112,7 @@ export class UsuarioService {
 
     return verificoCorreo;
   }
-  private async getUsuarioBd() {
+  public async getUsuarioBd() {
     const correo = await this.getCorreoAuth();
     const lista = await this.traerTodos();
     let usuario: (Duenio | Supervisor | Empleado | Cliente) | undefined =
@@ -145,26 +144,89 @@ export class UsuarioService {
     return usuario.rol;
   }
 
+  private async setToken() {
+    let usuario = await this.getUsuarioBd();
+
+    if (usuario.token.length > 0) {
+      return;
+    }
+
+    await this.pushNotificationService.crearToken();
+    usuario.token = this.pushNotificationService.getToken();
+
+    if (usuario instanceof Duenio) {
+      await this.duenioService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Supervisor) {
+      await this.supervisorService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Empleado) {
+      await this.empleadoService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Cliente) {
+      await this.clienteService.modificarDoc(usuario);
+      return;
+    }
+  }
+  private async deleteToken() {
+    let usuario = await this.getUsuarioBd();
+
+    if (usuario.token.length === 0) {
+      return;
+    }
+
+    usuario.token = '';
+
+    if (usuario instanceof Duenio) {
+      await this.duenioService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Supervisor) {
+      await this.supervisorService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Empleado) {
+      await this.empleadoService.modificarDoc(usuario);
+      return;
+    }
+
+    if (usuario instanceof Cliente) {
+      await this.clienteService.modificarDoc(usuario);
+      return;
+    }
+  }
+
   public async cerrarSesion() {
-    return this.cerrarSesionAuth();
+    await this.cerrarSesionAuth();
+    await this.deleteToken();
   }
   public async iniciarSesion(usuario: Usuario) {
     try {
       await this.iniciarSesionAuth(usuario);
+      // await this.setToken();
 
-      /* Aca se valida si verifico su correo, lo dejo comentado porque al hacer el Alta todavia no envia el correo de verficacion
-      const verificoCorreoAuth = await this.getVerificoCorreoAuth();
-      if (verificoCorreoAuth === false) {
-        throw new Error('Todavia no verificaste tu correo');
-      }
-      */
-
-      /* Aca se valida si fue habilitado o no por la entidad superior (jefe), todavia no me fije bien en el pdf como es eso, pero lo dejo comentado.
       const usuarioBd = await this.getUsuarioBd();
-      if (usuarioBd instanceof Empleado && usuarioBd.habilitado === false) {
-        throw new Error('Tu cuenta se encuentra deshabilitada');
+      if (
+        usuarioBd instanceof Cliente &&
+        usuarioBd.estado === Estado.pendiente
+      ) {
+        throw new Error('pendiente');
+      } else {
+        if (
+          usuarioBd instanceof Cliente &&
+          usuarioBd.estado === Estado.rechazado
+        ) {
+          throw new Error('rechazada');
+        }
       }
-      */
     } catch (e: any) {
       await this.cerrarSesionAuth();
       throw new Error(e.message);

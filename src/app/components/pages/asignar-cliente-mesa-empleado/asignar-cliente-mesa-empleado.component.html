@@ -1,0 +1,175 @@
+<ion-header>
+  <ion-toolbar>
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+      <div *ngIf="clienteSeleccionado !== undefined">
+        <div class="cambiar-cliente">
+          <button
+            class="btn btn-primary"
+            (click)="
+              clienteSeleccionado = undefined;
+              mesaSeleccionada = undefined;
+              mostrarClientes = true;
+              mostrarMesas = false
+            "
+          >
+            <label>Cambiar Cliente</label>
+          </button>
+        </div>
+      </div>
+    </div>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <!-- #region Listado Clientes -->
+    <div *ngIf="mostrarClientes">
+      <div *ngFor="let item of listaClientes">
+        <div class="card card-cliente">
+          <label style="text-align: center"
+            ><span class="id-span">{{ item.id }}</span></label
+          >
+          <label><span>NOMBRE: </span>{{ item.nombre | capitalize }}</label>
+          <label><span>APELLIDO: </span>{{ item.apellido | capitalize }}</label>
+          <label><span>DNI: </span>{{ item.dni }}</label>
+          <img class="cliente-foto" [src]="item.foto" />
+          <label
+            ><span>ESTADO: </span>
+            {{
+              item.habilitado === true ? "Habilitado" : "Inhabilitado"
+            }}</label
+          >
+          <label><span>CORREO: </span>{{ item.correo }}</label>
+          <button
+            class="btn btn-secondary boton-seleccionar"
+            (click)="
+              clienteSeleccionado = item;
+              mostrarClientes = false;
+              mostrarMesas = true
+            "
+          >
+            Seleccionar
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion Listado Clientes -->
+
+    <!-- #region Listado Mesas -->
+    <div *ngIf="mostrarMesas">
+      <div *ngFor="let item of listaMesas">
+        <div class="card card-mesa">
+          <label style="text-align: center"
+            ><span class="id-span">{{ item.id }}</span></label
+          >
+          <label><span>CANT-CLI: </span>{{ item.cantidadClientes }}</label>
+          <label><span>CANT-MÁX: </span>{{ item.cantidadMaxima }}</label>
+          <label
+            ><span>TIPO: </span
+            >{{
+              (item.tipo === "estandar" ? "estándar" : item.tipo) | capitalize
+            }}</label
+          >
+          <img class="mesa-qr" [src]="item.qr" />
+          <img class="mesa-foto" [src]="item.foto" />
+          <button
+            class="btn btn-secondary boton-seleccionar"
+            (click)="
+              mesaSeleccionada = item;
+              mostrarClientes = false;
+              mostrarMesas = false
+            "
+          >
+            Seleccionar
+          </button>
+        </div>
+      </div>
+    </div>
+    <!-- #endregion Listado Mesas -->
+
+    <!-- #region Confirmacion -->
+    <div
+      *ngIf="
+        clienteSeleccionado !== undefined && mesaSeleccionada !== undefined
+      "
+    >
+      <div class="card card-mesa">
+        <label style="text-align: center">
+          <span class="id-span">{{ mesaSeleccionada.id }} </span>
+        </label>
+        <label>
+          <span>CANT-CLI: </span>
+          {{ mesaSeleccionada.cantidadClientes }}
+        </label>
+        <label>
+          <span>CANT-MÁX: </span>
+          {{ mesaSeleccionada.cantidadMaxima }}
+        </label>
+        <label>
+          <span>TIPO: </span>
+          {{
+            (mesaSeleccionada.tipo === "estandar"
+              ? "estándar"
+              : mesaSeleccionada.tipo
+            ) | capitalize
+          }}
+        </label>
+        <img class="mesa-qr" [src]="mesaSeleccionada.qr" />
+        <img class="mesa-foto" [src]="mesaSeleccionada.foto" />
+      </div>
+
+      <div class="card card-cliente">
+        <label style="text-align: center">
+          <span class="id-span">
+            {{ clienteSeleccionado.id }}
+          </span>
+        </label>
+        <label>
+          <span>NOMBRE: </span>
+          {{ clienteSeleccionado.nombre | capitalize }}
+        </label>
+        <label>
+          <span>APELLIDO: </span>
+          {{ clienteSeleccionado.apellido | capitalize }}
+        </label>
+        <label>
+          <span>DNI: </span>
+          {{ clienteSeleccionado.dni }}
+        </label>
+        <img class="cliente-foto" [src]="clienteSeleccionado.foto" />
+        <label>
+          <span>ESTADO: </span>
+          {{
+            clienteSeleccionado.habilitado === true
+              ? "Habilitado"
+              : "Inhabilitado"
+          }}
+        </label>
+        <label>
+          <span>CORREO: </span>
+          {{ clienteSeleccionado.correo }}
+        </label>
+      </div>
+    </div>
+    <!-- #endregion Confirmacion -->
+  </div>
+</ion-content>
+
+<div
+  *ngIf="clienteSeleccionado !== undefined && mesaSeleccionada !== undefined"
+>
+  <ion-footer>
+    <ion-toolbar>
+      <div class="footer-container">
+        <button class="btn btn-primary boton-asignar" (click)="vincular()">
+          Asignar
+        </button>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</div>

@@ -1,29 +1,15 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import {
-  BarcodeScanner,
-  BarcodeFormat,
-  LensFacing,
-} from '@capacitor-mlkit/barcode-scanning';
+import { Injectable } from '@angular/core';
+import { BarcodeScanner } from '@capacitor-mlkit/barcode-scanning';
 
-// https://capawesome.io/plugins/mlkit/barcode-scanning/
-
-@Component({
-  selector: 'app-qr-scanner',
-  templateUrl: './qr-scanner.component.html',
-  styleUrls: ['./qr-scanner.component.scss'],
-  standalone: true,
+@Injectable({
+  providedIn: 'root',
 })
-export class QrScannerComponent implements OnInit {
-  @Input() nombreBtn: string = 'Escanear QR';
-  @Output() handlerData: EventEmitter<string> = new EventEmitter<string>();
-
-  constructor() {}
-
-  // Es necesario instalar GoogleBarcodeScannerModule al momento de crear el componente
-  public async ngOnInit() {
-    await this.instalarGoogleBarcodeScannerModule();
+export class BarcodeScanningService {
+  constructor() {
+    this.instalarGoogleBarcodeScannerModule();
   }
 
+  // Es necesario instalar GoogleBarcodeScannerModule al momento de iniciar la App
   private async isGoogleBarcodeScannerModuleAvailable() {
     const { available } =
       await BarcodeScanner.isGoogleBarcodeScannerModuleAvailable();
@@ -39,20 +25,9 @@ export class QrScannerComponent implements OnInit {
     }
   }
 
-  public async scan() {
-    try {
-      /* Usarlo sin indicar el formato, para poder escanear cualquier QR
-      const { barcodes } = await BarcodeScanner.scan({
-        formats: [BarcodeFormat.QrCode],
-      });
-      */
-      const { barcodes } = await BarcodeScanner.scan();
-      this.handlerData.emit(JSON.stringify(barcodes));
-      return barcodes;
-    } catch (e: any) {
-      console.log(e.message);
-      return undefined; // Este return es para que no aparezca el subrayado dorado en el metodo
-    }
+  public async escanearQr() {
+    const { barcodes } = await BarcodeScanner.scan();
+    return JSON.stringify(barcodes);
   }
 
   // #region No se utilzan, por ahora...

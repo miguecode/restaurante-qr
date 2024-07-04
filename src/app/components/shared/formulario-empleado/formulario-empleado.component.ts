@@ -13,11 +13,11 @@ import { Empleado } from 'src/app/classes/empleado';
 import { EmpleadoService } from 'src/app/services/empleado.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
-import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { IonContent } from '@ionic/angular/standalone';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 
 @Component({
   selector: 'app-formulario-empleado',
@@ -28,7 +28,6 @@ import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
     IonContent,
     FormsModule,
     ReactiveFormsModule,
-    QrScannerComponent,
     JsonPipe,
     CapitalizePipe,
     NgFor,
@@ -121,7 +120,10 @@ export class FormularioEmpleadoComponent implements OnInit {
     return this.formBaja.get('clave') as FormControl;
   }
 
-  constructor(private empleadoService: EmpleadoService) {}
+  constructor(
+    private empleadoService: EmpleadoService,
+    private barcodeScanningService: BarcodeScanningService
+  ) {}
 
   private crearFormGroup() {
     if (this.modoAlta) {
@@ -285,9 +287,15 @@ export class FormularioEmpleadoComponent implements OnInit {
       console.log(e.message);
     }
   }
+<<<<<<< HEAD
 
   public recibirDataDniCuilQR($event: string) {
     const source = TraductorQr.DniEjemplarA($event);
+=======
+  public async escanearDniCuil() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    const source = TraductorQr.DniEjemplarA(dataQr);
+>>>>>>> master
     this.dni.setValue(source.dni);
     this.cuil.setValue(source.cuil);
     this.dni.markAsDirty();

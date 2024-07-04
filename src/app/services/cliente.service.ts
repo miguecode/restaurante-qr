@@ -25,6 +25,18 @@ export class ClienteService {
     });
   }
 
+  public traerTodos() {
+    return new Promise<Cliente[]>((resolver) => {
+      if (this.flagObservable === true) {
+        resolver(this.clientes);
+      }
+
+      setTimeout(() => {
+        resolver(this.clientes);
+      }, 5000); // Este valor se puede bajar, pero no mucho
+    });
+  }
+
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }
@@ -32,7 +44,7 @@ export class ClienteService {
   private async registrarAuth(cliente: Cliente) {
     try {
       await this.authService.registrar(cliente.correo, cliente.clave);
-    } catch (e : any) {
+    } catch (e: any) {
       throw new Error(e.message);
     }
   }
@@ -93,7 +105,7 @@ export class ClienteService {
     }
   }
 
-  private async modificarDoc(cliente: Cliente) {
+  public async modificarDoc(cliente: Cliente) {
     const doc = Cliente.toDoc(cliente);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }
@@ -155,8 +167,6 @@ export class ClienteService {
       .traerPorId(doc.id, this.col)
       .pipe(map((doc) => Cliente.parseDoc(doc)));
   }
-<<<<<<< HEAD
+
 }
-=======
-}
->>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
+

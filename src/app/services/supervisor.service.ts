@@ -93,7 +93,7 @@ export class SupervisorService {
     console.log(doc);
     return this.firestoreService.insertarConId(this.col, doc.id, doc);
   }
-  private async modificarDoc(supervisor: Supervisor) {
+  public async modificarDoc(supervisor: Supervisor) {
     const doc = Supervisor.toDoc(supervisor);
     await this.firestoreService.modificar(this.col, doc.id, doc);
   }

@@ -13,11 +13,11 @@ import { Duenio } from 'src/app/classes/duenio';
 import { DuenioService } from 'src/app/services/duenio.service';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
-import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { JsonPipe, NgFor, NgIf } from '@angular/common';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { IonContent } from '@ionic/angular/standalone';
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
 
 @Component({
   selector: 'app-formulario-duenio',
@@ -28,7 +28,6 @@ import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
     IonContent,
     FormsModule,
     ReactiveFormsModule,
-    QrScannerComponent,
     JsonPipe,
     CapitalizePipe,
     NgFor,
@@ -111,7 +110,10 @@ export class FormularioDuenioComponent implements OnInit {
     return this.formBaja.get('clave') as FormControl;
   }
 
-  constructor(private duenioService: DuenioService) {}
+  constructor(
+    private duenioService: DuenioService,
+    private barcodeScanningService: BarcodeScanningService
+  ) {}
 
   private crearFormGroup() {
     if (this.modoAlta) {
@@ -286,8 +288,9 @@ export class FormularioDuenioComponent implements OnInit {
       console.log(e.message);
     }
   }
-  public recibirDataDniCuilQR($event: string) {
-    const source = TraductorQr.DniEjemplarA($event);
+  public async escanearDniCuil() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    const source = TraductorQr.DniEjemplarA(dataQr);
     this.dni.setValue(source.dni);
     this.cuil.setValue(source.cuil);
     this.dni.markAsDirty();

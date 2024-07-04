@@ -1,34 +1,192 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>La Comanda</ion-title>
+    <div class="header-container">
+      <div class="cerrar-sesion">
+        <button
+          *ngIf="!mostrarMenu"
+          class="btn btn-primary"
+          (click)="cerrarSesion()"
+        >
+          <i class="bi bi-box-arrow-left" style="font-size: 30px"></i>
+        </button>
+        <button
+          *ngIf="mostrarMenu"
+          class="btn btn-primary"
+          (click)="mostrarMenu = false"
+        >
+          <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+        </button>
+      </div>
+
+      <div class="titulo">
+        <label *ngIf="!mostrarMenu">La Comanda</label>
+        <label *ngIf="mostrarMenu">Menú</label>
+      </div>
+
+      <!-- <div class="test-push">
+        <button
+          *ngIf="!mostrarMenu"
+          class="btn btn-success"
+          routerLink="/push-notification"
+        >
+          Test PUSH
+        </button>
+      </div> -->
+    </div>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-title>La Comanda</ion-title>
-  </ion-header>
-  <div class="container-router">
-    <ion-button routerLink="/abm-duenio"
-      ><p>ABM<br />Dueño</p></ion-button
-    >
-    <ion-button routerLink="/abm-supervisor"
-      ><p>ABM<br />Supervisor</p></ion-button
-    >
-    <ion-button routerLink="/abm-empleado"
-      ><p>ABM<br />Empleado</p></ion-button
-    >
-    <ion-button routerLink="/abm-cliente"
-      ><p>ABM<br />Cliente</p></ion-button
-    >
-    <ion-button routerLink="/abm-mesa"
-      ><p>ABM<br />Mesa</p></ion-button
-    >
-    <ion-button routerLink="/abm-producto"
-      ><p>ABM<br />Producto</p></ion-button
-    >
-    <ion-button routerLink="/push-notification"
-      ><p>Push<br />Notifications</p></ion-button
-    >
+  <div class="content-container">
+    <div *ngIf="mostrarSpinner" class="loader-container">
+      <span class="loader"></span>
+    </div>
+
+    <div *ngIf="mostrarMenu">
+      <app-menu
+        [usuario]="usuario"
+        [lista]="listaProductos"
+        [mostrarSpinner]="mostrarSpinner"
+      ></app-menu>
+    </div>
+
+    <div *ngIf="!mostrarMenu" class="router-container">
+      <!-- #region Accesos de Dueño -->
+      <div *ngIf="!mostrarAbms && usuarioEsEsDuenio">
+        <button class="btn btn-primary" routerLink="/seccion-abms">
+          <label>Gestión</label>
+          <label>Entidades</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos de Dueño -->
+
+      <!-- #region Accesos de Supervisor -->
+      <div *ngIf="!mostrarAbms && usuarioEsSupervisor">
+        <button class="btn btn-primary" routerLink="/seccion-abms">
+          <label>Agregar</label>
+          <label>Empleado</label>
+        </button>
+      </div>
+      <div *ngIf="!mostrarAbms && usuarioEsSupervisor">
+        <button class="btn btn-primary" routerLink="/listado-encuestas">
+          <label>Encuestas</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos de Supervisor -->
+
+      <!-- #region Accesos de Empleado -->
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'mozo' || usuarioTipoEmpleado === 'metre')
+        "
+      >
+        <button class="btn btn-primary" routerLink="/abm-cliente">
+          <label>Agregar</label>
+          <label>Cliente</label>
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'cocinero' ||
+            usuarioTipoEmpleado === 'bartender')
+        "
+      >
+        <button class="btn btn-primary" routerLink="/abm-producto">
+          <label>Agregar</label>
+          <label>Plato o Bebida</label>
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          usuarioEsEmpleado &&
+          (usuarioTipoEmpleado === 'cocinero' ||
+            usuarioTipoEmpleado === 'bartender')
+        "
+      >
+        <button class="btn btn-primary" routerLink="/listado-pedidos-empleado">
+          <label>Listado de pedidos</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos de Empleado -->
+
+      <!-- #region Accesos De Cliente -->
+      <div
+        *ngIf="
+          usuarioEsCliente && !usuarioEstaEnListaEspera && !usuarioTieneMesa
+        "
+      >
+        <button class="btn btn-primary" (click)="escanearQrIngresoLocal()">
+          <label>Escanear código QR</label>
+          <label>de ingreso al local</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsCliente">
+        <!-- La línea comentada de abajo es para probar sin escanear -->
+        <button class="btn btn-primary" routerLink="/detalle-mesa-qr/4">
+          <!-- <button class="btn btn-primary" (click)="escanearQrMesa()"> -->
+          <label>Escanear código QR</label>
+          <label>de Mesa</label>
+        </button>
+      </div>
+
+      <div
+        *ngIf="
+          usuarioEsCliente && usuarioEstaEnListaEspera && !usuarioTieneMesa
+        "
+      >
+        <button class="btn btn-primary reloj">
+          <img src="../../../../assets/images/reloj.gif" />
+          <label>En lista de espera...</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos De Cliente -->
+
+      <!-- #region Accesos Metre -->
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'metre'">
+        <button
+          class="btn btn-primary"
+          routerLink="/asignar-cliente-mesa-empleado"
+        >
+          <label>Asignar</label>
+          <label>Mesa a Cliente</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos Metre -->
+
+      <!-- #region Accesos Mozo -->
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/confirmar-pedidos-mozo">
+          <label>Confirmar</label>
+          <label>Pedidos</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/entregar-pedidos-mozo">
+          <label>Entregar</label>
+          <label>Pedidos</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/confirmar-pagos-mozo">
+          <label>Confirmar</label>
+          <label>Pagos</label>
+        </button>
+      </div>
+
+      <div *ngIf="usuarioEsEmpleado && usuarioTipoEmpleado === 'mozo'">
+        <button class="btn btn-primary" routerLink="/listado-chat">
+          <label>Listado de</label>
+          <label>Mensajes</label>
+        </button>
+      </div>
+      <!-- #endregion Accesos Mozo -->
+    </div>
   </div>
 </ion-content>

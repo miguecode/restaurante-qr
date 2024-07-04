@@ -20,4 +20,28 @@ export class TraductorQr {
     const [entidad, nroId] = JSON.parse(dataQr)[0].displayValue.split('@');
     return { entidad: entidad, id: nroId };
   }
+
+  static producto(dataQr: string) {
+    const data = TraductorQr.entidadRestaurante(dataQr);
+    if (data.entidad === 'producto') {
+      return Number(data.id);
+    }
+    return false;
+  }
+
+  static mesa(dataQr: string) {
+    const data = TraductorQr.entidadRestaurante(dataQr);
+    if (data.entidad === 'mesa') {
+      return Number(data.id);
+    }
+    return false;
+  }
+
+  static ingresoLocal(dataQr: string) {
+    const data = TraductorQr.entidadRestaurante(dataQr);
+    if (data.entidad === 'sprestaurante' && data.id === 'ingresolocal') {
+      return true;
+    }
+    return false;
+  }
 }

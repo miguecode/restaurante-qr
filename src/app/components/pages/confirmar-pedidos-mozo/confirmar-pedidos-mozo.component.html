@@ -1,0 +1,97 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <div *ngIf="!verDetalle" class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+      <button
+        *ngIf="verDetalle"
+        class="btn btn-secondary boton-volver"
+        (click)="verDetalle = false"
+      >
+        Volver al listado
+      </button>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="page-container">
+    <div *ngIf="!verDetalle">
+      <!-- #region Listado -->
+      <div class="cartas">
+        <div *ngFor="let item of lista">
+          <div class="card carta-pedido">
+            <label style="text-align: center">
+              <span class="id-span">{{ item.id }}</span></label
+            >
+            <label><span>Mesa: </span>{{ item.idMesa }}</label>
+            <label><span>Cantidad Pedidos: </span>{{ item.cantidad }}</label>
+            <button
+              class="btn btn-secondary boton-ver-detalle"
+              (click)="verDetallePedido(item.idMesa)"
+            >
+              Ver detalle
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Listado -->
+    </div>
+
+    <div *ngIf="verDetalle && idMesaPedido !== undefined">
+      <!-- #region Detalle Pedido -->
+      <div class="cartas">
+        <div *ngFor="let item of detallePedidoMesa">
+          <div class="card carta-detalle-pedido">
+            <div class="contenedor-flex">
+              <div class="fotos-card">
+                <img class="img-foto-1" [src]="item.fotoUnoProducto" />
+                <img class="img-foto-2" [src]="item.fotoDosProducto" />
+                <img class="img-foto-3" [src]="item.fotoTresProducto" />
+              </div>
+            </div>
+
+            <label
+              ><span class="nombre">{{ item.nombreProducto }}</span></label
+            >
+            <label
+              ><span class="descripcion">{{
+                item.descripcionProducto
+              }}</span></label
+            >
+            <label
+              ><span class="precio">${{ item.precio }}</span></label
+            >
+            <label
+              ><span class="descripcion"
+                >{{ item.tiempo }} min. aprox.</span
+              ></label
+            >
+          </div>
+        </div>
+      </div>
+      <!-- #endregion Detalle Pedido -->
+    </div>
+  </div>
+</ion-content>
+
+<div *ngIf="verDetalle && idMesaPedido !== undefined">
+  <ion-footer>
+    <ion-toolbar>
+      <div class="footer-container">
+        <div class="info-pedido">
+          <label class="importe">Importe: ${{ importe }}</label>
+          <label>Demora: {{ tiempo }} min.</label>
+        </div>
+        <button class="btn-confirmar" (click)="confirmarPedido(idMesaPedido)">
+          Confirmar Pedido
+        </button>
+      </div>
+    </ion-toolbar>
+  </ion-footer>
+</div>

@@ -15,12 +15,17 @@ import { IonButton, IonIcon, IonContent } from '@ionic/angular/standalone';
 import { Cliente } from 'src/app/classes/cliente';
 import { ClienteService } from 'src/app/services/cliente.service';
 import { CommonModule, JsonPipe } from '@angular/common';
-import { QrScannerComponent } from '../qr-scanner/qr-scanner.component';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 <<<<<<< HEAD
 =======
 import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
+<<<<<<< HEAD
 >>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b
+=======
+import { ApiService } from 'src/app/services/api/api.service';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
+import { Estado } from 'src/app/classes/utils/enumerado';
+>>>>>>> master
 
 @Component({
   selector: 'app-formulario-cliente',
@@ -39,7 +44,6 @@ export class FormularioClienteComponent implements OnInit {
     IonContent,
     ReactiveFormsModule,
     CommonModule,
-    QrScannerComponent,
     CapitalizePipe,
     JsonPipe,
   ],
@@ -172,7 +176,10 @@ export class FormularioClienteComponent implements OnInit {
     return this.formBaja.get('clave') as FormControl;
   }
 
-  constructor(private clienteService: ClienteService) {}
+  constructor(
+    private clienteService: ClienteService,
+    private barcodeScanningService: BarcodeScanningService
+  ) {}
 
   private crearFormGroup() {
     if (this.modoAlta) {
@@ -329,6 +336,7 @@ export class FormularioClienteComponent implements OnInit {
     cliente.setApellido(this.apellido.value);
     cliente.setDni(this.dni.value);
 <<<<<<< HEAD
+<<<<<<< HEAD
     if(this.foto.value !== null){
       cliente.setFile(this.foto.value);
     }else{
@@ -340,6 +348,9 @@ export class FormularioClienteComponent implements OnInit {
       cliente.setUrlFoto(this.cliente.foto);
       console.log(this.cliente.foto)
 =======
+=======
+    cliente.estado = Estado.aceptado;
+>>>>>>> master
     if (this.foto.value !== null) {
       cliente.setFile(this.foto.value);
     } else {
@@ -463,11 +474,17 @@ export class FormularioClienteComponent implements OnInit {
     }
   }
 
+<<<<<<< HEAD
   public recibirDataDniCuilQR($event: string) {
 <<<<<<< HEAD
     this.nombre.setValue($event);
 =======
     const source = TraductorQr.DniEjemplarA($event);
+=======
+  public async escanearDniCuil() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    const source = TraductorQr.DniEjemplarA(dataQr);
+>>>>>>> master
     this.dni.setValue(source.dni);
     this.dni.markAsDirty();
 >>>>>>> 090c43b3d48424486267e8062d141e5a7cbdbe3b

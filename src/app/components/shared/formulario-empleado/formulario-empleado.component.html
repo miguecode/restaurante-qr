@@ -31,10 +31,15 @@
         <div class="form-group control-dni">
           <label>D.N.I.</label>
           <div class="input-group">
+            <!--
             <app-qr-scanner
               [nombreBtn]="'QR'"
               (handlerData)="recibirDataDniCuilQR($event)"
             ></app-qr-scanner>
+            -->
+            <button class="btn btn-primary" (click)="escanearDniCuil()">
+              QR
+            </button>
             <input class="form-control" type="text" formControlName="dni" />
           </div>
           @if (dni) { @if (dni.invalid && dni.dirty) {
@@ -49,10 +54,9 @@
         <div class="form-group control-cuil">
           <label>CUIL</label>
           <div class="input-group">
-            <app-qr-scanner
-              [nombreBtn]="'QR'"
-              (handlerData)="recibirDataDniCuilQR($event)"
-            ></app-qr-scanner>
+            <button class="btn btn-primary" (click)="escanearDniCuil()">
+              QR
+            </button>
             <input class="form-control" type="text" formControlName="cuil" />
           </div>
           @if (cuil) { @if (cuil.invalid && (cuil.dirty)) {
@@ -78,7 +82,7 @@
 
       <!-- #region Tipo -->
       <div class="form-group control-tipo">
-        <label>Tipo de empleado</label>
+        <label>Tipo</label>
         <select class="form-control" formControlName="tipo">
           <option value="">Seleccionar</option>
           <option *ngFor="let item of tiposEmpleados" [value]="item">
