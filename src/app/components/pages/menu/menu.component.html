@@ -51,13 +51,14 @@
     <!-- #endregion Listado -->
   </div>
 
-  <div class="container">
-    <div *ngIf="esperandoConfirmacion">
-      <button class="btn btn-primary reloj">
-        <img src="../../../../assets/images/reloj.gif" />
-        <label>Esperando confirmación...</label>
-      </button>
-    </div>
+  <div *ngIf="esperandoConfirmacion" class="mensaje-informativo">
+    <i class="bi bi-check-circle-fill" style="font-size: 100px"></i>
+    <h1>Tu pedido está pendiente de confirmación</h1>
+    <p>
+      La preparación del pedido comenzará una vez que el <span>mozo</span> lo
+      confirme. Recordá que <span>escaneando el código QR de tu mesa</span>, vas
+      a poder ir viendo el <span>estado actual de tu pedido</span>.
+    </p>
   </div>
 </div>
 
