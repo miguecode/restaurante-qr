@@ -2,7 +2,7 @@
   <div class="header-container">
     <div class="cerrar-sesion">
       <button
-        *ngIf="!mostrarMenu && !mostrarEstado"
+        *ngIf="!mostrarMenu && !mostrarEstado && !mostrarEscanearPropina"
         class="btn btn-primary"
         routerLink="/home"
       >
@@ -18,9 +18,17 @@
       </button>
 
       <button
-        *ngIf="mostrarEstado"
+        *ngIf="mostrarEstado && !mostrarEscanearPropina"
         class="btn btn-primary"
         (click)="mostrarEstado = false"
+      >
+        <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+      </button>
+
+      <button
+        *ngIf="mostrarEscanearPropina"
+        class="btn btn-primary"
+        (click)="mostrarEscanearPropina = false"
       >
         <i class="bi bi-arrow-left" style="font-size: 30px"></i>
       </button>
@@ -60,6 +68,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'pendiente'
@@ -78,6 +87,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'elaborando'
@@ -96,6 +106,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'terminado'
@@ -117,6 +128,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'entregado'
@@ -129,14 +141,31 @@
         El mozo dió por entregado tu pedido.
         <span>¡Esperamos que lo disfrutes!</span>
       </p>
-      <button class="btn-confirmar" (click)="pedirCuenta(idMesa)">
+      <button class="btn-confirmar" (click)="mostrarEscanearPropina = true">
         Pedir la cuenta
+      </button>
+    </div>
+
+    <div
+      *ngIf="!mostrarMenu && mostrarEscanearPropina"
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-piggy-bank-fill" style="font-size: 100px"></i>
+      <h1>¿Colaborarías con una propina?</h1>
+      <p>
+        Vas a poder elegir el monto de tu <span>propina</span> al
+        <span>escanear el código QR</span> que quieras. Cada uno representa un
+        monto basado en porcentajes.
+      </p>
+      <button class="btn-confirmar" (click)="escanearQrPropina()">
+        Escanear QR para la propina
       </button>
     </div>
 
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'pagado'
@@ -150,7 +179,10 @@
       </p>
     </div>
 
-    <div *ngIf="!mostrarMenu && !mostrarEstado" class="router-container">
+    <div
+      *ngIf="!mostrarMenu && !mostrarEstado && !mostrarEscanearPropina"
+      class="router-container"
+    >
       <!-- #region Accesos De Cliente -->
 
       <div *ngIf="usuarioTienePedido">

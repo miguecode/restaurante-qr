@@ -8,7 +8,9 @@ import {
   IonTitle,
   IonContent,
   IonButton,
-  IonLabel, IonFooter } from '@ionic/angular/standalone';
+  IonLabel,
+  IonFooter,
+} from '@ionic/angular/standalone';
 import { Cliente } from 'src/app/classes/cliente';
 import { Empleado } from 'src/app/classes/empleado';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -26,13 +28,16 @@ import { Usuario } from 'src/app/classes/padres/usuario';
 import { Duenio } from 'src/app/classes/duenio';
 import { Supervisor } from 'src/app/classes/supervisor';
 import { firstValueFrom, isObservable } from 'rxjs';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
+import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 
 @Component({
   selector: 'app-detalle-mesa-qr',
   templateUrl: './detalle-mesa-qr.component.html',
   styleUrls: ['./detalle-mesa-qr.component.scss'],
   standalone: true,
-  imports: [IonFooter, 
+  imports: [
+    IonFooter,
     RouterLink,
     IonLabel,
     IonButton,
@@ -56,6 +61,7 @@ export class DetalleMesaQrComponent implements OnInit {
   mostrarSpinner: boolean = false;
   mostrarMenu: boolean = false;
   mostrarEstado: boolean = false;
+  mostrarEscanearPropina: boolean = false;
 
   listaEmpleados: Empleado[] = [];
   listaClientes: Cliente[] = [];
@@ -78,10 +84,12 @@ export class DetalleMesaQrComponent implements OnInit {
     private productoService: ProductoService,
     private pedidosService: PedidoService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private barcodeScanningService: BarcodeScanningService
   ) {
     this.mostrarEstado = false;
     this.mostrarMenu = false;
+    this.mostrarEscanearPropina = false;
 
     this.clienteSerivice.traerTodosObservable().subscribe((l) => {
       this.listaClientes = l;
@@ -137,6 +145,8 @@ export class DetalleMesaQrComponent implements OnInit {
       this.usuarioEstaEnListaEspera = this.usuario!.estadoListaEspera;
       this.mostrarEstado = false;
       this.mostrarMenu = false;
+      this.mostrarEscanearPropina = false;
+
       await this.cargarPedidosDeEstaMesa();
       await this.calcularEstadoPedido();
       console.log(this.listaPedidos);
@@ -224,11 +234,22 @@ export class DetalleMesaQrComponent implements OnInit {
     }
   }
 
-  async pedirCuenta(idMesa: number) {
-    /*
-      Aca deberia pasar hacia el boton de qr de propinas,
-      para despues ir al detalle de pedido
-    */
-  }
+  async escanearQrPropina() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    const usuario = await this.usuarioService.getUsuarioBd();
+    // const source = TraductorQr.propina(dataQr);
 
+    try {
+      // await Swalert.toastSuccess(source.toString());
+      // if (source !== false) {
+      //   if (usuario instanceof Cliente) {
+      //     await this.mesaService.accesoDeClientePorQrMesa(source, usuario);
+      //   } else if (usuario instanceof Empleado) {
+      //     await this.mesaService.accesoDeEmpleadoPorQrMesa(source, usuario);
+      //   }
+      // }
+    } catch (e: any) {
+      Swalert.toastError(e.message);
+    }
+  }
 }

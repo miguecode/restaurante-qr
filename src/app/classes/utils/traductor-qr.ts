@@ -44,4 +44,6 @@ export class TraductorQr {
     }
     return false;
   }
+
+  static propina(dataQr: string) {}
 }
