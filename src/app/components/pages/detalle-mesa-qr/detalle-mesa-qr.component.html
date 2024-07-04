@@ -109,8 +109,17 @@
         ahora estás a la espera de que
         <span>el mozo te lo entregue a tu mesa</span>.
       </p>
+      <ion-footer>
+        <ion-toolbar>
+          <div class="footer-container">
+            <button class="btn-confirmar" (click)="confirmarRecepcion(idMesa)">
+              Confirmar recepción
+            </button>
+          </div>
+        </ion-toolbar>
+      </ion-footer>
     </div>
-
+   
     <div
       *ngIf="
         !mostrarMenu &&
@@ -126,6 +135,15 @@
         El mozo dió por entregado tu pedido.
         <span>¡Esperamos que lo disfrutes!</span>
       </p>
+      <ion-footer>
+        <ion-toolbar>
+          <div class="footer-container">
+            <button class="btn-confirmar" (click)="pedirCuenta(idMesa)">
+              Pedir la cuenta
+            </button>
+          </div>
+        </ion-toolbar>
+      </ion-footer>
     </div>
 
     <div
