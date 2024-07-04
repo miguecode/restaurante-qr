@@ -180,3 +180,44 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 - Diseño para los formularios actual
 <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/11c65cbc-51ac-4ca8-bc15-7d21688af133" width="500"/>
+
+-- --
+## 🛠️ Actualización de responsabilidades e informe (30/06)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Modificaciones y mejoras generales del Home
+#### 📅 Fecha de Inicio: 29/06
+#### ⌛ Fecha de Finalización: 30/06
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Modificaciones y mejoras generales de la API de los push notifiactions
+#### 📅 Fecha de Inicio: 29/06
+#### ⌛ Fecha de Finalización: 30/06
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Punto 1
+- ✔️ Punto 2
+#### 📅 Fecha de Inicio: 29/06
+#### ⌛ Fecha de Finalización: 30/06
+
+## 🛠️ Actualización de responsabilidades e informe (03/07)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Punto 4 (Grupal)
+- ✔️ Punto 5 (Grupal)
+#### 📅 Fecha de Inicio: 29/06
+#### ⌛ Fecha de Finalización: 30/06
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Punto 4 (Grupal)
+- ✔️ Punto 5 (Grupal)
+- ✔️ Punto 6 (la parte del Chat)
+- ✔️ Punto 8 (Grupal)
+#### 📅 Fecha de Inicio: 29/06
+#### ⌛ Fecha de Finalización: 30/06
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Punto 3
+- ✔️ Punto 4 (Grupal)
+- ✔️ Punto 5 (Grupal)
+- ✔️ Punto 9 (Sin la parte del Mozo)
+#### 📅 Fecha de Inicio: 29/06
+#### ⌛ Fecha de Finalización: 30/06
