@@ -67,6 +67,11 @@
           <label>Empleado</label>
         </button>
       </div>
+      <div *ngIf="!mostrarAbms && usuarioEsSupervisor">
+        <button class="btn btn-primary" routerLink="/listado-encuestas">
+          <label>Encuestas</label>
+        </button>
+      </div>
       <!-- #endregion Accesos de Supervisor -->
 
       <!-- #region Accesos de Empleado -->

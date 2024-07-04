@@ -1,0 +1,105 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+      <ion-title> Realizar Encuesta </ion-title>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <!-- #region Detalle -->
+    <div class="card detalle-encuesta">
+      <div class="form-group">
+        <label>
+          <span>ID Usuario: {{ encuesta.idUsuario }}</span>
+        </label>
+        <label>
+          <span>Fecha: {{ formatoDia(encuesta.fecha) }}</span>
+        </label>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <span>{{ encuesta.preguntas[0].pregunta }}</span>
+        </label>
+        <select class="form-control" id="r0">
+          <option [value]="-1">Elegir Respuesta</option>
+          <option
+            *ngFor="let r of encuesta.preguntas[0].respuestas; let i = index"
+            [value]="i"
+          >
+            {{ r | capitalize }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <span>{{ encuesta.preguntas[1].pregunta }}</span>
+        </label>
+        <select class="form-control" id="r1">
+          <option [value]="-1">Elegir Respuesta</option>
+          <option
+            *ngFor="let r of encuesta.preguntas[1].respuestas; let i = index"
+            [value]="i"
+          >
+            {{ r | capitalize }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <span>{{ encuesta.preguntas[2].pregunta }}</span>
+        </label>
+        <select class="form-control" id="r2">
+          <option [value]="-1">Elegir Respuesta</option>
+          <option
+            *ngFor="let r of encuesta.preguntas[2].respuestas; let i = index"
+            [value]="i"
+          >
+            {{ r | capitalize }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label>
+          <span>{{ encuesta.preguntas[3].pregunta }}</span>
+        </label>
+        <select class="form-control" id="r3">
+          <option [value]="-1">Elegir Respuesta</option>
+          <option
+            *ngFor="let r of encuesta.preguntas[3].respuestas; let i = index"
+            [value]="i"
+          >
+            {{ r | capitalize }}
+          </option>
+        </select>
+      </div>
+    </div>
+    <!-- #endregion Detalle -->
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div class="footer-container">
+      <button
+        class="btn btn-primary btn-confirmar"
+        [disabled]="encuesta.idUsuario === 0"
+        (click)="altaEncuesta()"
+      >
+        Enviar
+      </button>
+    </div>
+  </ion-toolbar>
+</ion-footer>
