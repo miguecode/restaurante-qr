@@ -87,7 +87,7 @@ export class EntregarPedidosMozoComponent {
     const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
     if (lpm !== undefined) {
       for (let p of lpm) {
-        p.estado = Estado.pedidoEntregado;
+        p.estado = Estado.pedidoRecibido;
         await this.pedidoService.modificar(p);
       }
     }

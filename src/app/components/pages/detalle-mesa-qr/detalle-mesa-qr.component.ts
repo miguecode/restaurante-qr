@@ -8,8 +8,7 @@ import {
   IonTitle,
   IonContent,
   IonButton,
-  IonLabel,
-} from '@ionic/angular/standalone';
+  IonLabel, IonFooter } from '@ionic/angular/standalone';
 import { Cliente } from 'src/app/classes/cliente';
 import { Empleado } from 'src/app/classes/empleado';
 import { UsuarioService } from 'src/app/services/usuario.service';
@@ -33,7 +32,7 @@ import { firstValueFrom, isObservable } from 'rxjs';
   templateUrl: './detalle-mesa-qr.component.html',
   styleUrls: ['./detalle-mesa-qr.component.scss'],
   standalone: true,
-  imports: [
+  imports: [IonFooter, 
     RouterLink,
     IonLabel,
     IonButton,
@@ -214,4 +213,22 @@ export class DetalleMesaQrComponent implements OnInit {
       this.router.navigateByUrl(`/chat-mozo/${this.usuario.id}`);
     }
   }
+
+  async confirmarRecepcion(idMesa: number) {
+    const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
+    if (lpm !== undefined) {
+      for (let p of lpm) {
+        p.estado = Estado.pedidoEntregado;
+        await this.pedidosService.modificar(p);
+      }
+    }
+  }
+
+  async pedirCuenta(idMesa: number) {
+    /*
+      Aca deberia pasar hacia el boton de qr de propinas,
+      para despues ir al detalle de pedido
+    */
+  }
+
 }

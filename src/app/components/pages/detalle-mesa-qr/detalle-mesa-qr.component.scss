@@ -165,3 +165,31 @@ button label {
 span {
   font-weight: bold;
 }
+
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #1c1c1c;
+  padding: 10px;
+  z-index: 1000;
+}
+.footer button {
+  width: 100%;
+  margin-right: 7px;
+  margin-left: 7px;
+}
+
+.btn-confirmar {
+  width: 95%;
+  height: 50px;
+  font-size: 27px;
+  background-color: #860106;
+  border-radius: 10px;
+  font-weight: bold;
+}
