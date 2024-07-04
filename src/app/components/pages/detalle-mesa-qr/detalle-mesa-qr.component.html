@@ -31,7 +31,7 @@
       <label *ngIf="mostrarMenu">Menú</label>
     </div>
 
-    <div class="test-push">
+    <!-- <div class="test-push">
       <button
         *ngIf="!mostrarMenu"
         class="btn btn-success"
@@ -39,7 +39,7 @@
       >
         Test PUSH
       </button>
-    </div>
+    </div> -->
   </div>
 </ion-toolbar>
 
@@ -147,25 +147,25 @@
     <div *ngIf="!mostrarMenu && !mostrarEstado" class="router-container">
       <!-- #region Accesos De Cliente -->
 
-      <div *ngIf="usuarioEsCliente">
+      <div *ngIf="usuarioTienePedido">
         <button class="btn btn-primary" (click)="mostrarEstado = true">
           <label>Mi Pedido</label>
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <div>
         <button class="btn btn-primary" (click)="mostrarMenu = true">
           <label>Menú</label>
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <div>
         <button class="btn btn-primary" (click)="clienteToChatMozo()">
           <label>Consultar al Mozo</label>
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <div>
         <button class="btn btn-primary" routerLink="/seccion-encuestas">
           <label>Encuestas</label>
         </button>
