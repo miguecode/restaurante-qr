@@ -238,16 +238,19 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 ## 🛠️ Informe Final previo al día de entrega (05/07)
 ### 🌟 Gil Miguel Ángel (Alfa)
 - ✔️ Correcciones e interfaz para el detalle de la cuenta
+- ✔️ Punto 13 (Grupal)
 #### 📅 Fecha de Inicio: 04/07
 #### ⌛ Fecha de Finalización: 05/07
 
-- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+### 🌟 Juan Pablo Dongo Huaman (Beta)
 - ✔️ Correcciones generales en push notifications y en otros lugares
+- ✔️ Punto 13 (Grupal)
 #### 📅 Fecha de Inicio: 04/07
 #### ⌛ Fecha de Finalización: 05/07
 
 ### 🌟 Santiago Fernández (Gamma)
 - ✔️ Correcciones generales en push notifications y en otros lugares
+- ✔️ Punto 13 (Grupal)
 #### 📅 Fecha de Inicio: 04/07
 #### ⌛ Fecha de Finalización: 05/07
 
