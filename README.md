@@ -233,6 +233,24 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 #### 📅 Fecha de Inicio: 03/07
 #### ⌛ Fecha de Finalización: 04/07
 
+-- --
+
+## 🛠️ Informe Final previo al día de entrega (05/07)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Interfaz para el detalle de la cuenta
+#### 📅 Fecha de Inicio: 04/07
+#### ⌛ Fecha de Finalización: 05/07
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Correcciones generales en push notifications y en otros lugares
+#### 📅 Fecha de Inicio: 04/07
+#### ⌛ Fecha de Finalización: 05/07
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Correcciones generales en push notifications y en otros lugares
+#### 📅 Fecha de Inicio: 04/07
+#### ⌛ Fecha de Finalización: 05/07
+
 -- -- 
 ### 🎨 Pantallas actualizadas
 
@@ -326,15 +344,20 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - Pantalla de Listado de Mensajes para el Mozo (elige a qué chat acceder)
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/4c06fc97-d7f7-41eb-9950-0e31e55e1011" width="350"/>
-  
-- Cliente revisa que el estado de su pedido es entregado, así que tiene la opción de pedir la cuenta.
-
-  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a16a33e7-73a4-4eaf-95fb-f4a5f84010d3" width="350"/>
-
-- Cliente ve la pantalla donde se le ofrece escanear un código QR para su propina
-
-  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a6babd0d-e40a-4218-acc2-f5b019bb3305" width="350"/>
 
 - Cliente accede a las encuestas
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/fb1908e7-c8f8-4369-b60d-09fa5a9b61ee" width="350"/>
+
+- Cliente revisa que el estado de su pedido es entregado, así que tiene la opción de pedir la cuenta.
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a16a33e7-73a4-4eaf-95fb-f4a5f84010d3" width="350"/>
+
+- Cliente ve la pantalla donde se le pide escanear un código QR para su propina
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/6cb69b8c-b7f0-4f21-b9a5-bcd3f659dd4e" width="350"/>
+
+- Detalle de una cuenta con botón para pagar (para el Cliente)
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/8ea5c374-4ea9-4713-83d6-cc75e20946cf" width="350"/>
+
