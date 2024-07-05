@@ -85,23 +85,6 @@ ion-content {
   font-weight: bold;
 }
 
-// #region span
-span {
-  font-weight: bold;
-}
-
-.nombre {
-  font-size: 25px;
-}
-.descripcion {
-  font-size: 15px;
-  color: #ffffffc0;
-}
-.precio {
-  font-size: 25px;
-}
-// #endregion span
-
 // #region Footer
 .footer {
   display: flex;
@@ -288,10 +271,67 @@ button label {
 }
 
 .btn-confirmar {
-  width: 95%;
+  width: 100%;
   height: 50px;
-  font-size: 27px;
-  background-color:#520305 ;
+  font-size: 32px;
   border-radius: 10px;
   font-weight: bold;
+  transition: 0.2s;
+  background: #fff;
+  color: #550003;
+}
+.btn-confirmar:hover {
+  background:#1e1e1e;
+  color: #fff;
+  transform: scale(1.09);
+}
+
+.listado {
+  background-color: #0000004f;
+  border-radius: 10px;
+  padding: 3px 9px 3px 9px;
+  border: 1.5px solid #b64346;
+}
+
+.detalle {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0px;
+}
+
+// #region span
+span {
+  font-weight: bold;
+  font-size: 22px;
+}
+
+.precio {
+  font-size: 25px;
+}
+// #endregion span
+
+h5 {
+  text-align: center;
+  background-color: #0000004f;
+  font-weight: bold;
+  font-size: 22px;
+  padding: 3px 9px 3px 9px;
+  border-radius: 10px;
+  border: 1.5px solid #b64346;
+}
+
+.importe-total {
+  font-weight: bold;
+  background-color: #0000004f;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  width: 100%;
+  margin: 0px;
+  padding: 3px 9px 3px 9px;
+  font-size: 30px;
+  border-radius: 10px;
+  border: 1.5px solid #b64346;
 }

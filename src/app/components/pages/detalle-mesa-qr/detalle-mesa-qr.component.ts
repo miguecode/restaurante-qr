@@ -250,10 +250,10 @@ export class DetalleMesaQrComponent implements OnInit {
           await this.clienteSerivice.modificar(this.usuario);
 
           setTimeout(() => {
-            this.router.navigate(['/detalle-cuenta']);
             this.mostrarEscanearPropina = false;
             this.mostrarMenu = false;
             this.mostrarEstado = false;
+            this.router.navigate(['/detalle-cuenta']);
           }, 2000);
         }
       }

@@ -7,7 +7,7 @@
           <i class="bi bi-house" style="font-size: 30px"></i>
         </button>
       </div>
-     <ion-title> Detalle cuenta </ion-title>
+      <ion-title> Detalle cuenta </ion-title>
     </div>
     <!-- #endregion Titulo -->
   </ion-toolbar>
@@ -15,27 +15,37 @@
 
 <ion-content [fullscreen]="true">
   <div class="page-container">
-    <div class="cartas">
-      <div class="card carta-detalle-pedido">
-        <div *ngFor="let item of pedidosCliente">
-          <label><span>Producto: </span>{{ item.nombreProducto }}</label>
-          <br>
-          <label><span>Precio: </span>{{ item.precio }}</label>
-          <br>
-          <br>
-        </div>
-        <br>
-        <label><span>Propina: </span>{{propina}}</label> 
-        <br>
-        <label class="precioTotal"><span class="precio">Precio total: </span>{{ importeTotal }}</label>
-        
-      </div>
+    <div *ngIf="mostrarSpinner" class="loader-container">
+      <span class="loader"></span>
     </div>
-    <button class="btn-confirmar" (click)="pagar()">
-      Pagar
-    </button>
+
+    <div *ngIf="!mostrarSpinner" class="carta-det">
+      <div>
+        <div class="listado">
+          <div class="detalle">
+            <label><span>Producto</span></label>
+            <label><span>Importe</span></label>
+          </div>
+          <div *ngFor="let item of pedidosCliente">
+            <div class="detalle">
+              <label
+                ><span>- {{ item.nombreProducto }}</span></label
+              >
+              <label
+                ><span>${{ item.precio }}</span></label
+              >
+            </div>
+          </div>
+        </div>
+
+        <h5>Propina: ${{ propina }}</h5>
+        <div class="importe-total">
+          <label>TOTAL</label>
+          <label>${{ importeTotal }}</label>
+        </div>
+      </div>
+      <br />
+      <button class="btn-confirmar" (click)="pagar()">PAGAR</button>
+    </div>
   </div>
 </ion-content>
-
-
-
