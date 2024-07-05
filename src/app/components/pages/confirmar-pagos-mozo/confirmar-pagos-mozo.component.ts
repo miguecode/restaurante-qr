@@ -10,9 +10,11 @@ import {
 } from '@ionic/angular/standalone';
 import { firstValueFrom, isObservable } from 'rxjs';
 import { Empleado } from 'src/app/classes/empleado';
+import { Mesa } from 'src/app/classes/mesa';
 import { Pedido } from 'src/app/classes/pedido';
 import { Estado } from 'src/app/classes/utils/enumerado';
 import { ApiService } from 'src/app/services/api/api.service';
+import { MesaService } from 'src/app/services/mesa.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 
 @Component({
@@ -44,7 +46,11 @@ export class ConfirmarPagosMozoComponent implements OnInit {
 
   private listaPedidos: Pedido[] = [];
 
-  constructor(private pedidoService: PedidoService, private push: ApiService) {
+  constructor(
+    private pedidoService: PedidoService,
+    private push: ApiService,
+    private mesasService: MesaService
+  ) {
     this.pedidoService.traerTodosObservable().subscribe((l) => {
       const fa = l.filter((p) => p.estado === Estado.pedidoPagado);
 
@@ -65,7 +71,9 @@ export class ConfirmarPagosMozoComponent implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    console.log('');
+  }
   private calcularPrecioTotal(pedido: Pedido, lista: Pedido[]) {
     let acum = 0;
     for (let p of lista) {
@@ -83,8 +91,22 @@ export class ConfirmarPagosMozoComponent implements OnInit {
         p.estado = Estado.pedidoPagoConfirmadoPorMozo;
         await this.pedidoService.modificar(p);
       }
+
+      this.liberarMesa(idMesa);
     }
     this.verDetalle = false;
+  }
+
+  private liberarMesa(idMesa: number) {
+    const mesa = this.mesasService.traerPorId(idMesa);
+    if (mesa instanceof Mesa) {
+      mesa.idCliente = 0;
+      mesa.encuestaRealizada = false;
+      mesa.apellidoCliente = '';
+      mesa.nombreCliente = '';
+
+      this.mesasService.modificar(mesa);
+    }
   }
 
   verDetallePedido(idMesa: number) {
