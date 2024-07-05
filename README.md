@@ -237,7 +237,7 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 ## 🛠️ Informe Final previo al día de entrega (05/07)
 ### 🌟 Gil Miguel Ángel (Alfa)
-- ✔️ Interfaz para el detalle de la cuenta
+- ✔️ Correcciones e interfaz para el detalle de la cuenta
 #### 📅 Fecha de Inicio: 04/07
 #### ⌛ Fecha de Finalización: 05/07
 
@@ -359,5 +359,4 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 - Detalle de una cuenta con botón para pagar (para el Cliente)
 
-  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/8ea5c374-4ea9-4713-83d6-cc75e20946cf" width="350"/>
-
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/2384dd29-8516-4f37-8441-1e00a6a20b6a" width="350"/>
