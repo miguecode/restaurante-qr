@@ -3,6 +3,8 @@ import { FirestoreService } from './firebase/firestore.service';
 import { Chat } from '../classes/chat';
 import { map } from 'rxjs';
 import { UsuarioService } from './usuario.service';
+import { Cliente } from '../classes/cliente';
+import { Empleado } from '../classes/empleado';
 
 @Injectable({
   providedIn: 'root',
@@ -74,22 +76,58 @@ export class ChatService {
       let chat = new Chat();
       chat.idCliente = idCliente;
 
-      chat.mensajes.push({
-        emisor: usuario.correo,
-        texto: texto,
-        fechaEnvio: new Date(),
-      });
+      if (usuario instanceof Cliente) {
+        chat.mensajes.push({
+          esCliente: true,
+          esMozo: false,
+          idMesa: usuario.idMesa,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
+
+      if (usuario instanceof Empleado && usuario.tipo === Empleado.T_MOZO) {
+        chat.mensajes.push({
+          esCliente: false,
+          esMozo: true,
+          tipo: Empleado.T_MOZO,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
 
       await this.setId(chat);
       await this.insertarDoc(chat);
     }
 
     if (c !== undefined) {
-      c.mensajes.push({
-        emisor: usuario.correo,
-        texto: texto,
-        fechaEnvio: new Date(),
-      });
+      if (usuario instanceof Cliente) {
+        c.mensajes.push({
+          esCliente: true,
+          esMozo: false,
+          idMesa: usuario.idMesa,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
+
+      if (usuario instanceof Empleado && usuario.tipo === Empleado.T_MOZO) {
+        c.mensajes.push({
+          esCliente: false,
+          esMozo: true,
+          tipo: Empleado.T_MOZO,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
 
       await this.modificarDoc(c);
     }

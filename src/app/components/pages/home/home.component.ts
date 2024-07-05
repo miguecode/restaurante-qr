@@ -178,7 +178,7 @@ export class HomeComponent implements OnInit {
         // Aquí ejecutas tu lógica antes de cambiar de ruta
         if (this.subscription) {
           this.subscription.unsubscribe();
-          this.subscription = undefined;
+          //this.subscription = undefined;
         }
       }
     });
@@ -187,7 +187,7 @@ export class HomeComponent implements OnInit {
   async cerrarSesion() {
     if (this.subscription) {
       this.subscription.unsubscribe();
-      this.subscription = undefined;
+      //this.subscription = undefined;
     }
     await this.usuarioService.cerrarSesion();
     this.router.navigateByUrl('/login');

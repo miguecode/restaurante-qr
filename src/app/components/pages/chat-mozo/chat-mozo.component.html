@@ -30,7 +30,9 @@
             'mensaje-recibido-informacion': usuario.correo !== mensaje.emisor
           }"
         >
-          {{ usuario.correo === mensaje.emisor ? "Tú" : mensaje.emisor }}<br />
+          <div *ngIf="mensaje.esCliente">Nro. Mesa: {{ mensaje.idMesa }}</div>
+          <div *ngIf="mensaje.esMozo">Rol: {{ mensaje.tipo | capitalize }}</div>
+          {{ usuario.correo === mensaje.emisor ? "Tú" : mensaje.nombre }}<br />
           {{ mensaje.fechaEnvio | date : "dd/MM/yyyy HH:mm:ss" }}
         </span>
         <p class="mensaje-texto">{{ mensaje.texto }}</p>
