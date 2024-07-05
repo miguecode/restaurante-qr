@@ -21,6 +21,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/classes/padres/usuario';
 import { Duenio } from 'src/app/classes/duenio';
 import { Supervisor } from 'src/app/classes/supervisor';
+import { ApiService } from 'src/app/services/api/api.service';
 
 @Component({
   selector: 'app-chat-mozo',
@@ -57,7 +58,8 @@ export class ChatMozoComponent implements OnInit {
     private clienteService: ClienteService,
     private usuarioService: UsuarioService,
     private chatService: ChatService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private pushService : ApiService
   ) {}
 
   async ngOnInit() {
@@ -95,6 +97,7 @@ export class ChatMozoComponent implements OnInit {
       this.usuario !== undefined &&
       this.idClienteParametros !== undefined
     ) {
+      await this.pushService.notificarMozoMensaje(Empleado.T_MOZO, `Un cliente ha realizado una nueva consulta`);
       await this.chatService.enviarMensaje(
         this.idClienteParametros,
         this.inputMensaje

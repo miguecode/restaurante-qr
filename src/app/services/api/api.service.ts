@@ -177,4 +177,42 @@ export class ApiService {
       headers: { 'Content-Type': 'application/json' },
     });
   }
+
+  public notificarPedidoRealizado(
+    tipoEmpleado: string,
+    mensaje: string,
+    idMesa: number
+  ) {
+    //const usuario = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-empleados`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-empleados`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `El pedido de la mesa ${idMesa} ya esta realizado`,
+        body: mensaje,
+        employeeType: tipoEmpleado,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  public notificarMozoMensaje(
+    tipoEmpleado: string,
+    mensaje: string,
+  ) {
+    //const usuario = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-empleados`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-empleados`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `Consulta de un cliente`,
+        body: mensaje,
+        employeeType: tipoEmpleado,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
 }

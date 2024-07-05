@@ -10,6 +10,7 @@ import {
 import { Pedido } from 'src/app/classes/pedido';
 import { Estado } from 'src/app/classes/utils/enumerado';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
+import { ApiService } from 'src/app/services/api/api.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 
 @Component({
