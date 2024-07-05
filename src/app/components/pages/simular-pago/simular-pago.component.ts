@@ -1,22 +1,24 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { IonContent } from "@ionic/angular/standalone";
+import { Router } from '@angular/router';
+import { IonContent } from '@ionic/angular/standalone';
+import { MesaService } from 'src/app/services/mesa.service';
 
 @Component({
   selector: 'app-simular-pago',
   templateUrl: './simular-pago.component.html',
   styleUrls: ['./simular-pago.component.scss'],
   standalone: true,
-  imports: [IonContent, CommonModule]
+  imports: [IonContent, CommonModule],
 })
-export class SimularPagoComponent  implements OnInit {
+export class SimularPagoComponent implements OnInit {
   verProcesando: boolean = false;
   verError: boolean = false;
   verExito: boolean = false;
 
   private simular: boolean = true;
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit() {
     if (this.simular) {
@@ -31,6 +33,9 @@ export class SimularPagoComponent  implements OnInit {
 
           default:
             this.verError = true;
+            setTimeout(() => {
+              this.router.navigateByUrl('/detalle-cuenta');
+            }, 4000);
         }
       }, 4000);
     }
@@ -44,5 +49,4 @@ export class SimularPagoComponent  implements OnInit {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min) + min);
   }
-
 }

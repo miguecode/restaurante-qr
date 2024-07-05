@@ -173,11 +173,9 @@ export class HomeComponent implements OnInit {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;
-    }
-    setTimeout(async () => {
       await this.usuarioService.cerrarSesion();
-      this.router.navigateByUrl('/login');
-    }, 500);
+    }
+    this.router.navigateByUrl('/login');
   }
 
   async escanearQrMesa() {

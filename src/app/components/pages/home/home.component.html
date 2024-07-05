@@ -134,6 +134,14 @@
         </button>
       </div>
 
+      <div *ngIf="usuarioEsCliente">
+        <!-- La línea comentada de abajo es para probar sin escanear -->
+        <button class="btn btn-primary" routerLink="/encuesta-graficos">
+          <!-- <button class="btn btn-primary" (click)="escanearQrMesa()"> -->
+          <label>Ver Encuestas</label>
+        </button>
+      </div>
+
       <div
         *ngIf="
           usuarioEsCliente && usuarioEstaEnListaEspera && !usuarioTieneMesa

@@ -11,4 +11,5 @@ export enum Estado {
   pedidoEntregado = 'entregado',
   pedidoRecibido = 'recibido',
   pedidoPagado = 'pagado',
+  pedidoPagoConfirmadoPorMozo = 'pagoConfirmadoPorMozo',
 }

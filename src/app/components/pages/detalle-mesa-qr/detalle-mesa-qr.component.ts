@@ -77,6 +77,8 @@ export class DetalleMesaQrComponent implements OnInit {
   usuarioTieneMesa: boolean = false;
   usuarioTienePedido: boolean = false;
 
+  mesaRealizoEncuesta: boolean = false;
+
   constructor(
     private usuarioService: UsuarioService,
     private clienteSerivice: ClienteService,
@@ -146,6 +148,7 @@ export class DetalleMesaQrComponent implements OnInit {
       this.mostrarEstado = false;
       this.mostrarMenu = false;
       this.mostrarEscanearPropina = false;
+      this.mesaRealizoEncuesta = this.mesa!.encuestaRealizada;
 
       await this.cargarPedidosDeEstaMesa();
       await this.calcularEstadoPedido();
@@ -260,5 +263,9 @@ export class DetalleMesaQrComponent implements OnInit {
     } catch (e: any) {
       Swalert.toastError(e.message);
     }
+  }
+
+  toAltaEncuesta() {
+    this.router.navigateByUrl(`/alta-encuesta/${this.idMesa}`);
   }
 }

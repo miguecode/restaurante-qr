@@ -1,0 +1,73 @@
+@import url("https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap");
+
+* {
+  font-family: "Baloo 2", sans-serif;
+}
+
+ion-content {
+  --background: #860106;
+}
+.btn {
+  width: 100%;
+  margin-left: 7px;
+  margin-right: 7px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #c0040b;
+  border: 0px solid black;
+}
+
+.header-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.content-container {
+  display: grid;
+  gap: 15px;
+  padding: 15px;
+  height: 100%;
+}
+
+// #region Pantalla-Vertical
+@media screen and (orientation: portrait) {
+  .content-container {
+    grid-template-columns: repeat(1, 1fr); // 3 columnas de igual ancho
+    grid-template-rows: repeat(auto, 1fr); // 2 filas de igual altura
+  }
+}
+//#endregion Pantalla-Vertical
+
+// #region Pantalla-Horizontal
+@media screen and (orientation: landscape) {
+  .content-container {
+    grid-template-columns: repeat(2, 1fr); // 3 columnas de igual ancho
+    grid-template-rows: repeat(1, 1fr); // 2 filas de igual altura
+  }
+}
+// #endregion Pantalla-Horizontal
+
+.inicio {
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  height: 52px;
+  margin: 5px;
+  position: absolute;
+  left: 2px;
+  width: 50px;
+}
+.inicio button {
+  border: 0px solid black;
+  background-color: rgba(black, 0);
+}
+.inicio button i {
+  margin-right: 8%;
+}
+
+ion-title {
+  margin-left: 15%;
+}

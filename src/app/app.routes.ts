@@ -206,7 +206,7 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
-    path: 'alta-encuesta',
+    path: 'alta-encuesta/:idMesa',
     loadComponent: () =>
       import('./components/pages/alta-encuesta/alta-encuesta.component').then(
         (m) => m.AltaEncuestaComponent
@@ -227,6 +227,14 @@ export const routes: Routes = [
       import('./components/pages/simular-pago/simular-pago.component').then(
         (m) => m.SimularPagoComponent
       ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'encuesta-graficos',
+    loadComponent: () =>
+      import(
+        './components/pages/encuesta-graficos/encuesta-graficos.component'
+      ).then((m) => m.EncuestaGraficosComponent),
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {

@@ -1,0 +1,34 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <!-- #region Titulo -->
+    <div class="header-container">
+      <div class="inicio">
+        <button class="btn btn-primary" routerLink="/home">
+          <i class="bi bi-house" style="font-size: 30px"></i>
+        </button>
+      </div>
+      <ion-title> Gráficos de encuestas </ion-title>
+    </div>
+    <!-- #endregion Titulo -->
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <canvasjs-chart
+      *ngIf="configTorta !== undefined"
+      [options]="configTorta"
+      [styles]="{ height: '100%', width: '100%' }"
+    >
+    </canvasjs-chart>
+    <canvasjs-chart
+      *ngIf="configTorta !== undefined"
+      [options]="configBarra"
+      [styles]="{
+      height: '100%',
+      width: '100%',
+    }"
+    >
+    </canvasjs-chart>
+  </div>
+</ion-content>

@@ -203,8 +203,10 @@
         </button>
       </div>
 
-      <div>
-        <button class="btn btn-primary" routerLink="/alta-encuesta">
+      <div
+        *ngIf="mesaRealizoEncuesta === false || estadoPedido === 'pendiente'"
+      >
+        <button class="btn btn-primary" (click)="toAltaEncuesta()">
           <label>Realizar Encuesta</label>
         </button>
       </div>
