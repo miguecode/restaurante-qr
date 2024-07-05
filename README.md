@@ -325,8 +325,8 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
 - Pantalla de Listado de Mensajes para el Mozo (elige a qué chat acceder)
 
-  <img src="localhost_8100_listado-chat](https://github.com/Leumig/brigada-binaria-2024/assets/103081146/8d5f66ad-4470-4167-bf02-bcd8d8ff3ba9" width="350"/>
-
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/4c06fc97-d7f7-41eb-9950-0e31e55e1011" width="350"/>
+  
 - Cliente revisa que el estado de su pedido es entregado, así que tiene la opción de pedir la cuenta.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a16a33e7-73a4-4eaf-95fb-f4a5f84010d3" width="350"/>
