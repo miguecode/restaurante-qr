@@ -25,13 +25,13 @@
           <br>
         </div>
         <br>
-        <label><span>Propina: </span></label> 
+        <label><span>Propina: </span>{{propina}}</label> 
         <br>
         <label class="precioTotal"><span class="precio">Precio total: </span>{{ importeTotal }}</label>
         
       </div>
     </div>
-    <button class="btn-confirmar" >
+    <button class="btn-confirmar" (click)="pagar()">
       Pagar
     </button>
   </div>
