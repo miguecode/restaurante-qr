@@ -248,6 +248,13 @@ export class DetalleMesaQrComponent implements OnInit {
         if (this.usuario instanceof Cliente) {
           this.usuario.propina = source;
           await this.clienteSerivice.modificar(this.usuario);
+
+          setTimeout(() => {
+            this.router.navigate(['/detalle-cuenta']);
+            this.mostrarEscanearPropina = false;
+            this.mostrarMenu = false;
+            this.mostrarEstado = false;
+          }, 2000);
         }
       }
     } catch (e: any) {

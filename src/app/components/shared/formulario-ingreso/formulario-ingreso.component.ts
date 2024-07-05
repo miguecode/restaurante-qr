@@ -100,7 +100,7 @@ export class FormularioIngresoComponent implements OnInit {
       });
     } else if (usuario === '1') {
       this.loginForm.patchValue({
-        correoActual: 'mmariaf@yopmail.com',
+        correoActual: 'miguel2@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '2') {
