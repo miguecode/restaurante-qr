@@ -21,7 +21,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/classes/padres/usuario';
 import { Duenio } from 'src/app/classes/duenio';
 import { Supervisor } from 'src/app/classes/supervisor';
-import { ApiService } from 'src/app/services/api/api.service';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-chat-mozo',
@@ -43,6 +43,7 @@ import { ApiService } from 'src/app/services/api/api.service';
     NgClass,
     DatePipe,
     RouterLink,
+    CapitalizePipe,
   ],
 })
 export class ChatMozoComponent implements OnInit {
@@ -54,12 +55,14 @@ export class ChatMozoComponent implements OnInit {
   usuario: Usuario | undefined = undefined;
   idClienteParametros: number | undefined = undefined;
 
+  empleado: Empleado | undefined = undefined;
+  cliente: Cliente | undefined = undefined;
+
   constructor(
     private clienteService: ClienteService,
     private usuarioService: UsuarioService,
     private chatService: ChatService,
-    private route: ActivatedRoute,
-    private pushService : ApiService
+    private route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
@@ -97,7 +100,6 @@ export class ChatMozoComponent implements OnInit {
       this.usuario !== undefined &&
       this.idClienteParametros !== undefined
     ) {
-      await this.pushService.notificarMozoMensaje(Empleado.T_MOZO, `Un cliente ha realizado una nueva consulta`);
       await this.chatService.enviarMensaje(
         this.idClienteParametros,
         this.inputMensaje
