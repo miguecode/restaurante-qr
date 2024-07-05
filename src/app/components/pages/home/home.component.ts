@@ -1,7 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import {
+  NavigationEnd,
+  NavigationStart,
+  Router,
+  RouterLink,
+} from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -167,14 +172,24 @@ export class HomeComponent implements OnInit {
         this.mostrarSpinner = false;
       }
     );
+
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        // Aquí ejecutas tu lógica antes de cambiar de ruta
+        if (this.subscription) {
+          this.subscription.unsubscribe();
+          this.subscription = undefined;
+        }
+      }
+    });
   }
 
   async cerrarSesion() {
     if (this.subscription) {
       this.subscription.unsubscribe();
       this.subscription = undefined;
-      await this.usuarioService.cerrarSesion();
     }
+    await this.usuarioService.cerrarSesion();
     this.router.navigateByUrl('/login');
   }
 
