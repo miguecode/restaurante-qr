@@ -211,6 +211,28 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 #### 📅 Fecha de Inicio: 30/06
 #### ⌛ Fecha de Finalización: 03/07
 
+-- --
+
+## 🛠️ Actualización de responsabilidades e informe (04/07)
+### 🌟 Gil Miguel Ángel (Alfa)
+- ✔️ Correcciones generales de la entrega anterior
+- ✔️ Punto 12 (Grupal)
+#### 📅 Fecha de Inicio: 03/07
+#### ⌛ Fecha de Finalización: 04/07
+
+- ### 🌟 Juan Pablo Dongo Huaman (Beta)
+- ✔️ Correcciones generales de la entrega anterior
+- ✔️ "Simulación de pago"
+- ✔️ Gráficos de Encuestas
+#### 📅 Fecha de Inicio: 03/07
+#### ⌛ Fecha de Finalización: 04/07
+
+### 🌟 Santiago Fernández (Gamma)
+- ✔️ Punto 10
+- ✔️ Punto 12 (Grupal)
+#### 📅 Fecha de Inicio: 03/07
+#### ⌛ Fecha de Finalización: 04/07
+
 -- -- 
 ### 🎨 Pantallas actualizadas
 
@@ -300,3 +322,19 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 - Pantalla de Consultar al Mozo, desde el Cliente (es la misma que la de Listado de Mensajes para el Mozo)
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/69f3fb0c-d9e8-4b16-aa38-d8396c914bc4" width="350"/>
+
+- Pantalla de Listado de Mensajes para el Mozo (elige a qué chat acceder)
+
+  <img src="localhost_8100_listado-chat](https://github.com/Leumig/brigada-binaria-2024/assets/103081146/8d5f66ad-4470-4167-bf02-bcd8d8ff3ba9" width="350"/>
+
+- Cliente revisa que el estado de su pedido es entregado, así que tiene la opción de pedir la cuenta.
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a16a33e7-73a4-4eaf-95fb-f4a5f84010d3" width="350"/>
+
+- Cliente ve la pantalla donde se le ofrece escanear un código QR para su propina
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a6babd0d-e40a-4218-acc2-f5b019bb3305" width="350"/>
+
+- Cliente accede a las encuestas
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/fb1908e7-c8f8-4369-b60d-09fa5a9b61ee" width="350"/>
