@@ -165,14 +165,30 @@ export class MesaService {
     // Esta ocupada y NO ES la mesa del Cliente
     if (m.idCliente !== 0 && m.idCliente !== cliente.id) {
       // this.router.navigateByUrl(`/estado-mesa-qr/${idMesa}`);
+      // El Cliente ESTA vinculado a una Mesa
+      if (cliente.idMesa !== 0) {
+        await this.apiService.notificarUnUsuario(
+          cliente,
+          `Tu Mesa asignada es la ${cliente.idMesa}`
+        );
+      }
       this.router.navigateByUrl(`/detalle-mesa-qr/${idMesa}`);
       return;
     }
 
-    // Esta libre
-    if (m.idCliente === 0) {
+    // Esta libre y el cliente NO tiene mesa
+    if (m.idCliente === 0 && cliente.idMesa === 0) {
       this.router.navigateByUrl(`/asignar-cliente-mesa-qr/${idMesa}`);
       return;
+    }
+
+    // Esta libre y el cliente SI tiene mesa
+    if (m.idCliente === 0 && cliente.idMesa !== 0) {
+      await this.apiService.notificarUnUsuario(
+        cliente,
+        `Tu Mesa asignada es la ${cliente.idMesa}`
+      );
+      throw new Error('Ya tenés una mesa asignada');
     }
 
     /* No esta en los 13 Puntos
@@ -217,7 +233,7 @@ export class MesaService {
   public traerPorIdObservable(mesa: Mesa) {
     const doc = Mesa.toDoc(mesa);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Mesa.parseDoc(doc)));
   }
 }

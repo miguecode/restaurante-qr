@@ -11,7 +11,12 @@ import {
 import { UsuarioService } from 'src/app/services/usuario.service';
 import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 import { NgFor, NgIf } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { Cliente } from 'src/app/classes/cliente';
+import { ClienteService } from 'src/app/services/cliente.service';
+import { firstValueFrom, isObservable } from 'rxjs';
+import { MesaService } from 'src/app/services/mesa.service';
+import { Mesa } from 'src/app/classes/mesa';
 
 @Component({
   selector: 'app-alta-encuesta',
@@ -33,15 +38,27 @@ import { RouterLink } from '@angular/router';
 export class AltaEncuestaComponent implements OnInit {
   verDetalle: boolean = false;
   encuesta: Encuesta = new Encuesta();
+  mesa: Mesa | undefined = undefined;
+  idMesaParametros: number = 0;
 
   constructor(
     private encuestaService: EncuestaService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private mesaService: MesaService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   async ngOnInit() {
     const u = await this.usuarioService.getUsuarioBd();
     this.encuesta.setUsuario(u);
+
+    const obs = this.route.params;
+    if (isObservable(obs)) {
+      const paramsPromise = await firstValueFrom(obs);
+      this.idMesaParametros = Number(paramsPromise['idMesa']);
+      this.mesa = await this.mesaService.traerPorId(this.idMesaParametros);
+    }
   }
 
   async altaEncuesta() {
@@ -62,7 +79,12 @@ export class AltaEncuestaComponent implements OnInit {
       this.encuesta.preguntas[3].respuestas[rs[3].value],
     ];
     console.log('this.encuesta', this.encuesta);
+    if (this.mesa !== undefined) {
+      this.mesa.encuestaRealizada = true;
+      await this.mesaService.modificar(this.mesa);
+    }
     await this.encuestaService.alta(this.encuesta);
+    this.router.navigateByUrl('/home');
     /*
     // Usar esto para hardcodear Encuestas
     let e = new Encuesta();

@@ -92,7 +92,7 @@ export class PedidoService {
   public traerPorIdObservable(pedido: Pedido): Observable<Pedido> {
     const doc = Pedido.toDoc(pedido);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Pedido.parseDoc(doc)));
   }
 }

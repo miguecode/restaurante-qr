@@ -156,7 +156,7 @@ export class DuenioService {
   public traerPorIdObservable(duenio: Duenio) {
     const doc = Duenio.toDoc(duenio);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Duenio.parseDoc(doc)));
   }
 }

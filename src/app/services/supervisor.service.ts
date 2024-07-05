@@ -156,7 +156,7 @@ export class SupervisorService {
   public traerPorIdObservable(supervisor: Supervisor) {
     const doc = Supervisor.toDoc(supervisor);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Supervisor.parseDoc(doc)));
   }
 }

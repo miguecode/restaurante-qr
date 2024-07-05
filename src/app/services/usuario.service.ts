@@ -11,6 +11,7 @@ import { ClienteService } from './cliente.service';
 import { Usuario } from '../classes/padres/usuario';
 import { PushNotificationService } from './utils/push-notification.service';
 import { Estado } from '../classes/utils/enumerado';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -133,6 +134,24 @@ export class UsuarioService {
 
     return usuario;
   }
+  public async getUsuarioBdObservable(): Promise<
+    Observable<Duenio | Supervisor | Cliente | Empleado>
+  > {
+    const u = await this.getUsuarioBd();
+    if (u instanceof Duenio) {
+      return this.duenioService.traerPorIdObservable(u);
+    }
+
+    if (u instanceof Supervisor) {
+      return this.supervisorService.traerPorIdObservable(u);
+    }
+
+    if (u instanceof Cliente) {
+      return this.clienteService.traerPorIdObservable(u);
+    }
+
+    return this.empleadoService.traerPorIdObservable(u);
+  }
   public async getRol() {
     const usuario = await this.getUsuarioBd();
     if (usuario === undefined) {
@@ -211,8 +230,7 @@ export class UsuarioService {
   public async iniciarSesion(usuario: Usuario) {
     try {
       await this.iniciarSesionAuth(usuario);
-      await this.setToken();
-
+      // await this.setToken();
       const usuarioBd = await this.getUsuarioBd();
       if (
         usuarioBd instanceof Cliente &&

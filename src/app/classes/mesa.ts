@@ -19,6 +19,8 @@ export class Mesa {
   public nombreCliente: string;
   public apellidoCliente: string;
 
+  public encuestaRealizada: boolean;
+
   public constructor() {
     this.id = 0;
     this.cantidadClientes = 0;
@@ -31,6 +33,8 @@ export class Mesa {
     this.idCliente = 0;
     this.nombreCliente = '';
     this.apellidoCliente = '';
+
+    this.encuestaRealizada = false;
   }
 
   public static toDoc(mesa: Mesa) {
@@ -45,6 +49,8 @@ export class Mesa {
       idCliente: mesa.idCliente,
       nombreCliente: mesa.nombreCliente,
       apellidoCliente: mesa.apellidoCliente,
+
+      encuestaRealizada: JSON.stringify(mesa.encuestaRealizada),
     };
   }
   public static parseDoc(doc: any) {
@@ -59,6 +65,8 @@ export class Mesa {
     mesa.idCliente = doc.idCliente;
     mesa.nombreCliente = doc.nombreCliente;
     mesa.apellidoCliente = doc.apellidoCliente;
+
+    mesa.encuestaRealizada = JSON.parse(doc.encuestaRealizada);
     return mesa;
   }
   public static parseDocArray(doc: any) {
@@ -73,6 +81,8 @@ export class Mesa {
     mesa.idCliente = doc['idCliente'];
     mesa.nombreCliente = doc['nombreCliente'];
     mesa.apellidoCliente = doc['apellidoCliente'];
+
+    mesa.encuestaRealizada = JSON.parse(doc['encuestaRealizada']);
     return mesa;
   }
 

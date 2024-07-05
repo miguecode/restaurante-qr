@@ -1,0 +1,25 @@
+<ion-content [fullscreen]="true">
+  <div class="content-container">
+    <div *ngIf="verProcesando" class="procesando-container">
+      <img
+        src="assets/iconoVacio.png"
+        [ngClass]="{ animarLogo: verProcesando }"
+      />
+      <label>PROCESANDO PAGO</label>
+    </div>
+
+    <div *ngIf="verError" class="error-container">
+      <img src="assets/iconoVacio.png" />
+      <label>UPS! HUBO UN PROBLEMA</label>
+      <label style="margin-top: -20px">AL PROCESAR EL PAGO</label>
+      <label>POR FAVOR, VUELVA</label>
+      <label style="margin-top: -20px">A INTENTARLO</label>
+    </div>
+
+    <div *ngIf="verExito" class="exito-container">
+      <img src="assets/iconoVacio.png" />
+      <label>PAGO PROCESADO</label>
+      <label style="margin-top: -20px">EXITOSAMENTE</label>
+    </div>
+  </div>
+</ion-content>

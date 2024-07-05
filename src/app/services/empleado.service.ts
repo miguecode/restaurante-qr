@@ -155,7 +155,7 @@ export class EmpleadoService {
   public traerPorIdObservable(empleado: Empleado) {
     const doc = Empleado.toDoc(empleado);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Empleado.parseDoc(doc)));
   }
 }

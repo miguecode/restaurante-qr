@@ -9,5 +9,7 @@ export enum Estado {
   pedidoElaborando = 'elaborando',
   pedidoTerminado = 'terminado',
   pedidoEntregado = 'entregado',
+  pedidoRecibido = 'recibido',
   pedidoPagado = 'pagado',
+  pedidoPagoConfirmadoPorMozo = 'pagoConfirmadoPorMozo',
 }

@@ -103,7 +103,7 @@ export class ChatService {
   public traerPorIdObservable(chat: Chat) {
     const doc = Chat.toDoc(chat);
     return this.firestoreService
-      .traerPorId(doc.id, this.col)
+      .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Chat.parseDoc(doc)));
   }
 }

@@ -79,13 +79,13 @@ export class ApiService {
     });
   }
   public async notificarUnUsuario(usuario: Usuario, mensaje: string) {
-    const usuarioLogeado = await this.usuarioService.getUsuarioBd();
+    //const usuarioLogeado = await this.usuarioService.getUsuarioBd();
     const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-uno`;
     const HOSTING = `${this.comandaApiWeb}/notificar-uno`;
     return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
-        title: `Mensaje de ${usuarioLogeado.correo}`,
+        title: `Mensaje del sistema`,
         body: mensaje,
         token: usuario.token,
       }),
@@ -107,39 +107,39 @@ export class ApiService {
     });
   }
   public async notificarDuenios(mensaje: string) {
-    const usuario = await this.usuarioService.getUsuarioBd();
+    //const usuario = await this.usuarioService.getUsuarioBd();
     const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-duenios`;
     const HOSTING = `${this.comandaApiWeb}/notificar-duenios`;
     return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
-        title: `Mensaje de ${usuario.correo}`,
+        title: `Mensaje del sistema`,
         body: mensaje,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
   }
   public async notificarSupervisores(mensaje: string) {
-    const usuario = await this.usuarioService.getUsuarioBd();
+    //const usuario = await this.usuarioService.getUsuarioBd();
     const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-supervisores`;
     const HOSTING = `${this.comandaApiWeb}/notificar-supervisores`;
     return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
-        title: `Mensaje de ${usuario.correo}`,
+        title: `Mensaje del sistema`,
         body: mensaje,
       }),
       headers: { 'Content-Type': 'application/json' },
     });
   }
   public async notificarClientes(mensaje: string) {
-    const usuario = await this.usuarioService.getUsuarioBd();
+    //const usuario = await this.usuarioService.getUsuarioBd();
     const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-clientes`;
     const HOSTING = `${this.comandaApiWeb}/notificar-clientes`;
     return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
       method: 'POST',
       body: JSON.stringify({
-        title: `Mensaje de ${usuario.correo}`,
+        title: `Mensaje del sistema`,
         body: mensaje,
       }),
       headers: { 'Content-Type': 'application/json' },
@@ -154,6 +154,25 @@ export class ApiService {
       body: JSON.stringify({
         title: `Mensaje del sistema`,
         body: `Se registro un nuevo cliente.`,
+      }),
+      headers: { 'Content-Type': 'application/json' },
+    });
+  }
+
+  public notificarPedidoCuenta(
+    tipoEmpleado: string,
+    mensaje: string,
+    idMesa: number
+  ) {
+    //const usuario = await this.usuarioService.getUsuarioBd();
+    const LOCALHOST = `http://localhost:${this.localPuerto}/notificar-empleados`;
+    const HOSTING = `${this.comandaApiWeb}/notificar-empleados`;
+    return fetch(this.consumirLocal ? LOCALHOST : HOSTING, {
+      method: 'POST',
+      body: JSON.stringify({
+        title: `La mesa ${idMesa} pidio la cuenta`,
+        body: mensaje,
+        employeeType: tipoEmpleado,
       }),
       headers: { 'Content-Type': 'application/json' },
     });

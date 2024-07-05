@@ -44,4 +44,12 @@ export class TraductorQr {
     }
     return false;
   }
+
+  static propina(dataQr: string) {
+    const data = TraductorQr.entidadRestaurante(dataQr);
+    if (data.entidad === 'propina') {
+      return Number(data.id);
+    }
+    return false;
+  }
 }

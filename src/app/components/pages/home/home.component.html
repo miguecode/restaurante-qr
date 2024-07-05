@@ -114,18 +114,6 @@
       <!-- #endregion Accesos de Empleado -->
 
       <!-- #region Accesos De Cliente -->
-      <!-- <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
-        <button class="btn btn-primary" (click)="mostrarMenu = true">
-          <label>Menú</label>
-        </button>
-      </div> -->
-
-      <!-- <div *ngIf="usuarioEsCliente && usuarioTieneMesa">
-        <button class="btn btn-primary" (click)="clienteToChatMozo()">
-          <label>Consultar al Mozo</label>
-        </button>
-      </div> -->
-
       <div
         *ngIf="
           usuarioEsCliente && !usuarioEstaEnListaEspera && !usuarioTieneMesa
@@ -139,18 +127,20 @@
 
       <div *ngIf="usuarioEsCliente">
         <!-- La línea comentada de abajo es para probar sin escanear -->
-        <!-- <button class="btn btn-primary" routerLink="/detalle-mesa-qr/1">  -->
-        <button class="btn btn-primary" (click)="escanearQrMesa()">
+        <button class="btn btn-primary" routerLink="/detalle-mesa-qr/4">
+          <!-- <button class="btn btn-primary" (click)="escanearQrMesa()"> -->
           <label>Escanear código QR</label>
           <label>de Mesa</label>
         </button>
       </div>
 
-      <!-- <div *ngIf="usuarioEsCliente">
-        <button class="btn btn-primary" routerLink="/seccion-encuestas">
-          <label>Encuestas</label>
+      <div *ngIf="usuarioEsCliente">
+        <!-- La línea comentada de abajo es para probar sin escanear -->
+        <button class="btn btn-primary" routerLink="/encuesta-graficos">
+          <!-- <button class="btn btn-primary" (click)="escanearQrMesa()"> -->
+          <label>Ver Encuestas</label>
         </button>
-      </div> -->
+      </div>
 
       <div
         *ngIf="

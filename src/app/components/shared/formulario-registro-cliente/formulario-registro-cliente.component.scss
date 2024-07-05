@@ -13,135 +13,145 @@ formulario-container {
     padding: 7px;
   }
   
-  input {
-    width: 100%;
-    background: transparent;
-    height: 38px;
-    color: #fff;
-    border-color: #b72c2c;
-    padding-left: 5px;
+input {
+  width: 100%;
+  background: transparent;
+  height: 38px;
+  color: #fff;
+  border-color: #b72c2c;
+  padding-left: 5px;
+}
+input:focus {
+  background: transparent;
+  height: 38px;
+  color: #fff;
+  border-color: #b72c2c;
+}
+label {
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+}
+img {
+  height: 70px;
+  width: 70px;
+  border-top-right-radius: 5px;
+  border-bottom-right-radius: 5px;
+  border: 2px solid #b72c2c;
+}
+
+.img-baja {
+  border-radius: 50%;
+  border: 2px solid black;
+}
+
+.area {
+  display: flex;
+  flex-direction: row;
+}
+
+// #region Controles
+.control-id,
+.control-nombre,
+.control-apellido,
+.control-dni,
+.control-cuil,
+.control-foto,
+.control-tipo,
+.control-correo,
+.control-clave,
+.control-accion,
+.control-cancelar {
+  padding: 5px;
+  width: 100%;
+}
+
+.control-foto {
+  display: flex;
+  flex-direction: column;
+  text-align: left;
+}
+
+.control-foto button {
+  border: 0px solid black;
+  color: white;
+  height: 70px;
+  width: 299px;
+  margin-right: 1px;
+}
+
+.control-accion button,
+.control-cancelar button {
+  border: 0px solid black;
+  color: white;
+  height: 40px;
+  width: 100%;
+}
+
+.control-foto button {
+  background: transparent;
+  border: 1px solid #b72c2c;
+  width: 250px;
+  font-weight: bold;
+  font-size: 21px;
+}
+
+.control-accion button {
+  background: #4b963c;
+  border: 1px solid #4b963c;
+  font-weight: bold;
+  height: 37px;
+}
+
+.control-cancelar button {
+  background: #dc2121;
+  border: 1px solid #dc2121;
+  font-weight: bold;
+  height: 37px;
+}
+// #endregion Controles
+
+// #region Spinner
+.loader-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.loader {
+  width: 25px;
+  height: 25px;
+  border: 5px solid #fff;
+  border-bottom-color: grey;
+  border-radius: 50%;
+  display: inline-block;
+  box-sizing: border-box;
+  animation: rotation 1s linear infinite;
+}
+@keyframes rotation {
+  0% {
+    transform: rotate(0deg);
   }
-  input:focus {
-    background: transparent;
-    height: 38px;
-    color: #fff;
-    border-color: #b72c2c;
+  100% {
+    transform: rotate(360deg);
   }
-  label {
-    color: #fff;
-    font-size: 18px;
-    font-weight: bold;
-  }
-  img {
-    height: 70px;
-    width: 70px;
-    border-top-right-radius: 5px;
-    border-bottom-right-radius: 5px;
-    border: 2px solid #b72c2c;
-  }
-  
-  .img-baja {
-    border-radius: 50%;
-    border: 2px solid black;
-  }
-  
-  .area {
-    display: flex;
-    flex-direction: row;
-  }
-  
-  // #region Controles
-  .control-id,
-  .control-nombre,
-  .control-apellido,
-  .control-dni,
-  .control-cuil,
-  .control-foto,
-  .control-tipo,
-  .control-correo,
-  .control-clave,
-  .control-accion,
-  .control-cancelar {
-    padding: 5px;
-    width: 100%;
-  }
-  
-  .control-foto {
-    display: flex;
-    flex-direction: column;
-    text-align: left;
-  }
-  
-  .control-foto button {
-    border: 0px solid black;
-    color: white;
-    height: 70px;
-    width: 299px;
-    margin-right: 1px;
-  }
-  
-  .control-accion button,
-  .control-cancelar button {
-    border: 0px solid black;
-    color: white;
-    height: 40px;
-    width: 100%;
-  }
-  
-  .control-foto button {
-    background: transparent;
-    border: 1px solid #b72c2c;
-    width: 250px;
-    font-weight: bold;
-    font-size: 21px;
-  }
-  
-  .control-accion button {
-    background: #4b963c;
-    border: 1px solid #4b963c;
-    font-weight: bold;
-    height: 37px;
-  }
-  
-  .control-cancelar button {
-    background: #dc2121;
-    border: 1px solid #dc2121;
-    font-weight: bold;
-    height: 37px;
-  }
-  // #endregion Controles
-  
-  // #region Spinner
-  .loader-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .loader {
-    width: 25px;
-    height: 25px;
-    border: 5px solid #fff;
-    border-bottom-color: grey;
-    border-radius: 50%;
-    display: inline-block;
-    box-sizing: border-box;
-    animation: rotation 1s linear infinite;
-  }
-  @keyframes rotation {
-    0% {
-      transform: rotate(0deg);
-    }
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-  
-  .alert {
-    background-color: transparent;
-    border: none;
-    margin: 0px;
-    padding: 0px;
-    color: #ba6366;
-    margin-left: 7px;
-  }
-  // #endregion Spinner
+}
+
+.alert {
+  background-color: transparent;
+  border: none;
+  margin: 0px;
+  padding: 0px;
+  color: #ba6366;
+  margin-left: 7px;
+}
+// #endregion Spinner
+
+.boton-qr {
+  background: #dc2121;
+  border: 1px solid #dc2121;
+  font-weight: bold;
+  width: 120px;
+}
+#input-dni {
+  width: 220px;
+}

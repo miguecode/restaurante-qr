@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NavigationEnd, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   IonHeader,
   IonToolbar,
@@ -9,22 +9,27 @@ import {
   IonContent,
   IonButton,
   IonLabel,
+  IonFooter,
 } from '@ionic/angular/standalone';
 import { Cliente } from 'src/app/classes/cliente';
 import { Empleado } from 'src/app/classes/empleado';
 import { UsuarioService } from 'src/app/services/usuario.service';
-import { Usuario } from 'src/app/classes/padres/usuario';
 import { Swalert } from 'src/app/classes/utils/swalert.class';
 import { Producto } from 'src/app/classes/producto';
 import { Mesa } from 'src/app/classes/mesa';
 import { MesaService } from 'src/app/services/mesa.service';
 import { ProductoService } from 'src/app/services/producto.service';
 import { ClienteService } from 'src/app/services/cliente.service';
-import { filter } from 'rxjs';
 import { MenuComponent } from '../menu/menu.component';
 import { Pedido } from 'src/app/classes/pedido';
 import { PedidoService } from 'src/app/services/pedido.service';
 import { Estado } from 'src/app/classes/utils/enumerado';
+import { Usuario } from 'src/app/classes/padres/usuario';
+import { Duenio } from 'src/app/classes/duenio';
+import { Supervisor } from 'src/app/classes/supervisor';
+import { firstValueFrom, isObservable } from 'rxjs';
+import { BarcodeScanningService } from 'src/app/services/utils/barcode-scanning.service';
+import { TraductorQr } from 'src/app/classes/utils/traductor-qr';
 
 @Component({
   selector: 'app-detalle-mesa-qr',
@@ -32,6 +37,7 @@ import { Estado } from 'src/app/classes/utils/enumerado';
   styleUrls: ['./detalle-mesa-qr.component.scss'],
   standalone: true,
   imports: [
+    IonFooter,
     RouterLink,
     IonLabel,
     IonButton,
@@ -49,10 +55,13 @@ import { Estado } from 'src/app/classes/utils/enumerado';
   ],
 })
 export class DetalleMesaQrComponent implements OnInit {
-  usuario: Usuario | Cliente | undefined = undefined;
+  usuario: Usuario | Duenio | Supervisor | Empleado | Cliente | undefined =
+    undefined;
+  mesa: Mesa | undefined = undefined;
   mostrarSpinner: boolean = false;
   mostrarMenu: boolean = false;
   mostrarEstado: boolean = false;
+  mostrarEscanearPropina: boolean = false;
 
   listaEmpleados: Empleado[] = [];
   listaClientes: Cliente[] = [];
@@ -60,13 +69,15 @@ export class DetalleMesaQrComponent implements OnInit {
   listaProductos: Producto[] = [];
   listaPedidos: Pedido[] = [];
   listaPedidosDeEstaMesa: Pedido[] = [];
-  idMesa: number = 0;
   estadoPedido: string = '';
+  idMesaParametros: any = '';
+  idMesa: number = 0;
 
-  usuarioEsCliente: boolean = false;
   usuarioEstaEnListaEspera: boolean = false;
   usuarioTieneMesa: boolean = false;
   usuarioTienePedido: boolean = false;
+
+  mesaRealizoEncuesta: boolean = false;
 
   constructor(
     private usuarioService: UsuarioService,
@@ -74,10 +85,13 @@ export class DetalleMesaQrComponent implements OnInit {
     private mesaService: MesaService,
     private productoService: ProductoService,
     private pedidosService: PedidoService,
-    private router: Router
+    private route: ActivatedRoute,
+    private router: Router,
+    private barcodeScanningService: BarcodeScanningService
   ) {
     this.mostrarEstado = false;
     this.mostrarMenu = false;
+    this.mostrarEscanearPropina = false;
 
     this.clienteSerivice.traerTodosObservable().subscribe((l) => {
       this.listaClientes = l;
@@ -93,51 +107,60 @@ export class DetalleMesaQrComponent implements OnInit {
 
     this.pedidosService.traerTodosObservable().subscribe((l) => {
       this.listaPedidos = l;
-      this.cargarPedidosDeEstaMesa;
+      console.log(this.listaPedidos);
+      this.cargarPedidosDeEstaMesa();
       this.calcularEstadoPedido();
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     try {
       this.mostrarSpinner = true;
-      this.router.events
-        .pipe(filter((event) => event instanceof NavigationEnd))
-        .subscribe(async () => {
-          try {
-            this.mostrarSpinner = true;
-            await this.cargarDatosImportantes();
-          } catch (e: any) {
-            Swalert.toastError(e.message);
-            console.log(e.message);
-          } finally {
-            this.mostrarSpinner = false;
-          }
-        });
+      const obs = this.route.params;
+
+      if (isObservable(obs)) {
+        const paramsPromise = await firstValueFrom(obs);
+        this.idMesaParametros = Number(paramsPromise['idMesa']);
+        this.idMesa = this.idMesaParametros;
+        this.mesa = await this.mesaService.traerPorId(this.idMesaParametros);
+
+        console.log(this.mesa);
+
+        const usuario = await this.usuarioService.getUsuarioBd();
+        if (usuario instanceof Cliente) {
+          this.usuario = usuario;
+          console.log('entro aca');
+          console.log(usuario);
+          this.cargarDatosImportantes();
+        }
+      }
     } catch (e: any) {
       Swalert.toastError(e.message);
       console.log(e.message);
+    } finally {
+      this.mostrarSpinner = false;
     }
   }
 
   private async cargarDatosImportantes() {
-    this.usuario = await this.usuarioService.getUsuarioBd();
-
     if (this.usuario instanceof Cliente) {
-      this.idMesa = this.usuario.idMesa;
-      this.usuarioEsCliente = true;
-      this.usuarioEstaEnListaEspera = this.usuario.estadoListaEspera;
+      this.usuarioEstaEnListaEspera = this.usuario!.estadoListaEspera;
       this.mostrarEstado = false;
       this.mostrarMenu = false;
+      this.mostrarEscanearPropina = false;
+      this.mesaRealizoEncuesta = this.mesa!.encuestaRealizada;
+
       await this.cargarPedidosDeEstaMesa();
       await this.calcularEstadoPedido();
+      console.log(this.listaPedidos);
+      console.log(this.listaPedidosDeEstaMesa);
     }
   }
 
   private async cargarPedidosDeEstaMesa() {
     if (this.idMesa > 0) {
       this.listaPedidosDeEstaMesa = this.listaPedidos.filter(
-        (pedido) => pedido.idMesa === this.idMesa
+        (pedido) => pedido.idMesa === this.mesa!.id
       );
     }
   }
@@ -202,5 +225,47 @@ export class DetalleMesaQrComponent implements OnInit {
     if (this.usuario instanceof Cliente) {
       this.router.navigateByUrl(`/chat-mozo/${this.usuario.id}`);
     }
+  }
+
+  async confirmarRecepcion(idMesa: number) {
+    const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
+    if (lpm !== undefined) {
+      for (let p of lpm) {
+        p.estado = Estado.pedidoEntregado;
+        await this.pedidosService.modificar(p);
+      }
+    }
+  }
+
+  async escanearQrPropina() {
+    const dataQr = await this.barcodeScanningService.escanearQr();
+    // const usuario = await this.usuarioService.getUsuarioBd();
+    const source = TraductorQr.propina(dataQr);
+
+    try {
+      await Swalert.toastSuccess(
+        `Porcentaje de propina seleccionado: ${source.toString()}%`
+      );
+      if (source !== false) {
+        console.log(source);
+        if (this.usuario instanceof Cliente) {
+          this.usuario.propina = source;
+          await this.clienteSerivice.modificar(this.usuario);
+
+          setTimeout(() => {
+            this.mostrarEscanearPropina = false;
+            this.mostrarMenu = false;
+            this.mostrarEstado = false;
+            this.router.navigate(['/detalle-cuenta']);
+          }, 2000);
+        }
+      }
+    } catch (e: any) {
+      Swalert.toastError(e.message);
+    }
+  }
+
+  toAltaEncuesta() {
+    this.router.navigateByUrl(`/alta-encuesta/${this.idMesa}`);
   }
 }

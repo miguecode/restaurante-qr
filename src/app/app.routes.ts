@@ -206,11 +206,35 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
-    path: 'alta-encuesta',
+    path: 'alta-encuesta/:idMesa',
     loadComponent: () =>
       import('./components/pages/alta-encuesta/alta-encuesta.component').then(
         (m) => m.AltaEncuestaComponent
       ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'detalle-cuenta',
+    loadComponent: () =>
+      import('./components/pages/detalle-cuenta/detalle-cuenta.component').then(
+        (m) => m.DetalleCuentaComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'simular-pago',
+    loadComponent: () =>
+      import('./components/pages/simular-pago/simular-pago.component').then(
+        (m) => m.SimularPagoComponent
+      ),
+    ...canActivate(() => redirectUnauthorizedTo(['/login'])),
+  },
+  {
+    path: 'encuesta-graficos',
+    loadComponent: () =>
+      import(
+        './components/pages/encuesta-graficos/encuesta-graficos.component'
+      ).then((m) => m.EncuestaGraficosComponent),
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {

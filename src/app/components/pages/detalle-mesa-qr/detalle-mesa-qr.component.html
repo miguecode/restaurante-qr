@@ -2,7 +2,7 @@
   <div class="header-container">
     <div class="cerrar-sesion">
       <button
-        *ngIf="!mostrarMenu && !mostrarEstado"
+        *ngIf="!mostrarMenu && !mostrarEstado && !mostrarEscanearPropina"
         class="btn btn-primary"
         routerLink="/home"
       >
@@ -18,9 +18,17 @@
       </button>
 
       <button
-        *ngIf="mostrarEstado"
+        *ngIf="mostrarEstado && !mostrarEscanearPropina"
         class="btn btn-primary"
         (click)="mostrarEstado = false"
+      >
+        <i class="bi bi-arrow-left" style="font-size: 30px"></i>
+      </button>
+
+      <button
+        *ngIf="mostrarEscanearPropina"
+        class="btn btn-primary"
+        (click)="mostrarEscanearPropina = false"
       >
         <i class="bi bi-arrow-left" style="font-size: 30px"></i>
       </button>
@@ -31,7 +39,7 @@
       <label *ngIf="mostrarMenu">Menú</label>
     </div>
 
-    <div class="test-push">
+    <!-- <div class="test-push">
       <button
         *ngIf="!mostrarMenu"
         class="btn btn-success"
@@ -39,7 +47,7 @@
       >
         Test PUSH
       </button>
-    </div>
+    </div> -->
   </div>
 </ion-toolbar>
 
@@ -60,6 +68,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'pendiente'
@@ -78,6 +87,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'elaborando'
@@ -96,6 +106,7 @@
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'terminado'
@@ -109,11 +120,15 @@
         ahora estás a la espera de que
         <span>el mozo te lo entregue a tu mesa</span>.
       </p>
+      <button class="btn-confirmar" (click)="confirmarRecepcion(idMesa)">
+        Confirmar recepción
+      </button>
     </div>
 
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'entregado'
@@ -126,11 +141,31 @@
         El mozo dió por entregado tu pedido.
         <span>¡Esperamos que lo disfrutes!</span>
       </p>
+      <button class="btn-confirmar" (click)="mostrarEscanearPropina = true">
+        Pedir la cuenta
+      </button>
+    </div>
+
+    <div
+      *ngIf="!mostrarMenu && mostrarEscanearPropina"
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-piggy-bank-fill" style="font-size: 100px"></i>
+      <h1>Elegí la propina</h1>
+      <p>
+        Vas a poder elegir el monto de tu <span>propina</span> al
+        <span>escanear el código QR</span> que quieras. Cada uno representa un
+        monto basado en porcentajes.
+      </p>
+      <button class="btn-confirmar" (click)="escanearQrPropina()">
+        Escanear QR para la propina
+      </button>
     </div>
 
     <div
       *ngIf="
         !mostrarMenu &&
+        !mostrarEscanearPropina &&
         mostrarEstado &&
         usuarioTienePedido &&
         estadoPedido === 'pagado'
@@ -144,35 +179,34 @@
       </p>
     </div>
 
-    <div *ngIf="!mostrarMenu && !mostrarEstado" class="router-container">
+    <div
+      *ngIf="!mostrarMenu && !mostrarEstado && !mostrarEscanearPropina"
+      class="router-container"
+    >
       <!-- #region Accesos De Cliente -->
 
-      <div *ngIf="usuarioEsCliente">
+      <div *ngIf="usuarioTienePedido">
         <button class="btn btn-primary" (click)="mostrarEstado = true">
           <label>Mi Pedido</label>
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <div *ngIf="!usuarioTienePedido">
         <button class="btn btn-primary" (click)="mostrarMenu = true">
           <label>Menú</label>
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
+      <div>
         <button class="btn btn-primary" (click)="clienteToChatMozo()">
           <label>Consultar al Mozo</label>
         </button>
       </div>
 
-      <div *ngIf="usuarioEsCliente">
-        <button class="btn btn-primary" routerLink="/listado-encuestas">
-          <label>Encuestas</label>
-        </button>
-      </div>
-
-      <div *ngIf="usuarioEsCliente">
-        <button class="btn btn-primary" routerLink="/alta-encuestas">
+      <div
+        *ngIf="mesaRealizoEncuesta === false || estadoPedido === 'pendiente'"
+      >
+        <button class="btn btn-primary" (click)="toAltaEncuesta()">
           <label>Realizar Encuesta</label>
         </button>
       </div>
