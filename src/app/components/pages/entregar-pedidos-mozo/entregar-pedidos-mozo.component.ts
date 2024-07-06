@@ -72,23 +72,12 @@ export class EntregarPedidosMozoComponent {
     });
   }
 
-  async confirmarPedido(idMesa: number) {
-    const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
-    if (lpm !== undefined) {
-      for (let p of lpm) {
-        p.confirmadoMozo = true;
-        p.estado = Estado.pedidoElaborando;
-        await this.pedidoService.modificar(p);
-      }
-    }
-    this.verDetalle = false;
-  }
 
   async entregarPedido(idMesa: number) {
     const lpm = this.listaPedidos.filter((p) => p.idMesa === idMesa);
     if (lpm !== undefined) {
       for (let p of lpm) {
-        p.estado = Estado.pedidoRecibido;
+        p.estado = Estado.pedidoEntregado;
         await this.pedidoService.modificar(p);
       }
     }

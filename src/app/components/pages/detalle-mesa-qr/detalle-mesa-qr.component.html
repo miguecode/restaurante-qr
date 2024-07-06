@@ -141,10 +141,32 @@
         El mozo dió por entregado tu pedido.
         <span>¡Esperamos que lo disfrutes!</span>
       </p>
+      <button class="btn-confirmar" (click)="confirmarRecepcion(idMesa)">
+        Confirmar recepción
+      </button>
+    </div>
+
+    <div
+      *ngIf="
+        !mostrarMenu &&
+        !mostrarEscanearPropina &&
+        mostrarEstado &&
+        usuarioTienePedido &&
+        estadoPedido === 'realizado'
+      "
+      class="mensaje-informativo"
+    >
+      <i class="bi bi-emoji-laughing-fill" style="font-size: 100px"></i>
+      <h1>Tu pedido ya fue entregado</h1>
+      <p>
+        El mozo dió por entregado tu pedido.
+        <span>¡Esperamos que lo disfrutes!</span>
+      </p>
       <button class="btn-confirmar" (click)="mostrarEscanearPropina = true">
         Pedir la cuenta
       </button>
     </div>
+
 
     <div
       *ngIf="!mostrarMenu && mostrarEscanearPropina"
