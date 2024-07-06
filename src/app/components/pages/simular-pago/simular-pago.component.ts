@@ -29,6 +29,9 @@ export class SimularPagoComponent implements OnInit {
         switch (c) {
           case 1:
             this.verExito = true;
+            setTimeout(() => {
+              this.router.navigateByUrl('/home');
+            }, 4000);
             break;
 
           default:

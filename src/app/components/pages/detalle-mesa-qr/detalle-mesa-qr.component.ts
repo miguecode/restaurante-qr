@@ -180,6 +180,7 @@ export class DetalleMesaQrComponent implements OnInit {
     let todosTerminado = true;
     let todosEntregado = true;
     let todosPagado = true;
+    let todosRecibido = true;
 
     for (const pedido of this.listaPedidosDeEstaMesa) {
       if (pedido.estado === Estado.pedidoElaborando) {
@@ -188,6 +189,7 @@ export class DetalleMesaQrComponent implements OnInit {
         todosTerminado = false;
         todosEntregado = false;
         todosPagado = false;
+        todosRecibido = false;
       } else if (pedido.estado !== Estado.pedidoPendiente) {
         todosPendiente = false;
       }
@@ -196,6 +198,9 @@ export class DetalleMesaQrComponent implements OnInit {
       }
       if (pedido.estado !== Estado.pedidoEntregado) {
         todosEntregado = false;
+      }
+      if (pedido.estado !== Estado.pedidoRecibido) {
+        todosRecibido = false;
       }
       if (pedido.estado !== Estado.pedidoPagado) {
         todosPagado = false;
@@ -212,6 +217,8 @@ export class DetalleMesaQrComponent implements OnInit {
       estadoPedido = Estado.pedidoPagado;
     } else if (todosPendiente) {
       estadoPedido = Estado.pedidoPendiente;
+    } else if (todosRecibido) {
+      estadoPedido = Estado.pedidoRecibido;
     }
 
     this.estadoPedido = estadoPedido;
