@@ -279,6 +279,13 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/ade6e72f-bbb1-4669-971d-d325ae9fff95" width="350"/>  
 
+- Correo de validación exitoso (cuando el Metre acepta al Cliente).
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/e0007498-19a1-448d-b385-8c36c27526aa" width="350"/>  
+
+- Correo de validación denegado (cuando el Metre rechaza al Cliente).
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/23e7194d-263e-497f-9f84-7d80796a79e2" width="350"/>  
 
 - Inicio para el Cliente (cuando está en lista de espera).
 
