@@ -69,6 +69,8 @@ export class DetalleCuentaComponent implements OnInit {
   }
 
   obtenerPrecioTotal(cliente: Cliente) {
+    this.importeTotal = 0;
+    this.propina = 0;
     this.pedidosCliente.forEach((p) => {
       this.importeTotal += p.precio;
       console.log(this.importeTotal);
