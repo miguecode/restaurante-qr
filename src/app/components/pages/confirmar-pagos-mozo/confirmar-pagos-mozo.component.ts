@@ -94,9 +94,12 @@ export class ConfirmarPagosMozoComponent implements OnInit {
         let cliente = this.clientesService.traerPorId(p.idCliente);
         if (cliente instanceof Cliente) {
           cliente.idMesa = 0;
+          cliente.estadoListaEspera = false;
+          cliente.propina = 0;
           await this.clientesService.modificar(cliente);
         }
 
+        p.idMesa = 0;
         await this.pedidoService.modificar(p);
       }
 
@@ -105,7 +108,7 @@ export class ConfirmarPagosMozoComponent implements OnInit {
     this.verDetalle = false;
   }
 
-  private liberarMesa(idMesa: number) {
+  private async liberarMesa(idMesa: number) {
     const mesa = this.mesasService.traerPorId(idMesa);
     if (mesa instanceof Mesa) {
       mesa.idCliente = 0;
@@ -113,7 +116,8 @@ export class ConfirmarPagosMozoComponent implements OnInit {
       mesa.apellidoCliente = '';
       mesa.nombreCliente = '';
 
-      this.mesasService.modificar(mesa);
+      await this.mesasService.modificar(mesa);
+
     }
   }
 
