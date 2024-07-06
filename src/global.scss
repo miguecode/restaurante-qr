@@ -36,6 +36,10 @@
 /* @import "@ionic/angular/css/palettes/dark.class.css"; */
 @import "@ionic/angular/css/palettes/dark.system.css";
 
+ion-toolbar {
+  --background: #1e1e1e;
+}
+
 $color-title-toast-cargar-foto: green;
 $marginRight-botonConfirm-toast-cargar-foto: 5px;
 .toast-cargar-foto-title {
