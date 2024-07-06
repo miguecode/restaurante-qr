@@ -257,70 +257,70 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
 -- -- 
 ### 🎨 Pantallas actualizadas
 
-- Pantalla para el inicio de sesión
+- Pantalla para el inicio de sesión.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/cd2ac29d-1276-446a-b45c-6a571258e77e" width="350"/>
   
 
-- Diseño para los formularios de alta (este es el ejemplo de registrar un nuevo Cliente)
+- Diseño para los formularios de alta (este es el ejemplo de registrar un nuevo Cliente).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/3b0ca40e-9cc0-4377-8db7-7b42c4ce866e" width="350"/>
 
-- Diseño para los menús ABM (todas las entidades lo tienen, este es el ejemplo para los Dueños)
+- Diseño para los menús ABM (todas las entidades lo tienen, este es el ejemplo para los Dueños).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/3d8e23e5-9f69-44c0-9b34-90c7985751a7" width="350"/>
 
-- Inicio para el Dueño
+- Inicio para el Dueño.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/cd483b4d-6f0d-44e8-ae9e-ce3fa3c6b239" width="350"/>
 
 
-- Inicio para el Cliente (cuando ingresa por primera vez)
+- Inicio para el Cliente (cuando ingresa por primera vez).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/ade6e72f-bbb1-4669-971d-d325ae9fff95" width="350"/>  
 
 
-- Inicio para el Cliente (cuando está en lista de espera)
+- Inicio para el Cliente (cuando está en lista de espera).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/25c262be-2626-4532-b16e-57eea0b90b699" width="350"/>  
 
 
-- Inicio para el Metre
+- Inicio para el Metre.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/f25c84b3-215e-4892-9c53-b24dd5e66ba6" width="350"/>  
 
   
-- Asignar Mesa al Cliente para el Metre (visualización de todos los clientes en lista de espera)
+- Asignar Mesa al Cliente para el Metre (visualización de todos los clientes en lista de espera).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/5e29009a-8484-4dd2-9e71-dbde6326d660" width="350"/>  
 
 
-- Elegir la Mesa para el Cliente (visualización de todas las mesas disponibles para asignar)
+- Elegir la Mesa para el Cliente (visualización de todas las mesas disponibles para asignar).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a6470497-1f54-4cac-827d-ed50a7466bfc" width="350"/>
 
 
-- Inicio para el Cliente (cuando ya le aceptaron el ingreso pero todavía no tiene mesa)
+- Inicio para el Cliente (cuando ya le aceptaron el ingreso pero todavía no tiene mesa).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/2f84305e-de8b-4810-9d93-c7a1e6675c5d" width="350"/>
 
 
-- Inicio para el Cliente (cuando ya le asignaron una mesa, y la escanea correctamente)
+- Inicio para el Cliente (cuando ya le asignaron una mesa, y la escanea correctamente).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/cd0a5eea-04f2-4670-958f-5f4b763500c7" width="350"/>
 
 
-- Menú de productos para el Cliente (con uno de ellos seleccionado)
+- Menú de productos para el Cliente (con uno de ellos seleccionado).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/b5e31bb7-2cae-4272-8c97-9066cee89901" width="350"/>
 
 
-- Inicio para el Cliente (cuando ya realizó su pedido, ahora puede ver su estado)
+- Inicio para el Cliente (cuando ya realizó su pedido, ahora puede ver su estado).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/e97117d9-9cdb-4c3a-b0e7-4eda77a2d932" width="350"/>
 
 
-- Cliente revisa el estado de su pedido (en este caso, todavía no está confirmado) (todos los demás estados mantienen este estilo)
+- Cliente revisa el estado de su pedido (en este caso, todavía no está confirmado) (todos los demás estados mantienen este estilo).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/200d719c-c442-4073-a22a-c4573bb71465" width="350"/>
 
@@ -330,36 +330,56 @@ Ya completamos la inicialización del proyecto, y se pretende realizar el formul
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/f5d0db5d-2b49-4430-9bc6-9247070d1c6a" width="350"/>
 
 
-- Confirmar Pedidos para el Mozo (la sección Entregar Pedidos y Confirmar Pagos mantienen esta misma estética)
+- Confirmar Pedidos para el Mozo (la sección Entregar Pedidos y Confirmar Pagos mantienen esta misma estética).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/2c5ac188-af33-4174-9c66-6d5294d09be7" width="350"/>
 
 
-- Mozo viendo el detalle de un Pedido para ejercer alguna acción sobre él (en este caso, confirmarlo)
+- Mozo viendo el detalle de un Pedido para ejercer alguna acción sobre él (en este caso, confirmarlo).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/dc8c5a9d-cb5d-4960-a559-c323f35db8cc" width="350"/>
 
 
-- Pantalla de Consultar al Mozo, desde el Cliente (es la misma que la de Listado de Mensajes para el Mozo)
+- Pantalla de Consultar al Mozo, desde el Cliente (es la misma que la de Listado de Mensajes para el Mozo).
 
-  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/69f3fb0c-d9e8-4b16-aa38-d8396c914bc4" width="350"/>
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/5604921c-1ad5-4107-9ab2-68405ba2b4f2" width="350"/>
 
-- Pantalla de Listado de Mensajes para el Mozo (elige a qué chat acceder)
+- Pantalla de Listado de Mensajes para el Mozo (elige a qué chat acceder).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/4c06fc97-d7f7-41eb-9950-0e31e55e1011" width="350"/>
 
-- Cliente accede a las encuestas
+- Cliente accede a las encuestas.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/fb1908e7-c8f8-4369-b60d-09fa5a9b61ee" width="350"/>
+
+- Cliente accede a los gráficos de las encuestas.
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/26692c63-6eea-4653-b1e3-e31804933b15" width="350"/>
+
+- Cliente revisa que el estado de su pedido se está elaborando.
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/7c92b733-b46c-4779-8d6e-3e3e14bf2d68" width="350"/>
+
+- Cliente revisa que el estado de su pedido es terminado.
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/d6c07377-dfe0-4bcc-a93d-12b32d32325f" width="350"/>
 
 - Cliente revisa que el estado de su pedido es entregado, así que tiene la opción de pedir la cuenta.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/a16a33e7-73a4-4eaf-95fb-f4a5f84010d3" width="350"/>
 
-- Cliente ve la pantalla donde se le pide escanear un código QR para su propina
+- Cliente ve la pantalla donde se le pide escanear un código QR para su propina.
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/6cb69b8c-b7f0-4f21-b9a5-bcd3f659dd4e" width="350"/>
 
-- Detalle de una cuenta con botón para pagar (para el Cliente)
+- Detalle de una cuenta con botón para pagar (para el Cliente).
 
   <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/2384dd29-8516-4f37-8441-1e00a6a20b6a" width="350"/>
+
+- Pantalla de Pago Fallido. Este es el caso en el que falla la transacción (es una emulación, puede fallar o no aleatoriamente).
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/d20f2a67-8a69-4a63-ad72-ab1637d5574c" width="350"/>
+
+- Pantalla de Pago Exitoso. Este es el caso en el que se realiza correctamente la transacción (es una emulación, puede fallar o no aleatoriamente).
+
+  <img src="https://github.com/Leumig/brigada-binaria-2024/assets/103081146/774725f0-2acc-4d60-846b-bfb333183227" width="350"/>
