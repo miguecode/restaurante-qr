@@ -3,6 +3,11 @@ import { FirestoreService } from './firebase/firestore.service';
 import { Chat } from '../classes/chat';
 import { map } from 'rxjs';
 import { UsuarioService } from './usuario.service';
+import { Cliente } from '../classes/cliente';
+import { Empleado } from '../classes/empleado';
+import { ApiService } from './api/api.service';
+import { ClienteService } from './cliente.service';
+import { Usuario } from '../classes/padres/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +19,9 @@ export class ChatService {
 
   constructor(
     private firestoreService: FirestoreService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private clienteService: ClienteService,
+    private apiService: ApiService
   ) {
     this.traerTodosObservable().subscribe((l) => {
       this.listaChat = l;
@@ -74,22 +81,64 @@ export class ChatService {
       let chat = new Chat();
       chat.idCliente = idCliente;
 
-      chat.mensajes.push({
-        emisor: usuario.correo,
-        texto: texto,
-        fechaEnvio: new Date(),
-      });
+      if (usuario instanceof Cliente) {
+        await this.apiService.notificarMozoMensaje(Empleado.T_MOZO, texto);
+        chat.mensajes.push({
+          esCliente: true,
+          esMozo: false,
+          idMesa: usuario.idMesa,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
+
+      if (usuario instanceof Empleado && usuario.tipo === Empleado.T_MOZO) {
+        const cliente = await this.clienteService.traerPorId(idCliente);
+        await this.apiService.notificarUnUsuario(cliente as Usuario, texto);
+        chat.mensajes.push({
+          esCliente: false,
+          esMozo: true,
+          tipo: Empleado.T_MOZO,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
 
       await this.setId(chat);
       await this.insertarDoc(chat);
     }
 
     if (c !== undefined) {
-      c.mensajes.push({
-        emisor: usuario.correo,
-        texto: texto,
-        fechaEnvio: new Date(),
-      });
+      if (usuario instanceof Cliente) {
+        await this.apiService.notificarMozoMensaje(Empleado.T_MOZO, texto);
+        c.mensajes.push({
+          esCliente: true,
+          esMozo: false,
+          idMesa: usuario.idMesa,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
+
+      if (usuario instanceof Empleado && usuario.tipo === Empleado.T_MOZO) {
+        const cliente = await this.clienteService.traerPorId(idCliente);
+        await this.apiService.notificarUnUsuario(cliente as Usuario, texto);
+        c.mensajes.push({
+          esCliente: false,
+          esMozo: true,
+          tipo: Empleado.T_MOZO,
+          nombre: usuario.nombre,
+          emisor: usuario.correo,
+          texto: texto,
+          fechaEnvio: new Date(),
+        });
+      }
 
       await this.modificarDoc(c);
     }

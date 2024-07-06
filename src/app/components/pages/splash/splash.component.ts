@@ -16,6 +16,7 @@ export class SplashComponent implements OnInit {
 
   ngOnInit() {
     this.splashService.estadoMostrado = true;
+
     setTimeout(() => {
       SplashScreen.hide();
     }, 150);

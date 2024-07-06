@@ -21,6 +21,7 @@ import { UsuarioService } from 'src/app/services/usuario.service';
 import { Usuario } from 'src/app/classes/padres/usuario';
 import { Duenio } from 'src/app/classes/duenio';
 import { Supervisor } from 'src/app/classes/supervisor';
+import { CapitalizePipe } from 'src/app/pipes/capitalize.pipe';
 
 @Component({
   selector: 'app-chat-mozo',
@@ -42,6 +43,7 @@ import { Supervisor } from 'src/app/classes/supervisor';
     NgClass,
     DatePipe,
     RouterLink,
+    CapitalizePipe,
   ],
 })
 export class ChatMozoComponent implements OnInit {
@@ -52,6 +54,9 @@ export class ChatMozoComponent implements OnInit {
   mostrarSpinner: boolean = false;
   usuario: Usuario | undefined = undefined;
   idClienteParametros: number | undefined = undefined;
+
+  empleado: Empleado | undefined = undefined;
+  cliente: Cliente | undefined = undefined;
 
   constructor(
     private clienteService: ClienteService,

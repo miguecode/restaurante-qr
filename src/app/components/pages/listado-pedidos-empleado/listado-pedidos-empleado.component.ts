@@ -76,9 +76,10 @@ export class ListadoPedidosEmpleadoComponent implements OnInit {
 
   async realizar(pedido: Pedido) {
     pedido.estado = Estado.pedidoTerminado;
-    await this.pushService.notificarEmpleados(
+    await this.pushService.notificarPedidoRealizado(
       Empleado.T_MOZO,
-      `Notificando a todos los mozos`
+      `El producto ${pedido.nombreProducto} se ha realizado.`,
+      pedido.idMesa
     );
     await this.pedidoService.modificar(pedido);
   }

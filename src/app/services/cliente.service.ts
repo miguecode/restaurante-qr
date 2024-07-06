@@ -37,6 +37,16 @@ export class ClienteService {
     });
   }
 
+  public async traerPorId(idCliente: number) {
+    const l = await this.traerTodos();
+    for (let item of l) {
+      if (item.id === idCliente) {
+        return item;
+      }
+    }
+    return undefined;
+  }
+
   private traerProximoId() {
     return this.firestoreService.traerProximoId(this.col, 'id');
   }

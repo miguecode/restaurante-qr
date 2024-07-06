@@ -23,6 +23,7 @@
         <label *ngIf="mostrarMenu">Menú</label>
       </div>
 
+      <!--
       <div class="test-push">
         <button
           *ngIf="!mostrarMenu"
@@ -32,6 +33,7 @@
           Test PUSH
         </button>
       </div>
+      -->
     </div>
   </ion-toolbar>
 </ion-header>
@@ -127,8 +129,8 @@
 
       <div *ngIf="usuarioEsCliente">
         <!-- La línea comentada de abajo es para probar sin escanear -->
-        <button class="btn btn-primary" routerLink="/detalle-mesa-qr/4">
-          <!-- <button class="btn btn-primary" (click)="escanearQrMesa()"> -->
+        <!-- <button class="btn btn-primary" routerLink="/detalle-mesa-qr/4"> -->
+        <button class="btn btn-primary" (click)="escanearQrMesa()">
           <label>Escanear código QR</label>
           <label>de Mesa</label>
         </button>
