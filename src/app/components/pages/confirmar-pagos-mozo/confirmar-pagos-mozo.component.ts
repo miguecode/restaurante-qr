@@ -9,11 +9,13 @@ import {
   IonTitle,
 } from '@ionic/angular/standalone';
 import { firstValueFrom, isObservable } from 'rxjs';
+import { Cliente } from 'src/app/classes/cliente';
 import { Empleado } from 'src/app/classes/empleado';
 import { Mesa } from 'src/app/classes/mesa';
 import { Pedido } from 'src/app/classes/pedido';
 import { Estado } from 'src/app/classes/utils/enumerado';
 import { ApiService } from 'src/app/services/api/api.service';
+import { ClienteService } from 'src/app/services/cliente.service';
 import { MesaService } from 'src/app/services/mesa.service';
 import { PedidoService } from 'src/app/services/pedido.service';
 
@@ -38,10 +40,8 @@ export class ConfirmarPagosMozoComponent implements OnInit {
   verDetalle: boolean = false;
   detallePedidoMesa: Pedido[] = [];
   idMesaPedido: number | undefined = undefined;
-
   importe: number = 0;
   tiempo: number = 0;
-
   idMesa: number = 0;
 
   private listaPedidos: Pedido[] = [];
@@ -49,7 +49,8 @@ export class ConfirmarPagosMozoComponent implements OnInit {
   constructor(
     private pedidoService: PedidoService,
     private push: ApiService,
-    private mesasService: MesaService
+    private mesasService: MesaService,
+    private clientesService: ClienteService
   ) {
     this.pedidoService.traerTodosObservable().subscribe((l) => {
       const fa = l.filter((p) => p.estado === Estado.pedidoPagado);
@@ -89,6 +90,13 @@ export class ConfirmarPagosMozoComponent implements OnInit {
     if (lpm !== undefined) {
       for (let p of lpm) {
         p.estado = Estado.pedidoPagoConfirmadoPorMozo;
+
+        let cliente = this.clientesService.traerPorId(p.idCliente);
+        if (cliente instanceof Cliente) {
+          cliente.idMesa = 0;
+          await this.clientesService.modificar(cliente);
+        }
+
         await this.pedidoService.modificar(p);
       }
 
