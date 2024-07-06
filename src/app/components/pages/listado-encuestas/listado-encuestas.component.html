@@ -12,7 +12,8 @@
           <i class="bi bi-arrow-left" style="font-size: 30px"></i>
         </button>
       </div>
-      <ion-title> Listado de Encuestas </ion-title>
+      <ion-title *ngIf="!verDetalle"> Listado de Encuestas </ion-title>
+      <ion-title *ngIf="verDetalle"> Detalle de Encuesta </ion-title>
     </div>
     <!-- #endregion Titulo -->
   </ion-toolbar>

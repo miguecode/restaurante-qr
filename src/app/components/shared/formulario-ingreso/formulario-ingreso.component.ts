@@ -100,8 +100,8 @@ export class FormularioIngresoComponent implements OnInit {
       });
     } else if (usuario === '1') {
       this.loginForm.patchValue({
-        correoActual: 'mmariaf@yopmail.com',
-        claveActual: '222222',
+        correoActual: 'perezdd@yopmail.com',
+        claveActual: '111111',
       });
     } else if (usuario === '2') {
       this.loginForm.patchValue({
@@ -110,7 +110,7 @@ export class FormularioIngresoComponent implements OnInit {
       });
     } else if (usuario === '3') {
       this.loginForm.patchValue({
-        correoActual: 'miguel2@yopmail.com',
+        correoActual: 'hggg@yopmail.com',
         claveActual: '111111',
       });
     } else if (usuario === '4') {

@@ -5,6 +5,9 @@ import { map } from 'rxjs';
 import { UsuarioService } from './usuario.service';
 import { Cliente } from '../classes/cliente';
 import { Empleado } from '../classes/empleado';
+import { ApiService } from './api/api.service';
+import { ClienteService } from './cliente.service';
+import { Usuario } from '../classes/padres/usuario';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +19,9 @@ export class ChatService {
 
   constructor(
     private firestoreService: FirestoreService,
-    private usuarioService: UsuarioService
+    private usuarioService: UsuarioService,
+    private clienteService: ClienteService,
+    private apiService: ApiService
   ) {
     this.traerTodosObservable().subscribe((l) => {
       this.listaChat = l;
@@ -77,6 +82,7 @@ export class ChatService {
       chat.idCliente = idCliente;
 
       if (usuario instanceof Cliente) {
+        await this.apiService.notificarMozoMensaje(Empleado.T_MOZO, texto);
         chat.mensajes.push({
           esCliente: true,
           esMozo: false,
@@ -89,6 +95,8 @@ export class ChatService {
       }
 
       if (usuario instanceof Empleado && usuario.tipo === Empleado.T_MOZO) {
+        const cliente = await this.clienteService.traerPorId(idCliente);
+        await this.apiService.notificarUnUsuario(cliente as Usuario, texto);
         chat.mensajes.push({
           esCliente: false,
           esMozo: true,
@@ -106,6 +114,7 @@ export class ChatService {
 
     if (c !== undefined) {
       if (usuario instanceof Cliente) {
+        await this.apiService.notificarMozoMensaje(Empleado.T_MOZO, texto);
         c.mensajes.push({
           esCliente: true,
           esMozo: false,
@@ -118,6 +127,8 @@ export class ChatService {
       }
 
       if (usuario instanceof Empleado && usuario.tipo === Empleado.T_MOZO) {
+        const cliente = await this.clienteService.traerPorId(idCliente);
+        await this.apiService.notificarUnUsuario(cliente as Usuario, texto);
         c.mensajes.push({
           esCliente: false,
           esMozo: true,
