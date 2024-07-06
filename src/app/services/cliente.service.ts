@@ -177,14 +177,4 @@ export class ClienteService {
       .traerPorId(this.col, doc.id)
       .pipe(map((doc) => Cliente.parseDoc(doc)));
   }
-
-  public async traerPorId(idCliente: number) {
-    const l = await this.traerTodos();
-    for (let item of l) {
-      if (item.id === idCliente) {
-        return item;
-      }
-    }
-    return undefined;
-  }
 }
