@@ -22,7 +22,7 @@ export class PushNotificationService {
       }
 
       if (permStatus.receive !== 'granted') {
-        Swalert.toastError(`User denied permissions!`);
+        // Swalert.toastError(`User denied permissions!`);
         console.log('User denied permissions!');
       }
 
@@ -33,19 +33,19 @@ export class PushNotificationService {
     if (this.plataform.is('android')) {
       await PushNotifications.addListener('registration', (token) => {
         this.token = token;
-        Swalert.toastSuccess(`Registration token: ${token.value}`);
+        //Swalert.toastSuccess(`Registration token: ${token.value}`);
         console.log('Registration token: ', token.value);
       });
 
       await PushNotifications.addListener('registrationError', (e) => {
-        Swalert.toastError(`Registration error: ${e.error}`);
+        //Swalert.toastError(`Registration error: ${e.error}`);
         console.log('Registration error: ', e.error);
       });
 
       await PushNotifications.addListener(
         'pushNotificationReceived',
         (notification) => {
-          Swalert.toastSuccess(`Push notification received: ${notification}`);
+          //Swalert.toastSuccess(`Push notification received: ${notification}`);
           console.log('Push notification received: ', notification);
         }
       );
@@ -53,9 +53,9 @@ export class PushNotificationService {
       await PushNotifications.addListener(
         'pushNotificationActionPerformed',
         (notification) => {
-          Swalert.toastSuccess(
+          /*Swalert.toastSuccess(
             `Push notification action performed: ACTIONID:${notification.actionId} || INPUTVALUE:${notification.inputValue}`
-          );
+          );*/
           console.log(
             'Push notification action performed: ',
             notification.actionId,
