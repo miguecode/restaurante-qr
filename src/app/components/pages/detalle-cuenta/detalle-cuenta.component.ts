@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   IonHeader,
   IonContent,
@@ -8,6 +8,7 @@ import {
   IonToolbar,
   IonChip,
 } from '@ionic/angular/standalone';
+import { firstValueFrom, isObservable } from 'rxjs';
 import { Cliente } from 'src/app/classes/cliente';
 import { Duenio } from 'src/app/classes/duenio';
 import { Empleado } from 'src/app/classes/empleado';
@@ -33,11 +34,13 @@ export class DetalleCuentaComponent implements OnInit {
   mostrarSpinner: boolean = false;
   satisfaccion: string = 'Regular';
   cliente: Cliente | undefined = undefined;
+  idMesa: number = 0;
 
   constructor(
     private pedidoService: PedidoService,
     private usuarioService: UsuarioService,
-    private router: Router
+    private router: Router,
+    
   ) {}
 
   async ngOnInit() {
@@ -100,12 +103,13 @@ export class DetalleCuentaComponent implements OnInit {
     console.log('Iniciando pago');
     const modificaciones = this.pedidosCliente.map(async (p) => {
       p.estado = Estado.pedidoPagado;
+      this.idMesa = p.idMesa;
       console.log(p.estado);
       await this.pedidoService.modificar(p);
     });
 
     console.log(modificaciones);
     await Promise.all(modificaciones);
-    this.router.navigateByUrl('simular-pago');
+    this.router.navigateByUrl(`simular-pago/${this.idMesa}`);
   }
 }

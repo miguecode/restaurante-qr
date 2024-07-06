@@ -222,7 +222,7 @@ export const routes: Routes = [
     ...canActivate(() => redirectUnauthorizedTo(['/login'])),
   },
   {
-    path: 'simular-pago',
+    path: 'simular-pago/:idMesa',
     loadComponent: () =>
       import('./components/pages/simular-pago/simular-pago.component').then(
         (m) => m.SimularPagoComponent

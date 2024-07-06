@@ -1,7 +1,10 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IonContent } from '@ionic/angular/standalone';
+import { firstValueFrom, isObservable } from 'rxjs';
+import { Empleado } from 'src/app/classes/empleado';
+import { ApiService } from 'src/app/services/api/api.service';
 import { MesaService } from 'src/app/services/mesa.service';
 
 @Component({
@@ -17,10 +20,19 @@ export class SimularPagoComponent implements OnInit {
   verExito: boolean = false;
 
   private simular: boolean = true;
+  idMesa: number = 0;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private pushService: ApiService, private route: ActivatedRoute) {}
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    const obs = this.route.params;
+    if (isObservable(obs)) {
+      const paramsPromise = await firstValueFrom(obs);
+      this.idMesa = Number(paramsPromise['idMesa']);
+    }
+
+
     if (this.simular) {
       this.verProcesando = true;
       setTimeout(() => {
@@ -29,6 +41,7 @@ export class SimularPagoComponent implements OnInit {
         switch (c) {
           case 1:
             this.verExito = true;
+            this.pushService.notificarPedidoCuenta(Empleado.T_MOZO, `El cliente de la mesa pidio la cuenta`, this.idMesa)
             setTimeout(() => {
               this.router.navigateByUrl('/home');
             }, 4000);
