@@ -1,7 +1,8 @@
-# 📝 Segundo Parcial de PPS, 2024
+# 🍽 Restaurante QR - Aplicación Móvil (PPS, 2024)
+Este repositorio corresponde al segundo parcial de la materia Práctica Profesional Supervisada, hecho en 2024 mientras cursaba la Tecnicatura Universitaria en Programación, en la UTN. El proyecto se trata de una aplicación móvil Android que simula el funcionamiento de un restaurante, basado en el escaneo de códigos QR. 
 
-## 👥 Integrantes del grupo Brigada Binaria
-- Gil Miguel Ángel
+## 👥 Integrantes del grupo
+- Gil Miguel Ángel (yo)
 - Dongo Huaman Juan Pablo
 - Fernández Santiago
 
